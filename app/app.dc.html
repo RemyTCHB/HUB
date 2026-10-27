@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="0094393b-445d-4ddb-a809-f87e75f542df"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>/* Webfonts — Google Fonts substitutes (no brand font binaries were provided).
+   Baloo 2 stands in for the rounded bold wordmark face; Nunito Sans for body. */
+/* devanagari */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("18197564-3a66-4fdc-b91e-a13a00f18b94") format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("63c304b3-08be-4940-82bb-47ff4ab1c775") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("f572efd7-6c9a-4d05-bed8-1fbe57894dc7") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("25a9071f-3cca-4c7d-9530-12a2d6ec3298") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("18197564-3a66-4fdc-b91e-a13a00f18b94") format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("63c304b3-08be-4940-82bb-47ff4ab1c775") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("f572efd7-6c9a-4d05-bed8-1fbe57894dc7") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("25a9071f-3cca-4c7d-9530-12a2d6ec3298") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("18197564-3a66-4fdc-b91e-a13a00f18b94") format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("63c304b3-08be-4940-82bb-47ff4ab1c775") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("f572efd7-6c9a-4d05-bed8-1fbe57894dc7") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("25a9071f-3cca-4c7d-9530-12a2d6ec3298") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("18197564-3a66-4fdc-b91e-a13a00f18b94") format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("63c304b3-08be-4940-82bb-47ff4ab1c775") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("f572efd7-6c9a-4d05-bed8-1fbe57894dc7") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("25a9071f-3cca-4c7d-9530-12a2d6ec3298") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("1f09955e-2c75-4cf5-b2be-cf7dafa56638") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("42e80850-8584-4a4d-abae-7c9e4a02e487") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("5c91bfec-4de7-4e1a-abe3-a8f77a6321ff") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("67c2b16f-2920-4222-a481-8199f96fe02a") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("ae07dc36-9f54-4164-9e5c-7a430e216bbc") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("7acbea95-e570-4bbf-873a-7aed2fc5e663") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("dd106f51-1058-43f4-b308-63436a617b54") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("414d0394-f6ef-4af4-ba87-15b0411f1896") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("116413e5-06dc-4f4c-9822-6afc550ea116") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("66cf9369-3159-4b00-84fd-a4312def535b") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("7acbea95-e570-4bbf-873a-7aed2fc5e663") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("dd106f51-1058-43f4-b308-63436a617b54") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("414d0394-f6ef-4af4-ba87-15b0411f1896") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("116413e5-06dc-4f4c-9822-6afc550ea116") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("66cf9369-3159-4b00-84fd-a4312def535b") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("7acbea95-e570-4bbf-873a-7aed2fc5e663") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("dd106f51-1058-43f4-b308-63436a617b54") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("414d0394-f6ef-4af4-ba87-15b0411f1896") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("116413e5-06dc-4f4c-9822-6afc550ea116") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("66cf9369-3159-4b00-84fd-a4312def535b") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+</style>
+  <style>/* Total Cash Home Buyers — color tokens
+   Official palette via Brandfetch (brandfetch.com/totalchb.com):
+   Victoria #4D458A · Cardinal #BD2239 · Stiletto #992849 · Salem #109648 · White.
+   Shades/tints derived; red-400 sampled from the logo's bright "7" stroke. */
+:root {
+  /* Base brand */
+  --tchb-indigo-900: #2c2752;
+  --tchb-indigo-700: #4d458a;   /* Victoria — wordmark "TOTAL CA$H" / house roof */
+  --tchb-indigo-500: #625aa5;
+  --tchb-indigo-100: #eae9f4;
+  --tchb-indigo-050: #f5f4fa;
+
+  --tchb-red-700: #992849;      /* Stiletto — deep crimson (gradient start) */
+  --tchb-red-500: #bd2239;      /* Cardinal — wordmark "HOME BUYERS" */
+  --tchb-red-400: #e0212b;      /* bright red (7 stroke) */
+  --tchb-red-050: #fbf0f2;
+
+  --tchb-green-600: #0d7a3b;
+  --tchb-green-500: #109648;    /* Salem — the "$" accent */
+  --tchb-green-050: #eaf7ef;
+
+  /* Neutrals */
+  --tchb-white: #ffffff;
+  --tchb-gray-050: #f7f7f9;
+  --tchb-gray-100: #eeedf2;
+  --tchb-gray-300: #c9c7d4;
+  --tchb-gray-500: #767388;
+  --tchb-gray-700: #47445a;
+  --tchb-gray-900: #211e33;
+
+  /* Brand gradient (icon ring: red top → indigo bottom) */
+  --tchb-gradient-brand: linear-gradient(160deg, #bd2239 0%, #7d3468 45%, #4d458a 100%); /* @kind color */
+  --tchb-gradient-indigo: linear-gradient(160deg, #625aa5 0%, #352f66 100%); /* @kind color */
+
+  /* Semantic aliases */
+  --surface-page: var(--tchb-white);
+  --surface-subtle: var(--tchb-gray-050);
+  --surface-card: var(--tchb-white);
+  --surface-inverse: var(--tchb-indigo-700);
+  --surface-accent-tint: var(--tchb-indigo-050);
+
+  --text-heading: var(--tchb-indigo-700);
+  --text-body: var(--tchb-gray-700);
+  --text-muted: var(--tchb-gray-500);
+  --text-on-inverse: var(--tchb-white);
+  --text-on-inverse-muted: rgba(255, 255, 255, 0.72);
+
+  --action-primary: var(--tchb-red-500);
+  --action-primary-hover: var(--tchb-red-700);
+  --action-secondary: var(--tchb-indigo-700);
+  --action-secondary-hover: var(--tchb-indigo-900);
+  --accent-money: var(--tchb-green-500);
+
+  --border-default: var(--tchb-gray-100);
+  --border-strong: var(--tchb-gray-300);
+  --focus-ring: 0 0 0 3px rgba(98, 90, 165, 0.35);
+
+  --status-success: var(--tchb-green-600);
+  --status-error: var(--tchb-red-400);
+}
+</style>
+  <style>/* Total Cash Home Buyers — typography tokens
+   Brand wordmark uses a bold rounded geometric sans (source font not provided).
+   Substitutes from Google Fonts: Baloo 2 (display, rounded like the wordmark)
+   + Nunito Sans (body). Flagged in readme.md — replace with real brand fonts
+   in tokens/fonts.css when available. */
+:root {
+  --font-display: 'Baloo 2', 'Nunito Sans', system-ui, sans-serif;
+  --font-body: 'Nunito Sans', system-ui, -apple-system, sans-serif;
+
+  /* Scale */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-xl: 22px;
+  --text-2xl: 28px;
+  --text-3xl: 36px;
+  --text-4xl: 48px;
+  --text-5xl: 62px;
+
+  /* Weights */
+  --weight-regular: 400;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-display: 700;   /* Baloo 2 bold ≈ wordmark weight */
+
+  /* Line heights */
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-body: 1.6;
+
+  /* Letterspacing — wordmark is set wide, all-caps */
+  --tracking-caps: 0.04em;
+  --tracking-normal: 0;
+}
+</style>
+  <style>/* Total Cash Home Buyers — spacing, radius, shadow, motion tokens */
+:root {
+  /* Spacing (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* Radii — brand geometry is softly rounded (wordmark corners, logo notches) */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* Shadows — soft, low-saturation indigo cast */
+  --shadow-card: 0 1px 2px rgba(34, 29, 84, 0.06), 0 4px 16px rgba(34, 29, 84, 0.08);
+  --shadow-raised: 0 2px 4px rgba(34, 29, 84, 0.08), 0 12px 32px rgba(34, 29, 84, 0.14);
+  --shadow-button: 0 1px 2px rgba(34, 29, 84, 0.12);
+
+  /* Borders */
+  --border-width: 1px;
+  --border-width-strong: 2px;
+
+  /* Motion — quick, businesslike; no bounces */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.3, 1); /* @kind other */
+  --duration-fast: 120ms; /* @kind other */
+  --duration-base: 200ms; /* @kind other */
+
+  /* Layout */
+  --container-max: 1140px;
+  --container-pad: 24px;
+}
+</style>
+  <style>/* Minimal base application of tokens */
+body {
+  font-family: var(--font-body);
+  color: var(--text-body);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--text-heading);
+  line-height: var(--leading-snug);
+  margin: 0;
+}
+</style>
+  <style>/* Webfonts — Google Fonts substitutes (no brand font binaries were provided).
+   Baloo 2 stands in for the rounded bold wordmark face; Nunito Sans for body. */
+/* devanagari */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("18197564-3a66-4fdc-b91e-a13a00f18b94") format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("63c304b3-08be-4940-82bb-47ff4ab1c775") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("f572efd7-6c9a-4d05-bed8-1fbe57894dc7") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("25a9071f-3cca-4c7d-9530-12a2d6ec3298") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("18197564-3a66-4fdc-b91e-a13a00f18b94") format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("63c304b3-08be-4940-82bb-47ff4ab1c775") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("f572efd7-6c9a-4d05-bed8-1fbe57894dc7") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("25a9071f-3cca-4c7d-9530-12a2d6ec3298") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("18197564-3a66-4fdc-b91e-a13a00f18b94") format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("63c304b3-08be-4940-82bb-47ff4ab1c775") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("f572efd7-6c9a-4d05-bed8-1fbe57894dc7") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("25a9071f-3cca-4c7d-9530-12a2d6ec3298") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("18197564-3a66-4fdc-b91e-a13a00f18b94") format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("63c304b3-08be-4940-82bb-47ff4ab1c775") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("f572efd7-6c9a-4d05-bed8-1fbe57894dc7") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("25a9071f-3cca-4c7d-9530-12a2d6ec3298") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("1f09955e-2c75-4cf5-b2be-cf7dafa56638") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("42e80850-8584-4a4d-abae-7c9e4a02e487") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("5c91bfec-4de7-4e1a-abe3-a8f77a6321ff") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("67c2b16f-2920-4222-a481-8199f96fe02a") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("ae07dc36-9f54-4164-9e5c-7a430e216bbc") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("7acbea95-e570-4bbf-873a-7aed2fc5e663") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("dd106f51-1058-43f4-b308-63436a617b54") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("414d0394-f6ef-4af4-ba87-15b0411f1896") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("116413e5-06dc-4f4c-9822-6afc550ea116") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("66cf9369-3159-4b00-84fd-a4312def535b") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("7acbea95-e570-4bbf-873a-7aed2fc5e663") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("dd106f51-1058-43f4-b308-63436a617b54") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("414d0394-f6ef-4af4-ba87-15b0411f1896") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("116413e5-06dc-4f4c-9822-6afc550ea116") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("66cf9369-3159-4b00-84fd-a4312def535b") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("7acbea95-e570-4bbf-873a-7aed2fc5e663") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("dd106f51-1058-43f4-b308-63436a617b54") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("414d0394-f6ef-4af4-ba87-15b0411f1896") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("116413e5-06dc-4f4c-9822-6afc550ea116") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("66cf9369-3159-4b00-84fd-a4312def535b") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
+/* Total Cash Home Buyers — color tokens
+   Official palette via Brandfetch (brandfetch.com/totalchb.com):
+   Victoria #4D458A · Cardinal #BD2239 · Stiletto #992849 · Salem #109648 · White.
+   Shades/tints derived; red-400 sampled from the logo's bright "7" stroke. */
+:root {
+  /* Base brand */
+  --tchb-indigo-900: #2c2752;
+  --tchb-indigo-700: #4d458a;   /* Victoria — wordmark "TOTAL CA$H" / house roof */
+  --tchb-indigo-500: #625aa5;
+  --tchb-indigo-100: #eae9f4;
+  --tchb-indigo-050: #f5f4fa;
+
+  --tchb-red-700: #992849;      /* Stiletto — deep crimson (gradient start) */
+  --tchb-red-500: #bd2239;      /* Cardinal — wordmark "HOME BUYERS" */
+  --tchb-red-400: #e0212b;      /* bright red (7 stroke) */
+  --tchb-red-050: #fbf0f2;
+
+  --tchb-green-600: #0d7a3b;
+  --tchb-green-500: #109648;    /* Salem — the "$" accent */
+  --tchb-green-050: #eaf7ef;
+
+  /* Neutrals */
+  --tchb-white: #ffffff;
+  --tchb-gray-050: #f7f7f9;
+  --tchb-gray-100: #eeedf2;
+  --tchb-gray-300: #c9c7d4;
+  --tchb-gray-500: #767388;
+  --tchb-gray-700: #47445a;
+  --tchb-gray-900: #211e33;
+
+  /* Brand gradient (icon ring: red top → indigo bottom) */
+  --tchb-gradient-brand: linear-gradient(160deg, #bd2239 0%, #7d3468 45%, #4d458a 100%); /* @kind color */
+  --tchb-gradient-indigo: linear-gradient(160deg, #625aa5 0%, #352f66 100%); /* @kind color */
+
+  /* Semantic aliases */
+  --surface-page: var(--tchb-white);
+  --surface-subtle: var(--tchb-gray-050);
+  --surface-card: var(--tchb-white);
+  --surface-inverse: var(--tchb-indigo-700);
+  --surface-accent-tint: var(--tchb-indigo-050);
+
+  --text-heading: var(--tchb-indigo-700);
+  --text-body: var(--tchb-gray-700);
+  --text-muted: var(--tchb-gray-500);
+  --text-on-inverse: var(--tchb-white);
+  --text-on-inverse-muted: rgba(255, 255, 255, 0.72);
+
+  --action-primary: var(--tchb-red-500);
+  --action-primary-hover: var(--tchb-red-700);
+  --action-secondary: var(--tchb-indigo-700);
+  --action-secondary-hover: var(--tchb-indigo-900);
+  --accent-money: var(--tchb-green-500);
+
+  --border-default: var(--tchb-gray-100);
+  --border-strong: var(--tchb-gray-300);
+  --focus-ring: 0 0 0 3px rgba(98, 90, 165, 0.35);
+
+  --status-success: var(--tchb-green-600);
+  --status-error: var(--tchb-red-400);
+}
+
+/* Total Cash Home Buyers — typography tokens
+   Brand wordmark uses a bold rounded geometric sans (source font not provided).
+   Substitutes from Google Fonts: Baloo 2 (display, rounded like the wordmark)
+   + Nunito Sans (body). Flagged in readme.md — replace with real brand fonts
+   in tokens/fonts.css when available. */
+:root {
+  --font-display: 'Baloo 2', 'Nunito Sans', system-ui, sans-serif;
+  --font-body: 'Nunito Sans', system-ui, -apple-system, sans-serif;
+
+  /* Scale */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-xl: 22px;
+  --text-2xl: 28px;
+  --text-3xl: 36px;
+  --text-4xl: 48px;
+  --text-5xl: 62px;
+
+  /* Weights */
+  --weight-regular: 400;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-display: 700;   /* Baloo 2 bold ≈ wordmark weight */
+
+  /* Line heights */
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-body: 1.6;
+
+  /* Letterspacing — wordmark is set wide, all-caps */
+  --tracking-caps: 0.04em;
+  --tracking-normal: 0;
+}
+
+/* Total Cash Home Buyers — spacing, radius, shadow, motion tokens */
+:root {
+  /* Spacing (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* Radii — brand geometry is softly rounded (wordmark corners, logo notches) */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* Shadows — soft, low-saturation indigo cast */
+  --shadow-card: 0 1px 2px rgba(34, 29, 84, 0.06), 0 4px 16px rgba(34, 29, 84, 0.08);
+  --shadow-raised: 0 2px 4px rgba(34, 29, 84, 0.08), 0 12px 32px rgba(34, 29, 84, 0.14);
+  --shadow-button: 0 1px 2px rgba(34, 29, 84, 0.12);
+
+  /* Borders */
+  --border-width: 1px;
+  --border-width-strong: 2px;
+
+  /* Motion — quick, businesslike; no bounces */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.3, 1); /* @kind other */
+  --duration-fast: 120ms; /* @kind other */
+  --duration-base: 200ms; /* @kind other */
+
+  /* Layout */
+  --container-max: 1140px;
+  --container-pad: 24px;
+}
+
+/* Minimal base application of tokens */
+body {
+  font-family: var(--font-body);
+  color: var(--text-body);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--text-heading);
+  line-height: var(--leading-snug);
+  margin: 0;
+}
+
+</style>
+  <script src="936356f7-ed54-4869-879a-6aea9f3a9e7e"></script>
+  <script src="a2c42bde-a883-4c8a-885d-ad1f11af76d8"></script>
+  <title>Universal Task Tracker</title>
+  <link rel="icon" type="image/png" href="c5e512e7-0e0d-4615-a85d-91dbb794a254">
+  <link rel="apple-touch-icon" href="c6771071-2b4c-40ae-a8f4-e4b36c4c706c">
+  <style>
+    body { margin: 0; background: var(--surface-subtle); }
+    a { color: var(--tchb-indigo-700); }
+    a:hover { color: var(--tchb-indigo-900); }
+    input::placeholder { color: var(--tchb-gray-500); }
+  </style>
+</helmet>
+<div style="min-height: 100vh; background: var(--surface-subtle); font-family: var(--font-body); color: var(--text-body);">
+  <header style="background: var(--surface-card); border-bottom: 1px solid var(--border-default);">
+    <div style="max-width: 920px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; {{ mo.headRow }}">
+      <div style="height: 64px; display: flex; align-items: center; {{ mo.logoBox }}">
+        <sc-if value="{{ tchbLight }}" hint-placeholder-val="{{ true }}">
+          <img src="eacd85cb-342b-497b-9f44-adad94715c27" alt="Total Cash Home Buyers" style="height: 64px; width: auto; display: block; {{ mo.logoTchb }}">
+        </sc-if>
+        <sc-if value="{{ tchbDark }}" hint-placeholder-val="{{ false }}">
+          <img src="69e01730-0e65-40e4-b23e-ce47acf4ec71" alt="Total Cash Home Buyers" style="height: 64px; width: auto; display: block; {{ mo.logoTchb }}">
+        </sc-if>
+        <sc-if value="{{ kpiLight }}" hint-placeholder-val="{{ false }}">
+          <img src="2f4cc925-6d8d-4ae7-aa63-2f3160418bce" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }}">
+        </sc-if>
+        <sc-if value="{{ kpiDark }}" hint-placeholder-val="{{ false }}">
+          <img src="c6cb2c3c-4eaf-48c9-a4d4-8658f9419f52" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }}">
+        </sc-if>
+      </div>
+      <div title="Theme" style="display: flex; gap: 2px; padding: 4px; border-radius: 999px; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); {{ mo.theme }}">
+        <button sc-camel-on-click="{{ setLight }}" title="Light theme" style="border: none; cursor: pointer; padding: 7px 12px; border-radius: 999px; display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; transition: background 120ms; background: {{ lightBg }}; color: {{ lightFg }}; {{ mo.themeBtn }}" aria-label="Light theme">
+          <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg><span style="{{ mo.hide }}">Light</span>
+        </button>
+        <button sc-camel-on-click="{{ setDark }}" title="Dark theme" style="border: none; cursor: pointer; padding: 7px 12px; border-radius: 999px; display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; transition: background 120ms; background: {{ darkBg }}; color: {{ darkFg }}; {{ mo.themeBtn }}" aria-label="Dark theme">
+          <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg><span style="{{ mo.hide }}">Dark</span>
+        </button>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; {{ mo.navGroup }}">
+      <nav style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.nav }}">
+        <sc-for list="{{ companyTabs }}" as="c" hint-placeholder-count="2">
+          <button sc-camel-on-click="{{ c.onClick }}" style="border: none; cursor: pointer; padding: 9px 18px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: 0.04em; display: flex; gap: 8px; align-items: center; transition: background 120ms; background: {{ c.bg }}; color: {{ c.color }}; box-shadow: {{ c.shadow }}; {{ mo.tab }}">{{ c.label }}<span style="font-weight: 600; font-size: 12px; opacity: 0.8; {{ mo.tabPct }}">{{ c.pct }}</span></button>
+        </sc-for>
+      </nav>
+      <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
+        <button sc-camel-on-click="{{ signOut }}" title="{{ userTitle }}" style="width: 40px; height: 40px; flex: none; border-radius: 999px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-shadow: var(--shadow-button); {{ mo.avatar }}">{{ userInitials }}</button>
+      </sc-if>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 920px; margin: 0 auto; padding: 40px 24px 96px; display: flex; flex-direction: column; gap: 24px; {{ mo.main }}">
+    <sc-if value="{{ showGate }}" hint-placeholder-val="{{ false }}">
+      <section style="margin: 48px auto 0; max-width: 520px; width: 100%; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); padding: 40px 32px; display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; {{ mo.gate }}">
+        <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 28px; line-height: 1.25; width: 100%; color: var(--tchb-indigo-700);">Sign In To The <span style="color: var(--tchb-red-500);">Task Board</span></h2>
+        <p style="margin: 0; font-size: 15px; color: var(--text-muted); text-wrap: pretty;">{{ gateText }}</p>
+        <sc-if value="{{ canSignIn }}" hint-placeholder-val="{{ true }}">
+          <x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="primary" pill="{{ true }}" sc-camel-on-click="{{ signIn }}" hint-size="220px,48px">Sign In With Google</x-import>
+        </sc-if>
+        <sc-if value="{{ hasAuthError }}" hint-placeholder-val="{{ false }}">
+          <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--status-error); text-wrap: pretty;">{{ authError }}</p>
+        </sc-if>
+        <x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="ghost" size="sm" sc-camel-on-click="{{ workLocal }}" hint-size="200px,36px">Work Offline In This Browser</x-import>
+      </section>
+    </sc-if>
+    <sc-if value="{{ showBoard }}" hint-placeholder-val="{{ true }}">
+    <div style="display: contents;">
+    <section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; {{ mo.hero }}">
+      <div style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 440px; min-width: 0; {{ mo.heroText }}">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; color: var(--tchb-red-500);">{{ companyName }}</span>
+          <span title="{{ syncTitle }}" style="display: flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.04em; background: {{ syncBg }}; color: {{ syncFg }};"><span style="width: 7px; height: 7px; border-radius: 999px; background: {{ syncDot }};"></span>{{ syncLabel }}</span>
+        </div>
+        <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 44px; line-height: 1.15; color: var(--tchb-indigo-700); {{ mo.h1 }}">Universal <span style="color: var(--tchb-red-500);">Task Tracker</span></h1>
+        <p style="margin: 0; font-size: 16px; color: var(--text-muted); text-wrap: pretty; text-transform: capitalize">Add Tasks And Subtasks With Their Owners.</p>
+      </div>
+      <div style="display: flex; gap: 28px; align-items: flex-end; {{ mo.stats }}">
+        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-end; {{ mo.stat }}">
+          <span style="font-family: var(--font-display); font-weight: 800; font-size: 32px; line-height: 1; color: var(--tchb-indigo-700); {{ mo.statNum }}">{{ tasksDone }}<span style="color: var(--tchb-gray-300);">/</span>{{ tasksTotal }}</span>
+          <span style="font-size: 13px; color: var(--text-muted); text-transform: capitalize">tasks done</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-end; {{ mo.stat }}">
+          <span style="font-family: var(--font-display); font-weight: 800; font-size: 32px; line-height: 1; color: var(--tchb-green-600); {{ mo.statNum }}">{{ overallPct }}</span>
+          <span style="font-size: 13px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap;">{{ subsDone }} of {{ subsTotal }} subtasks</span>
+        </div>
+      </div>
+    </section>
+
+    <div style="height: 6px; border-radius: 999px; background: var(--tchb-gray-100); overflow: hidden;">
+      <div style="height: 100%; width: {{ overallPct }}; background: var(--tchb-gradient-brand); border-radius: 999px; transition: width 200ms cubic-bezier(0.2,0.8,0.3,1);"></div>
+    </div>
+
+    <section style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; {{ mo.addBar }}">
+      <input value="{{ newTask }}" sc-camel-on-change="{{ onNewTask }}" sc-camel-on-key-down="{{ onNewTaskKey }}" placeholder="Add a main task" style="flex: 1; min-width: 220px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 12px 14px; font-family: var(--font-body); font-size: 16px; text-transform: capitalize; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.addInput }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+      <button sc-camel-on-click="{{ openNewOwner }}" title="Owner" style="display: flex; align-items: center; gap: 8px; flex: none; padding: 6px 12px 6px 6px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 15px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ newOwnerChip.ownerLabelColor }}; {{ mo.addOwner }}" style-focus="box-shadow: var(--focus-ring);">
+        <span style="width: 32px; height: 32px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; background: {{ newOwnerChip.ownerBg }}; color: {{ newOwnerChip.ownerFg }};">{{ newOwnerChip.initials }}</span>
+        <span style="min-width: 110px; text-align: left; white-space: nowrap; {{ mo.ellip }}">{{ newOwnerChip.ownerLabel }}</span>
+        <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+      <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="primary" sc-camel-on-click="{{ addTask }}" hint-size="120px,48px">Add Task</x-import></div>
+    </section>
+
+    <section style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; {{ mo.filterRow }}">
+      <div style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.filterPills }}">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+          <button sc-camel-on-click="{{ f.onClick }}" style="border: none; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; display: flex; gap: 6px; align-items: center; background: {{ f.bg }}; color: {{ f.color }}; box-shadow: {{ f.shadow }}; transition: background 120ms; {{ mo.filterBtn }}">{{ f.label }}<span style="font-weight: 600; opacity: 0.7;">{{ f.count }}</span></button>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 4px; align-items: center; {{ mo.tools }}">
+        <button sc-camel-on-click="{{ openOwnerFilter }}" style="display: flex; align-items: center; gap: 8px; border-radius: 999px; padding: 8px 12px 8px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); cursor: pointer; white-space: nowrap; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); {{ mo.ownerFilter }}" style-focus="box-shadow: var(--focus-ring);"><span style="{{ mo.ellip }}">{{ ownerFilterLabel }}</span><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="ghost" size="sm" sc-camel-on-click="{{ expandAll }}" hint-size="100px,36px">Expand All</x-import></div>
+        <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="ghost" size="sm" sc-camel-on-click="{{ collapseAll }}" hint-size="100px,36px">Collapse All</x-import></div>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 14px;">
+      <sc-for list="{{ visibleTasks }}" as="t" hint-placeholder-count="3">
+        <article data-tid="{{ t.id }}" sc-camel-on-drag-over="{{ t.onDragOver }}" sc-camel-on-drop="{{ t.onDrop }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; transition: opacity 120ms; outline-offset: 2px; opacity: {{ t.dragOpacity }}; outline: {{ t.dropOutline }};">
+          <div style="display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto auto auto; align-items: center; gap: 14px; padding: 16px 18px 16px 8px; {{ mo.card }}">
+            <button draggable="{{ gripDraggable }}" sc-camel-on-drag-start="{{ t.onDragStart }}" sc-camel-on-drag-end="{{ onDragEnd }}" sc-camel-on-pointer-down="{{ t.onGripDown }}" sc-camel-on-pointer-move="{{ onGripMove }}" sc-camel-on-pointer-up="{{ onGripUp }}" sc-camel-on-pointer-cancel="{{ onDragEnd }}" title="Drag to reorder" style="width: 24px; height: 36px; margin-right: -8px; border: none; background: transparent; border-radius: 8px; cursor: grab; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; padding: 0; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; {{ mo.grip }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
+              <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.8"></circle><circle cx="15" cy="5" r="1.8"></circle><circle cx="9" cy="12" r="1.8"></circle><circle cx="15" cy="12" r="1.8"></circle><circle cx="9" cy="19" r="1.8"></circle><circle cx="15" cy="19" r="1.8"></circle></svg>
+            </button>
+            <button sc-camel-on-click="{{ t.onToggle }}" title="Mark whole task done" style="width: 28px; height: 28px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; transition: background 120ms; background: {{ t.boxBg }}; border: 2px solid {{ t.boxBorder }};">
+              <sc-if value="{{ t.isDone }}" hint-placeholder-val="{{ false }}">
+                <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+              </sc-if>
+            </button>
+            <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0; {{ mo.grow }}">
+              <div style="display: grid; margin-left: -7px; min-width: 0;">
+                <span aria-hidden="true" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; visibility: hidden; {{ mo.taskTitle }}">{{ t.title }} </span>
+                <textarea rows="1" value="{{ t.title }}" sc-camel-on-change="{{ t.onTitle }}" sc-camel-on-key-down="{{ blurOnEnter }}" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; border-radius: 6px; background: transparent; outline: none; resize: none; overflow: hidden; margin: 0; min-width: 0; width: 100%; box-sizing: border-box; color: {{ t.titleColor }}; text-decoration: {{ t.titleDeco }}; {{ mo.taskTitle }}" style-hover="border-color: var(--border-default);" style-focus="border-color: var(--tchb-indigo-500); background: var(--tchb-indigo-050);"></textarea>
+              </div>
+              <span style="font-size: 13px; color: var(--text-muted);">{{ t.meta }}</span>
+            </div>
+            <div style="display: none; {{ mo.brk }}"></div>
+            <button sc-camel-on-click="{{ t.openOwner }}" title="Owner" style="display: flex; align-items: center; gap: 6px; flex: none; padding: 3px 10px 3px 3px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ t.ownerLabelColor }}; {{ mo.taskOwner }}" style-focus="box-shadow: var(--focus-ring);">
+                    <span style="width: 24px; height: 24px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ t.ownerBg }}; color: {{ t.ownerFg }};">{{ t.initials }}</span>
+                    <span style="min-width: 84px; text-align: left; white-space: nowrap; {{ mo.ellip }}">{{ t.ownerLabel }}</span>
+                    <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
+                  </button>
+            <x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Badge" tone="{{ t.tone }}" hint-size="100px,26px">{{ t.status }}</x-import>
+            <button sc-camel-on-click="{{ t.onExpand }}" title="Show subtasks" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-indigo-700); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }} {{ mo.push }}" style-hover="background: var(--tchb-indigo-050);">
+              <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 160ms; transform: {{ t.chevron }};"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <button sc-camel-on-click="{{ t.onDelete }}" title="Delete task" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }}" style-hover="background: var(--tchb-red-050); color: var(--tchb-red-400);">
+              <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </div>
+          <sc-if value="{{ showProgress }}" hint-placeholder-val="{{ true }}">
+            <div style="height: 4px; background: var(--tchb-gray-100);">
+              <div style="height: 100%; width: {{ t.pct }}; background: {{ t.barColor }}; transition: width 200ms cubic-bezier(0.2,0.8,0.3,1);"></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ t.open }}" hint-placeholder-val="{{ true }}">
+            <div style="background: var(--tchb-gray-050); padding: 10px 18px 16px 60px; display: flex; flex-direction: column; gap: 2px; {{ mo.panel }}">
+              <sc-for list="{{ t.subs }}" as="s" hint-placeholder-count="3">
+                <div style="display: flex; align-items: center; gap: 12px; padding: 6px 8px; margin-left: -8px; border-radius: 8px; {{ mo.sub }}" style-hover="background: var(--surface-card);">
+                  <button sc-camel-on-click="{{ s.onToggle }}" style="width: 22px; height: 22px; flex: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; transition: background 120ms; background: {{ s.boxBg }}; border: 2px solid {{ s.boxBorder }}; {{ mo.subCheck }}">
+                    <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}">
+                      <svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                    </sc-if>
+                  </button>
+                  <div style="display: grid; flex: 1; min-width: 0;">
+                    <span aria-hidden="true" style="font-family: var(--font-body); font-size: 15px; line-height: 1.4; text-transform: capitalize; padding: 4px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; visibility: hidden; {{ mo.input16 }}">{{ s.title }} </span>
+                    <textarea rows="1" value="{{ s.title }}" sc-camel-on-change="{{ s.onTitle }}" sc-camel-on-key-down="{{ blurOnEnter }}" style="font-family: var(--font-body); font-size: 15px; line-height: 1.4; text-transform: capitalize; padding: 4px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; border-radius: 6px; background: transparent; outline: none; resize: none; overflow: hidden; margin: 0; min-width: 0; width: 100%; box-sizing: border-box; color: {{ s.color }}; text-decoration: {{ s.deco }}; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); background: var(--surface-card);"></textarea>
+                  </div>
+                  <div style="display: none; {{ mo.brk }}"></div>
+                  <sc-if value="{{ s.hasEdited }}" hint-placeholder-val="{{ false }}">
+                    <span title="{{ s.editedTitle }}" style="flex: none; font-size: 12px; color: var(--text-muted); white-space: nowrap; {{ mo.edited }}">{{ s.edited }}</span>
+                  </sc-if>
+                  <button sc-camel-on-click="{{ s.openOwner }}" title="Owner" style="display: flex; align-items: center; gap: 6px; flex: none; padding: 3px 10px 3px 3px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ s.ownerLabelColor }}; {{ mo.subOwner }}" style-focus="box-shadow: var(--focus-ring);">
+                    <span style="width: 22px; height: 22px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ s.ownerBg }}; color: {{ s.ownerFg }};">{{ s.initials }}</span>
+                    <span style="min-width: 84px; text-align: left; white-space: nowrap; {{ mo.ellip }}">{{ s.ownerLabel }}</span>
+                    <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
+                  </button>
+                  <button sc-camel-on-click="{{ s.openStatus }}" title="Subtask status" style="display: flex; align-items: center; gap: 6px; flex: none; border-radius: 999px; padding: 5px 10px 5px 12px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; white-space: nowrap; background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); background-color: {{ s.statusBg }}; color: {{ s.statusFg }}; {{ mo.subStatus }}" style-focus="box-shadow: var(--focus-ring);">{{ s.statusLabel }}<svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
+                  <button sc-camel-on-click="{{ s.onDelete }}" title="Remove subtask" style="width: 28px; height: 28px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; {{ mo.subDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);">
+                    <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                  </button>
+                </div>
+              </sc-for>
+              <div style="display: flex; align-items: center; gap: 12px; padding: 6px 0 0;">
+                <span style="width: 22px; height: 22px; flex: none; display: flex; align-items: center; justify-content: center; color: var(--tchb-indigo-500);">
+                  <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                </span>
+                <input value="{{ t.draft }}" sc-camel-on-change="{{ t.onDraft }}" sc-camel-on-key-down="{{ t.onDraftKey }}" placeholder="Add a subtask and press Enter" style="flex: 1; min-width: 0; border: 1px dashed var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 15px; text-transform: capitalize; background: var(--surface-card); outline: none; color: var(--text-body); {{ mo.input16 }}" style-focus="border-style: solid; border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+              </div>
+            </div>
+          </sc-if>
+        </article>
+      </sc-for>
+
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="border: 2px dashed var(--border-strong); border-radius: var(--radius-lg); padding: 48px 24px; text-align: center; display: flex; flex-direction: column; gap: 6px; align-items: center;">
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 20px; color: var(--tchb-indigo-700);">{{ emptyTitle }}</span>
+          <span style="font-size: 15px; color: var(--text-muted);">{{ emptyBody }}</span>
+        </div>
+      </sc-if>
+    </section>
+    </div>
+    </sc-if>
+  </main>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ closeMenu }}" sc-camel-on-wheel="{{ closeMenu }}" sc-camel-on-touch-move="{{ closeMenu }}" style="position: fixed; inset: 0; z-index: 50; {{ mo.shade }}"></div>
+    <div sc-camel-on-key-down="{{ menuKey }}" style="position: fixed; z-index: 51; min-width: 230px; max-height: 340px; overflow-y: auto; padding: 6px; border-radius: 14px; display: flex; flex-direction: column; gap: 2px; background-color: var(--menu-bg, rgba(255,255,255,0.62)); background-image: var(--menu-sheen, linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 100%)); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid var(--glass-border, rgba(255,255,255,0.9)); box-shadow: var(--menu-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 2px 4px rgba(34,29,84,0.08), 0 16px 40px rgba(34,29,84,0.18)); top: {{ menuTop }}; left: {{ menuLeft }}; transform: {{ menuTransform }}; {{ menuSheet }}">
+      <sc-for list="{{ menuItems }}" as="m" hint-placeholder-count="0">
+        <button sc-camel-on-click="{{ m.onClick }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 8px 10px; border-radius: 9px; font-family: var(--font-body); font-size: 14px; font-weight: 600; text-transform: capitalize; color: var(--text-body); background: {{ m.bg }}; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));">
+          <sc-if value="{{ m.hasAvatar }}" hint-placeholder-val="{{ false }}">
+            <span style="width: 24px; height: 24px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ m.avBg }}; color: {{ m.avFg }};">{{ m.initials }}</span>
+          </sc-if>
+          <sc-if value="{{ m.hasDot }}" hint-placeholder-val="{{ false }}">
+            <span style="width: 10px; height: 10px; flex: none; border-radius: 999px; background: {{ m.dot }};"></span>
+          </sc-if>
+          <span style="flex: 1; white-space: nowrap;">{{ m.label }}</span>
+          <sc-if value="{{ m.selected }}" hint-placeholder-val="{{ false }}">
+            <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--tchb-green-500)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          </sc-if>
+        </button>
+      </sc-for>
+      <sc-if value="{{ menuCanAdd }}" hint-placeholder-val="{{ false }}">
+        <div style="height: 1px; background: var(--glass-divider, rgba(17,29,44,0.08)); margin: 4px 6px;"></div>
+        <sc-if value="{{ notAdding }}" hint-placeholder-val="{{ true }}">
+          <button sc-camel-on-click="{{ startAdd }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 8px 10px; border-radius: 9px; font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--action-primary); background: transparent; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));">
+            <span style="width: 24px; height: 24px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; border: 1.5px dashed currentColor;">
+              <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+            </span>
+            Add New Owner
+          </button>
+        </sc-if>
+        <sc-if value="{{ adding }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; gap: 6px; padding: 4px;">
+            <input sc-camel-auto-focus="{{ true }}" value="{{ addName }}" sc-camel-on-change="{{ onAddName }}" sc-camel-on-key-down="{{ onAddKey }}" placeholder="Full name" style="flex: 1; min-width: 0; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; text-transform: capitalize; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+            <button sc-camel-on-click="{{ confirmAdd }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 8px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Add</button>
+          </div>
+        </sc-if>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hasUndo }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tchb-indigo-900); color: #fff; border-radius: 999px; padding: 10px 10px 10px 20px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-raised); font-size: 15px; {{ mo.toast }}">
+      <span style="text-transform: capitalize; {{ mo.toastLabel }}">Deleted “{{ undoLabel }}”</span>
+      <button sc-camel-on-click="{{ undo }}" style="border: none; cursor: pointer; background: rgba(255,255,255,0.14); color: #fff; border-radius: 999px; padding: 8px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; {{ mo.toastBtn }}" style-hover="background: rgba(255,255,255,0.24);">Undo</button>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;showProgress&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;sortDoneToBottom&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const KEY = 'q4-sprint-tracker-v2';
+let uid = Date.now();
+const id = () => 'i' + (uid++).toString(36);
+const TEAM = ['Remy Ahmed', 'Brandy Pollack', 'Monz Miller', 'Motz Curran'];
+const initials = n => (n || '').trim().split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join('');
+const mk = (company, title, owner = '', subs = []) => ({ id: id(), company, title, owner, done: false, open: false,
+  subs: subs.map(s => { const m = /^(.*?)\s*<([^>]+)>\s*$/.exec(s); return { id: id(), title: m ? m[1] : s, owner: m ? m[2] : owner, status: 'todo', done: false }; }) });
+const meetings = n => Array.from({ length: n }, (_, i) => 'Meeting ' + (i + 1));
+const COMPANIES = [{ key: 'tchb', label: 'TCHB', name: 'Total Cash Home Buyers' }, { key: 'kpi', label: 'KPI DRIVER', name: 'KPI Driver' }];
+const KPI_THEME = {
+  '--tchb-indigo-900': '#0a121c', '--tchb-indigo-700': '#111d2c', '--tchb-indigo-500': '#3a7fc2', '--tchb-indigo-100': '#dce9f5', '--tchb-indigo-050': '#eef4fb',
+  '--tchb-red-700': '#2d669f', '--tchb-red-500': '#3a7fc2', '--tchb-red-400': '#ee2025', '--tchb-red-050': '#fdeaea',
+  '--tchb-green-600': '#2f8f34', '--tchb-green-500': '#47b84b', '--tchb-green-050': '#ebf7ec',
+  '--tchb-gradient-brand': 'linear-gradient(90deg, #ee2025 0%, #e88e1f 35%, #fdb11a 65%, #47b84b 100%)',
+  '--surface-inverse': '#111d2c', '--surface-accent-tint': '#eef4fb', '--text-heading': '#111d2c',
+  '--action-primary': '#3a7fc2', '--action-primary-hover': '#2d669f', '--action-secondary': '#111d2c', '--action-secondary-hover': '#0a121c',
+  '--accent-money': '#47b84b', '--status-success': '#2f8f34', '--status-error': '#ee2025', '--focus-ring': '0 0 0 3px rgba(58, 127, 194, 0.35)'
+};
+const GAUGE = 'linear-gradient(90deg, #ee2025 0%, #e88e1f 35%, #fdb11a 65%, #47b84b 100%)';
+const DARK_BASE = {
+  '--surface-page': '#1c1a2e', '--surface-card': '#1f1d33', '--surface-subtle': '#141323', '--surface-inverse': '#0f0e1c', '--surface-accent-tint': '#2a2747',
+  '--tchb-gray-050': '#191729', '--tchb-gray-100': '#2a2740', '--tchb-gray-300': '#4a4662', '--tchb-gray-500': '#9a97ad', '--tchb-gray-700': '#d4d2e3', '--tchb-gray-900': '#f1f0f7',
+  '--text-body': '#e4e2ee', '--text-muted': '#a3a0b8', '--text-heading': '#c2bdf0', '--border-default': '#2f2c47', '--border-strong': '#4a4664',
+  '--tchb-indigo-900': '#0f0e1c', '--tchb-indigo-700': '#c2bdf0', '--tchb-indigo-500': '#8f87dd', '--tchb-indigo-100': '#36325c', '--tchb-indigo-050': '#2a2747',
+  '--tchb-red-700': '#b52a44', '--tchb-red-500': '#ef5a6f', '--tchb-red-400': '#ff5a5f', '--tchb-red-050': '#3a1f2b',
+  '--tchb-green-600': '#4fd98a', '--tchb-green-500': '#1fae5b', '--tchb-green-050': '#163224',
+  '--action-primary': '#d8334c', '--action-primary-hover': '#b52a44', '--action-secondary': '#756dc4', '--action-secondary-hover': '#625aa5', '--avatar-bg': '#625aa5',
+  '--status-success': '#4fd98a', '--status-error': '#ff5a5f', '--focus-ring': '0 0 0 3px rgba(143, 135, 221, 0.45)',
+  '--shadow-card': '0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.28)', '--shadow-raised': '0 2px 4px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45)', '--shadow-button': '0 1px 2px rgba(0,0,0,0.5)'
+};
+const KPI_DARK = {
+  '--surface-page': '#0f1722', '--surface-card': '#152131', '--surface-subtle': '#0b121b', '--surface-inverse': '#070d15', '--surface-accent-tint': '#172a40',
+  '--tchb-gray-050': '#111b28', '--tchb-gray-100': '#1f2d3f', '--tchb-gray-300': '#3a4b60', '--tchb-gray-500': '#93a1b3', '--tchb-gray-700': '#d3dbe5',
+  '--text-body': '#e1e7ee', '--text-muted': '#9aa8b9', '--text-heading': '#e3ecf7', '--border-default': '#1f2d3f', '--border-strong': '#34465c',
+  '--tchb-indigo-900': '#070d15', '--tchb-indigo-700': '#e3ecf7', '--tchb-indigo-500': '#5b9bdb', '--tchb-indigo-100': '#1f3550', '--tchb-indigo-050': '#172a40',
+  '--tchb-red-700': '#2d669f', '--tchb-red-500': '#5b9bdb', '--tchb-red-400': '#ff4a4f', '--tchb-red-050': '#3a1c1e',
+  '--tchb-green-600': '#5fd463', '--tchb-green-500': '#47b84b', '--tchb-green-050': '#173119',
+  '--action-primary': '#3a7fc2', '--action-primary-hover': '#2d669f', '--action-secondary': '#3a7fc2', '--action-secondary-hover': '#2d669f', '--avatar-bg': '#3a7fc2',
+  '--accent-money': '#47b84b', '--status-success': '#5fd463', '--status-error': '#ff4a4f', '--focus-ring': '0 0 0 3px rgba(91, 155, 219, 0.45)', '--menu-bg': 'rgba(18, 30, 46, 0.78)'
+};
+const GLASS_LIGHT = {
+  '--glass-bg': 'rgba(255,255,255,0.55)', '--glass-sheen': 'linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)', '--glass-border': 'rgba(255,255,255,0.85)',
+  '--glass-shadow': 'inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)',
+  '--glass-hover': 'rgba(255,255,255,0.85)', '--glass-divider': 'rgba(17,29,44,0.08)', '--menu-bg': 'rgba(255,255,255,0.62)',
+  '--menu-sheen': 'linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 100%)', '--menu-shadow': 'inset 0 1px 0 rgba(255,255,255,0.95), 0 2px 4px rgba(34,29,84,0.08), 0 16px 40px rgba(34,29,84,0.18)'
+};
+const GLASS_DARK = {
+  '--glass-bg': 'rgba(255,255,255,0.06)', '--glass-sheen': 'linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.02) 100%)', '--glass-border': 'rgba(255,255,255,0.12)',
+  '--glass-shadow': 'inset 0 1px 0 rgba(255,255,255,0.10), 0 1px 2px rgba(0,0,0,0.4), 0 4px 14px rgba(0,0,0,0.3)',
+  '--glass-hover': 'rgba(255,255,255,0.10)', '--glass-divider': 'rgba(255,255,255,0.10)', '--menu-bg': 'rgba(30, 28, 50, 0.75)',
+  '--menu-sheen': 'linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 100%)', '--menu-shadow': 'inset 0 1px 0 rgba(255,255,255,0.08), 0 16px 40px rgba(0,0,0,0.5)'
+};
+const ALL_VARS = [...new Set([DARK_BASE, KPI_DARK, GLASS_LIGHT, GLASS_DARK].flatMap(Object.keys))];
+const FB_V = 'https://www.gstatic.com/firebasejs/10.12.2/';
+const loadScript = src => new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+const clean = t => { const { open, ...rest } = t; return JSON.parse(JSON.stringify(rest)); };
+const ago = ts => { const s = (Date.now() - ts) / 1000; return s < 60 ? 'just now' : s < 3600 ? Math.floor(s / 60) + 'm ago' : s < 86400 ? Math.floor(s / 3600) + 'h ago' : Math.floor(s / 86400) + 'd ago'; };
+const firstName = n => (n || '').split(/[\s@]/)[0];
+const MOBILE_MAX = 640;
+const isPhone = () => window.innerWidth < MOBILE_MAX;
+const isTiny = () => window.innerWidth < 360;
+const isTouch = () => !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+// Phone-only style overrides, appended to inline styles; desktop gets '' so its layout is untouched.
+const MOBILE = {
+  headRow: 'padding: 10px 16px; gap: 10px 8px;',
+  logoBox: 'height: 44px; flex: 1 0 calc(100% - 60px); order: 1;',
+  logoTchb: 'height: 44px;', logoKpi: 'height: 24px;',
+  theme: 'order: 3; flex: none;',
+  themeBtn: 'padding: 0; width: 44px; height: 40px; justify-content: center;',
+  hide: 'display: none;',
+  navGroup: 'display: contents;',
+  nav: 'order: 4; flex: 1 1 0; min-width: 0;',
+  tab: 'flex: 1 1 0; min-width: 0; justify-content: center; padding: 0 8px; height: 40px; font-size: 13px; gap: 6px; white-space: nowrap;',
+  avatar: 'order: 2; width: 44px; height: 44px;',
+  main: 'padding: 20px 16px 96px; gap: 16px;',
+  gate: 'margin-top: 16px; padding: 28px 20px;',
+  hero: 'gap: 16px;', heroText: 'flex-basis: 100%;',
+  h1: 'font-size: 30px;',
+  stats: 'width: 100%; align-items: flex-start;', stat: 'align-items: flex-start;', statNum: 'font-size: 28px;',
+  addBar: 'padding: 10px; gap: 8px;',
+  addInput: 'flex: 1 1 100%; min-width: 0;',
+  addOwner: 'flex: 1 1 0; min-width: 0; min-height: 46px;',
+  ellip: 'min-width: 0; overflow: hidden; text-overflow: ellipsis;',
+  btnWrap: 'display: grid; flex: none; min-height: 44px;',
+  filterRow: 'gap: 10px;',
+  filterPills: 'max-width: 100%; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;',
+  filterBtn: 'flex: none; white-space: nowrap; height: 40px; padding: 0 14px;',
+  tools: 'flex: 1 1 100%; min-width: 0;',
+  ownerFilter: 'flex: 1 1 auto; min-width: 0; min-height: 44px; justify-content: space-between;',
+  card: 'display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 10px 12px 2px;',
+  grip: 'width: 32px; height: 44px; margin-right: -4px; flex: none;',
+  grow: 'flex: 1 1 0;',
+  taskTitle: 'font-size: 17px;',
+  brk: 'display: block; flex-basis: 100%; height: 0;',
+  taskOwner: 'flex: 1 1 0; max-width: max-content; min-width: 0; margin-left: 8px;',
+  iconBtn: 'width: 44px; height: 44px; flex: none;', push: 'margin-left: auto;',
+  panel: 'padding: 8px 10px 14px 16px;',
+  sub: 'flex-wrap: wrap; gap: 8px; padding: 8px;',
+  subCheck: 'width: 26px; height: 26px;',
+  input16: 'font-size: 16px;',
+  edited: 'order: 9; flex-basis: 100%; padding-left: 34px; white-space: normal;',
+  subOwner: 'flex: 1 1 0; max-width: max-content; min-width: 0; min-height: 36px;',
+  subStatus: 'min-height: 36px;',
+  subDel: 'width: 40px; height: 40px; margin-left: auto;',
+  shade: 'background: rgba(10, 12, 24, 0.35);',
+  menuItem: 'padding: 12px; font-size: 16px;',
+  toast: 'left: 16px; right: 16px; bottom: 16px; transform: none;',
+  toastLabel: 'flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;',
+  toastBtn: 'flex: none; min-height: 40px;'
+};
+const MOBILE_TINY = { ...MOBILE, tabPct: 'display: none;' }; // < 360px: company tabs drop their % to fit
+const SEED = [
+  mk('tchb', 'P&Ls', 'Motz Curran', ['PPC FL Out of The Accounting', 'Credit Card Interest to be Reviewed', 'CRM Fees To be Broken Down on the P&L', 'Bank Fees & Service Charges To Be Broken Down', '%s of Marketing, Payroll Sections, G&A', 'P&L TCHB No Flip Revenue From PI/BJP', 'P&L Pollack Investments']),
+  mk('tchb', 'TCA Handover — Chris to Will', 'Monz Miller'),
+  mk('tchb', 'Kompozy', 'Remy Ahmed', ['Set Up Social Profiles', 'Connect Social Profiles', 'Set Up Persona', 'Pictures', 'Review Prompts', 'Launch']),
+  mk('tchb', 'Payroll Draft 2027', 'Remy Ahmed', ['Dispo Payroll', 'TC Payroll', 'Ops Payroll']),
+  mk('tchb', 'SEO Mega AI', 'Remy Ahmed', ['Clone Webuysouthfl.com', 'Launch & Get Discount']),
+  mk('tchb', 'SEO HESEL WBSFL', 'Remy Ahmed', ['Check Progress 1', '2025 Case Studies (Brandy)', 'Check Progress 2', 'Check Progress 3']),
+  mk('tchb', 'Facebook Retargeting Ads HESEL', '', ['Check Connection to CRM', 'Review Ads', 'Launch', 'Progress Check 1', 'Progress Check 2']),
+  mk('tchb', '2027 Q1 Projection', 'Remy Ahmed'),
+  mk('tchb', 'TC Tools', 'Remy Ahmed', ['Title Commitment Agent', 'Aframe Views <Monz Miller>']),
+  mk('tchb', 'Projection Tool', 'Remy Ahmed'),
+  mk('tchb', 'ACQ Department', 'Brandy Pollack', ["Shawn's Vetting", 'Justin Offer', 'Justin Onboarding <Remy Ahmed>']),
+  mk('tchb', 'Integrate Kandice', 'Brandy Pollack', ['Train Remy into the Operations Roles', 'Identify Bottle Necks']),
+  mk('kpi', 'Kompozy', 'Remy Ahmed', ['Pictures', 'Review Prompts', 'Launch']),
+  mk('kpi', 'AI Dashboard', 'Remy Ahmed', meetings(10)),
+  mk('kpi', 'AI Sales Coach', 'Remy Ahmed', ['Dynamic Rubric', 'Accountability Tracker', 'Disputes', 'Voice Summary']),
+  mk('kpi', 'AI Insights', 'Remy Ahmed', meetings(5)),
+  mk('kpi', 'Enrichment Data Sources', 'Remy Ahmed', ['Implement Investorbase', 'Research Other APIs']),
+  mk('kpi', 'Referral Partnerships', 'Brandy Pollack', ['Partnership 1', 'Partnership 2', 'Partnership 3']),
+  mk('kpi', 'Operating Agreement 66.6/33.4', 'Brandy Pollack', ["Remy's Data <Remy Ahmed>", 'Create The Operating Agreement']),
+  mk('kpi', 'Nurture Revamp', 'Remy Ahmed', ['New 6 Months Nurtures', 'AI Nurture'])
+];
+
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    let tasks = null;
+    try { tasks = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+    if (Array.isArray(tasks)) tasks = tasks.map(t => ({ ...t, subs: t.subs.map(s => ({ ...s, status: s.status || (s.done ? 'done' : 'todo') })) }));
+    this.rootRef = React.createRef();
+    let company = 'tchb';
+    try { company = localStorage.getItem(KEY + '-co') || 'tchb'; } catch (e) {}
+    let team = null;
+    try { team = JSON.parse(localStorage.getItem(KEY + '-team')); } catch (e) {}
+    if (!Array.isArray(team)) team = [...TEAM];
+    (Array.isArray(tasks) ? tasks : SEED).forEach(t => [t.owner, ...t.subs.map(s => s.owner)].forEach(o => { o = (o || '').trim(); if (o && !team.includes(o)) team.push(o); }));
+    let mode = 'light', openMap = {};
+    try { mode = localStorage.getItem(KEY + '-mode') || 'light'; openMap = JSON.parse(localStorage.getItem(KEY + '-open')) || {}; } catch (e) {}
+    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, menu: null, adding: false, addName: '', tasks: Array.isArray(tasks) ? tasks : SEED, company, filter: 'all', ownerFilter: '', newTask: '', newOwner: '', drafts: {}, undo: null };
+  }
+  applyTheme(company, mode) {
+    const el = document.documentElement, dark = mode === 'dark', kpi = company === 'kpi';
+    const vars = { ...(dark ? GLASS_DARK : GLASS_LIGHT), ...(dark ? DARK_BASE : {}), ...(kpi ? KPI_THEME : {}), ...(kpi && dark ? KPI_DARK : {}) };
+    [...ALL_VARS, ...Object.keys(KPI_THEME)].forEach(k => k in vars ? el.style.setProperty(k, vars[k]) : el.style.removeProperty(k));
+    el.style.colorScheme = mode;
+    document.body.style.background = 'var(--surface-subtle)';
+  }
+  // ---------- cloud (Firebase) ----------
+  initCloud() {
+    let tries = 0;
+    const wait = () => {
+      const cfg = window.TRACKER_FIREBASE;
+      if (!cfg && tries++ < 30) return setTimeout(wait, 100);
+      if (!cfg || !cfg.config) return this.setState({ cloud: 'local' });
+      this.allowed = (cfg.allowedDomains || []).map(d => d.toLowerCase());
+      this.setState({ cloud: 'connecting' });
+      loadScript(FB_V + 'firebase-app-compat.js')
+        .then(() => Promise.all([loadScript(FB_V + 'firebase-auth-compat.js'), loadScript(FB_V + 'firebase-firestore-compat.js')]))
+        .then(() => {
+          const fb = window.firebase; if (!fb.apps.length) fb.initializeApp(cfg.config);
+          this.fb = fb; this.auth = fb.auth(); this.db = fb.firestore();
+          this.auth.onAuthStateChanged(u => this.onUser(u));
+        })
+        .catch(e => { console.warn('Cloud sync unavailable', e); this.setState({ cloud: 'error', authError: 'Could not reach Firebase. Working locally for now.' }); });
+    };
+    wait();
+  }
+  onUser(u) {
+    if (!u) { this.unsub(); return this.setState({ cloud: 'signedOut', user: null }); }
+    const email = (u.email || '').toLowerCase();
+    if (this.allowed.length && !this.allowed.some(d => email.endsWith('@' + d))) {
+      this.auth.signOut();
+      return this.setState({ cloud: 'signedOut', user: null, authError: (u.email || 'That account') + " isn't on the team list. Use your @" + this.allowed.join(' or @') + ' Google account.' });
+    }
+    this.setState({ cloud: 'connecting', user: { name: u.displayName || email, email }, authError: '' });
+    this.subscribe();
+  }
+  subscribe() {
+    this.unsub();
+    const col = this.db.collection('tasks');
+    this._u1 = col.onSnapshot(snap => {
+      if (snap.empty) {
+        this.db.doc('meta/app').get().then(m => {
+          if (m.exists && m.data().seeded) return this.applyRemote([]);
+          const b = this.db.batch();
+          SEED.forEach((t, i) => b.set(col.doc(t.id), clean({ ...t, order: i })));
+          b.set(this.db.doc('meta/app'), { seeded: true });
+          return b.commit();
+        });
+        return;
+      }
+      this.applyRemote(snap.docs.map(d => d.data()));
+    }, e => this.setState({ cloud: 'error', authError: e.message }));
+    this._u2 = this.db.doc('meta/team').onSnapshot(d => {
+      if (d.exists) this.setState({ team: d.data().names || [] });
+      else this.db.doc('meta/team').set({ names: this.state.team });
+    });
+  }
+  unsub() { this._u1 && this._u1(); this._u2 && this._u2(); this._u1 = this._u2 = null; }
+  applyRemote(list) {
+    const pend = this._pending || {};
+    const tasks = list.map(t => pend[t.id] || t);
+    Object.values(pend).forEach(p => { if (!tasks.some(t => t.id === p.id)) tasks.push(p); });
+    tasks.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    this._synced = new Map(tasks.map(t => [t.id, t]));
+    this.setState({ tasks, cloud: 'ready' });
+  }
+  syncOut(tasks) {
+    const prev = this._synced || new Map(), next = new Map();
+    tasks.forEach(t => { next.set(t.id, t); if (prev.get(t.id) !== t) { (this._pending = this._pending || {})[t.id] = t; } });
+    prev.forEach((t, tid) => { if (!next.has(tid)) { if (this._pending) delete this._pending[tid]; this.db.collection('tasks').doc(tid).delete().catch(e => console.warn(e)); } });
+    this._synced = next;
+    if (this._pending && Object.keys(this._pending).length) { clearTimeout(this._wt); this._wt = setTimeout(() => this.flush(), 350); }
+  }
+  flush() {
+    const p = this._pending || {}; this._pending = {};
+    const b = this.db.batch(); Object.values(p).forEach(t => b.set(this.db.collection('tasks').doc(t.id), clean(t)));
+    b.commit().catch(e => console.warn('Sync failed', e));
+  }
+  me() { return this.state.cloud === 'ready' && this.state.user ? this.state.user.name : null; }
+  sst() { const m = this.me(); return m ? { by: m, at: Date.now() } : {}; }
+  isDone(t) { return t.subs.length ? t.subs.every(s => s.done) : t.done; }
+  upd(tid, fn) { const m = this.me(); this.setState(st => ({ tasks: st.tasks.map(t => t.id === tid ? (m ? { ...fn(t), updatedBy: m, updatedAt: Date.now() } : fn(t)) : t) })); }
+  addTask = () => {
+    const title = this.state.newTask.trim();
+    if (!title) return;
+    this.setState(st => ({ tasks: [...st.tasks, { ...mk(st.company, title, st.newOwner.trim()), order: Date.now(), ...(this.me() ? { updatedBy: this.me(), updatedAt: Date.now() } : {}) }], newTask: '' }));
+  };
+  addSub(tid) {
+    const title = (this.state.drafts[tid] || '').trim();
+    if (!title) return;
+    this.upd(tid, t => ({ ...t, subs: [...t.subs, { id: id(), title, owner: t.owner || '', status: 'todo', done: false, ...this.sst() }] }));
+    this.setState(st => ({ openMap: { ...st.openMap, [tid]: true } }));
+    this.setState(st => ({ drafts: { ...st.drafts, [tid]: '' } }));
+  }
+  toggleTask(t) {
+    const d = !this.isDone(t);
+    this.upd(t.id, x => ({ ...x, done: d, subs: x.subs.map(s => ({ ...s, done: d, status: d ? 'done' : (s.status === 'done' ? 'todo' : s.status), ...this.sst() })) }));
+  }
+  deleteTask(t) {
+    clearTimeout(this._u);
+    const idx = this.state.tasks.indexOf(t);
+    this.setState(st => ({ tasks: st.tasks.filter(x => x.id !== t.id), undo: { t, idx } }));
+    this._u = setTimeout(() => this.setState({ undo: null }), 6000);
+  }
+  setSubStatus(tid, sid, v) {
+    this.upd(tid, x => { const subs = x.subs.map(y => y.id === sid ? { ...y, status: v, done: v === 'done', ...this.sst() } : y); return { ...x, subs, done: subs.every(y => y.done) }; });
+  }
+  openMenu(e, cfg) {
+    const r = e.currentTarget.getBoundingClientRect();
+    const flip = r.bottom + 330 > window.innerHeight && r.top > 330;
+    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - 248)), flip }, adding: false, addName: '' });
+  }
+  choose(v) {
+    const m = this.state.menu; if (!m) return;
+    if (m.kind === 'owner') m.sid ? this.upd(m.tid, x => ({ ...x, subs: x.subs.map(y => y.id === m.sid ? { ...y, owner: v, ...this.sst() } : y) })) : this.upd(m.tid, x => ({ ...x, owner: v }));
+    else if (m.kind === 'newOwner') this.setState({ newOwner: v });
+    else if (m.kind === 'ownerFilter') this.setState({ ownerFilter: v });
+    else if (m.kind === 'status') this.setSubStatus(m.tid, m.sid, v);
+    this.setState({ menu: null, adding: false, addName: '' });
+  }
+  confirmAdd = () => {
+    const name = this.state.addName.trim().replace(/\s+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    if (!name) return;
+    if (!this.state.team.includes(name)) { this.setState(st => ({ team: [...st.team, name] })); if (this.state.cloud === 'ready') this.db.doc('meta/team').set({ names: this.fb.firestore.FieldValue.arrayUnion(name) }, { merge: true }); }
+    this.choose(name);
+  };
+  moveTask(from, to) {
+    if (!from || from === to) return;
+    this.setState(st => {
+      const a = [...st.tasks]; const fi = a.findIndex(t => t.id === from); if (fi < 0) return null;
+      const ti0 = a.findIndex(t => t.id === to); const [it] = a.splice(fi, 1);
+      const ti = a.findIndex(t => t.id === to); a.splice(fi < ti0 ? ti + 1 : ti, 0, it);
+      return { tasks: a.map((t, i) => t.order === i ? t : { ...t, order: i }), dragId: null, overId: null };
+    });
+  }
+  componentDidMount() {
+    // Track the phone breakpoint and the on-screen keyboard (so the bottom sheet stays above it).
+    this._onResize = () => {
+      const vv = window.visualViewport, mob = isPhone(), tiny = isTiny();
+      const kb = vv ? Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) : 0;
+      if (mob !== this.state.mob || tiny !== this.state.tiny || kb !== this.state.kb) this.setState(st => ({ mob, tiny, kb, menu: mob !== st.mob ? null : st.menu }));
+    };
+    window.addEventListener('resize', this._onResize);
+    if (window.visualViewport) { window.visualViewport.addEventListener('resize', this._onResize); window.visualViewport.addEventListener('scroll', this._onResize); }
+  }
+  componentWillUnmount() {
+    clearTimeout(this._u); Object.keys(KPI_THEME).forEach(k => document.documentElement.style.removeProperty(k));
+    window.removeEventListener('resize', this._onResize);
+    if (window.visualViewport) { window.visualViewport.removeEventListener('resize', this._onResize); window.visualViewport.removeEventListener('scroll', this._onResize); }
+  }
+
+  renderVals() {
+    const { filter, ownerFilter, drafts, undo, company } = this.state;
+    const allTasks = this.state.tasks;
+    if (!this._cloudInit) { this._cloudInit = true; this.initCloud(); }
+    const cloud = this.state.cloud, mode = this.state.mode;
+    if (cloud === 'ready') this.syncOut(allTasks);
+    else if (this._savedTasks !== allTasks) { this._savedTasks = allTasks; try { localStorage.setItem(KEY, JSON.stringify(allTasks)); } catch (e) {} }
+    if (this._savedOpen !== this.state.openMap) { this._savedOpen = this.state.openMap; try { localStorage.setItem(KEY + '-open', JSON.stringify(this.state.openMap)); } catch (e) {} }
+    if (this._themed !== company + mode) { this._themed = company + mode; this.applyTheme(company, mode); try { localStorage.setItem(KEY + '-co', company); localStorage.setItem(KEY + '-mode', mode); } catch (e) {} }
+    const pctOf = ts => { const tot = ts.reduce((a, t) => a + (t.subs.length || 1), 0); const dn = ts.reduce((a, t) => a + (t.subs.length ? t.subs.filter(s => s.done).length : (t.done ? 1 : 0)), 0); return (tot ? Math.round(dn / tot * 100) : 0) + '%'; };
+    const companyTabs = COMPANIES.map(c => ({ label: c.label, pct: pctOf(allTasks.filter(t => (t.company || 'tchb') === c.key)),
+      onClick: () => this.setState({ company: c.key, ownerFilter: '', filter: 'all' }),
+      bg: company === c.key ? 'var(--action-secondary)' : 'transparent', color: company === c.key ? '#fff' : 'var(--tchb-gray-700)', shadow: company === c.key ? 'var(--shadow-button)' : 'none' }));
+    const tasks = allTasks.filter(t => (t.company || 'tchb') === company);
+    const owners = this.state.team;
+    if (this._savedTeam !== owners) { this._savedTeam = owners; try { localStorage.setItem(KEY + '-team', JSON.stringify(owners)); } catch (e) {} }
+    const chipOf = o => ({ owner: o || '', ownerLabel: o ? (this.state.mob ? firstName(o) : o) : 'Assign', ownerLabelColor: o ? 'var(--text-body)' : 'var(--text-muted)', initials: initials(o) || '+', ownerBg: o ? 'var(--avatar-bg, var(--tchb-indigo-700))' : 'var(--tchb-gray-100)', ownerFg: o ? '#fff' : 'var(--tchb-gray-500)' });
+    const menu = this.state.menu;
+    const SL = { todo: 'Not Started', progress: 'In Progress', done: 'Done' };
+    let menuItems = [], menuCur = '';
+    if (menu) {
+      if (menu.kind === 'status') {
+        const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : '';
+        menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
+      } else {
+        if (menu.kind === 'owner') { const tk = allTasks.find(x => x.id === menu.tid); menuCur = tk ? (menu.sid ? (tk.subs.find(y => y.id === menu.sid) || {}).owner : tk.owner) || '' : ''; }
+        else menuCur = menu.kind === 'newOwner' ? this.state.newOwner : ownerFilter;
+        menuItems = [{ value: '', label: menu.kind === 'ownerFilter' ? 'All Owners' : 'Unassigned', hasAvatar: true, initials: '—', avBg: 'var(--tchb-gray-100)', avFg: 'var(--tchb-gray-500)' },
+          ...owners.map(o => ({ value: o, label: o, hasAvatar: true, initials: initials(o), avBg: 'var(--avatar-bg, var(--tchb-indigo-700))', avFg: '#fff' }))];
+      }
+      menuItems = menuItems.map(it => ({ hasAvatar: false, hasDot: false, ...it, selected: it.value === menuCur, bg: it.value === menuCur ? 'var(--glass-hover, rgba(255,255,255,0.7))' : 'transparent', onClick: () => this.choose(it.value) }));
+    }
+    const ownerMatch = t => !ownerFilter || (t.owner || '').trim() === ownerFilter || t.subs.some(s => (s.owner || '').trim() === ownerFilter);
+    const showProgress = this.props.showProgress ?? true;
+    const sortDone = this.props.sortDoneToBottom ?? false;
+    const done = tasks.filter(t => this.isDone(t));
+    const subsTotal = tasks.reduce((a, t) => a + (t.subs.length || 1), 0);
+    const subsDone = tasks.reduce((a, t) => a + (t.subs.length ? t.subs.filter(s => s.done).length : (t.done ? 1 : 0)), 0);
+    const statusOf = t => this.isDone(t) ? 'done' : (t.subs.some(s => s.done || s.status === 'progress') ? 'progress' : 'todo');
+    const counts = { all: tasks.length, todo: 0, progress: 0, done: 0 };
+    tasks.forEach(t => counts[statusOf(t)]++);
+    const filters = [['all', 'All'], ['todo', 'Not Started'], ['progress', 'In Progress'], ['done', 'Done']].map(([k, label]) => ({
+      label, count: counts[k], onClick: () => this.setState({ filter: k }),
+      bg: filter === k ? 'var(--surface-card)' : 'transparent',
+      color: filter === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
+      shadow: filter === k ? 'var(--shadow-button)' : 'none'
+    }));
+    let list = tasks.filter(t => (filter === 'all' || statusOf(t) === filter) && ownerMatch(t));
+    if (sortDone) list = [...list.filter(t => !this.isDone(t)), ...list.filter(t => this.isDone(t))];
+    const STAT = { done: ['Done', 'green'], progress: ['In Progress', 'indigo'], todo: ['Not Started', 'neutral'] };
+    const visibleTasks = list.map(t => {
+      const d = this.isDone(t), st = statusOf(t);
+      const n = t.subs.filter(s => s.done).length;
+      const pct = t.subs.length ? Math.round(n / t.subs.length * 100) : (d ? 100 : 0);
+      return {
+        dragOpacity: this.state.dragId === t.id ? 0.45 : 1,
+        dropOutline: this.state.overId === t.id && this.state.dragId && this.state.dragId !== t.id ? '2px solid var(--tchb-indigo-500)' : 'none',
+        onDragStart: e => { e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', t.id); } catch (_) {} const art = e.currentTarget.closest('article'); if (art) e.dataTransfer.setDragImage(art, 24, 28); this.setState({ dragId: t.id }); },
+        onDragOver: e => { if (!this.state.dragId) return; e.preventDefault(); e.dataTransfer.dropEffect = 'move'; if (this.state.overId !== t.id) this.setState({ overId: t.id }); },
+        onDrop: e => { e.preventDefault(); this.moveTask(this.state.dragId, t.id); },
+        onGripDown: e => { if (e.pointerType === 'mouse') return; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {} this.setState({ dragId: t.id, overId: null }); },
+        ...chipOf(t.owner), openOwner: e => this.openMenu(e, { kind: 'owner', tid: t.id }),
+        id: t.id, title: t.title, isDone: d, open: !!this.state.openMap[t.id], draft: drafts[t.id] || '',
+        status: STAT[st][0], tone: STAT[st][1], pct: pct + '%',
+        meta: (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks — check off directly') + (t.updatedBy ? ` · Edited by ${t.updatedBy} · ${ago(t.updatedAt)}` : ''),
+        boxBg: d ? 'var(--tchb-green-500)' : 'var(--surface-card)',
+        boxBorder: d ? 'var(--tchb-green-500)' : 'var(--border-strong)',
+        titleColor: d ? 'var(--text-muted)' : 'var(--tchb-indigo-700)',
+        titleDeco: d ? 'line-through' : 'none',
+        barColor: d ? 'var(--tchb-green-500)' : 'var(--tchb-indigo-500)',
+        chevron: t.open ? 'rotate(180deg)' : 'none',
+        onToggle: () => this.toggleTask(t),
+        onExpand: () => this.setState(st => ({ openMap: { ...st.openMap, [t.id]: !st.openMap[t.id] } })),
+        onDelete: () => this.deleteTask(t),
+        onTitle: e => { const v = e.target.value; this.upd(t.id, x => ({ ...x, title: v })); },
+        onDraft: e => { const v = e.target.value; this.setState(s => ({ drafts: { ...s.drafts, [t.id]: v } })); },
+        onDraftKey: e => { if (e.key === 'Enter') this.addSub(t.id); },
+        subs: t.subs.map(s => ({
+          title: s.title, done: s.done, hasEdited: !!s.by, edited: s.by ? firstName(s.by) + ' · ' + ago(s.at) : '', editedTitle: s.by ? 'Last edited by ' + s.by : '', ...chipOf(s.owner), status: s.status || (s.done ? 'done' : 'todo'),
+          statusBg: s.done ? 'var(--tchb-green-050)' : s.status === 'progress' ? 'var(--tchb-indigo-050)' : 'var(--tchb-gray-100)',
+          statusFg: s.done ? 'var(--tchb-green-600)' : s.status === 'progress' ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
+          openOwner: e => this.openMenu(e, { kind: 'owner', tid: t.id, sid: s.id }),
+          openStatus: e => this.openMenu(e, { kind: 'status', tid: t.id, sid: s.id }), statusLabel: SL[s.status || (s.done ? 'done' : 'todo')],
+          boxBg: s.done ? 'var(--tchb-green-500)' : 'var(--surface-card)',
+          boxBorder: s.done ? 'var(--tchb-green-500)' : 'var(--border-strong)',
+          color: s.done ? 'var(--text-muted)' : 'var(--text-body)',
+          deco: s.done ? 'line-through' : 'none',
+          onToggle: () => this.upd(t.id, x => {
+            const subs = x.subs.map(y => y.id === s.id ? { ...y, done: !y.done, status: y.done ? 'todo' : 'done', ...this.sst() } : y);
+            return { ...x, subs, done: subs.every(y => y.done) };
+          }),
+          onStatus: e => { const v = e.target.value; this.upd(t.id, x => {
+            const subs = x.subs.map(y => y.id === s.id ? { ...y, status: v, done: v === 'done', ...this.sst() } : y);
+            return { ...x, subs, done: subs.every(y => y.done) };
+          }); },
+          onTitle: e => { const v = e.target.value; this.upd(t.id, x => ({ ...x, subs: x.subs.map(y => y.id === s.id ? { ...y, title: v, ...this.sst() } : y) })); },
+          onDelete: () => this.upd(t.id, x => ({ ...x, subs: x.subs.filter(y => y.id !== s.id) }))
+        }))
+      };
+    });
+    return {
+      tasksDone: done.length, tasksTotal: tasks.length, subsDone, subsTotal,
+      overallPct: (subsTotal ? Math.round(subsDone / subsTotal * 100) : 0) + '%',
+      onDragEnd: () => this.setState({ dragId: null, overId: null }),
+      // Touch reorder (HTML5 drag doesn't fire on iOS): follow the finger, highlight the card under it, drop on release.
+      gripDraggable: isTouch() ? 'false' : 'true',
+      onGripMove: e => {
+        if (e.pointerType === 'mouse' || !this.state.dragId) return;
+        if (e.clientY < 60) window.scrollBy(0, -12); else if (e.clientY > window.innerHeight - 60) window.scrollBy(0, 12);
+        const el = document.elementFromPoint(e.clientX, e.clientY), art = el && el.closest('article[data-tid]');
+        if (art && art.dataset.tid !== this.state.overId) this.setState({ overId: art.dataset.tid });
+      },
+      onGripUp: e => {
+        if (e.pointerType === 'mouse') return;
+        const { dragId, overId } = this.state;
+        this.setState({ dragId: null, overId: null });
+        if (dragId && overId) this.moveTask(dragId, overId);
+      },
+      mo: this.state.mob ? (this.state.tiny ? MOBILE_TINY : MOBILE) : {},
+      menuSheet: menu && this.state.mob ? `top: auto; left: 0; right: 0; bottom: ${this.state.kb}px; transform: none; min-width: 0; max-height: ${this.state.kb ? 'calc(100% - ' + (this.state.kb + 24) + 'px)' : '70vh'}; padding: 8px 8px 20px; border-radius: 20px 20px 0 0;` : '',
+      tchbLight: company === 'tchb' && mode !== 'dark', tchbDark: company === 'tchb' && mode === 'dark', kpiLight: company === 'kpi' && mode !== 'dark', kpiDark: company === 'kpi' && mode === 'dark',
+      setLight: () => this.setState({ mode: 'light' }), setDark: () => this.setState({ mode: 'dark' }),
+      lightBg: mode !== 'dark' ? 'var(--action-secondary)' : 'transparent', lightFg: mode !== 'dark' ? '#fff' : 'var(--tchb-gray-700)',
+      darkBg: mode === 'dark' ? 'var(--action-secondary)' : 'transparent', darkFg: mode === 'dark' ? '#fff' : 'var(--tchb-gray-700)',
+      showGate: ['connecting', 'signedOut'].includes(cloud), showBoard: ['init', 'local', 'ready', 'error'].includes(cloud),
+      canSignIn: cloud === 'signedOut', gateText: cloud === 'connecting' ? 'Connecting to the team board…' : 'Use your @kpidriver.com or @totalchb.com Google account to see and edit the live board.',
+      hasAuthError: !!this.state.authError, authError: this.state.authError,
+      workLocal: () => { this.unsub(); this.setState({ cloud: 'local', authError: '' }); },
+      signIn: () => this.auth && this.auth.signInWithPopup(new this.fb.auth.GoogleAuthProvider()).catch(e => this.setState({ authError: e.message })),
+      signOut: () => { if (this.auth && window.confirm('Sign out of the task board?')) this.auth.signOut(); },
+      signedIn: cloud === 'ready' && !!this.state.user, userInitials: this.state.user ? initials(this.state.user.name) : '',
+      userTitle: this.state.user ? 'Signed in as ' + this.state.user.email + ' — click to sign out' : '',
+      syncLabel: cloud === 'ready' ? 'Live' : cloud === 'connecting' ? 'Connecting' : cloud === 'error' ? 'Offline' : 'Local Only',
+      syncTitle: cloud === 'ready' ? 'Changes sync to the whole team instantly' : 'Changes are saved in this browser only',
+      syncBg: cloud === 'ready' ? 'var(--tchb-green-050)' : cloud === 'error' ? 'var(--tchb-red-050)' : 'var(--tchb-gray-100)',
+      syncFg: cloud === 'ready' ? 'var(--tchb-green-600)' : cloud === 'error' ? 'var(--status-error)' : 'var(--tchb-gray-700)',
+      syncDot: cloud === 'ready' ? 'var(--tchb-green-500)' : cloud === 'error' ? 'var(--status-error)' : 'var(--tchb-gray-500)',
+      companyTabs, isTchb: company === 'tchb', isKpi: company === 'kpi', rootRef: this.rootRef,
+      companyName: COMPANIES.find(c => c.key === company).name,
+      newTask: this.state.newTask, newOwner: this.state.newOwner, owners, ownerFilter,
+      newOwnerChip: chipOf(this.state.newOwner),
+      ownerFilterLabel: ownerFilter || 'All Owners',
+      openNewOwner: e => this.openMenu(e, { kind: 'newOwner' }),
+      openOwnerFilter: e => this.openMenu(e, { kind: 'ownerFilter' }),
+      menuOpen: !!menu, menuItems, menuCanAdd: !!menu && (menu.kind === 'owner' || menu.kind === 'newOwner'),
+      menuTop: menu ? menu.top + 'px' : '0px', menuLeft: menu ? menu.left + 'px' : '0px', menuTransform: menu && menu.flip ? 'translateY(-100%)' : 'none',
+      closeMenu: () => this.setState({ menu: null, adding: false, addName: '' }),
+      menuKey: e => { if (e.key === 'Escape') this.setState({ menu: null, adding: false, addName: '' }); },
+      adding: this.state.adding, notAdding: !this.state.adding, addName: this.state.addName,
+      startAdd: () => this.setState({ adding: true, addName: '' }),
+      onAddName: e => this.setState({ addName: e.target.value }),
+      onAddKey: e => { if (e.key === 'Enter') this.confirmAdd(); if (e.key === 'Escape') this.setState({ menu: null, adding: false }); },
+      confirmAdd: this.confirmAdd,
+      blurOnEnter: e => { if (e.key === 'Enter') { e.preventDefault(); e.currentTarget.blur(); } },
+      onNewTask: e => this.setState({ newTask: e.target.value }),
+      onNewTaskKey: e => { if (e.key === 'Enter') this.addTask(); },
+      addTask: this.addTask,
+      filters, visibleTasks, showProgress,
+      expandAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = true; }); return { openMap: o }; }),
+      collapseAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = false; }); return { openMap: o }; }),
+      isEmpty: visibleTasks.length === 0,
+      emptyTitle: tasks.length ? 'Nothing here' : 'No tasks yet',
+      emptyBody: tasks.length ? 'No tasks match these filters.' : 'Add your first main task above to get started.',
+      hasUndo: !!undo, undoLabel: undo ? undo.t.title : '',
+      undo: () => { clearTimeout(this._u); this.setState(st => { const a = [...st.tasks]; a.splice(st.undo.idx, 0, st.undo.t); return { tasks: a, undo: null }; }); }
+    };
+  }
+}
+</script>
+
+
+</body></html>
