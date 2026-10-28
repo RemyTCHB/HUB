@@ -1019,7 +1019,8 @@ h1, h2, h3, h4 {
   </style>
 </helmet>
 <div style="min-height: 100vh; background: var(--surface-subtle); font-family: var(--font-body); color: var(--text-body);">
-  <header style="background: var(--surface-card); border-bottom: 1px solid var(--border-default);">
+  <canvas ref="{{ bgRef }}" aria-hidden="true" style="position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block;"></canvas>
+  <header style="position: relative; z-index: 1; background: color-mix(in srgb, var(--surface-card) 78%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-default);">
     <div style="max-width: 920px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; {{ mo.headRow }}">
       <div style="height: 64px; display: flex; align-items: center; {{ mo.logoBox }}">
         <sc-if value="{{ tchbLight }}" hint-placeholder-val="{{ true }}">
@@ -1056,7 +1057,7 @@ h1, h2, h3, h4 {
     </div>
   </header>
 
-  <main style="max-width: 920px; margin: 0 auto; padding: 40px 24px 96px; display: flex; flex-direction: column; gap: 24px; {{ mo.main }}">
+  <main style="position: relative; z-index: 1; max-width: 920px; margin: 0 auto; padding: 40px 24px 96px; display: flex; flex-direction: column; gap: 24px; {{ mo.main }}">
     <sc-if value="{{ showGate }}" hint-placeholder-val="{{ false }}">
       <section style="margin: 48px auto 0; max-width: 520px; width: 100%; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); padding: 40px 32px; display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; {{ mo.gate }}">
         <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 28px; line-height: 1.25; width: 100%; color: var(--tchb-indigo-700); {{ mo.gateTitle }}">Sign In To The <span style="color: var(--tchb-red-500);">Task Board</span></h2>
@@ -1305,7 +1306,7 @@ h1, h2, h3, h4 {
   </sc-if>
 
   <sc-if value="{{ hasUndo }}" hint-placeholder-val="{{ false }}">
-    <div style="position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tchb-indigo-900); color: #fff; border-radius: 999px; padding: 10px 10px 10px 20px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-raised); font-size: 15px; {{ mo.toast }}">
+    <div style="position: fixed; z-index: 40; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--tchb-indigo-900); color: #fff; border-radius: 999px; padding: 10px 10px 10px 20px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-raised); font-size: 15px; {{ mo.toast }}">
       <span style="text-transform: capitalize; {{ mo.toastLabel }}">Deleted “{{ undoLabel }}”</span>
       <button sc-camel-on-click="{{ undo }}" style="border: none; cursor: pointer; background: rgba(255,255,255,0.14); color: #fff; border-radius: 999px; padding: 8px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; {{ mo.toastBtn }}" style-hover="background: rgba(255,255,255,0.24);">Undo</button>
     </div>
@@ -1372,6 +1373,11 @@ const loadScript = src => new Promise((res, rej) => { const s = document.createE
 const clean = t => { const { open, ...rest } = t; return JSON.parse(JSON.stringify(rest)); };
 const ago = ts => { const s = (Date.now() - ts) / 1000; return s < 60 ? 'just now' : s < 3600 ? Math.floor(s / 60) + 'm ago' : s < 86400 ? Math.floor(s / 3600) + 'h ago' : Math.floor(s / 86400) + 'd ago'; };
 const firstName = n => (n || '').split(/[\s@]/)[0];
+// Aurora background: [green that follows the pointer, then the company's other two colours], per company and theme.
+const AURORA = {
+  tchb: { light: ['#109648', '#4d458a', '#bd2239'], dark: ['#4fd98a', '#8f87dd', '#ef5a6f'] },
+  kpi: { light: ['#47b84b', '#3a7fc2', '#ee2025'], dark: ['#5fd463', '#5b9bdb', '#ff4a4f'] }
+};
 const MOBILE_MAX = 640;
 const isPhone = () => window.innerWidth < MOBILE_MAX;
 const isTiny = () => window.innerWidth < 360;
@@ -1460,6 +1466,7 @@ class Component extends DCLogic {
     try { tasks = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
     if (Array.isArray(tasks)) tasks = tasks.map(t => ({ ...t, subs: t.subs.map(s => ({ ...s, status: s.status || (s.done ? 'done' : 'todo') })) }));
     this.rootRef = React.createRef();
+    this.bgRef = React.createRef();
     let company = 'tchb';
     try { company = localStorage.getItem(KEY + '-co') || 'tchb'; } catch (e) {}
     let team = null;
@@ -1641,10 +1648,49 @@ class Component extends DCLogic {
     };
     window.addEventListener('resize', this._onResize);
     if (window.visualViewport) { window.visualViewport.addEventListener('resize', this._onResize); window.visualViewport.addEventListener('scroll', this._onResize); }
+    this.startAurora();
+  }
+  // Soft glows behind the board: two drift slowly, the green one eases toward the pointer (or a tap).
+  startAurora() {
+    const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const au = this._au = { fx: 0.5, fy: 0.55, tx: null, ty: null, until: 0, t: Math.random() * 100, last: performance.now() };
+    this._onPtr = e => { au.tx = e.clientX / window.innerWidth; au.ty = e.clientY / window.innerHeight; au.until = e.pointerType === 'mouse' ? Infinity : performance.now() + 2500; };
+    this._onPtrOut = e => { if (!e.relatedTarget) au.until = 0; };
+    window.addEventListener('pointermove', this._onPtr, { passive: true });
+    window.addEventListener('pointerdown', this._onPtr, { passive: true });
+    document.addEventListener('pointerout', this._onPtrOut);
+    const frame = now => {
+      const cv = this.bgRef.current;
+      if (cv && !document.hidden) {
+        const dt = Math.min(0.05, (now - au.last) / 1000); au.t += still ? 0 : dt;
+        const w = Math.ceil(window.innerWidth / 2), h = Math.ceil(window.innerHeight / 2);   // half resolution: the glows are blurry anyway
+        if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+        const c = cv.getContext('2d'), dark = this.state.mode === 'dark', cols = AURORA[this.state.company === 'kpi' ? 'kpi' : 'tchb'][dark ? 'dark' : 'light'];
+        const follow = !still && au.tx !== null && now < au.until, t = au.t;
+        au.fx += ((follow ? au.tx : 0.5 + 0.3 * Math.sin(t * 0.07)) - au.fx) * (follow ? 0.025 : 0.01);
+        au.fy += ((follow ? au.ty : 0.55 + 0.25 * Math.cos(t * 0.09)) - au.fy) * (follow ? 0.025 : 0.01);
+        c.clearRect(0, 0, w, h);
+        c.globalCompositeOperation = dark ? 'lighter' : 'source-over';
+        const R = Math.max(w, h) * 0.42;
+        [2, 1, 0].forEach(i => {
+          const ph = i * 2.1, sp = 0.05 + i * 0.018;
+          const x = (i ? 0.5 + 0.38 * Math.sin(t * sp + ph) : au.fx) * w, y = (i ? 0.5 + 0.34 * Math.cos(t * sp * 1.3 + ph) : au.fy) * h;
+          const g = c.createRadialGradient(x, y, 0, x, y, R * (i ? 1 : 0.85)), n = parseInt(cols[i].slice(1), 16);
+          const rgb = `${n >> 16 & 255},${n >> 8 & 255},${n & 255}`, a = dark ? 0.3 : i ? 0.27 : 0.32;
+          g.addColorStop(0, `rgba(${rgb},${a})`); g.addColorStop(1, `rgba(${rgb},0)`);
+          c.fillStyle = g; c.fillRect(0, 0, w, h);
+        });
+        c.globalCompositeOperation = 'source-over';
+      }
+      au.last = now;
+      this._auRaf = requestAnimationFrame(frame);
+    };
+    this._auRaf = requestAnimationFrame(frame);
   }
   componentWillUnmount() {
     clearTimeout(this._u); Object.keys(KPI_THEME).forEach(k => document.documentElement.style.removeProperty(k));
     window.removeEventListener('resize', this._onResize);
+    cancelAnimationFrame(this._auRaf); window.removeEventListener('pointermove', this._onPtr); window.removeEventListener('pointerdown', this._onPtr); document.removeEventListener('pointerout', this._onPtrOut);
     if (window.visualViewport) { window.visualViewport.removeEventListener('resize', this._onResize); window.visualViewport.removeEventListener('scroll', this._onResize); }
   }
 
@@ -1812,7 +1858,7 @@ class Component extends DCLogic {
       syncBg: cloud === 'ready' ? 'var(--tchb-green-050)' : cloud === 'error' ? 'var(--tchb-red-050)' : 'var(--tchb-gray-100)',
       syncFg: cloud === 'ready' ? 'var(--tchb-green-600)' : cloud === 'error' ? 'var(--status-error)' : 'var(--tchb-gray-700)',
       syncDot: cloud === 'ready' ? 'var(--tchb-green-500)' : cloud === 'error' ? 'var(--status-error)' : 'var(--tchb-gray-500)',
-      companyTabs, isTchb: company === 'tchb', isKpi: company === 'kpi', rootRef: this.rootRef,
+      companyTabs, isTchb: company === 'tchb', isKpi: company === 'kpi', rootRef: this.rootRef, bgRef: this.bgRef,
       companyName: COMPANIES.find(c => c.key === company).name,
       newTask: this.state.newTask, newOwner: this.state.newOwner, owners, ownerFilter,
       newOwnerChip: chipOf(this.state.newOwner),
