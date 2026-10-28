@@ -1107,6 +1107,12 @@ h1, h2, h3, h4 {
         <span style="font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700);">Your Personal Tasks</span>
       </sc-if>
       <span style="font-size: 13px; color: var(--text-muted);">{{ scopeHint }}</span>
+      <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
+        <button sc-camel-on-click="{{ goBack }}" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; margin-left: auto;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back To Sign In</button>
+      </sc-if>
+      <sc-if value="{{ showPeopleBtn }}" hint-placeholder-val="{{ false }}">
+        <button sc-camel-on-click="{{ openPeople }}" title="Link owner names to their sign-in emails" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; margin-left: auto;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>People</button>
+      </sc-if>
     </div>
     <sc-if value="{{ showErr }}" hint-placeholder-val="{{ false }}">
       <div style="padding: 10px 14px; border-radius: var(--radius-md); background: var(--tchb-red-050); color: var(--status-error); font-size: 14px; font-weight: 600;">These tasks can't load yet. An admin needs to update the Firestore rules (see the user guide).</div>
@@ -1119,6 +1125,9 @@ h1, h2, h3, h4 {
     <sc-if value="{{ canAdd }}" hint-placeholder-val="{{ true }}">
     <section style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; {{ mo.addBar }}">
       <input value="{{ newTask }}" sc-camel-on-change="{{ onNewTask }}" sc-camel-on-key-down="{{ onNewTaskKey }}" placeholder="{{ newTaskPlaceholder }}" style="flex: 1; min-width: 220px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 12px 14px; font-family: var(--font-body); font-size: 16px; text-transform: capitalize; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.addInput }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+      <sc-if value="{{ showFor }}" hint-placeholder-val="{{ false }}">
+        <button sc-camel-on-click="{{ openFor }}" title="Who this task is for" style="display: flex; align-items: center; gap: 8px; flex: none; padding: 0 14px; min-height: 44px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-size: 14px; font-weight: 700; border: 1px solid var(--border-strong); background: var(--surface-card); color: {{ forColor }}; {{ mo.addOwner }}" style-focus="box-shadow: var(--focus-ring);">{{ forLabel }}<svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
+      </sc-if>
       <button sc-camel-on-click="{{ openNewOwner }}" title="Owner" style="display: flex; align-items: center; gap: 8px; flex: none; padding: 6px 12px 6px 6px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 15px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ newOwnerChip.ownerLabelColor }}; {{ mo.addOwner }}" style-focus="box-shadow: var(--focus-ring);">
         <span style="width: 32px; height: 32px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; background: {{ newOwnerChip.ownerBg }}; color: {{ newOwnerChip.ownerFg }};">{{ newOwnerChip.initials }}</span>
         <span style="min-width: 110px; text-align: left; white-space: nowrap; {{ mo.ellip }}">{{ newOwnerChip.ownerLabel }}</span>
@@ -1169,10 +1178,10 @@ h1, h2, h3, h4 {
       <sc-for list="{{ visibleTasks }}" as="t" hint-placeholder-count="3">
         <article data-tid="{{ t.id }}" sc-camel-on-drag-over="{{ t.onDragOver }}" sc-camel-on-drop="{{ t.onDrop }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; transition: opacity 120ms; outline-offset: 2px; opacity: {{ t.dragOpacity }}; outline: {{ t.dropOutline }};">
           <div style="display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto auto auto auto; align-items: center; gap: 14px; padding: 16px 18px 16px 8px; {{ mo.card }}">
-            <button draggable="{{ gripDraggable }}" sc-camel-on-drag-start="{{ t.onDragStart }}" sc-camel-on-drag-end="{{ onDragEnd }}" sc-camel-on-pointer-down="{{ t.onGripDown }}" sc-camel-on-pointer-move="{{ onGripMove }}" sc-camel-on-pointer-up="{{ onGripUp }}" sc-camel-on-pointer-cancel="{{ onGripCancel }}" title="Drag to reorder" style="width: 24px; height: 36px; margin-right: -8px; border: none; background: transparent; border-radius: 8px; cursor: grab; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; padding: 0; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; {{ mo.grip }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
+            <button draggable="{{ gripDraggable }}" sc-camel-on-drag-start="{{ t.onDragStart }}" sc-camel-on-drag-end="{{ onDragEnd }}" sc-camel-on-pointer-down="{{ t.onGripDown }}" sc-camel-on-pointer-move="{{ onGripMove }}" sc-camel-on-pointer-up="{{ onGripUp }}" sc-camel-on-pointer-cancel="{{ onGripCancel }}" title="Drag to reorder" style="width: 24px; height: 36px; margin-right: -8px; border: none; background: transparent; border-radius: 8px; cursor: grab; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; padding: 0; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; {{ mo.grip }} {{ t.hideGrip }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
               <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.8"></circle><circle cx="15" cy="5" r="1.8"></circle><circle cx="9" cy="12" r="1.8"></circle><circle cx="15" cy="12" r="1.8"></circle><circle cx="9" cy="19" r="1.8"></circle><circle cx="15" cy="19" r="1.8"></circle></svg>
             </button>
-            <button sc-camel-on-click="{{ t.onToggle }}" title="Mark whole task done" style="width: 28px; height: 28px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; transition: background 120ms; background: {{ t.boxBg }}; border: 2px solid {{ t.boxBorder }};">
+            <button sc-camel-on-click="{{ t.onToggle }}" title="Mark whole task done" style="width: 28px; height: 28px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; transition: background 120ms; background: {{ t.boxBg }}; border: 2px solid {{ t.boxBorder }}; {{ t.lockMain }}">
               <sc-if value="{{ t.isDone }}" hint-placeholder-val="{{ false }}">
                 <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
               </sc-if>
@@ -1180,7 +1189,7 @@ h1, h2, h3, h4 {
             <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0; {{ mo.grow }}">
               <div style="display: grid; margin-left: -7px; min-width: 0;">
                 <span aria-hidden="true" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; visibility: hidden; {{ mo.taskTitle }}">{{ t.title }} </span>
-                <textarea rows="1" value="{{ t.title }}" sc-camel-on-change="{{ t.onTitle }}" sc-camel-on-key-down="{{ blurOnEnter }}" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; border-radius: 6px; background: transparent; outline: none; resize: none; overflow: hidden; margin: 0; min-width: 0; width: 100%; box-sizing: border-box; color: {{ t.titleColor }}; text-decoration: {{ t.titleDeco }}; {{ mo.taskTitle }}" style-hover="border-color: var(--border-default);" style-focus="border-color: var(--tchb-indigo-500); background: var(--tchb-indigo-050);"></textarea>
+                <textarea rows="1" value="{{ t.title }}" sc-camel-read-only="{{ t.readOnly }}" sc-camel-on-change="{{ t.onTitle }}" sc-camel-on-key-down="{{ blurOnEnter }}" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; border-radius: 6px; background: transparent; outline: none; resize: none; overflow: hidden; margin: 0; min-width: 0; width: 100%; box-sizing: border-box; color: {{ t.titleColor }}; text-decoration: {{ t.titleDeco }}; {{ mo.taskTitle }}" style-hover="border-color: var(--border-default);" style-focus="border-color: var(--tchb-indigo-500); background: var(--tchb-indigo-050);"></textarea>
               </div>
               <span style="font-size: 13px; color: var(--text-muted);">{{ t.meta }}</span>
               <sc-if value="{{ t.canPushLive }}" hint-placeholder-val="{{ false }}">
@@ -1191,7 +1200,7 @@ h1, h2, h3, h4 {
               </sc-if>
             </div>
             <div style="display: none; {{ mo.brk }}"></div>
-            <button sc-camel-on-click="{{ t.openOwner }}" title="Owner" aria-label="{{ t.ownerAria }}" style="display: flex; align-items: center; gap: 6px; flex: none; padding: 3px 10px 3px 3px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ t.ownerLabelColor }}; {{ mo.taskOwner }}" style-focus="box-shadow: var(--focus-ring);">
+            <button sc-camel-on-click="{{ t.openOwner }}" title="Owner" aria-label="{{ t.ownerAria }}" style="display: flex; align-items: center; gap: 6px; flex: none; padding: 3px 10px 3px 3px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ t.ownerLabelColor }}; {{ mo.taskOwner }} {{ t.ownerLock }}" style-focus="box-shadow: var(--focus-ring);">
                     <span style="width: 24px; height: 24px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ t.ownerBg }}; color: {{ t.ownerFg }};">{{ t.initials }}</span>
                     <span style="min-width: 84px; text-align: left; white-space: nowrap; {{ mo.ellip }} {{ t.nameHide }}">{{ t.ownerLabel }}</span>
                     <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
@@ -1203,7 +1212,7 @@ h1, h2, h3, h4 {
             <button sc-camel-on-click="{{ t.onExpand }}" title="Show subtasks" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-indigo-700); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }}" style-hover="background: var(--tchb-indigo-050);">
               <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 160ms; transform: {{ t.chevron }};"><path d="m6 9 6 6 6-6"></path></svg>
             </button>
-            <button sc-camel-on-click="{{ t.onDelete }}" title="Delete task" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }}" style-hover="background: var(--tchb-red-050); color: var(--tchb-red-400);">
+            <button sc-camel-on-click="{{ t.onDelete }}" title="Delete task" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }} {{ t.hideEdit }}" style-hover="background: var(--tchb-red-050); color: var(--tchb-red-400);">
               <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
             </button>
           </div>
@@ -1215,8 +1224,8 @@ h1, h2, h3, h4 {
           <sc-if value="{{ t.open }}" hint-placeholder-val="{{ true }}">
             <div style="background: var(--tchb-gray-050); padding: 10px 18px 16px 60px; display: flex; flex-direction: column; gap: 2px; {{ mo.panel }}">
               <sc-for list="{{ t.subs }}" as="s" hint-placeholder-count="3">
-                <div data-sid="{{ s.id }}" sc-camel-on-drag-over="{{ s.onDragOver }}" sc-camel-on-drop="{{ s.onDrop }}" style="display: flex; align-items: center; gap: 12px; padding: 6px 8px; margin-left: -8px; border-radius: 8px; transition: opacity 120ms; outline-offset: -2px; opacity: {{ s.dragOpacity }}; outline: {{ s.dropOutline }}; {{ s.matchStyle }} {{ mo.sub }}" style-hover="background: var(--surface-card);">
-                  <button draggable="{{ gripDraggable }}" sc-camel-on-drag-start="{{ s.onDragStart }}" sc-camel-on-drag-end="{{ onDragEnd }}" sc-camel-on-pointer-down="{{ s.onGripDown }}" sc-camel-on-pointer-move="{{ onSubGripMove }}" sc-camel-on-pointer-up="{{ onSubGripUp }}" sc-camel-on-pointer-cancel="{{ onGripCancel }}" title="Drag to reorder subtask" style="width: 20px; height: 28px; flex: none; margin: 0 -4px 0 -28px; border: none; background: transparent; border-radius: 6px; cursor: grab; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; padding: 0; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; {{ mo.subGrip }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
+                <div data-sid="{{ s.id }}" sc-camel-on-drag-over="{{ s.onDragOver }}" sc-camel-on-drop="{{ s.onDrop }}" style="display: flex; align-items: center; gap: 12px; padding: 6px 8px; margin-left: -8px; border-radius: 8px; transition: opacity 120ms; outline-offset: -2px; opacity: {{ s.dragOpacity }}; outline: {{ s.dropOutline }}; {{ s.matchStyle }} {{ s.rowLock }} {{ mo.sub }}" style-hover="background: var(--surface-card);">
+                  <button draggable="{{ gripDraggable }}" sc-camel-on-drag-start="{{ s.onDragStart }}" sc-camel-on-drag-end="{{ onDragEnd }}" sc-camel-on-pointer-down="{{ s.onGripDown }}" sc-camel-on-pointer-move="{{ onSubGripMove }}" sc-camel-on-pointer-up="{{ onSubGripUp }}" sc-camel-on-pointer-cancel="{{ onGripCancel }}" title="Drag to reorder subtask" style="width: 20px; height: 28px; flex: none; margin: 0 -4px 0 -28px; border: none; background: transparent; border-radius: 6px; cursor: grab; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; padding: 0; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; {{ mo.subGrip }} {{ s.hideGrip }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
                     <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.8"></circle><circle cx="15" cy="5" r="1.8"></circle><circle cx="9" cy="12" r="1.8"></circle><circle cx="15" cy="12" r="1.8"></circle><circle cx="9" cy="19" r="1.8"></circle><circle cx="15" cy="19" r="1.8"></circle></svg>
                   </button>
                   <button sc-camel-on-click="{{ s.onToggle }}" style="width: 22px; height: 22px; flex: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; transition: background 120ms; background: {{ s.boxBg }}; border: 2px solid {{ s.boxBorder }}; {{ mo.subCheck }}">
@@ -1226,13 +1235,13 @@ h1, h2, h3, h4 {
                   </button>
                   <div style="display: grid; flex: 1; min-width: 0;">
                     <span aria-hidden="true" style="font-family: var(--font-body); font-size: 15px; line-height: 1.4; text-transform: capitalize; padding: 4px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; visibility: hidden; {{ mo.input16 }}">{{ s.title }} </span>
-                    <textarea rows="1" value="{{ s.title }}" sc-camel-on-change="{{ s.onTitle }}" sc-camel-on-key-down="{{ blurOnEnter }}" style="font-family: var(--font-body); font-size: 15px; line-height: 1.4; text-transform: capitalize; padding: 4px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; border-radius: 6px; background: transparent; outline: none; resize: none; overflow: hidden; margin: 0; min-width: 0; width: 100%; box-sizing: border-box; color: {{ s.color }}; text-decoration: {{ s.deco }}; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); background: var(--surface-card);"></textarea>
+                    <textarea rows="1" value="{{ s.title }}" sc-camel-on-change="{{ s.onTitle }}" sc-camel-on-key-down="{{ blurOnEnter }}" style="font-family: var(--font-body); font-size: 15px; line-height: 1.4; text-transform: capitalize; padding: 4px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; border-radius: 6px; background: transparent; outline: none; resize: none; overflow: hidden; margin: 0; min-width: 0; width: 100%; box-sizing: border-box; color: {{ s.color }}; text-decoration: {{ s.deco }}; {{ mo.input16 }} {{ s.blurStyle }}" style-focus="border-color: var(--tchb-indigo-500); background: var(--surface-card);"></textarea>
                   </div>
                   <div style="display: none; {{ mo.brk }}"></div>
                   <sc-if value="{{ s.hasEdited }}" hint-placeholder-val="{{ false }}">
                     <span title="{{ s.editedTitle }}" style="flex: none; font-size: 12px; color: var(--text-muted); white-space: nowrap; {{ mo.edited }}">{{ s.edited }}</span>
                   </sc-if>
-                  <button sc-camel-on-click="{{ s.openOwner }}" title="Owner" aria-label="{{ s.ownerAria }}" style="display: flex; align-items: center; gap: 6px; flex: none; padding: 3px 10px 3px 3px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ s.ownerLabelColor }}; {{ mo.subOwner }}" style-focus="box-shadow: var(--focus-ring);">
+                  <button sc-camel-on-click="{{ s.openOwner }}" title="Owner" aria-label="{{ s.ownerAria }}" style="display: flex; align-items: center; gap: 6px; flex: none; padding: 3px 10px 3px 3px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ s.ownerLabelColor }}; {{ mo.subOwner }} {{ s.subOwnerLock }} {{ s.blurStyle }}" style-focus="box-shadow: var(--focus-ring);">
                     <span style="width: 22px; height: 22px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ s.ownerBg }}; color: {{ s.ownerFg }};">{{ s.initials }}</span>
                     <span style="min-width: 84px; text-align: left; white-space: nowrap; {{ mo.ellip }} {{ s.nameHide }}">{{ s.ownerLabel }}</span>
                     <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
@@ -1241,12 +1250,12 @@ h1, h2, h3, h4 {
                   <button sc-camel-on-click="{{ s.openNotes }}" title="Notes" aria-label="{{ s.notesAria }}" style="height: 28px; min-width: 28px; padding: 0 6px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: {{ s.noteColor }}; {{ mo.subNote }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
                     <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M13 8H7"></path><path d="M17 12H7"></path></svg><sc-if value="{{ s.hasNotes }}" hint-placeholder-val="{{ false }}"><span>{{ s.notesCount }}</span></sc-if>
                   </button>
-                  <button sc-camel-on-click="{{ s.onDelete }}" title="Remove subtask" style="width: 28px; height: 28px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; {{ mo.subDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);">
+                  <button sc-camel-on-click="{{ s.onDelete }}" title="Remove subtask" style="width: 28px; height: 28px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; {{ mo.subDel }} {{ s.hideDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);">
                     <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
                   </button>
                 </div>
               </sc-for>
-              <div style="display: flex; align-items: center; gap: 12px; padding: 6px 0 0;">
+              <div style="display: flex; align-items: center; gap: 12px; padding: 6px 0 0; {{ t.addSubStyle }}">
                 <span style="width: 22px; height: 22px; flex: none; display: flex; align-items: center; justify-content: center; color: var(--tchb-indigo-500);">
                   <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
                 </span>
@@ -1296,11 +1305,25 @@ h1, h2, h3, h4 {
           </button>
         </sc-if>
         <sc-if value="{{ adding }}" hint-placeholder-val="{{ false }}">
-          <div style="display: flex; gap: 6px; padding: 4px;">
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; padding: 4px;">
             <input sc-camel-auto-focus="{{ true }}" value="{{ addName }}" sc-camel-on-change="{{ onAddName }}" sc-camel-on-key-down="{{ onAddKey }}" placeholder="Full name" style="flex: 1; min-width: 0; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; text-transform: capitalize; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+            <sc-if value="{{ showAddEmail }}" hint-placeholder-val="{{ false }}"><input value="{{ addEmail }}" sc-camel-on-change="{{ onAddEmail }}" sc-camel-on-key-down="{{ onAddKey }}" placeholder="Email (optional)" type="email" style="flex: 1; min-width: 0; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"></sc-if>
             <button sc-camel-on-click="{{ confirmAdd }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 8px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Add</button>
           </div>
         </sc-if>
+      </sc-if>
+      <sc-if value="{{ menuIsPeople }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 6px 8px 2px; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">People</div>
+        <div style="padding: 0 8px 8px; font-size: 12px; color: var(--text-muted);">Link each owner name to the email they sign in with. MGMT tasks they own then show in their own list. Leave blank for names without a login.</div>
+        <sc-for list="{{ peopleRows }}" as="pr" hint-placeholder-count="0">
+          <label style="display: flex; flex-direction: column; gap: 3px; padding: 4px 8px;">
+            <span style="font-size: 13px; font-weight: 700; color: var(--text-body); text-transform: capitalize;">{{ pr.name }}</span>
+            <input value="{{ pr.email }}" sc-camel-on-change="{{ pr.onEmail }}" placeholder="name@totalchb.com" type="email" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+          </label>
+        </sc-for>
+        <div style="display: flex; justify-content: flex-end; padding: 8px;">
+          <button sc-camel-on-click="{{ saveEmails }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 9px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Save Emails</button>
+        </div>
       </sc-if>
       <sc-if value="{{ menuIsNotes }}" hint-placeholder-val="{{ false }}">
         <div style="padding: 6px 8px 4px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
@@ -1411,6 +1434,9 @@ const MANAGERS = ['brandy@totalchb.com', 'systems@totalchb.com'];            // 
 const SAME_PERSON = { 'brandy@kpidriver.com': 'brandy@totalchb.com', 'systems@kpidriver.com': 'systems@totalchb.com' };  // second logins
 const MANAGER_CAN_SEE = {};   // managers who may see another manager's personal tasks, e.g. { 'systems@totalchb.com': ['brandy@totalchb.com'] }
 const personKey = email => SAME_PERSON[email] || email;
+// Owner names linked to logins, written once if none are saved yet; managers change them later in People.
+const DEFAULT_EMAILS = { 'Brandy Pollack': 'brandy@totalchb.com', 'Remy Ahmed': 'systems@totalchb.com', 'Monz Miller': 'monz@totalchb.com',
+  'Motz Curran': 'billing@kpidriver.com', 'Anas Abid': 'anas@kpidriver.com', 'Jan Arpilleda': 'info@totalchb.com' };
 const MOBILE_MAX = 640;
 const isPhone = () => window.innerWidth < MOBILE_MAX;
 const isTiny = () => window.innerWidth < 360;
@@ -1486,7 +1512,7 @@ class Component extends DCLogic {
     if (!Array.isArray(team)) team = [...TEAM];
     let mode = 'light', openMap = {};
     try { mode = localStorage.getItem(KEY + '-mode') || 'light'; openMap = JSON.parse(localStorage.getItem(KEY + '-open')) || {}; } catch (e) {}
-    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, menu: null, adding: false, addName: '', tasks: loadOffline(), scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null };
+    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, menu: null, adding: false, addName: '', tasks: loadOffline(), emails: {}, forWho: '', addEmail: '', emailDrafts: {}, scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null };
   }
   applyTheme(company, mode) {
     const el = document.documentElement, dark = mode === 'dark', kpi = company === 'kpi';
@@ -1535,12 +1561,14 @@ class Component extends DCLogic {
   // Managers: MGMT (tasks/), their own personal list, and every member's personal list (the Team view).
   // Members: only their own personal list. Personal lists live at personal/{person}/items.
   subscribe() {
-    this.unsub(); this._got = {}; this._need = this._mgr ? ['mgmt', 'personal', 'team'] : ['personal'];
+    this.unsub(); this._got = {}; this._need = this._mgr ? ['mgmt', 'personal', 'team'] : ['personal', 'assigned'];
     const db = this.db, key = this._key, ls = this._ls = [];
     const fail = (kind, e) => { console.warn('Could not load ' + kind + ' tasks', e); this.setState(st => ({ errs: { ...st.errs, [kind]: true } })); this.applyRemote(kind, []); };
     const listOf = (who, scope) => s => s.docs.map(d => ({ ...d.data(), scope, list: who }));
     if (this._mgr) ls.push(db.collection('tasks').onSnapshot(s => this.applyRemote('mgmt', s.docs.map(d => ({ ...d.data(), scope: 'mgmt' }))), e => fail('mgmt', e)));
     ls.push(this.pcol(key).onSnapshot(s => this.applyRemote('personal', listOf(key, 'personal')(s)), e => fail('personal', e)));
+    // Members also get the MGMT tasks they own something in ('members' lists their logins; see membersOf).
+    if (!this._mgr) ls.push(db.collection('tasks').where('members', 'array-contains', key).onSnapshot(s => this.applyRemote('assigned', s.docs.map(d => ({ ...d.data(), scope: 'assigned' }))), e => fail('assigned', e)));
     // Everyone signs in to the people list, so managers know whose personal lists to open.
     db.doc('meta/people').set({ keys: this.fb.firestore.FieldValue.arrayUnion(key), names: { [key]: this._name } }, { merge: true }).catch(e => console.warn(e));
     if (this._mgr) {
@@ -1557,13 +1585,30 @@ class Component extends DCLogic {
       }, e => fail('team', e)));
     }
     ls.push(db.doc('meta/team').onSnapshot(d => {
-      if (d.exists) this.setState({ team: d.data().names || [] });
-      else db.doc('meta/team').set({ names: this.state.team });
+      if (!d.exists) return db.doc('meta/team').set({ names: this.state.team, ...(this._mgr ? { emails: DEFAULT_EMAILS } : {}) });
+      const data = d.data();
+      if (this._mgr && !data.emails) db.doc('meta/team').set({ emails: DEFAULT_EMAILS }, { merge: true }).catch(e => console.warn(e));
+      this.setState({ team: data.names || [], emails: data.emails || {} }, () => this.fixMembers());
     }));
   }
   unsub() { (this._ls || []).forEach(f => f && f()); this._ls = []; }
   pcol(who) { return this.db.collection('personal').doc(who).collection('items'); }
-  docRef(t) { return (t.scope === 'mgmt' ? this.db.collection('tasks') : this.pcol(t.list)).doc(t.id); }
+  docRef(t) { return (t.scope === 'mgmt' || t.scope === 'assigned' ? this.db.collection('tasks') : this.pcol(t.list)).doc(t.id); }
+  // Logins (other than managers) of the people who own a MGMT task or one of its subtasks, via the name -> email links.
+  membersOf(t) {
+    const em = this.state.emails || {};
+    return [...new Set([t.owner, ...t.subs.map(s => s.owner)].map(n => em[(n || '').trim()]).filter(Boolean)
+      .map(e => personKey(e.trim().toLowerCase())).filter(k => !MANAGERS.includes(k)))].sort();
+  }
+  // Managers keep each MGMT task's 'members' up to date, so it shows in those members' lists.
+  fixMembers() {
+    if (!this._mgr || this.state.cloud !== 'ready') return;
+    const stale = this.state.tasks.filter(t => t.scope === 'mgmt' && (t.members || []).join() !== this.membersOf(t).join());
+    if (!stale.length) return;
+    this._pending = this._pending || {}; stale.forEach(t => { this._pending[t.id] = t; });
+    clearTimeout(this._wt); this._wt = setTimeout(() => this.flush(), 350);
+  }
+  namesOf(key) { const em = this.state.emails || {}; return Object.keys(em).filter(n => personKey((em[n] || '').trim().toLowerCase()) === key); }
   applyRemote(kind, list) {
     this._got = { ...this._got, [kind]: list };   // latest snapshot of each list this person can see
     if (!this._need.every(k => this._got[k])) return;
@@ -1574,6 +1619,7 @@ class Component extends DCLogic {
     this._synced = new Map(tasks.map(t => [t.id, t]));
     this.setState(st => ({ tasks: [...tasks, ...st.tasks.filter(t => t.scope === 'offline')], cloud: 'ready' }), () => {
       if (this._pushAfter) { const tid = this._pushAfter; this._pushAfter = null; this.pushLive(tid); }   // a Push To Live that asked to sign in first
+      this.fixMembers();
     });
   }
   say(msg) { clearTimeout(this._tt); this.setState({ toast: msg }); this._tt = setTimeout(() => this.setState({ toast: '' }), 3000); }
@@ -1606,7 +1652,7 @@ class Component extends DCLogic {
   }
   flush() {
     const p = this._pending || {}; this._pending = {};
-    const b = this.db.batch(); Object.values(p).forEach(t => b.set(this.docRef(t), clean(t)));
+    const b = this.db.batch(); Object.values(p).forEach(t => b.set(this.docRef(t), clean(t.scope === 'mgmt' ? { ...t, members: this.membersOf(t) } : t)));
     b.commit().catch(e => console.warn('Sync failed', e));
   }
   me() { return this.state.cloud === 'ready' && this.state.user ? this.state.user.name : null; }
@@ -1615,9 +1661,10 @@ class Component extends DCLogic {
   upd(tid, fn) { const m = this.me(); this.setState(st => ({ tasks: st.tasks.map(t => t.id === tid ? (m ? { ...fn(t), updatedBy: m, updatedAt: Date.now() } : fn(t)) : t) })); }
   addTask = () => {
     const title = this.state.newTask.trim();
-    if (!title || this.state.scope === 'team') return;
+    if (!title) return;
+    if (this.state.scope === 'team' && !this.state.forWho) return this.say('Pick who this task is for first');
     this.setState(st => {
-      const owner = st.newOwner.trim(), t = { ...mk(st.company, title, owner), ...(st.scope === 'mgmt' ? { scope: 'mgmt' } : st.scope === 'personal' ? { scope: 'personal', list: this._key } : { scope: 'offline' }), order: Date.now(), ...(this.me() ? { updatedBy: this.me(), updatedAt: Date.now() } : {}) };
+      const owner = st.newOwner.trim(), t = { ...mk(st.company, title, owner), ...(st.scope === 'mgmt' ? { scope: 'mgmt' } : st.scope === 'personal' ? { scope: 'personal', list: this._key } : st.scope === 'team' ? { scope: 'team', list: st.forWho } : { scope: 'offline' }), order: Date.now(), ...(this.me() ? { updatedBy: this.me(), updatedAt: Date.now() } : {}) };
       // A listed subtask keeps the owner picked for it; otherwise it takes the task's owner.
       t.subs = [...st.newSubs, { title: st.newSubDraft.trim(), owner: null }].filter(s => s.title).map(s => ({ id: id(), title: s.title, owner: s.owner ?? owner, status: 'todo', done: false, ...this.sst() }));
       return { tasks: [...st.tasks, t], newTask: '', newSubs: [], newSubDraft: '', openMap: t.subs.length ? { ...st.openMap, [t.id]: true } : st.openMap };
@@ -1654,6 +1701,7 @@ class Component extends DCLogic {
     if (m.kind === 'owner') m.sid ? this.upd(m.tid, x => ({ ...x, subs: x.subs.map(y => y.id === m.sid ? { ...y, owner: v, ...this.sst() } : y) })) : this.upd(m.tid, x => ({ ...x, owner: v }));
     else if (m.kind === 'newOwner') this.setState({ newOwner: v });
     else if (m.kind === 'newSubOwner') this.setState(st => ({ newSubs: st.newSubs.map((s, j) => j === m.idx ? { ...s, owner: v } : s) }));
+    else if (m.kind === 'forMember') this.setState(st => ({ forWho: v, newOwner: st.newOwner || this.namesOf(v)[0] || '' }));
     else if (m.kind === 'ownerFilter') this.setState(st => { const o = { ...st.openMap }; if (v) st.tasks.forEach(t => { if (t.subs.some(y => (y.owner || '').trim() === v)) o[t.id] = true; }); return { ownerFilter: v, openMap: o }; });
     else if (m.kind === 'status') this.setSubStatus(m.tid, m.sid, v);
     this.setState({ menu: null, adding: false, addName: '' });
@@ -1669,10 +1717,22 @@ class Component extends DCLogic {
     this.editNotes(m, ns => [...ns, { id: id(), text, at: Date.now(), ...(me ? { by: me } : {}) }]);
     this.setState({ noteDraft: '' });
   };
+  saveEmails = () => {
+    const em = { ...this.state.emails, ...this.state.emailDrafts }, bad = Object.values(em).find(e => e && !/^[^@\s]+@[^@\s]+$/.test(e.trim()));
+    if (bad) return this.say(bad + " doesn't look like an email");
+    const clean = Object.fromEntries(Object.entries(em).map(([n, e]) => [n, (e || '').trim().toLowerCase()]).filter(([, e]) => e));
+    this.db.doc('meta/team').update({ emails: clean }).catch(e => this.say('Could not save: ' + e.message));
+    this.setState({ emails: clean, emailDrafts: {}, menu: null }); this.say('Emails saved');
+  };
   confirmAdd = () => {
     const name = this.state.addName.trim().replace(/\s+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     if (!name) return;
-    if (!this.state.team.includes(name)) { this.setState(st => ({ team: [...st.team, name] })); if (this.state.cloud === 'ready') this.db.doc('meta/team').set({ names: this.fb.firestore.FieldValue.arrayUnion(name) }, { merge: true }); }
+    const email = this._mgr ? this.state.addEmail.trim().toLowerCase() : '';
+    if (email && !/^[^@\s]+@[^@\s]+$/.test(email)) return this.say('That email doesn\'t look right');
+    if (!this.state.team.includes(name) || email) {
+      this.setState(st => ({ team: st.team.includes(name) ? st.team : [...st.team, name], emails: email ? { ...st.emails, [name]: email } : st.emails, addEmail: '' }));
+      if (this.state.cloud === 'ready') this.db.doc('meta/team').set({ names: this.fb.firestore.FieldValue.arrayUnion(name), ...(email ? { emails: { [name]: email } } : {}) }, { merge: true });
+    }
     this.choose(name);
   };
   moveTask(from, to) {
@@ -1757,13 +1817,22 @@ class Component extends DCLogic {
     if (this._savedTasks !== allTasks) { this._savedTasks = allTasks; try { localStorage.setItem(KEY + '-offline', JSON.stringify(allTasks.filter(t => t.scope === 'offline'))); } catch (e) {} }
     if (this._savedOpen !== this.state.openMap) { this._savedOpen = this.state.openMap; try { localStorage.setItem(KEY + '-open', JSON.stringify(this.state.openMap)); } catch (e) {} }
     if (this._themed !== company + mode) { this._themed = company + mode; this.applyTheme(company, mode); try { localStorage.setItem(KEY + '-co', company); localStorage.setItem(KEY + '-mode', mode); } catch (e) {} }
-    const pctOf = ts => { const tot = ts.reduce((a, t) => a + (t.subs.length || 1), 0); const dn = ts.reduce((a, t) => a + (t.subs.length ? t.subs.filter(s => s.done).length : (t.done ? 1 : 0)), 0); return (tot ? Math.round(dn / tot * 100) : 0) + '%'; };
+    // What counts toward someone's %: on a MGMT task shown in a member's list, only the parts they own (all of it if they own the task).
+    const myNames = cloud === 'ready' ? this.namesOf(this._key) : [], mineName = n => myNames.includes((n || '').trim());
+    const ownsAll = t => t.scope !== 'assigned' || mineName(t.owner);
+    const unitSubs = t => ownsAll(t) ? t.subs : t.subs.filter(s => mineName(s.owner));
+    const unitTot = ts => ts.reduce((a, t) => a + (t.subs.length ? unitSubs(t).length : (ownsAll(t) ? 1 : 0)), 0);
+    const unitDone = ts => ts.reduce((a, t) => a + (t.subs.length ? unitSubs(t).filter(s => s.done).length : (ownsAll(t) && t.done ? 1 : 0)), 0);
+    const pctOf = ts => { const tot = unitTot(ts), dn = unitDone(ts); return (tot ? Math.round(dn / tot * 100) : 0) + '%'; };
     const gate = ['init', 'connecting', 'signedOut'].includes(cloud), live = cloud === 'ready';
     const hasOffline = allTasks.some(t => t.scope === 'offline');
     // Managers: MGMT / Team / Personal; members: Personal only. Offline appears while this device holds offline tasks.
     const views = !live ? ['offline'] : [...(this._mgr ? ['mgmt', 'team', 'personal'] : ['personal']), ...(hasOffline ? ['offline'] : [])];
     const scope = views.includes(this.state.scope) ? this.state.scope : views[0];
-    const inScope = t => (t.scope || 'mgmt') === scope;
+    const inScope = t => { const sc = t.scope || 'mgmt';
+      if (scope === 'personal') return sc === 'personal' || sc === 'assigned';             // members also see MGMT tasks they own parts of
+      if (scope === 'team') return sc === 'team' || (sc === 'mgmt' && this.membersOf(t).length > 0);
+      return sc === scope; };
     // Completion % is hidden on the sign-in screen; when shown it counts the list being viewed (team or personal).
     const companyTabs = COMPANIES.map(c => ({ label: c.label, pct: gate ? '' : pctOf(allTasks.filter(t => (t.company || 'tchb') === c.key && inScope(t))),
       onClick: () => this.setState({ company: c.key, ownerFilter: '', filter: 'all' }),
@@ -1776,10 +1845,15 @@ class Component extends DCLogic {
     const menu = this.state.menu;
     const SL = { todo: 'Not Started', progress: 'In Progress', done: 'Done' };
     let menuItems = [], menuCur = '';
-    if (menu && menu.kind !== 'notes') {
+    if (menu && menu.kind !== 'notes' && menu.kind !== 'people') {
       if (menu.kind === 'status') {
         const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : '';
         menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
+      } else if (menu.kind === 'forMember') {
+        menuCur = this.state.forWho;
+        const em = this.state.emails || {}, keys = new Set([...Object.values(em).map(e => personKey(e.trim().toLowerCase())), ...Object.keys(this.state.people || {})]);
+        menuItems = [...keys].filter(k => k && !MANAGERS.includes(k)).map(k => { const nm = this.namesOf(k)[0] || (this.state.people || {})[k] || k; return { value: k, label: nm, sub: k, hasAvatar: true, initials: initials(nm), avBg: 'var(--avatar-bg, var(--tchb-indigo-700))', avFg: '#fff' }; })
+          .sort((a, b) => a.label.localeCompare(b.label));
       } else {
         if (menu.kind === 'owner') { const tk = allTasks.find(x => x.id === menu.tid); menuCur = tk ? (menu.sid ? (tk.subs.find(y => y.id === menu.sid) || {}).owner : tk.owner) || '' : ''; }
         else if (menu.kind === 'newSubOwner') { const ns = this.state.newSubs[menu.idx]; menuCur = ns ? ns.owner ?? this.state.newOwner : ''; }
@@ -1792,8 +1866,7 @@ class Component extends DCLogic {
     const ownerMatch = t => !ownerFilter || (t.owner || '').trim() === ownerFilter || t.subs.some(s => (s.owner || '').trim() === ownerFilter);
     const showProgress = this.props.showProgress ?? true;
     const done = tasks.filter(t => this.isDone(t));
-    const subsTotal = tasks.reduce((a, t) => a + (t.subs.length || 1), 0);
-    const subsDone = tasks.reduce((a, t) => a + (t.subs.length ? t.subs.filter(s => s.done).length : (t.done ? 1 : 0)), 0);
+    const subsTotal = unitTot(tasks), subsDone = unitDone(tasks);
     const statusOf = t => this.isDone(t) ? 'done' : (t.subs.some(s => s.done || s.status === 'progress') ? 'progress' : 'todo');
     const counts = { all: tasks.length, todo: 0, progress: 0, done: 0 };
     tasks.forEach(t => counts[statusOf(t)]++);
@@ -1811,6 +1884,8 @@ class Component extends DCLogic {
     const noteBtn = (o, idle) => { const n = (o.notes || []).length; return { hasNotes: n > 0, notesCount: n, noteColor: n ? 'var(--tchb-indigo-700)' : idle, notesAria: n ? n + (n === 1 ? ' note' : ' notes') : 'Add a note' }; };
     const visibleTasks = list.map(t => {
       const d = this.isDone(t), st = statusOf(t);
+      const asg = t.scope === 'assigned', whole = ownsAll(t), mgmtInTeam = scope === 'team' && t.scope === 'mgmt';
+      const who = mgmtInTeam ? this.membersOf(t).map(k => this.namesOf(k)[0] || k).join(', ') : '';
       const n = t.subs.filter(s => s.done).length;
       const pct = t.subs.length ? Math.round(n / t.subs.length * 100) : (d ? 100 : 0);
       return {
@@ -1823,10 +1898,13 @@ class Component extends DCLogic {
         ...chipOf(t.owner), openOwner: e => this.openMenu(e, { kind: 'owner', tid: t.id }),
         ...noteBtn(t, 'var(--tchb-gray-500)'), openNotes: e => this.openMenu(e, { kind: 'notes', tid: t.id }),
         canPushLive: t.scope === 'offline' && !!this.auth, onPushLive: () => this.pushLive(t.id),
+        // A member's view of a MGMT task: no moving, deleting or changing owners; only the task owner can tick or rename the whole task.
+        lockMain: asg && !whole ? 'pointer-events: none; opacity: 0.55;' : '', readOnly: asg && !whole,
+        hideEdit: asg ? 'display: none;' : '', hideGrip: asg ? 'visibility: hidden; pointer-events: none;' : '', ownerLock: asg ? 'pointer-events: none;' : '', addSubStyle: asg && !whole ? 'display: none;' : '',
         canPushMgmt: live && this._mgr && t.scope === 'personal', onPushMgmt: () => this.pushMgmt(t.id),
         id: t.id, title: t.title, isDone: d, open: !!this.state.openMap[t.id], draft: drafts[t.id] || '',
         status: STAT[st][0], tone: STAT[st][1], pct: pct + '%',
-        meta: (t.scope === 'team' ? (this.state.people[t.list] || t.list) + "'s task · " : '') + (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks — check off directly') + (t.updatedBy ? ` · Edited by ${t.updatedBy} · ${ago(t.updatedAt)}` : ''),
+        meta: (asg ? 'Added by MGMT · ' : mgmtInTeam ? 'Added by MGMT for ' + who + ' · ' : t.scope === 'team' ? (this.namesOf(t.list)[0] || this.state.people[t.list] || t.list) + "'s task · " : '') + (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks — check off directly') + (t.updatedBy ? ` · Edited by ${t.updatedBy} · ${ago(t.updatedAt)}` : ''),
         boxBg: d ? 'var(--tchb-green-500)' : 'var(--surface-card)',
         boxBorder: d ? 'var(--tchb-green-500)' : 'var(--border-strong)',
         titleColor: d ? 'var(--text-muted)' : 'var(--tchb-indigo-700)',
@@ -1841,6 +1919,10 @@ class Component extends DCLogic {
         onDraftKey: e => { if (e.key === 'Enter') this.addSub(t.id); },
         subs: t.subs.map(s => ({
           id: s.id,
+          // Subtasks a member doesn't own stay visible (done or not) but are blurred and can't be clicked.
+          rowLock: whole || mineName(s.owner) ? '' : 'pointer-events: none;',
+          blurStyle: whole || mineName(s.owner) ? '' : 'filter: blur(3px); user-select: none;',
+          subOwnerLock: asg ? 'pointer-events: none;' : '', hideDel: asg && !whole ? 'display: none;' : '', hideGrip: asg ? 'visibility: hidden;' : '',
           dragOpacity: this.state.subDrag && this.state.subDrag.sid === s.id ? 0.45 : 1,
           dropOutline: this.state.subOver === s.id && this.state.subDrag && this.state.subDrag.sid !== s.id ? '2px solid var(--tchb-indigo-500)' : 'none',
           onDragStart: e => { e.stopPropagation(); e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', s.id); } catch (_) {} const row = e.currentTarget.closest('[data-sid]'); if (row) e.dataTransfer.setDragImage(row, 16, 18); this.setState({ subDrag: { tid: t.id, sid: s.id } }); },
@@ -1917,11 +1999,19 @@ class Component extends DCLogic {
       ...Object.fromEntries(['mgmt', 'team', 'personal', 'offline'].map(k => [k + 'Tab', { on: scope === k, show: views.includes(k),
         onClick: () => this.setState({ scope: k, ownerFilter: '', filter: 'all', menu: null }),
         bg: scope === k ? 'var(--surface-card)' : 'transparent', color: scope === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: scope === k ? 'var(--shadow-button)' : 'none' }])),
-      scopeHint: { mgmt: 'Shared by the managers only.', team: "Everyone else's personal tasks.",
+      scopeHint: { mgmt: 'Shared by the managers only.', team: "Everyone else's personal tasks, plus MGMT tasks they own.",
         offline: live ? 'On this device only. Push a task to move it into your personal list.' : 'Saved on this device only. Push a task to your personal list when you are online.',
         personal: this._mgr ? 'Only you can see these.' : 'Only you and the managers can see these.' }[scope],
-      showErr: !!this.state.errs[scope], canAdd: scope !== 'team',
-      newTaskPlaceholder: { mgmt: 'Add a MGMT task', personal: 'Add a personal task', offline: 'Add an offline task' }[scope] || '',
+      showErr: !!this.state.errs[scope], canAdd: scope !== 'team' || this._mgr,
+      showFor: scope === 'team', forLabel: this.state.forWho ? 'For: ' + (this.namesOf(this.state.forWho)[0] || (this.state.people || {})[this.state.forWho] || this.state.forWho) : 'Pick a team member',
+      forColor: this.state.forWho ? 'var(--text-body)' : 'var(--status-error)', openFor: e => this.openMenu(e, { kind: 'forMember' }),
+      showBack: !live, goBack: () => this.auth ? this.setState({ cloud: 'signedOut', authError: '' }) : window.location.reload(),
+      showPeopleBtn: live && this._mgr, openPeople: e => this.openMenu(e, { kind: 'people' }),
+      menuIsPeople: !!menu && menu.kind === 'people',
+      peopleRows: owners.map(n => ({ name: n, email: n in this.state.emailDrafts ? this.state.emailDrafts[n] : (this.state.emails[n] || ''),
+        onEmail: e => { const v = e.target.value; this.setState(st => ({ emailDrafts: { ...st.emailDrafts, [n]: v } })); } })),
+      saveEmails: this.saveEmails, showAddEmail: live && this._mgr, addEmail: this.state.addEmail, onAddEmail: e => this.setState({ addEmail: e.target.value }),
+      newTaskPlaceholder: { mgmt: 'Add a MGMT task', personal: 'Add a personal task', offline: 'Add an offline task', team: 'Add a task for a team member' }[scope] || '',
       hasToast: !!this.state.toast, toast: this.state.toast,
       signIn: () => this.auth && this.auth.signInWithPopup(new this.fb.auth.GoogleAuthProvider()).catch(e => this.setState({ authError: e.message })),
       signOut: () => { if (this.auth && window.confirm('Sign out of the task board?')) this.auth.signOut(); },
@@ -1948,7 +2038,7 @@ class Component extends DCLogic {
         const item = tk ? (menu.sid ? tk.subs.find(y => y.id === menu.sid) : tk) : null, notes = (item && item.notes) || [];
         return {
           menuIsNotes: on && !!item, notesFor: item ? item.title : '', notesEmpty: !notes.length,
-          notesBox: on ? 'width: 340px; max-width: calc(100vw - 16px); max-height: 440px; box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
+          notesBox: on || (menu && menu.kind === 'people') ? 'width: 340px; max-width: calc(100vw - 16px); max-height: 440px; box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
           notesList: notes.map(n => ({ text: n.text, meta: (n.by || 'Note') + ' · ' + ago(n.at), canDelete: !n.by || n.by === this.me(),
             onDelete: () => this.editNotes(menu, ns => ns.filter(x => x.id !== n.id)) })),
           notesAutoFocus: !this.state.mob, noteDraft: this.state.noteDraft || '', addNote: this.addNote,
