@@ -1111,6 +1111,11 @@ h1, h2, h3, h4 {
             <div style="display: flex; align-items: center; gap: 12px; padding: 4px 0;">
               <span style="width: 18px; height: 18px; flex: none; box-sizing: border-box; border: 2px solid var(--border-strong); border-radius: 5px;"></span>
               <span style="flex: 1; min-width: 0; font-size: 15px; text-transform: capitalize; color: var(--text-body); word-break: break-word;">{{ ns.title }}</span>
+              <button sc-camel-on-click="{{ ns.openOwner }}" title="Owner" aria-label="{{ ns.ownerAria }}" style="display: flex; align-items: center; gap: 6px; flex: none; padding: 3px 10px 3px 3px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ ns.ownerLabelColor }}; {{ mo.subOwner }}" style-focus="box-shadow: var(--focus-ring);">
+              <span style="width: 22px; height: 22px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ ns.ownerBg }}; color: {{ ns.ownerFg }};">{{ ns.initials }}</span>
+              <span style="min-width: 84px; text-align: left; white-space: nowrap; {{ mo.ellip }} {{ ns.nameHide }}">{{ ns.ownerLabel }}</span>
+              <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
+              </button>
               <button sc-camel-on-click="{{ ns.onRemove }}" title="Remove subtask" style="width: 28px; height: 28px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; {{ mo.subDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);">
                 <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
               </button>
@@ -1517,7 +1522,8 @@ class Component extends DCLogic {
     if (!title) return;
     this.setState(st => {
       const owner = st.newOwner.trim(), t = { ...mk(st.company, title, owner), order: Date.now(), ...(this.me() ? { updatedBy: this.me(), updatedAt: Date.now() } : {}) };
-      t.subs = [...st.newSubs, st.newSubDraft.trim()].filter(Boolean).map(s => ({ id: id(), title: s, owner, status: 'todo', done: false, ...this.sst() }));
+      // A listed subtask keeps the owner picked for it; otherwise it takes the task's owner.
+      t.subs = [...st.newSubs, { title: st.newSubDraft.trim(), owner: null }].filter(s => s.title).map(s => ({ id: id(), title: s.title, owner: s.owner ?? owner, status: 'todo', done: false, ...this.sst() }));
       return { tasks: [...st.tasks, t], newTask: '', newSubs: [], newSubDraft: '', openMap: t.subs.length ? { ...st.openMap, [t.id]: true } : st.openMap };
     });
   };
@@ -1550,6 +1556,7 @@ class Component extends DCLogic {
     const m = this.state.menu; if (!m) return;
     if (m.kind === 'owner') m.sid ? this.upd(m.tid, x => ({ ...x, subs: x.subs.map(y => y.id === m.sid ? { ...y, owner: v, ...this.sst() } : y) })) : this.upd(m.tid, x => ({ ...x, owner: v }));
     else if (m.kind === 'newOwner') this.setState({ newOwner: v });
+    else if (m.kind === 'newSubOwner') this.setState(st => ({ newSubs: st.newSubs.map((s, j) => j === m.idx ? { ...s, owner: v } : s) }));
     else if (m.kind === 'ownerFilter') this.setState({ ownerFilter: v });
     else if (m.kind === 'status') this.setSubStatus(m.tid, m.sid, v);
     this.setState({ menu: null, adding: false, addName: '' });
@@ -1620,6 +1627,7 @@ class Component extends DCLogic {
         menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
       } else {
         if (menu.kind === 'owner') { const tk = allTasks.find(x => x.id === menu.tid); menuCur = tk ? (menu.sid ? (tk.subs.find(y => y.id === menu.sid) || {}).owner : tk.owner) || '' : ''; }
+        else if (menu.kind === 'newSubOwner') { const ns = this.state.newSubs[menu.idx]; menuCur = ns ? ns.owner ?? this.state.newOwner : ''; }
         else menuCur = menu.kind === 'newOwner' ? this.state.newOwner : ownerFilter;
         menuItems = [{ value: '', label: menu.kind === 'ownerFilter' ? 'All Owners' : 'Unassigned', hasAvatar: true, initials: '—', avBg: 'var(--tchb-gray-100)', avFg: 'var(--tchb-gray-500)' },
           ...owners.map(o => ({ value: o, label: o, hasAvatar: true, initials: initials(o), avBg: 'var(--avatar-bg, var(--tchb-indigo-700))', avFg: '#fff' }))];
@@ -1760,7 +1768,7 @@ class Component extends DCLogic {
       ownerFilterLabel: ownerFilter || 'All Owners',
       openNewOwner: e => this.openMenu(e, { kind: 'newOwner' }),
       openOwnerFilter: e => this.openMenu(e, { kind: 'ownerFilter' }),
-      menuOpen: !!menu, menuItems, menuCanAdd: !!menu && (menu.kind === 'owner' || menu.kind === 'newOwner'),
+      menuOpen: !!menu, menuItems, menuCanAdd: !!menu && ['owner', 'newOwner', 'newSubOwner'].includes(menu.kind),
       menuTop: menu ? menu.top + 'px' : '0px', menuLeft: menu ? menu.left + 'px' : '0px', menuTransform: menu && menu.flip ? 'translateY(-100%)' : 'none',
       closeMenu: () => this.setState({ menu: null, adding: false, addName: '' }),
       menuKey: e => { if (e.key === 'Escape') this.setState({ menu: null, adding: false, addName: '' }); },
@@ -1773,11 +1781,12 @@ class Component extends DCLogic {
       onNewTask: e => this.setState({ newTask: e.target.value }),
       onNewTaskKey: e => { if (e.key === 'Enter') this.addTask(); },
       showNewSubs: !!this.state.newTask.trim() || this.state.newSubs.length > 0,
-      newSubList: this.state.newSubs.map((title, i) => ({ title, onRemove: () => this.setState(st => ({ newSubs: st.newSubs.filter((_, j) => j !== i) })) })),
+      newSubList: this.state.newSubs.map((ns, i) => ({ title: ns.title, ...chipOf(ns.owner ?? this.state.newOwner), openOwner: e => this.openMenu(e, { kind: 'newSubOwner', idx: i }),
+        onRemove: () => this.setState(st => ({ newSubs: st.newSubs.filter((_, j) => j !== i) })) })),
       newSubDraft: this.state.newSubDraft,
       newSubPlaceholder: this.state.newSubs.length ? 'Add another subtask and press Enter' : 'Add subtasks now (optional): type one and press Enter',
       onNewSubDraft: e => this.setState({ newSubDraft: e.target.value }),
-      onNewSubKey: e => { if (e.key !== 'Enter') return; const v = this.state.newSubDraft.trim(); if (v) this.setState(st => ({ newSubs: [...st.newSubs, v], newSubDraft: '' })); },
+      onNewSubKey: e => { if (e.key !== 'Enter') return; const v = this.state.newSubDraft.trim(); if (v) this.setState(st => ({ newSubs: [...st.newSubs, { title: v, owner: null }], newSubDraft: '' })); },
       addTask: this.addTask,
       filters, visibleTasks, showProgress,
       expandAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = true; }); return { openMap: o }; }),
