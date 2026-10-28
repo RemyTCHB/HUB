@@ -1059,7 +1059,7 @@ h1, h2, h3, h4 {
   <main style="max-width: 920px; margin: 0 auto; padding: 40px 24px 96px; display: flex; flex-direction: column; gap: 24px; {{ mo.main }}">
     <sc-if value="{{ showGate }}" hint-placeholder-val="{{ false }}">
       <section style="margin: 48px auto 0; max-width: 520px; width: 100%; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); padding: 40px 32px; display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; {{ mo.gate }}">
-        <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 28px; line-height: 1.25; width: 100%; color: var(--tchb-indigo-700);">Sign In To The <span style="color: var(--tchb-red-500);">Task Board</span></h2>
+        <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 28px; line-height: 1.25; width: 100%; color: var(--tchb-indigo-700); {{ mo.gateTitle }}">Sign In To The <span style="color: var(--tchb-red-500);">Task Board</span></h2>
         <p style="margin: 0; font-size: 15px; color: var(--text-muted); text-wrap: pretty;">{{ gateText }}</p>
         <sc-if value="{{ canSignIn }}" hint-placeholder-val="{{ true }}">
           <x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="primary" pill="{{ true }}" sc-camel-on-click="{{ signIn }}" hint-size="220px,48px">Sign In With Google</x-import>
@@ -1319,8 +1319,8 @@ const isTiny = () => window.innerWidth < 360;
 const isTouch = () => !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 // Phone-only style overrides, appended to inline styles; desktop gets '' so its layout is untouched.
 const MOBILE = {
-  headRow: 'padding: 10px 16px; gap: 10px 8px;',
-  logoBox: 'height: 44px; flex: 1 0 calc(100% - 60px); order: 1;',
+  headRow: 'padding: 10px 16px; gap: 10px 8px; position: relative;',
+  logoBox: 'height: 44px; flex: 1 0 100%; order: 1; justify-content: center;',
   logoTchb: 'height: 44px;', logoKpi: 'height: 24px;',
   theme: 'order: 3; flex: none;',
   themeBtn: 'padding: 0; width: 44px; height: 40px; justify-content: center;',
@@ -1328,9 +1328,9 @@ const MOBILE = {
   navGroup: 'display: contents;',
   nav: 'order: 4; flex: 1 1 0; min-width: 0;',
   tab: 'flex: 1 1 0; min-width: 0; justify-content: center; padding: 0 8px; height: 40px; font-size: 13px; gap: 6px; white-space: nowrap;',
-  avatar: 'order: 2; width: 44px; height: 44px;',
+  avatar: 'position: absolute; top: 10px; right: 16px; width: 44px; height: 44px;', // keeps the logo centred
   main: 'padding: 20px 16px 96px; gap: 16px;',
-  gate: 'margin-top: 16px; padding: 28px 20px;',
+  gate: 'margin-top: 16px; padding: 28px 20px; box-sizing: border-box;', gateTitle: 'font-size: 24px;',
   hero: 'gap: 16px;', heroText: 'flex-basis: 100%;',
   h1: 'font-size: 30px;',
   stats: 'width: 100%; align-items: flex-start;', stat: 'align-items: flex-start;', statNum: 'font-size: 28px;',
