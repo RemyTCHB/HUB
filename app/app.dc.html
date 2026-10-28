@@ -1147,7 +1147,7 @@ h1, h2, h3, h4 {
     <section style="display: flex; flex-direction: column; gap: 14px;">
       <sc-for list="{{ visibleTasks }}" as="t" hint-placeholder-count="3">
         <article data-tid="{{ t.id }}" sc-camel-on-drag-over="{{ t.onDragOver }}" sc-camel-on-drop="{{ t.onDrop }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; transition: opacity 120ms; outline-offset: 2px; opacity: {{ t.dragOpacity }}; outline: {{ t.dropOutline }};">
-          <div style="display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto auto auto; align-items: center; gap: 14px; padding: 16px 18px 16px 8px; {{ mo.card }}">
+          <div style="display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto auto auto auto; align-items: center; gap: 14px; padding: 16px 18px 16px 8px; {{ mo.card }}">
             <button draggable="{{ gripDraggable }}" sc-camel-on-drag-start="{{ t.onDragStart }}" sc-camel-on-drag-end="{{ onDragEnd }}" sc-camel-on-pointer-down="{{ t.onGripDown }}" sc-camel-on-pointer-move="{{ onGripMove }}" sc-camel-on-pointer-up="{{ onGripUp }}" sc-camel-on-pointer-cancel="{{ onGripCancel }}" title="Drag to reorder" style="width: 24px; height: 36px; margin-right: -8px; border: none; background: transparent; border-radius: 8px; cursor: grab; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; padding: 0; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; {{ mo.grip }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
               <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.8"></circle><circle cx="15" cy="5" r="1.8"></circle><circle cx="9" cy="12" r="1.8"></circle><circle cx="15" cy="12" r="1.8"></circle><circle cx="9" cy="19" r="1.8"></circle><circle cx="15" cy="19" r="1.8"></circle></svg>
             </button>
@@ -1170,7 +1170,10 @@ h1, h2, h3, h4 {
                     <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
                   </button>
             <x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Badge" tone="{{ t.tone }}" hint-size="100px,26px">{{ t.status }}</x-import>
-            <button sc-camel-on-click="{{ t.onExpand }}" title="Show subtasks" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-indigo-700); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }} {{ mo.push }}" style-hover="background: var(--tchb-indigo-050);">
+            <button sc-camel-on-click="{{ t.openNotes }}" title="Notes" aria-label="{{ t.notesAria }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: {{ t.noteColor }}; {{ mo.noteBtn }} {{ mo.push }}" style-hover="background: var(--tchb-indigo-050);">
+              <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M13 8H7"></path><path d="M17 12H7"></path></svg><sc-if value="{{ t.hasNotes }}" hint-placeholder-val="{{ false }}"><span>{{ t.notesCount }}</span></sc-if>
+            </button>
+            <button sc-camel-on-click="{{ t.onExpand }}" title="Show subtasks" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-indigo-700); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }}" style-hover="background: var(--tchb-indigo-050);">
               <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 160ms; transform: {{ t.chevron }};"><path d="m6 9 6 6 6-6"></path></svg>
             </button>
             <button sc-camel-on-click="{{ t.onDelete }}" title="Delete task" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }}" style-hover="background: var(--tchb-red-050); color: var(--tchb-red-400);">
@@ -1208,6 +1211,9 @@ h1, h2, h3, h4 {
                     <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
                   </button>
                   <button sc-camel-on-click="{{ s.openStatus }}" title="Subtask status" style="display: flex; align-items: center; gap: 6px; flex: none; border-radius: 999px; padding: 5px 10px 5px 12px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; white-space: nowrap; background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); background-color: {{ s.statusBg }}; color: {{ s.statusFg }}; {{ mo.subStatus }}" style-focus="box-shadow: var(--focus-ring);">{{ s.statusLabel }}<svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
+                  <button sc-camel-on-click="{{ s.openNotes }}" title="Notes" aria-label="{{ s.notesAria }}" style="height: 28px; min-width: 28px; padding: 0 6px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: {{ s.noteColor }}; {{ mo.subNote }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
+                    <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M13 8H7"></path><path d="M17 12H7"></path></svg><sc-if value="{{ s.hasNotes }}" hint-placeholder-val="{{ false }}"><span>{{ s.notesCount }}</span></sc-if>
+                  </button>
                   <button sc-camel-on-click="{{ s.onDelete }}" title="Remove subtask" style="width: 28px; height: 28px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; {{ mo.subDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);">
                     <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
                   </button>
@@ -1237,7 +1243,7 @@ h1, h2, h3, h4 {
 
   <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
     <div sc-camel-on-click="{{ closeMenu }}" sc-camel-on-wheel="{{ closeMenu }}" sc-camel-on-touch-move="{{ closeMenu }}" style="position: fixed; inset: 0; z-index: 50; {{ mo.shade }}"></div>
-    <div sc-camel-on-key-down="{{ menuKey }}" style="position: fixed; z-index: 51; min-width: 230px; max-height: 340px; overflow-y: auto; padding: 6px; border-radius: 14px; display: flex; flex-direction: column; gap: 2px; background-color: var(--menu-bg, rgba(255,255,255,0.62)); background-image: var(--menu-sheen, linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 100%)); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid var(--glass-border, rgba(255,255,255,0.9)); box-shadow: var(--menu-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 2px 4px rgba(34,29,84,0.08), 0 16px 40px rgba(34,29,84,0.18)); top: {{ menuTop }}; left: {{ menuLeft }}; transform: {{ menuTransform }}; {{ menuSheet }}">
+    <div sc-camel-on-key-down="{{ menuKey }}" style="position: fixed; z-index: 51; min-width: 230px; max-height: 340px; overflow-y: auto; padding: 6px; border-radius: 14px; display: flex; flex-direction: column; gap: 2px; background-color: var(--menu-bg, rgba(255,255,255,0.62)); background-image: var(--menu-sheen, linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 100%)); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid var(--glass-border, rgba(255,255,255,0.9)); box-shadow: var(--menu-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 2px 4px rgba(34,29,84,0.08), 0 16px 40px rgba(34,29,84,0.18)); top: {{ menuTop }}; left: {{ menuLeft }}; transform: {{ menuTransform }}; {{ notesBox }} {{ menuSheet }}">
       <sc-for list="{{ menuItems }}" as="m" hint-placeholder-count="0">
         <button sc-camel-on-click="{{ m.onClick }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 8px 10px; border-radius: 9px; font-family: var(--font-body); font-size: 14px; font-weight: 600; text-transform: capitalize; color: var(--text-body); background: {{ m.bg }}; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));">
           <sc-if value="{{ m.hasAvatar }}" hint-placeholder-val="{{ false }}">
@@ -1268,6 +1274,32 @@ h1, h2, h3, h4 {
             <button sc-camel-on-click="{{ confirmAdd }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 8px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Add</button>
           </div>
         </sc-if>
+      </sc-if>
+      <sc-if value="{{ menuIsNotes }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 6px 8px 4px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">Notes</span>
+          <span style="flex: 1; min-width: 0; font-size: 13px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ notesFor }}</span>
+        </div>
+        <sc-if value="{{ notesEmpty }}" hint-placeholder-val="{{ true }}">
+          <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No notes yet. Add the first one below.</div>
+        </sc-if>
+        <sc-for list="{{ notesList }}" as="nt" hint-placeholder-count="0">
+          <div style="display: flex; gap: 6px; align-items: flex-start; padding: 8px 6px 8px 10px; margin: 2px 2px; border-radius: 10px; background: var(--surface-subtle); border: 1px solid var(--border-default);">
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 12px; font-weight: 600; color: var(--text-muted);">{{ nt.meta }}</div>
+              <div style="font-size: 14px; line-height: 1.45; color: var(--text-body); white-space: pre-wrap; word-break: break-word;">{{ nt.text }}</div>
+            </div>
+            <sc-if value="{{ nt.canDelete }}" hint-placeholder-val="{{ false }}">
+              <button sc-camel-on-click="{{ nt.onDelete }}" title="Delete note" style="width: 26px; height: 26px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; padding: 0; {{ mo.noteDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);">
+                <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+              </button>
+            </sc-if>
+          </div>
+        </sc-for>
+        <div style="display: flex; gap: 6px; align-items: flex-end; padding: 6px 4px 4px;">
+          <textarea rows="2" sc-camel-auto-focus="{{ notesAutoFocus }}" value="{{ noteDraft }}" sc-camel-on-change="{{ onNoteDraft }}" sc-camel-on-key-down="{{ onNoteKey }}" placeholder="Write a note" style="flex: 1; min-width: 0; resize: none; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; line-height: 1.4; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"></textarea>
+          <button sc-camel-on-click="{{ addNote }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 9px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ mo.noteAdd }}" style-hover="background: var(--action-primary-hover);">Add</button>
+        </div>
       </sc-if>
     </div>
   </sc-if>
@@ -1386,7 +1418,11 @@ const MOBILE = {
   edited: 'order: 9; flex-basis: 100%; padding-left: 34px; white-space: normal;',
   subOwner: 'flex: 1 1 0; max-width: max-content; min-width: 0; min-height: 36px;',
   subStatus: 'min-height: 36px;',
-  subDel: 'width: 40px; height: 40px; margin-left: auto;',
+  subDel: 'width: 40px; height: 40px;',
+  subNote: 'min-width: 40px; height: 40px; margin-left: auto;',
+  noteBtn: 'min-width: 44px; height: 44px; flex: none;',
+  noteDel: 'width: 36px; height: 36px;',
+  noteAdd: 'min-height: 44px;',
   shade: 'background: rgba(10, 12, 24, 0.35);',
   menuItem: 'padding: 12px; font-size: 16px;',
   toast: 'left: 16px; right: 16px; bottom: 16px; transform: none;',
@@ -1549,8 +1585,9 @@ class Component extends DCLogic {
   }
   openMenu(e, cfg) {
     const r = e.currentTarget.getBoundingClientRect();
-    const flip = r.bottom + 330 > window.innerHeight && r.top > 330;
-    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - 248)), flip }, adding: false, addName: '' });
+    const h = cfg.kind === 'notes' ? 430 : 330, w = cfg.kind === 'notes' ? 340 : 248;
+    const flip = r.bottom + h > window.innerHeight && r.top > h;
+    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, adding: false, addName: '', noteDraft: '' });
   }
   choose(v) {
     const m = this.state.menu; if (!m) return;
@@ -1561,6 +1598,17 @@ class Component extends DCLogic {
     else if (m.kind === 'status') this.setSubStatus(m.tid, m.sid, v);
     this.setState({ menu: null, adding: false, addName: '' });
   }
+  editNotes(m, fn) {
+    const f = o => ({ ...o, notes: fn(o.notes || []) });
+    if (m.sid) this.upd(m.tid, x => ({ ...x, subs: x.subs.map(y => y.id === m.sid ? f(y) : y) })); else this.upd(m.tid, f);
+  }
+  addNote = () => {
+    const m = this.state.menu, text = this.state.noteDraft.trim();
+    if (!m || m.kind !== 'notes' || !text) return;
+    const me = this.me();
+    this.editNotes(m, ns => [...ns, { id: id(), text, at: Date.now(), ...(me ? { by: me } : {}) }]);
+    this.setState({ noteDraft: '' });
+  };
   confirmAdd = () => {
     const name = this.state.addName.trim().replace(/\s+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     if (!name) return;
@@ -1621,7 +1669,7 @@ class Component extends DCLogic {
     const menu = this.state.menu;
     const SL = { todo: 'Not Started', progress: 'In Progress', done: 'Done' };
     let menuItems = [], menuCur = '';
-    if (menu) {
+    if (menu && menu.kind !== 'notes') {
       if (menu.kind === 'status') {
         const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : '';
         menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
@@ -1653,6 +1701,7 @@ class Component extends DCLogic {
     const RANK = { progress: 0, todo: 1, done: 2 };
     list = list.map((t, i) => [t, i]).sort((a, b) => RANK[statusOf(a[0])] - RANK[statusOf(b[0])] || a[1] - b[1]).map(([t]) => t);
     const STAT = { done: ['Done', 'green'], progress: ['In Progress', 'indigo'], todo: ['Not Started', 'neutral'] };
+    const noteBtn = (o, idle) => { const n = (o.notes || []).length; return { hasNotes: n > 0, notesCount: n, noteColor: n ? 'var(--tchb-indigo-700)' : idle, notesAria: n ? n + (n === 1 ? ' note' : ' notes') : 'Add a note' }; };
     const visibleTasks = list.map(t => {
       const d = this.isDone(t), st = statusOf(t);
       const n = t.subs.filter(s => s.done).length;
@@ -1665,6 +1714,7 @@ class Component extends DCLogic {
         onDrop: e => { e.preventDefault(); this.moveTask(this.state.dragId, t.id); },
         onGripDown: e => { if (e.pointerType === 'mouse') return; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {} this.setState({ dragId: t.id, overId: null }); },
         ...chipOf(t.owner), openOwner: e => this.openMenu(e, { kind: 'owner', tid: t.id }),
+        ...noteBtn(t, 'var(--tchb-gray-500)'), openNotes: e => this.openMenu(e, { kind: 'notes', tid: t.id }),
         id: t.id, title: t.title, isDone: d, open: !!this.state.openMap[t.id], draft: drafts[t.id] || '',
         status: STAT[st][0], tone: STAT[st][1], pct: pct + '%',
         meta: (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks — check off directly') + (t.updatedBy ? ` · Edited by ${t.updatedBy} · ${ago(t.updatedAt)}` : ''),
@@ -1692,6 +1742,7 @@ class Component extends DCLogic {
           statusBg: s.done ? 'var(--tchb-green-050)' : s.status === 'progress' ? 'var(--tchb-indigo-050)' : 'var(--tchb-gray-100)',
           statusFg: s.done ? 'var(--tchb-green-600)' : s.status === 'progress' ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
           openOwner: e => this.openMenu(e, { kind: 'owner', tid: t.id, sid: s.id }),
+          ...noteBtn(s, 'var(--tchb-gray-300)'), openNotes: e => this.openMenu(e, { kind: 'notes', tid: t.id, sid: s.id }),
           openStatus: e => this.openMenu(e, { kind: 'status', tid: t.id, sid: s.id }), statusLabel: SL[s.status || (s.done ? 'done' : 'todo')],
           boxBg: s.done ? 'var(--tchb-green-500)' : 'var(--surface-card)',
           boxBorder: s.done ? 'var(--tchb-green-500)' : 'var(--border-strong)',
@@ -1743,7 +1794,7 @@ class Component extends DCLogic {
         if (dragId && overId) this.moveTask(dragId, overId);
       },
       mo: this.state.mob ? (this.state.tiny ? MOBILE_TINY : MOBILE) : {},
-      menuSheet: menu && this.state.mob ? `top: auto; left: 0; right: 0; bottom: ${this.state.kb}px; transform: none; min-width: 0; max-height: ${this.state.kb ? 'calc(100% - ' + (this.state.kb + 24) + 'px)' : '70vh'}; padding: 8px 8px 20px; border-radius: 20px 20px 0 0;` : '',
+      menuSheet: menu && this.state.mob ? `top: auto; left: 0; right: 0; width: auto; bottom: ${this.state.kb}px; transform: none; min-width: 0; max-height: ${this.state.kb ? 'calc(100% - ' + (this.state.kb + 24) + 'px)' : '70vh'}; padding: 8px 8px 20px; border-radius: 20px 20px 0 0;` : '',
       tchbLight: company === 'tchb' && mode !== 'dark', tchbDark: company === 'tchb' && mode === 'dark', kpiLight: company === 'kpi' && mode !== 'dark', kpiDark: company === 'kpi' && mode === 'dark',
       setLight: () => this.setState({ mode: 'light' }), setDark: () => this.setState({ mode: 'dark' }),
       lightBg: mode !== 'dark' ? 'var(--action-secondary)' : 'transparent', lightFg: mode !== 'dark' ? '#fff' : 'var(--tchb-gray-700)',
@@ -1771,6 +1822,20 @@ class Component extends DCLogic {
       menuOpen: !!menu, menuItems, menuCanAdd: !!menu && ['owner', 'newOwner', 'newSubOwner'].includes(menu.kind),
       menuTop: menu ? menu.top + 'px' : '0px', menuLeft: menu ? menu.left + 'px' : '0px', menuTransform: menu && menu.flip ? 'translateY(-100%)' : 'none',
       closeMenu: () => this.setState({ menu: null, adding: false, addName: '' }),
+      ...(() => {
+        // Notes panel: who wrote each note and when, oldest first; you can delete your own.
+        const on = !!menu && menu.kind === 'notes', tk = on && allTasks.find(x => x.id === menu.tid);
+        const item = tk ? (menu.sid ? tk.subs.find(y => y.id === menu.sid) : tk) : null, notes = (item && item.notes) || [];
+        return {
+          menuIsNotes: on && !!item, notesFor: item ? item.title : '', notesEmpty: !notes.length,
+          notesBox: on ? 'width: 340px; max-width: calc(100vw - 16px); max-height: 440px; box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
+          notesList: notes.map(n => ({ text: n.text, meta: (n.by || 'Note') + ' · ' + ago(n.at), canDelete: !n.by || n.by === this.me(),
+            onDelete: () => this.editNotes(menu, ns => ns.filter(x => x.id !== n.id)) })),
+          notesAutoFocus: !this.state.mob, noteDraft: this.state.noteDraft || '', addNote: this.addNote,
+          onNoteDraft: e => this.setState({ noteDraft: e.target.value }),
+          onNoteKey: e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); this.addNote(); } }
+        };
+      })(),
       menuKey: e => { if (e.key === 'Escape') this.setState({ menu: null, adding: false, addName: '' }); },
       adding: this.state.adding, notAdding: !this.state.adding, addName: this.state.addName,
       startAdd: () => this.setState({ adding: true, addName: '' }),
