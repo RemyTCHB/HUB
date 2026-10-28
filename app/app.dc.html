@@ -1105,6 +1105,25 @@ h1, h2, h3, h4 {
         <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
       </button>
       <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="primary" sc-camel-on-click="{{ addTask }}" hint-size="120px,48px">Add Task</x-import></div>
+      <sc-if value="{{ showNewSubs }}" hint-placeholder-val="{{ false }}">
+        <div style="flex: 1 1 100%; display: flex; flex-direction: column; gap: 2px; padding: 2px 2px 0 4px;">
+          <sc-for list="{{ newSubList }}" as="ns" hint-placeholder-count="0">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 4px 0;">
+              <span style="width: 18px; height: 18px; flex: none; box-sizing: border-box; border: 2px solid var(--border-strong); border-radius: 5px;"></span>
+              <span style="flex: 1; min-width: 0; font-size: 15px; text-transform: capitalize; color: var(--text-body); word-break: break-word;">{{ ns.title }}</span>
+              <button sc-camel-on-click="{{ ns.onRemove }}" title="Remove subtask" style="width: 28px; height: 28px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; {{ mo.subDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);">
+                <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+              </button>
+            </div>
+          </sc-for>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 4px 0 2px;">
+            <span style="width: 18px; height: 18px; flex: none; display: flex; align-items: center; justify-content: center; color: var(--tchb-indigo-500);">
+              <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+            </span>
+            <input value="{{ newSubDraft }}" sc-camel-on-change="{{ onNewSubDraft }}" sc-camel-on-key-down="{{ onNewSubKey }}" placeholder="{{ newSubPlaceholder }}" style="flex: 1; min-width: 0; border: 1px dashed var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 15px; text-transform: capitalize; background: var(--surface-card); outline: none; color: var(--text-body); {{ mo.input16 }}" style-focus="border-style: solid; border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+          </div>
+        </div>
+      </sc-if>
     </section>
 
     <section style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; {{ mo.filterRow }}">
@@ -1408,7 +1427,7 @@ class Component extends DCLogic {
     (Array.isArray(tasks) ? tasks : SEED).forEach(t => [t.owner, ...t.subs.map(s => s.owner)].forEach(o => { o = (o || '').trim(); if (o && !team.includes(o)) team.push(o); }));
     let mode = 'light', openMap = {};
     try { mode = localStorage.getItem(KEY + '-mode') || 'light'; openMap = JSON.parse(localStorage.getItem(KEY + '-open')) || {}; } catch (e) {}
-    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, menu: null, adding: false, addName: '', tasks: Array.isArray(tasks) ? tasks : SEED, company, filter: 'all', ownerFilter: '', newTask: '', newOwner: '', drafts: {}, undo: null };
+    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, menu: null, adding: false, addName: '', tasks: Array.isArray(tasks) ? tasks : SEED, company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null };
   }
   applyTheme(company, mode) {
     const el = document.documentElement, dark = mode === 'dark', kpi = company === 'kpi';
@@ -1496,7 +1515,11 @@ class Component extends DCLogic {
   addTask = () => {
     const title = this.state.newTask.trim();
     if (!title) return;
-    this.setState(st => ({ tasks: [...st.tasks, { ...mk(st.company, title, st.newOwner.trim()), order: Date.now(), ...(this.me() ? { updatedBy: this.me(), updatedAt: Date.now() } : {}) }], newTask: '' }));
+    this.setState(st => {
+      const owner = st.newOwner.trim(), t = { ...mk(st.company, title, owner), order: Date.now(), ...(this.me() ? { updatedBy: this.me(), updatedAt: Date.now() } : {}) };
+      t.subs = [...st.newSubs, st.newSubDraft.trim()].filter(Boolean).map(s => ({ id: id(), title: s, owner, status: 'todo', done: false, ...this.sst() }));
+      return { tasks: [...st.tasks, t], newTask: '', newSubs: [], newSubDraft: '', openMap: t.subs.length ? { ...st.openMap, [t.id]: true } : st.openMap };
+    });
   };
   addSub(tid) {
     const title = (this.state.drafts[tid] || '').trim();
@@ -1749,6 +1772,12 @@ class Component extends DCLogic {
       blurOnEnter: e => { if (e.key === 'Enter') { e.preventDefault(); e.currentTarget.blur(); } },
       onNewTask: e => this.setState({ newTask: e.target.value }),
       onNewTaskKey: e => { if (e.key === 'Enter') this.addTask(); },
+      showNewSubs: !!this.state.newTask.trim() || this.state.newSubs.length > 0,
+      newSubList: this.state.newSubs.map((title, i) => ({ title, onRemove: () => this.setState(st => ({ newSubs: st.newSubs.filter((_, j) => j !== i) })) })),
+      newSubDraft: this.state.newSubDraft,
+      newSubPlaceholder: this.state.newSubs.length ? 'Add another subtask and press Enter' : 'Add subtasks now (optional): type one and press Enter',
+      onNewSubDraft: e => this.setState({ newSubDraft: e.target.value }),
+      onNewSubKey: e => { if (e.key !== 'Enter') return; const v = this.state.newSubDraft.trim(); if (v) this.setState(st => ({ newSubs: [...st.newSubs, v], newSubDraft: '' })); },
       addTask: this.addTask,
       filters, visibleTasks, showProgress,
       expandAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = true; }); return { openMap: o }; }),
