@@ -1161,7 +1161,10 @@ h1, h2, h3, h4 {
           <sc-if value="{{ t.open }}" hint-placeholder-val="{{ true }}">
             <div style="background: var(--tchb-gray-050); padding: 10px 18px 16px 60px; display: flex; flex-direction: column; gap: 2px; {{ mo.panel }}">
               <sc-for list="{{ t.subs }}" as="s" hint-placeholder-count="3">
-                <div style="display: flex; align-items: center; gap: 12px; padding: 6px 8px; margin-left: -8px; border-radius: 8px; {{ mo.sub }}" style-hover="background: var(--surface-card);">
+                <div data-sid="{{ s.id }}" sc-camel-on-drag-over="{{ s.onDragOver }}" sc-camel-on-drop="{{ s.onDrop }}" style="display: flex; align-items: center; gap: 12px; padding: 6px 8px; margin-left: -8px; border-radius: 8px; transition: opacity 120ms; outline-offset: -2px; opacity: {{ s.dragOpacity }}; outline: {{ s.dropOutline }}; {{ mo.sub }}" style-hover="background: var(--surface-card);">
+                  <button draggable="{{ gripDraggable }}" sc-camel-on-drag-start="{{ s.onDragStart }}" sc-camel-on-drag-end="{{ onDragEnd }}" sc-camel-on-pointer-down="{{ s.onGripDown }}" sc-camel-on-pointer-move="{{ onSubGripMove }}" sc-camel-on-pointer-up="{{ onSubGripUp }}" sc-camel-on-pointer-cancel="{{ onDragEnd }}" title="Drag to reorder subtask" style="width: 20px; height: 28px; flex: none; margin: 0 -4px 0 -28px; border: none; background: transparent; border-radius: 6px; cursor: grab; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; padding: 0; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; {{ mo.subGrip }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
+                    <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.8"></circle><circle cx="15" cy="5" r="1.8"></circle><circle cx="9" cy="12" r="1.8"></circle><circle cx="15" cy="12" r="1.8"></circle><circle cx="9" cy="19" r="1.8"></circle><circle cx="15" cy="19" r="1.8"></circle></svg>
+                  </button>
                   <button sc-camel-on-click="{{ s.onToggle }}" style="width: 22px; height: 22px; flex: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; transition: background 120ms; background: {{ s.boxBg }}; border: 2px solid {{ s.boxBorder }}; {{ mo.subCheck }}">
                     <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}">
                       <svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
@@ -1354,6 +1357,7 @@ const MOBILE = {
   panel: 'padding: 8px 10px 14px 16px;',
   sub: 'flex-wrap: wrap; gap: 8px; padding: 8px;',
   subCheck: 'width: 26px; height: 26px;',
+  subGrip: 'margin: 0 -4px 0 -6px; width: 28px; height: 40px;',
   input16: 'font-size: 16px;',
   edited: 'order: 9; flex-basis: 100%; padding-left: 34px; white-space: normal;',
   subOwner: 'flex: 1 1 0; max-width: max-content; min-width: 0; min-height: 36px;',
@@ -1542,6 +1546,14 @@ class Component extends DCLogic {
       return { tasks: a.map((t, i) => t.order === i ? t : { ...t, order: i }), dragId: null, overId: null };
     });
   }
+  moveSub(tid, from, to) {
+    if (!from || from === to) return;
+    this.upd(tid, x => {
+      const a = [...x.subs]; const fi = a.findIndex(y => y.id === from), ti0 = a.findIndex(y => y.id === to); if (fi < 0 || ti0 < 0) return x;
+      const [it] = a.splice(fi, 1); const ti = a.findIndex(y => y.id === to); a.splice(fi < ti0 ? ti + 1 : ti, 0, it);
+      return { ...x, subs: a };
+    });
+  }
   componentDidMount() {
     // Track the phone breakpoint and the on-screen keyboard (so the bottom sheet stays above it).
     this._onResize = () => {
@@ -1638,6 +1650,13 @@ class Component extends DCLogic {
         onDraft: e => { const v = e.target.value; this.setState(s => ({ drafts: { ...s.drafts, [t.id]: v } })); },
         onDraftKey: e => { if (e.key === 'Enter') this.addSub(t.id); },
         subs: t.subs.map(s => ({
+          id: s.id,
+          dragOpacity: this.state.subDrag && this.state.subDrag.sid === s.id ? 0.45 : 1,
+          dropOutline: this.state.subOver === s.id && this.state.subDrag && this.state.subDrag.sid !== s.id ? '2px solid var(--tchb-indigo-500)' : 'none',
+          onDragStart: e => { e.stopPropagation(); e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', s.id); } catch (_) {} const row = e.currentTarget.closest('[data-sid]'); if (row) e.dataTransfer.setDragImage(row, 16, 18); this.setState({ subDrag: { tid: t.id, sid: s.id } }); },
+          onDragOver: e => { const d = this.state.subDrag; if (!d || d.tid !== t.id) return; e.preventDefault(); e.stopPropagation(); e.dataTransfer.dropEffect = 'move'; if (this.state.subOver !== s.id) this.setState({ subOver: s.id }); },
+          onDrop: e => { const d = this.state.subDrag; if (!d || d.tid !== t.id) return; e.preventDefault(); e.stopPropagation(); this.setState({ subDrag: null, subOver: null }); this.moveSub(t.id, d.sid, s.id); },
+          onGripDown: e => { if (e.pointerType === 'mouse') return; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {} this.setState({ subDrag: { tid: t.id, sid: s.id }, subOver: null }); },
           title: s.title, done: s.done, hasEdited: !!s.by, edited: s.by ? firstName(s.by) + ' · ' + ago(s.at) : '', editedTitle: s.by ? 'Last edited by ' + s.by : '', ...chipOf(s.owner), status: s.status || (s.done ? 'done' : 'todo'),
           statusBg: s.done ? 'var(--tchb-green-050)' : s.status === 'progress' ? 'var(--tchb-indigo-050)' : 'var(--tchb-gray-100)',
           statusFg: s.done ? 'var(--tchb-green-600)' : s.status === 'progress' ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
@@ -1663,7 +1682,19 @@ class Component extends DCLogic {
     return {
       tasksDone: done.length, tasksTotal: tasks.length, subsDone, subsTotal,
       overallPct: (subsTotal ? Math.round(subsDone / subsTotal * 100) : 0) + '%',
-      onDragEnd: () => this.setState({ dragId: null, overId: null }),
+      onDragEnd: () => this.setState({ dragId: null, overId: null, subDrag: null, subOver: null }),
+      onSubGripMove: e => {
+        const d = this.state.subDrag; if (e.pointerType === 'mouse' || !d) return;
+        if (e.clientY < 60) window.scrollBy(0, -12); else if (e.clientY > window.innerHeight - 60) window.scrollBy(0, 12);
+        const el = document.elementFromPoint(e.clientX, e.clientY), row = el && el.closest('[data-sid]'), art = row && row.closest('article[data-tid]');
+        if (row && art && art.dataset.tid === d.tid && row.dataset.sid !== this.state.subOver) this.setState({ subOver: row.dataset.sid });
+      },
+      onSubGripUp: e => {
+        if (e.pointerType === 'mouse') return;
+        const { subDrag, subOver } = this.state;
+        this.setState({ subDrag: null, subOver: null });
+        if (subDrag && subOver) this.moveSub(subDrag.tid, subDrag.sid, subOver);
+      },
       // Touch reorder (HTML5 drag doesn't fire on iOS): follow the finger, highlight the card under it, drop on release.
       gripDraggable: isTouch() ? 'false' : 'true',
       onGripMove: e => {
