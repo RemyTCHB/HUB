@@ -1593,7 +1593,6 @@ class Component extends DCLogic {
     }
     const ownerMatch = t => !ownerFilter || (t.owner || '').trim() === ownerFilter || t.subs.some(s => (s.owner || '').trim() === ownerFilter);
     const showProgress = this.props.showProgress ?? true;
-    const sortDone = this.props.sortDoneToBottom ?? false;
     const done = tasks.filter(t => this.isDone(t));
     const subsTotal = tasks.reduce((a, t) => a + (t.subs.length || 1), 0);
     const subsDone = tasks.reduce((a, t) => a + (t.subs.length ? t.subs.filter(s => s.done).length : (t.done ? 1 : 0)), 0);
@@ -1607,7 +1606,9 @@ class Component extends DCLogic {
       shadow: filter === k ? 'var(--shadow-button)' : 'none'
     }));
     let list = tasks.filter(t => (filter === 'all' || statusOf(t) === filter) && ownerMatch(t));
-    if (sortDone) list = [...list.filter(t => !this.isDone(t)), ...list.filter(t => this.isDone(t))];
+    // Group by status (In Progress, then Not Started, then Done); within a group keep the saved drag order.
+    const RANK = { progress: 0, todo: 1, done: 2 };
+    list = list.map((t, i) => [t, i]).sort((a, b) => RANK[statusOf(a[0])] - RANK[statusOf(b[0])] || a[1] - b[1]).map(([t]) => t);
     const STAT = { done: ['Done', 'green'], progress: ['In Progress', 'indigo'], todo: ['Not Started', 'neutral'] };
     const visibleTasks = list.map(t => {
       const d = this.isDone(t), st = statusOf(t);
