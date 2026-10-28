@@ -1094,12 +1094,23 @@ h1, h2, h3, h4 {
       </div>
     </section>
 
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;">
+      <div role="group" aria-label="Which tasks" style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.scopeSeg }}">
+        <button sc-camel-on-click="{{ teamTab.onClick }}" aria-pressed="{{ isTeam }}" style="border: none; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; display: flex; gap: 7px; align-items: center; transition: background 120ms; background: {{ teamTab.bg }}; color: {{ teamTab.color }}; box-shadow: {{ teamTab.shadow }}; {{ mo.scopeBtn }}"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Team Tasks</button>
+        <button sc-camel-on-click="{{ personalTab.onClick }}" aria-pressed="{{ isPersonal }}" style="border: none; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; display: flex; gap: 7px; align-items: center; transition: background 120ms; background: {{ personalTab.bg }}; color: {{ personalTab.color }}; box-shadow: {{ personalTab.shadow }}; {{ mo.scopeBtn }}"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Personal Tasks</button>
+      </div>
+      <span style="font-size: 13px; color: var(--text-muted);">{{ scopeHint }}</span>
+    </div>
+    <sc-if value="{{ showPError }}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 10px 14px; border-radius: var(--radius-md); background: var(--tchb-red-050); color: var(--status-error); font-size: 14px; font-weight: 600;">Personal tasks can't load yet. An admin needs to add the personal-tasks rule in Firebase (see the user guide).</div>
+    </sc-if>
+
     <div style="height: 6px; border-radius: 999px; background: var(--tchb-gray-100); overflow: hidden;">
       <div style="height: 100%; width: {{ overallPct }}; background: var(--tchb-gradient-brand); border-radius: 999px; transition: width 200ms cubic-bezier(0.2,0.8,0.3,1);"></div>
     </div>
 
     <section style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; {{ mo.addBar }}">
-      <input value="{{ newTask }}" sc-camel-on-change="{{ onNewTask }}" sc-camel-on-key-down="{{ onNewTaskKey }}" placeholder="Add a main task" style="flex: 1; min-width: 220px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 12px 14px; font-family: var(--font-body); font-size: 16px; text-transform: capitalize; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.addInput }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+      <input value="{{ newTask }}" sc-camel-on-change="{{ onNewTask }}" sc-camel-on-key-down="{{ onNewTaskKey }}" placeholder="{{ newTaskPlaceholder }}" style="flex: 1; min-width: 220px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 12px 14px; font-family: var(--font-body); font-size: 16px; text-transform: capitalize; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.addInput }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
       <button sc-camel-on-click="{{ openNewOwner }}" title="Owner" style="display: flex; align-items: center; gap: 8px; flex: none; padding: 6px 12px 6px 6px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 15px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ newOwnerChip.ownerLabelColor }}; {{ mo.addOwner }}" style-focus="box-shadow: var(--focus-ring);">
         <span style="width: 32px; height: 32px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; background: {{ newOwnerChip.ownerBg }}; color: {{ newOwnerChip.ownerFg }};">{{ newOwnerChip.initials }}</span>
         <span style="min-width: 110px; text-align: left; white-space: nowrap; {{ mo.ellip }}">{{ newOwnerChip.ownerLabel }}</span>
@@ -1189,7 +1200,7 @@ h1, h2, h3, h4 {
           <sc-if value="{{ t.open }}" hint-placeholder-val="{{ true }}">
             <div style="background: var(--tchb-gray-050); padding: 10px 18px 16px 60px; display: flex; flex-direction: column; gap: 2px; {{ mo.panel }}">
               <sc-for list="{{ t.subs }}" as="s" hint-placeholder-count="3">
-                <div data-sid="{{ s.id }}" sc-camel-on-drag-over="{{ s.onDragOver }}" sc-camel-on-drop="{{ s.onDrop }}" style="display: flex; align-items: center; gap: 12px; padding: 6px 8px; margin-left: -8px; border-radius: 8px; transition: opacity 120ms; outline-offset: -2px; opacity: {{ s.dragOpacity }}; outline: {{ s.dropOutline }}; {{ mo.sub }}" style-hover="background: var(--surface-card);">
+                <div data-sid="{{ s.id }}" sc-camel-on-drag-over="{{ s.onDragOver }}" sc-camel-on-drop="{{ s.onDrop }}" style="display: flex; align-items: center; gap: 12px; padding: 6px 8px; margin-left: -8px; border-radius: 8px; transition: opacity 120ms; outline-offset: -2px; opacity: {{ s.dragOpacity }}; outline: {{ s.dropOutline }}; {{ s.matchStyle }} {{ mo.sub }}" style-hover="background: var(--surface-card);">
                   <button draggable="{{ gripDraggable }}" sc-camel-on-drag-start="{{ s.onDragStart }}" sc-camel-on-drag-end="{{ onDragEnd }}" sc-camel-on-pointer-down="{{ s.onGripDown }}" sc-camel-on-pointer-move="{{ onSubGripMove }}" sc-camel-on-pointer-up="{{ onSubGripUp }}" sc-camel-on-pointer-cancel="{{ onGripCancel }}" title="Drag to reorder subtask" style="width: 20px; height: 28px; flex: none; margin: 0 -4px 0 -28px; border: none; background: transparent; border-radius: 6px; cursor: grab; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; padding: 0; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; {{ mo.subGrip }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
                     <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.8"></circle><circle cx="15" cy="5" r="1.8"></circle><circle cx="9" cy="12" r="1.8"></circle><circle cx="15" cy="12" r="1.8"></circle><circle cx="9" cy="19" r="1.8"></circle><circle cx="15" cy="19" r="1.8"></circle></svg>
                   </button>
@@ -1322,7 +1333,6 @@ const TEAM = ['Remy Ahmed', 'Brandy Pollack', 'Monz Miller', 'Motz Curran'];
 const initials = n => (n || '').trim().split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join('');
 const mk = (company, title, owner = '', subs = []) => ({ id: id(), company, title, owner, done: false, open: false,
   subs: subs.map(s => { const m = /^(.*?)\s*<([^>]+)>\s*$/.exec(s); return { id: id(), title: m ? m[1] : s, owner: m ? m[2] : owner, status: 'todo', done: false }; }) });
-const meetings = n => Array.from({ length: n }, (_, i) => 'Meeting ' + (i + 1));
 const COMPANIES = [{ key: 'tchb', label: 'TCHB', name: 'Total Cash Home Buyers' }, { key: 'kpi', label: 'KPI DRIVER', name: 'KPI Driver' }];
 const KPI_THEME = {
   '--tchb-indigo-900': '#0a121c', '--tchb-indigo-700': '#111d2c', '--tchb-indigo-500': '#3a7fc2', '--tchb-indigo-100': '#dce9f5', '--tchb-indigo-050': '#eef4fb',
@@ -1419,6 +1429,7 @@ const MOBILE = {
   panel: 'padding: 8px 10px 14px 16px;',
   sub: 'flex-wrap: wrap; gap: 8px; padding: 8px;',
   subCheck: 'width: 26px; height: 26px;',
+  scopeSeg: 'flex: 1 1 100%;', scopeBtn: 'flex: 1 1 0; justify-content: center; min-height: 40px; padding: 0 10px;',
   subGrip: 'margin: 0 -4px 0 -6px; width: 28px; height: 40px;',
   input16: 'font-size: 16px;',
   edited: 'order: 9; flex-basis: 100%; padding-left: 34px; white-space: normal;',
@@ -1436,35 +1447,12 @@ const MOBILE = {
   toastBtn: 'flex: none; min-height: 40px;'
 };
 const MOBILE_TINY = { ...MOBILE, tabPct: 'display: none;' }; // < 360px: company tabs drop their % to fit
-const SEED = [
-  mk('tchb', 'P&Ls', 'Motz Curran', ['PPC FL Out of The Accounting', 'Credit Card Interest to be Reviewed', 'CRM Fees To be Broken Down on the P&L', 'Bank Fees & Service Charges To Be Broken Down', '%s of Marketing, Payroll Sections, G&A', 'P&L TCHB No Flip Revenue From PI/BJP', 'P&L Pollack Investments']),
-  mk('tchb', 'TCA Handover — Chris to Will', 'Monz Miller'),
-  mk('tchb', 'Kompozy', 'Remy Ahmed', ['Set Up Social Profiles', 'Connect Social Profiles', 'Set Up Persona', 'Pictures', 'Review Prompts', 'Launch']),
-  mk('tchb', 'Payroll Draft 2027', 'Remy Ahmed', ['Dispo Payroll', 'TC Payroll', 'Ops Payroll']),
-  mk('tchb', 'SEO Mega AI', 'Remy Ahmed', ['Clone Webuysouthfl.com', 'Launch & Get Discount']),
-  mk('tchb', 'SEO HESEL WBSFL', 'Remy Ahmed', ['Check Progress 1', '2025 Case Studies (Brandy)', 'Check Progress 2', 'Check Progress 3']),
-  mk('tchb', 'Facebook Retargeting Ads HESEL', '', ['Check Connection to CRM', 'Review Ads', 'Launch', 'Progress Check 1', 'Progress Check 2']),
-  mk('tchb', '2027 Q1 Projection', 'Remy Ahmed'),
-  mk('tchb', 'TC Tools', 'Remy Ahmed', ['Title Commitment Agent', 'Aframe Views <Monz Miller>']),
-  mk('tchb', 'Projection Tool', 'Remy Ahmed'),
-  mk('tchb', 'ACQ Department', 'Brandy Pollack', ["Shawn's Vetting", 'Justin Offer', 'Justin Onboarding <Remy Ahmed>']),
-  mk('tchb', 'Integrate Kandice', 'Brandy Pollack', ['Train Remy into the Operations Roles', 'Identify Bottle Necks']),
-  mk('kpi', 'Kompozy', 'Remy Ahmed', ['Pictures', 'Review Prompts', 'Launch']),
-  mk('kpi', 'AI Dashboard', 'Remy Ahmed', meetings(10)),
-  mk('kpi', 'AI Sales Coach', 'Remy Ahmed', ['Dynamic Rubric', 'Accountability Tracker', 'Disputes', 'Voice Summary']),
-  mk('kpi', 'AI Insights', 'Remy Ahmed', meetings(5)),
-  mk('kpi', 'Enrichment Data Sources', 'Remy Ahmed', ['Implement Investorbase', 'Research Other APIs']),
-  mk('kpi', 'Referral Partnerships', 'Brandy Pollack', ['Partnership 1', 'Partnership 2', 'Partnership 3']),
-  mk('kpi', 'Operating Agreement 66.6/33.4', 'Brandy Pollack', ["Remy's Data <Remy Ahmed>", 'Create The Operating Agreement']),
-  mk('kpi', 'Nurture Revamp', 'Remy Ahmed', ['New 6 Months Nurtures', 'AI Nurture'])
-];
+// Work Offline shows placeholder tasks only (two per company); real tasks only ever come from Firebase.
+const examples = () => COMPANIES.flatMap(c => [mk(c.key, 'Example 1'), mk(c.key, 'Example 2', '', ['Subtask 1', 'Subtask 2'])]);
 
 class Component extends DCLogic {
   constructor(p) {
     super(p);
-    let tasks = null;
-    try { tasks = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
-    if (Array.isArray(tasks)) tasks = tasks.map(t => ({ ...t, subs: t.subs.map(s => ({ ...s, status: s.status || (s.done ? 'done' : 'todo') })) }));
     this.rootRef = React.createRef();
     this.bgRef = React.createRef();
     let company = 'tchb';
@@ -1472,10 +1460,9 @@ class Component extends DCLogic {
     let team = null;
     try { team = JSON.parse(localStorage.getItem(KEY + '-team')); } catch (e) {}
     if (!Array.isArray(team)) team = [...TEAM];
-    (Array.isArray(tasks) ? tasks : SEED).forEach(t => [t.owner, ...t.subs.map(s => s.owner)].forEach(o => { o = (o || '').trim(); if (o && !team.includes(o)) team.push(o); }));
     let mode = 'light', openMap = {};
     try { mode = localStorage.getItem(KEY + '-mode') || 'light'; openMap = JSON.parse(localStorage.getItem(KEY + '-open')) || {}; } catch (e) {}
-    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, menu: null, adding: false, addName: '', tasks: Array.isArray(tasks) ? tasks : SEED, company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null };
+    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, menu: null, adding: false, addName: '', tasks: [], scope: 'team', pError: false, company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null };
   }
   applyTheme(company, mode) {
     const el = document.documentElement, dark = mode === 'dark', kpi = company === 'kpi';
@@ -1490,7 +1477,7 @@ class Component extends DCLogic {
     const wait = () => {
       const cfg = window.TRACKER_FIREBASE;
       if (!cfg && tries++ < 30) return setTimeout(wait, 100);
-      if (!cfg || !cfg.config) return this.setState({ cloud: 'local' });
+      if (!cfg || !cfg.config) return this.goLocal();
       this.allowed = (cfg.allowedDomains || []).map(d => d.toLowerCase());
       this.setState({ cloud: 'connecting' });
       loadScript(FB_V + 'firebase-app-compat.js')
@@ -1500,45 +1487,50 @@ class Component extends DCLogic {
           this.fb = fb; this.auth = fb.auth(); this.db = fb.firestore();
           this.auth.onAuthStateChanged(u => this.onUser(u));
         })
-        .catch(e => { console.warn('Cloud sync unavailable', e); this.setState({ cloud: 'error', authError: 'Could not reach Firebase. Working locally for now.' }); });
+        .catch(e => { console.warn('Cloud sync unavailable', e); this.goLocal('error', 'Could not reach Firebase. Working locally for now.'); });
     };
     wait();
   }
+  // Work Offline: placeholder tasks (plus any personal ones made offline), kept in this browser only.
+  goLocal(cloud = 'local', authError = '') {
+    let tasks = null;
+    try { tasks = JSON.parse(localStorage.getItem(KEY + '-examples')); } catch (e) {}
+    this.unsub(); this._local = true;
+    this.setState({ cloud, authError, tasks: Array.isArray(tasks) ? tasks : examples(), scope: 'team' });
+  }
   onUser(u) {
-    if (!u) { this.unsub(); return this.setState({ cloud: 'signedOut', user: null }); }
+    // Signed out: forget the board in memory so nothing shows on the sign-in screen.
+    if (!u) { this.unsub(); this._local = false; this._synced = null; this._pending = {}; clearTimeout(this._wt); return this.setState({ cloud: 'signedOut', user: null, tasks: [], scope: 'team', pError: false }); }
     const email = (u.email || '').toLowerCase();
     if (this.allowed.length && !this.allowed.some(d => email.endsWith('@' + d))) {
       this.auth.signOut();
       return this.setState({ cloud: 'signedOut', user: null, authError: (u.email || 'That account') + " isn't on the team list. Use your @" + this.allowed.join(' or @') + ' Google account.' });
     }
-    this.setState({ cloud: 'connecting', user: { name: u.displayName || email, email }, authError: '' });
+    this._uid = u.uid; this._local = false;
+    this.setState({ cloud: 'connecting', user: { name: u.displayName || email, email }, authError: '', pError: false });
     this.subscribe();
   }
   subscribe() {
     this.unsub();
-    const col = this.db.collection('tasks');
-    this._u1 = col.onSnapshot(snap => {
-      if (snap.empty) {
-        this.db.doc('meta/app').get().then(m => {
-          if (m.exists && m.data().seeded) return this.applyRemote([]);
-          const b = this.db.batch();
-          SEED.forEach((t, i) => b.set(col.doc(t.id), clean({ ...t, order: i })));
-          b.set(this.db.doc('meta/app'), { seeded: true });
-          return b.commit();
-        });
-        return;
-      }
-      this.applyRemote(snap.docs.map(d => d.data()));
-    }, e => this.setState({ cloud: 'error', authError: e.message }));
+    this._got = {};
+    this._u1 = this.db.collection('tasks').onSnapshot(snap => this.applyRemote('team', snap.docs.map(d => d.data())),
+      e => this.setState({ cloud: 'error', authError: e.message }));
+    // Personal tasks live under users/{uid}/tasks, readable only by that person (Firestore rules).
+    this._u3 = this.pcol().onSnapshot(snap => { this.setState({ pError: false }); this.applyRemote('personal', snap.docs.map(d => ({ ...d.data(), scope: 'personal' }))); },
+      e => { console.warn('Personal tasks unavailable', e); this.setState({ pError: true }); this.applyRemote('personal', []); });
     this._u2 = this.db.doc('meta/team').onSnapshot(d => {
       if (d.exists) this.setState({ team: d.data().names || [] });
       else this.db.doc('meta/team').set({ names: this.state.team });
     });
   }
-  unsub() { this._u1 && this._u1(); this._u2 && this._u2(); this._u1 = this._u2 = null; }
-  applyRemote(list) {
+  unsub() { [this._u1, this._u2, this._u3].forEach(f => f && f()); this._u1 = this._u2 = this._u3 = null; }
+  pcol() { return this.db.collection('users').doc(this._uid).collection('tasks'); }
+  docRef(t) { return (t.scope === 'personal' ? this.pcol() : this.db.collection('tasks')).doc(t.id); }
+  applyRemote(kind, list) {
+    this._got = { ...this._got, [kind]: list };   // latest snapshot of team and personal tasks
+    if (!this._got.team || !this._got.personal) return;
     const pend = this._pending || {};
-    const tasks = list.map(t => pend[t.id] || t);
+    const tasks = [...this._got.team, ...this._got.personal].map(t => pend[t.id] || t);
     Object.values(pend).forEach(p => { if (!tasks.some(t => t.id === p.id)) tasks.push(p); });
     tasks.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
     this._synced = new Map(tasks.map(t => [t.id, t]));
@@ -1547,13 +1539,13 @@ class Component extends DCLogic {
   syncOut(tasks) {
     const prev = this._synced || new Map(), next = new Map();
     tasks.forEach(t => { next.set(t.id, t); if (prev.get(t.id) !== t) { (this._pending = this._pending || {})[t.id] = t; } });
-    prev.forEach((t, tid) => { if (!next.has(tid)) { if (this._pending) delete this._pending[tid]; this.db.collection('tasks').doc(tid).delete().catch(e => console.warn(e)); } });
+    prev.forEach((t, tid) => { if (!next.has(tid)) { if (this._pending) delete this._pending[tid]; this.docRef(t).delete().catch(e => console.warn(e)); } });
     this._synced = next;
     if (this._pending && Object.keys(this._pending).length) { clearTimeout(this._wt); this._wt = setTimeout(() => this.flush(), 350); }
   }
   flush() {
     const p = this._pending || {}; this._pending = {};
-    const b = this.db.batch(); Object.values(p).forEach(t => b.set(this.db.collection('tasks').doc(t.id), clean(t)));
+    const b = this.db.batch(); Object.values(p).forEach(t => b.set(this.docRef(t), clean(t)));
     b.commit().catch(e => console.warn('Sync failed', e));
   }
   me() { return this.state.cloud === 'ready' && this.state.user ? this.state.user.name : null; }
@@ -1564,7 +1556,7 @@ class Component extends DCLogic {
     const title = this.state.newTask.trim();
     if (!title) return;
     this.setState(st => {
-      const owner = st.newOwner.trim(), t = { ...mk(st.company, title, owner), order: Date.now(), ...(this.me() ? { updatedBy: this.me(), updatedAt: Date.now() } : {}) };
+      const owner = st.newOwner.trim(), t = { ...mk(st.company, title, owner), ...(st.scope === 'personal' ? { scope: 'personal' } : {}), order: Date.now(), ...(this.me() ? { updatedBy: this.me(), updatedAt: Date.now() } : {}) };
       // A listed subtask keeps the owner picked for it; otherwise it takes the task's owner.
       t.subs = [...st.newSubs, { title: st.newSubDraft.trim(), owner: null }].filter(s => s.title).map(s => ({ id: id(), title: s.title, owner: s.owner ?? owner, status: 'todo', done: false, ...this.sst() }));
       return { tasks: [...st.tasks, t], newTask: '', newSubs: [], newSubDraft: '', openMap: t.subs.length ? { ...st.openMap, [t.id]: true } : st.openMap };
@@ -1601,7 +1593,7 @@ class Component extends DCLogic {
     if (m.kind === 'owner') m.sid ? this.upd(m.tid, x => ({ ...x, subs: x.subs.map(y => y.id === m.sid ? { ...y, owner: v, ...this.sst() } : y) })) : this.upd(m.tid, x => ({ ...x, owner: v }));
     else if (m.kind === 'newOwner') this.setState({ newOwner: v });
     else if (m.kind === 'newSubOwner') this.setState(st => ({ newSubs: st.newSubs.map((s, j) => j === m.idx ? { ...s, owner: v } : s) }));
-    else if (m.kind === 'ownerFilter') this.setState({ ownerFilter: v });
+    else if (m.kind === 'ownerFilter') this.setState(st => { const o = { ...st.openMap }; if (v) st.tasks.forEach(t => { if (t.subs.some(y => (y.owner || '').trim() === v)) o[t.id] = true; }); return { ownerFilter: v, openMap: o }; });
     else if (m.kind === 'status') this.setSubStatus(m.tid, m.sid, v);
     this.setState({ menu: null, adding: false, addName: '' });
   }
@@ -1700,14 +1692,17 @@ class Component extends DCLogic {
     if (!this._cloudInit) { this._cloudInit = true; this.initCloud(); }
     const cloud = this.state.cloud, mode = this.state.mode;
     if (cloud === 'ready') this.syncOut(allTasks);
-    else if (this._savedTasks !== allTasks) { this._savedTasks = allTasks; try { localStorage.setItem(KEY, JSON.stringify(allTasks)); } catch (e) {} }
+    else if (this._local && this._savedTasks !== allTasks) { this._savedTasks = allTasks; try { localStorage.setItem(KEY + '-examples', JSON.stringify(allTasks)); } catch (e) {} }
     if (this._savedOpen !== this.state.openMap) { this._savedOpen = this.state.openMap; try { localStorage.setItem(KEY + '-open', JSON.stringify(this.state.openMap)); } catch (e) {} }
     if (this._themed !== company + mode) { this._themed = company + mode; this.applyTheme(company, mode); try { localStorage.setItem(KEY + '-co', company); localStorage.setItem(KEY + '-mode', mode); } catch (e) {} }
     const pctOf = ts => { const tot = ts.reduce((a, t) => a + (t.subs.length || 1), 0); const dn = ts.reduce((a, t) => a + (t.subs.length ? t.subs.filter(s => s.done).length : (t.done ? 1 : 0)), 0); return (tot ? Math.round(dn / tot * 100) : 0) + '%'; };
-    const companyTabs = COMPANIES.map(c => ({ label: c.label, pct: pctOf(allTasks.filter(t => (t.company || 'tchb') === c.key)),
+    const scope = this.state.scope, gate = ['init', 'connecting', 'signedOut'].includes(cloud);
+    const inScope = t => (t.scope === 'personal') === (scope === 'personal');
+    // Completion % is hidden on the sign-in screen; when shown it counts the list being viewed (team or personal).
+    const companyTabs = COMPANIES.map(c => ({ label: c.label, pct: gate ? '' : pctOf(allTasks.filter(t => (t.company || 'tchb') === c.key && inScope(t))),
       onClick: () => this.setState({ company: c.key, ownerFilter: '', filter: 'all' }),
       bg: company === c.key ? 'var(--action-secondary)' : 'transparent', color: company === c.key ? '#fff' : 'var(--tchb-gray-700)', shadow: company === c.key ? 'var(--shadow-button)' : 'none' }));
-    const tasks = allTasks.filter(t => (t.company || 'tchb') === company);
+    const tasks = allTasks.filter(t => (t.company || 'tchb') === company && inScope(t));
     const owners = this.state.team;
     if (this._savedTeam !== owners) { this._savedTeam = owners; try { localStorage.setItem(KEY + '-team', JSON.stringify(owners)); } catch (e) {} }
     // On phones, task/subtask owner pills show just the initials avatar once someone is picked (nameHide).
@@ -1785,6 +1780,7 @@ class Component extends DCLogic {
           onDrop: e => { const d = this.state.subDrag; if (!d || d.tid !== t.id) return; e.preventDefault(); e.stopPropagation(); this.setState({ subDrag: null, subOver: null }); this.moveSub(t.id, d.sid, s.id); },
           onGripDown: e => { if (e.pointerType === 'mouse') return; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {} this.setState({ subDrag: { tid: t.id, sid: s.id }, subOver: null }); },
           title: s.title, done: s.done, hasEdited: !!s.by, edited: s.by ? firstName(s.by) + ' · ' + ago(s.at) : '', editedTitle: s.by ? 'Last edited by ' + s.by : '', ...chipOf(s.owner), status: s.status || (s.done ? 'done' : 'todo'),
+          matchStyle: ownerFilter && (s.owner || '').trim() === ownerFilter ? 'background: color-mix(in srgb, var(--tchb-green-500) 11%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--tchb-green-500) 45%, transparent), 0 0 14px color-mix(in srgb, var(--tchb-green-500) 30%, transparent);' : '',
           statusBg: s.done ? 'var(--tchb-green-050)' : s.status === 'progress' ? 'var(--tchb-indigo-050)' : 'var(--tchb-gray-100)',
           statusFg: s.done ? 'var(--tchb-green-600)' : s.status === 'progress' ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
           openOwner: e => this.openMenu(e, { kind: 'owner', tid: t.id, sid: s.id }),
@@ -1845,10 +1841,17 @@ class Component extends DCLogic {
       setLight: () => this.setState({ mode: 'light' }), setDark: () => this.setState({ mode: 'dark' }),
       lightBg: mode !== 'dark' ? 'var(--action-secondary)' : 'transparent', lightFg: mode !== 'dark' ? '#fff' : 'var(--tchb-gray-700)',
       darkBg: mode === 'dark' ? 'var(--action-secondary)' : 'transparent', darkFg: mode === 'dark' ? '#fff' : 'var(--tchb-gray-700)',
-      showGate: ['connecting', 'signedOut'].includes(cloud), showBoard: ['init', 'local', 'ready', 'error'].includes(cloud),
-      canSignIn: cloud === 'signedOut', gateText: cloud === 'connecting' ? 'Connecting to the team board…' : 'Use your @kpidriver.com or @totalchb.com Google account to see and edit the live board.',
+      showGate: gate, showBoard: !gate,
+      canSignIn: cloud === 'signedOut', gateText: cloud !== 'signedOut' ? 'Connecting to the team board…' : 'Use your @kpidriver.com or @totalchb.com Google account to see and edit the live board.',
       hasAuthError: !!this.state.authError, authError: this.state.authError,
-      workLocal: () => { this.unsub(); this.setState({ cloud: 'local', authError: '' }); },
+      workLocal: () => this.goLocal(),
+      isTeam: scope !== 'personal', isPersonal: scope === 'personal',
+      ...Object.fromEntries(['team', 'personal'].map(k => [k + 'Tab', {
+        onClick: () => this.setState({ scope: k, ownerFilter: '', filter: 'all', menu: null }),
+        bg: scope === k ? 'var(--surface-card)' : 'transparent', color: scope === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: scope === k ? 'var(--shadow-button)' : 'none' }])),
+      scopeHint: scope === 'personal' ? (cloud === 'ready' ? 'Only you can see these.' : 'Saved in this browser only.') : 'Shared with the whole team.',
+      showPError: scope === 'personal' && this.state.pError,
+      newTaskPlaceholder: scope === 'personal' ? 'Add a personal task' : 'Add a main task',
       signIn: () => this.auth && this.auth.signInWithPopup(new this.fb.auth.GoogleAuthProvider()).catch(e => this.setState({ authError: e.message })),
       signOut: () => { if (this.auth && window.confirm('Sign out of the task board?')) this.auth.signOut(); },
       signedIn: cloud === 'ready' && !!this.state.user, userInitials: this.state.user ? initials(this.state.user.name) : '',
@@ -1903,8 +1906,8 @@ class Component extends DCLogic {
       expandAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = true; }); return { openMap: o }; }),
       collapseAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = false; }); return { openMap: o }; }),
       isEmpty: visibleTasks.length === 0,
-      emptyTitle: tasks.length ? 'Nothing here' : 'No tasks yet',
-      emptyBody: tasks.length ? 'No tasks match these filters.' : 'Add your first main task above to get started.',
+      emptyTitle: tasks.length ? 'Nothing here' : scope === 'personal' ? 'No personal tasks yet' : 'No tasks yet',
+      emptyBody: tasks.length ? 'No tasks match these filters.' : scope === 'personal' ? 'Add one above. Only you can see your personal tasks.' : 'Add your first main task above to get started.',
       hasUndo: !!undo, undoLabel: undo ? undo.t.title : '',
       undo: () => { clearTimeout(this._u); this.setState(st => { const a = [...st.tasks]; a.splice(st.undo.idx, 0, st.undo.t); return { tasks: a, undo: null }; }); }
     };
