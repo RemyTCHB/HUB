@@ -1567,7 +1567,8 @@ const squarePhoto = (file, size = 256) => new Promise((res, rej) => {
   img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('That file is not a photo this browser can open')); };
   img.src = url;
 });
-const when = ts => ts ? new Date(ts).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+// Dates are stored as exact moments (ms) and always shown in Eastern time, wherever the viewer is.
+const when = ts => ts ? new Date(ts).toLocaleString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' ET' : '';
 const sizeOf = b => b < 1024 * 1024 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
 const subStatus = s => s.status || (s.done ? 'done' : 'todo');
 const isDone = t => t.subs.length ? t.subs.every(s => s.done) : !!t.done;
