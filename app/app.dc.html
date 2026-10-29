@@ -1493,8 +1493,8 @@ h1, h2, h3, h4 {
           <span style="flex: 1 1 100%; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700);">Add A Person</span>
           <input value="{{ npName }}" sc-camel-on-change="{{ onNpName }}" sc-camel-on-key-down="{{ onNpKey }}" placeholder="Full name" style="flex: 1 1 180px; min-width: 0; text-transform: capitalize; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); box-sizing: border-box; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
           <input value="{{ npEmail }}" sc-camel-on-change="{{ onNpEmail }}" sc-camel-on-key-down="{{ onNpKey }}" placeholder="Sign-in email" type="email" style="flex: 1 1 200px; min-width: 0; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); box-sizing: border-box; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
-          <select value="{{ npRole }}" sc-camel-on-change="{{ onNpRole }}" aria-label="Role" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-body); background: var(--surface-card); outline: none; cursor: pointer; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"><sc-for list="{{ npRoleOpts }}" as="o" hint-placeholder-count="2"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select>
-          <select value="{{ npDept }}" sc-camel-on-change="{{ onNpDept }}" aria-label="Main department" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-body); background: var(--surface-card); outline: none; cursor: pointer; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"><sc-for list="{{ deptOpts }}" as="o" hint-placeholder-count="5"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select>
+          <button sc-camel-on-click="{{ openNpRole }}" aria-label="Role" aria-haspopup="listbox" style="width: 140px; display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 8px 10px 8px 12px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); white-space: nowrap; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); " style-focus="box-shadow: var(--focus-ring);"><span style="overflow: hidden; text-overflow: ellipsis;">{{ npRoleLabel }}</span><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
+          <button sc-camel-on-click="{{ openNpDept }}" aria-label="Main department" aria-haspopup="listbox" style="width: 140px; display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 8px 10px 8px 12px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); white-space: nowrap; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); " style-focus="box-shadow: var(--focus-ring);"><span style="overflow: hidden; text-overflow: ellipsis;">{{ npDeptLabel }}</span><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
           <button sc-camel-on-click="{{ addPerson }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 9px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Add</button>
         </div>
         <sc-for list="{{ pdGroups }}" as="g" hint-placeholder-count="2">
@@ -1508,9 +1508,9 @@ h1, h2, h3, h4 {
                   <span style="font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ pr.email }}</span>
                 </div>
               </div>
-              <select value="{{ pr.role }}" sc-camel-on-change="{{ pr.onRole }}" disabled="{{ pr.lockRole }}" aria-label="Role" style="width: 132px; border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-body); background: var(--surface-card); outline: none; cursor: pointer; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"><sc-for list="{{ pr.roleOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select>
+              <button sc-camel-on-click="{{ pr.openRole }}" aria-label="Role" aria-haspopup="listbox" style="width: 140px; display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 8px 10px 8px 12px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); white-space: nowrap; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); {{ pr.roleLock }}" style-focus="box-shadow: var(--focus-ring);"><span style="overflow: hidden; text-overflow: ellipsis;">{{ pr.roleLabel }}</span><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
               <sc-if value="{{ pr.notMgr }}" hint-placeholder-val="{{ true }}">
-                <select value="{{ pr.dept }}" sc-camel-on-change="{{ pr.onDept }}" aria-label="Main department" style="width: 132px; border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-body); background: var(--surface-card); outline: none; cursor: pointer; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"><sc-for list="{{ pr.deptOpts }}" as="o" hint-placeholder-count="5"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select>
+                <button sc-camel-on-click="{{ pr.openDept }}" aria-label="Main department" aria-haspopup="listbox" style="width: 140px; display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 8px 10px 8px 12px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); white-space: nowrap; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); " style-focus="box-shadow: var(--focus-ring);"><span style="overflow: hidden; text-overflow: ellipsis;">{{ pr.deptLabel }}</span><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
                 <div role="group" aria-label="Departments they see in Team" title="Departments they see in Team" style="display: flex; align-items: center; gap: 4px;">
                   <span style="font-size: 12px; font-weight: 700; color: var(--text-muted); margin-right: 2px;">Sees</span>
                   <sc-for list="{{ pr.sees }}" as="c" hint-placeholder-count="4">
@@ -1537,6 +1537,17 @@ h1, h2, h3, h4 {
         <button sc-camel-on-click="{{ closePeople }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 10px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); background: var(--surface-card);" style-hover="background: var(--tchb-indigo-050);">Cancel</button>
         <button sc-camel-on-click="{{ savePeople }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 10px 18px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Save Changes</button>
       </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ pdMenuOpen }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ closePdMenu }}" sc-camel-on-wheel="{{ closePdMenu }}" style="position: fixed; inset: 0; z-index: 70; {{ mo.shade }}"></div>
+    <div role="listbox" style="position: fixed; z-index: 71; min-width: 180px; padding: 6px; border-radius: 14px; display: flex; flex-direction: column; gap: 2px; background-color: var(--menu-bg, rgba(255,255,255,0.62)); background-image: var(--menu-sheen, linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 100%)); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid var(--glass-border, rgba(255,255,255,0.9)); box-shadow: var(--menu-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 2px 4px rgba(34,29,84,0.08), 0 16px 40px rgba(34,29,84,0.18)); top: {{ pdMenuTop }}; left: {{ pdMenuLeft }}; transform: {{ pdMenuTransform }}; {{ pdMenuSheet }}">
+      <sc-for list="{{ pdMenuItems }}" as="o" hint-placeholder-count="3">
+        <button role="option" aria-selected="{{ o.selected }}" sc-camel-on-click="{{ o.onClick }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 9px 12px; border-radius: 9px; font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--tchb-indigo-700); background: {{ o.bg }}; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));">
+          <span style="flex: 1; white-space: nowrap;">{{ o.label }}</span>
+          <sc-if value="{{ o.selected }}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--tchb-green-500)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+        </button>
+      </sc-for>
     </div>
   </sc-if>
   <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
@@ -2059,6 +2070,18 @@ class Component extends DCLogic {
   // ---------- People (managers) ----------
   // Edits go into a draft; Save writes the directory, and for Remy also the managers and company access.
   openPeople = () => this.setState(st => ({ menu: null, pd: { dir: JSON.parse(JSON.stringify(st.dir || {})), mgrs: [...(st.mgrs || [])], cos: JSON.parse(JSON.stringify(st.cos || {})) }, np: { name: '', email: '', role: 'member', dept: '' } }));
+  // Glass dropdowns inside Team Members (role and main department, per person and in Add A Person).
+  openPd(e, cfg) {
+    const r = e.currentTarget.getBoundingClientRect(), h = cfg.field === 'dept' ? 250 : 160, flip = r.bottom + h > window.innerHeight && r.top > h;
+    this.setState({ pdMenu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - 196)), flip } });
+  }
+  choosePd(v) {
+    const m = this.state.pdMenu; if (!m) return;
+    this.setState({ pdMenu: null });
+    if (m.k === '#new') return this.setState(st => ({ np: { ...st.np, [m.field]: v } }));
+    if (m.field === 'role') return this.setRole(m.k, v);
+    this.editPerson(m.k, x => ({ ...x, dept: v, sees: x.role === 'lead' ? DEPTS.filter(z => z === v || (x.sees || []).includes(z)) : v ? [v] : [] }));
+  }
   editPerson(k, fn) { this.setState(st => st.pd ? { pd: { ...st.pd, dir: { ...st.pd.dir, [k]: fn({ ...st.pd.dir[k] }) } } } : null); }
   setRole(k, role) {
     if ((role === 'manager' || this.state.pd.dir[k].role === 'manager') && this._key !== ADMIN) return this.say('Only Remy can add or remove managers');
@@ -2217,7 +2240,7 @@ class Component extends DCLogic {
   // the department toggle and (Remy only) which companies they can open.
   peopleVals() {
     const pd = this.state.pd, admin = this._key === ADMIN;
-    if (!pd) return { peopleOpen: false, pdGroups: [] };
+    if (!pd) return { peopleOpen: false, pdGroups: [], pdMenuOpen: false, pdMenuItems: [] };
     const d = pd.dir, isM = k => ROOT_MANAGERS.includes(k) || pd.mgrs.includes(k), by = (a, b) => (d[a].order || 999) - (d[b].order || 999), ks = Object.keys(d);
     const groups = [['Managers', ks.filter(isM).sort(by)], ...DEPTS.map(dp => [dp, ks.filter(k => !isM(k) && d[k].dept === dp).sort((a, b) => (d[b].role === 'lead') - (d[a].role === 'lead') || by(a, b))]),
       ['No Department', ks.filter(k => !isM(k) && !DEPTS.includes(d[k].dept)).sort(by)]].filter(g => g[1].length);
@@ -2230,9 +2253,10 @@ class Component extends DCLogic {
         canPhoto: admin, photoCursor: admin ? 'cursor: pointer;' : '', photoTitle: admin ? 'Upload a profile photo' : '',
         onPhoto: e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; this.setPhoto(k, f); },
         onName: e => { const v = e.target.value; this.editPerson(k, x => ({ ...x, name: v })); },
-        role: mgr ? 'manager' : r.role === 'lead' ? 'lead' : 'member', lockRole: root || (mgr && !admin), roleOpts: roleOpts(admin || mgr), onRole: e => this.setRole(k, e.target.value),
-        notMgr: !mgr, dept: r.dept || '', deptOpts,
-        onDept: e => { const v = e.target.value; this.editPerson(k, x => ({ ...x, dept: v, sees: x.role === 'lead' ? DEPTS.filter(z => z === v || (x.sees || []).includes(z)) : v ? [v] : [] })); },
+        role: mgr ? 'manager' : r.role === 'lead' ? 'lead' : 'member', roleLabel: ROLE_LABEL[mgr ? 'manager' : r.role === 'lead' ? 'lead' : 'member'],
+        roleLock: root || (mgr && !admin) ? 'pointer-events: none; opacity: 0.55;' : '', openRole: e => this.openPd(e, { k, field: 'role', opts: roleOpts(admin || mgr) }),
+        notMgr: !mgr, dept: r.dept || '',
+        deptLabel: r.dept || 'No Dept', openDept: e => this.openPd(e, { k, field: 'dept', opts: deptOpts }),
         sees: DEPTS.map(x => { const on = (r.sees || []).includes(x);
           return { label: x, ...chip(on, false), onClick: () => this.editPerson(k, y => ({ ...y, sees: on ? (y.sees || []).filter(z => z !== x) : DEPTS.filter(z => z === x || (y.sees || []).includes(z)) })) }; }),
         deptView: !!r.deptView,
@@ -2244,11 +2268,17 @@ class Component extends DCLogic {
     const np = this.state.np, setNp = (f, v) => this.setState(st => ({ np: { ...st.np, [f]: v } }));
     return { peopleOpen: true, pdGroups: groups.map(([g, rows]) => ({ label: g, rows: rows.map(row) })),
       adminNote: admin ? 'You can add managers and choose which companies each person can open.' : 'Only Remy can add managers or change which companies people can open.',
-      npName: np.name, npEmail: np.email, npRole: np.role, npDept: np.dept, npRoleOpts: roleOpts(admin), deptOpts,
-      onNpName: e => setNp('name', e.target.value), onNpEmail: e => setNp('email', e.target.value), onNpRole: e => setNp('role', e.target.value), onNpDept: e => setNp('dept', e.target.value),
+      npName: np.name, npEmail: np.email, npRole: np.role, npDept: np.dept,
+      onNpName: e => setNp('name', e.target.value), onNpEmail: e => setNp('email', e.target.value), npRoleLabel: ROLE_LABEL[np.role], npDeptLabel: np.dept || 'No Dept',
+      openNpRole: e => this.openPd(e, { k: '#new', field: 'role', opts: roleOpts(admin) }), openNpDept: e => this.openPd(e, { k: '#new', field: 'dept', opts: deptOpts }),
       onNpKey: e => { if (e.key === 'Enter') this.addPerson(); },
-      addPerson: this.addPerson, savePeople: this.savePeople, closePeople: () => this.setState({ pd: null }),
-      peopleKey: e => { if (e.key === 'Escape') this.setState({ pd: null }); } };
+      addPerson: this.addPerson, savePeople: this.savePeople, closePeople: () => this.setState({ pd: null, pdMenu: null }),
+      peopleKey: e => { if (e.key === 'Escape') this.setState(st => st.pdMenu ? { pdMenu: null } : { pd: null }); },
+      ...(() => { const m = this.state.pdMenu, cur = m ? (m.k === '#new' ? np[m.field] : m.field === 'role' ? (pd.mgrs.includes(m.k) || ROOT_MANAGERS.includes(m.k) ? 'manager' : (pd.dir[m.k] || {}).role) : (pd.dir[m.k] || {}).dept || '') : '';
+        return { pdMenuOpen: !!m, pdMenuTop: m ? m.top + 'px' : '0px', pdMenuLeft: m ? m.left + 'px' : '0px', pdMenuTransform: m && m.flip ? 'translateY(-100%)' : 'none',
+          closePdMenu: () => this.setState({ pdMenu: null }),
+          pdMenuSheet: m && this.state.mob ? 'top: auto; left: 0; right: 0; bottom: 0; transform: none; min-width: 0; padding: 8px 8px 20px; border-radius: 20px 20px 0 0;' : '',
+          pdMenuItems: m ? m.opts.map(o => ({ label: o.label, selected: o.v === cur, bg: o.v === cur ? 'var(--glass-hover, rgba(255,255,255,0.7))' : 'transparent', onClick: () => this.choosePd(o.v) })) : [] }; })() };
   }
   renderVals() {
     const { filter, ownerFilter, drafts, undo } = this.state;
