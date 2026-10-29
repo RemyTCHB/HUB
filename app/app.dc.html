@@ -1719,6 +1719,39 @@ const evText = e => { const q = e.title ? '“' + e.title + '”' : '';
   if (e.ev === 'due') return (e.sid ? q + ' due date ' : 'Due date ') + (e.due ? 'set to ' + when(e.due) : 'removed');
   if (e.ev in EV) return e.sid ? q + ' ' + EV[e.ev] : 'Task ' + EV[e.ev];
   return e.ev.charAt(0).toUpperCase() + e.ev.slice(1) + (q && e.ev !== 'pushed to live' ? ' ' + q : ''); };
+// Saving without losing anyone's work: when a task changed on the server while you were editing it, your changes
+// are laid over the latest saved version (field by field; subtasks, notes and files item by item; logs combined)
+// instead of replacing the whole task. base = the saved version your edit started from.
+const J = JSON.stringify;
+const mergeList = (base, mine, theirs, each) => {
+  base = base || []; mine = mine || []; theirs = theirs || [];
+  const b = new Map(base.map(x => [x.id, x])), m = new Map(mine.map(x => [x.id, x])), th = new Map(theirs.map(x => [x.id, x]));
+  const pick = id => {
+    if (m.has(id) && th.has(id)) return each ? each(b.get(id) || {}, m.get(id), th.get(id)) : J(m.get(id)) !== J(b.get(id)) ? m.get(id) : th.get(id);
+    if (m.has(id)) return b.has(id) && J(m.get(id)) === J(b.get(id)) ? null : m.get(id);   // they removed it (and you didn't change it) / you added it
+    if (th.has(id)) return b.has(id) ? null : th.get(id);                                  // you removed it / they added it
+    return null; };
+  const moved = J(mine.map(x => x.id).filter(i => b.has(i))) !== J(base.map(x => x.id).filter(i => m.has(i)));
+  const ids = moved ? [...mine.map(x => x.id), ...theirs.map(x => x.id)] : [...theirs.map(x => x.id), ...mine.map(x => x.id)];
+  return [...new Set(ids)].map(pick).filter(Boolean);
+};
+const mergeFields = (base, mine, theirs, lists = {}) => {
+  const out = { ...theirs };
+  new Set([...Object.keys(base), ...Object.keys(mine), ...Object.keys(theirs)]).forEach(k => {
+    if (lists[k]) { if (base[k] !== undefined || mine[k] !== undefined || theirs[k] !== undefined) out[k] = lists[k](base[k], mine[k], theirs[k]); }
+    else if (J(mine[k]) !== J(base[k])) { if (mine[k] === undefined) delete out[k]; else out[k] = mine[k]; }
+  });
+  return out;
+};
+const mergeLog = (b, m, t) => { const seen = new Map(); [...(t || []), ...(m || [])].forEach(e => seen.set([e.at, e.ev, e.sid || '', e.by || ''].join('|'), e));
+  return [...seen.values()].sort((x, y) => x.at - y.at).slice(-300); };
+const mergeTask = (base, mine, theirs) => {
+  const byId = (b, m, t) => mergeList(b, m, t);
+  const out = mergeFields(base, mine, theirs, { notes: byId, files: byId, log: mergeLog,
+    subs: (b, m, t) => mergeList(b, m, t, (bs, ms, ts) => mergeFields(bs, ms, ts, { notes: byId })) });
+  if (out.subs && out.subs.length) out.done = out.subs.every(x => x.done);
+  return out;
+};
 const MOBILE_MAX = 640;
 const isPhone = () => window.innerWidth < MOBILE_MAX;
 const isTiny = () => window.innerWidth < 360;
@@ -1949,7 +1982,9 @@ class Component extends DCLogic {
     this._got = { ...this._got, [kind]: list };   // latest snapshot of each list this person can see
     if (!this._need.every(k => this._got[k])) return;
     const pend = this._pending || {};
-    const tasks = [].concat(...this._need.map(k => this._got[k])).map(t => pend[t.id] || t);
+    const remote = [].concat(...this._need.map(k => this._got[k]));
+    this._remote = new Map(remote.map(t => [t.id, t]));   // latest saved version of every task (merge partner for saves)
+    const tasks = remote.map(t => pend[t.id] || t);
     Object.values(pend).forEach(p => { if (!tasks.some(t => t.id === p.id)) tasks.push(p); });
     tasks.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
     this._synced = new Map(tasks.map(t => [t.id, t]));
@@ -1981,15 +2016,44 @@ class Component extends DCLogic {
   }
   syncOut(tasks) {
     const prev = this._synced || new Map(), next = new Map();
-    tasks.forEach(t => { next.set(t.id, t); const was = prev.get(t.id); if (was !== t) { (this._pending = this._pending || {})[t.id] = t; if (was && this.docRef(was).path !== this.docRef(t).path) this.docRef(was).delete().catch(e => console.warn(e)); } });
-    prev.forEach((t, tid) => { if (!next.has(tid)) { if (this._pending) delete this._pending[tid]; this.docRef(t).delete().catch(e => console.warn(e)); } });
+    this._base = this._base || {};
+    tasks.forEach(t => { next.set(t.id, t); const was = prev.get(t.id); if (was !== t) { (this._pending = this._pending || {})[t.id] = t; if (!(t.id in this._base)) this._base[t.id] = (this._remote && this._remote.get(t.id)) || null; if (was && this.docRef(was).path !== this.docRef(t).path) this.write(was, () => this.docRef(was).delete()); } });
+    prev.forEach((t, tid) => { if (!next.has(tid)) { if (this._pending) delete this._pending[tid]; this.write(t, () => this.docRef(t).delete()); } });
     this._synced = next;
-    if (this._pending && Object.keys(this._pending).length) { clearTimeout(this._wt); this._wt = setTimeout(() => this.flush(), 350); }
+    if (this._pending && Object.keys(this._pending).length && !this._retry) { clearTimeout(this._wt); this._wt = setTimeout(() => this.flush(), 350); }   // while offline, the retry timer flushes
   }
+  // Each task is saved on its own (one refused save can't sink the others). A save reads the task's latest copy from the
+  // server and lays your changes over it in one step (a transaction), so a tab that is behind can't wipe out anyone's work.
   flush() {
     const p = this._pending || {}; this._pending = {};
-    const b = this.db.batch(); Object.values(p).forEach(t => b.set(this.docRef(t), clean(t.scope === 'assigned' ? t : { ...t, members: this.membersOf(t) })));
-    b.commit().catch(e => console.warn('Sync failed', e));
+    Object.values(p).forEach(t => { const base = this._base[t.id]; delete this._base[t.id]; this.save(t, base); });
+  }
+  save(t, base) {
+    const ref = this.docRef(t);
+    this.write(t, () => this.db.runTransaction(tx => tx.get(ref).then(snap => {
+      const latest = snap.exists ? snap.data() : null;
+      const out = base && latest ? mergeTask(clean(base), clean(t), latest) : clean(t);
+      tx.set(ref, clean(t.scope === 'assigned' ? { ...out, members: (latest || out).members || [] } : { ...out, members: this.membersOf({ ...out, list: t.list }) }));
+    })), () => { (this._pending = this._pending || {})[t.id] = this._pending[t.id] || t; if (!(t.id in this._base)) this._base[t.id] = base; });
+  }
+  // Every save is tracked: the badge says Saving… until the server confirms. No connection: the change waits and retries.
+  // Refused (e.g. no permission): Not Saved with the reason, and the screen goes back to what is really saved.
+  write(t, fn, keep) {
+    this._inflight = (this._inflight || 0) + 1; this.setState({ saving: this._inflight });
+    fn().then(() => { this._inflight--; this.setState(st => ({ saving: this._inflight, saveErr: this._inflight || this._retry || Object.keys(this._pending || {}).length ? st.saveErr : '' })); })
+      .catch(e => {
+        this._inflight--; console.warn('Save failed', e);
+        const msg = (e.code || '') + ' ' + (e.message || ''), offline = /unavailable|network|offline|failed-precondition|deadline/i.test(msg);
+        if (offline && keep) {
+          keep(); this.setState({ saving: this._inflight, saveErr: 'Not saved yet: no connection. Retrying…' });
+          clearTimeout(this._retry); this._retry = setTimeout(() => { this._retry = null; this.flush(); }, 5000);
+          return;
+        }
+        const why = /permission/i.test(msg) ? "you don't have permission to change it" : offline ? 'no connection' : e.message;
+        this.setState({ saving: this._inflight, saveErr: 'Not saved: "' + (t.title || 'task') + '" (' + why + ')' });
+        this.say('Your change to "' + (t.title || 'a task') + '" was not saved: ' + why + '. Showing the latest saved version.');
+        this._pending = {}; this._base = {}; const k = (this._need || []).find(x => this._got && this._got[x]); if (k) this.applyRemote(k, this._got[k]);
+      });
   }
   me() { return this.state.cloud === 'ready' && this.state.user ? this.myName() : null; }
   sst() { const m = this.me(); return m ? { by: m, at: hubNow() } : {}; }
@@ -2584,11 +2648,12 @@ class Component extends DCLogic {
       signedIn: cloud === 'ready' && !!this.state.user, userInitials: this.state.user ? initials(live ? this.myName() : this.state.user.name) : '',
       me: { photo: live ? this.rec(this._key).photo || '' : '', hasPhoto: live && !!this.rec(this._key).photo },
       userTitle: this.state.user ? 'Signed in as ' + this.state.user.email + ' — click to sign out' : '',
-      syncLabel: cloud === 'ready' ? 'Live' : cloud === 'connecting' ? 'Connecting' : cloud === 'error' ? 'Offline' : 'Local Only',
-      syncTitle: cloud === 'ready' ? 'Changes sync to the whole team instantly' : 'Changes are saved in this browser only',
-      syncBg: cloud === 'ready' ? 'var(--tchb-green-050)' : cloud === 'error' ? 'var(--tchb-red-050)' : 'var(--tchb-gray-100)',
-      syncFg: cloud === 'ready' ? 'var(--tchb-green-600)' : cloud === 'error' ? 'var(--status-error)' : 'var(--tchb-gray-700)',
-      syncDot: cloud === 'ready' ? 'var(--tchb-green-500)' : cloud === 'error' ? 'var(--status-error)' : 'var(--tchb-gray-500)',
+      ...(() => { const st = cloud !== 'ready' ? cloud : this.state.saveErr ? 'unsaved' : this.state.saving ? 'saving' : 'ready';
+        return { syncLabel: { ready: 'Live', saving: 'Saving…', unsaved: 'Not Saved', connecting: 'Connecting', error: 'Offline' }[st] || 'Local Only',
+          syncTitle: { ready: 'Every change is saved for the whole team', saving: 'Saving your changes for the whole team…', unsaved: this.state.saveErr }[st] || 'Changes are saved in this browser only',
+          syncBg: st === 'ready' ? 'var(--tchb-green-050)' : st === 'saving' ? 'var(--tchb-indigo-050)' : ['error', 'unsaved'].includes(st) ? 'var(--tchb-red-050)' : 'var(--tchb-gray-100)',
+          syncFg: st === 'ready' ? 'var(--tchb-green-600)' : st === 'saving' ? 'var(--tchb-indigo-700)' : ['error', 'unsaved'].includes(st) ? 'var(--status-error)' : 'var(--tchb-gray-700)',
+          syncDot: st === 'ready' ? 'var(--tchb-green-500)' : st === 'saving' ? 'var(--tchb-indigo-500)' : ['error', 'unsaved'].includes(st) ? 'var(--status-error)' : 'var(--tchb-gray-500)' }; })(),
       companyTabs, isTchb: company === 'tchb', isKpi: company === 'kpi', rootRef: this.rootRef, bgRef: this.bgRef, clockARef: this.clockARef, clockBRef: this.clockBRef,
       companyName: COMPANIES.find(c => c.key === company).name,
       newTask: this.state.newTask, newOwner: this.state.newOwner, owners, ownerFilter,
