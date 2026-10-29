@@ -1051,7 +1051,7 @@ h1, h2, h3, h4 {
         </sc-for>
       </nav>
       <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
-        <button sc-camel-on-click="{{ signOut }}" title="{{ userTitle }}" style="width: 40px; height: 40px; flex: none; border-radius: 999px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-shadow: var(--shadow-button); {{ mo.avatar }}">{{ userInitials }}</button>
+        <button sc-camel-on-click="{{ signOut }}" title="{{ userTitle }}" style="width: 40px; height: 40px; flex: none; border-radius: 999px; cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-shadow: var(--shadow-button); {{ mo.avatar }}">{{ userInitials }}<sc-if value="{{ me.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ me.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></button>
       </sc-if>
       </div>
     </div>
@@ -1096,7 +1096,7 @@ h1, h2, h3, h4 {
 
     <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;">
       <sc-if value="{{ showScopes }}" hint-placeholder-val="{{ false }}">
-        <div role="group" aria-label="Which tasks" style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.scopeSeg }}">
+        <div role="group" aria-label="Which tasks" title="{{ scopeHint }}" style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.scopeSeg }}">
           <sc-if value="{{ mgmtTab.show }}" hint-placeholder-val="{{ true }}"><button sc-camel-on-click="{{ mgmtTab.onClick }}" aria-pressed="{{ mgmtTab.on }}" style="border: none; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; display: flex; gap: 7px; align-items: center; transition: background 120ms; background: {{ mgmtTab.bg }}; color: {{ mgmtTab.color }}; box-shadow: {{ mgmtTab.shadow }}; {{ mo.scopeBtn }}"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>MGMT</button></sc-if>
           <sc-if value="{{ teamTab.show }}" hint-placeholder-val="{{ true }}"><button sc-camel-on-click="{{ teamTab.onClick }}" aria-pressed="{{ teamTab.on }}" style="border: none; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; display: flex; gap: 7px; align-items: center; transition: background 120ms; background: {{ teamTab.bg }}; color: {{ teamTab.color }}; box-shadow: {{ teamTab.shadow }}; {{ mo.scopeBtn }}"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Team</button></sc-if>
           <sc-if value="{{ personalTab.show }}" hint-placeholder-val="{{ true }}"><button sc-camel-on-click="{{ personalTab.onClick }}" aria-pressed="{{ personalTab.on }}" style="border: none; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; display: flex; gap: 7px; align-items: center; transition: background 120ms; background: {{ personalTab.bg }}; color: {{ personalTab.color }}; box-shadow: {{ personalTab.shadow }}; {{ mo.scopeBtn }}"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Personal</button></sc-if>
@@ -1106,21 +1106,20 @@ h1, h2, h3, h4 {
       <sc-if value="{{ isMember }}" hint-placeholder-val="{{ false }}">
         <span style="font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700);">Your Personal Tasks</span>
       </sc-if>
-      <span style="font-size: 13px; color: var(--text-muted);">{{ scopeHint }}</span>
+      <sc-if value="{{ showDepts }}" hint-placeholder-val="{{ false }}">
+        <div role="group" aria-label="Department" style="display: flex; gap: 4px; padding: 4px; max-width: 100%; box-sizing: border-box; overflow-x: auto; scrollbar-width: none; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.deptSeg }}">
+          <sc-for list="{{ deptTabs }}" as="d" hint-placeholder-count="5">
+            <button sc-camel-on-click="{{ d.onClick }}" style="border: none; cursor: pointer; flex: none; padding: 7px 14px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; display: flex; gap: 6px; align-items: center; white-space: nowrap; transition: background 120ms; background: {{ d.bg }}; color: {{ d.color }}; box-shadow: {{ d.shadow }}; {{ mo.deptBtn }}">{{ d.label }}<span style="font-weight: 600; opacity: 0.7;">{{ d.count }}</span></button>
+          </sc-for>
+        </div>
+      </sc-if>
       <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
         <button sc-camel-on-click="{{ goBack }}" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; margin-left: auto;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back To Sign In</button>
       </sc-if>
       <sc-if value="{{ showPeopleBtn }}" hint-placeholder-val="{{ false }}">
-        <button sc-camel-on-click="{{ openPeople }}" title="Roles, departments and access" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; margin-left: auto;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>People</button>
+        <button sc-camel-on-click="{{ openPeople }}" title="Roles, departments and access" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; margin-left: auto;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>Team Members</button>
       </sc-if>
     </div>
-    <sc-if value="{{ showDepts }}" hint-placeholder-val="{{ false }}">
-      <div role="group" aria-label="Department" style="display: flex; gap: 4px; padding: 4px; align-self: flex-start; max-width: 100%; box-sizing: border-box; overflow-x: auto; scrollbar-width: none; background: var(--tchb-gray-100); border-radius: 999px; margin-top: -8px; {{ mo.deptSeg }}">
-        <sc-for list="{{ deptTabs }}" as="d" hint-placeholder-count="5">
-          <button sc-camel-on-click="{{ d.onClick }}" style="border: none; cursor: pointer; flex: none; padding: 7px 14px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; display: flex; gap: 6px; align-items: center; white-space: nowrap; transition: background 120ms; background: {{ d.bg }}; color: {{ d.color }}; box-shadow: {{ d.shadow }}; {{ mo.deptBtn }}">{{ d.label }}<span style="font-weight: 600; opacity: 0.7;">{{ d.count }}</span></button>
-        </sc-for>
-      </div>
-    </sc-if>
     <sc-if value="{{ showErr }}" hint-placeholder-val="{{ false }}">
       <div style="padding: 10px 14px; border-radius: var(--radius-md); background: var(--tchb-red-050); color: var(--status-error); font-size: 14px; font-weight: 600;">These tasks can't load yet. An admin needs to update the Firestore rules (see the user guide).</div>
     </sc-if>
@@ -1137,7 +1136,7 @@ h1, h2, h3, h4 {
       </sc-if>
       <sc-if value="{{ showNewOwner }}" hint-placeholder-val="{{ true }}">
       <button sc-camel-on-click="{{ openNewOwner }}" title="Owner" style="display: flex; align-items: center; gap: 8px; flex: none; padding: 6px 12px 6px 6px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 15px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ newOwnerChip.ownerLabelColor }}; {{ mo.addOwner }}" style-focus="box-shadow: var(--focus-ring);">
-        <span style="width: 32px; height: 32px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; background: {{ newOwnerChip.ownerBg }}; color: {{ newOwnerChip.ownerFg }};">{{ newOwnerChip.initials }}</span>
+        <span style="width: 32px; height: 32px; flex: none; border-radius: 999px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; background: {{ newOwnerChip.ownerBg }}; color: {{ newOwnerChip.ownerFg }};">{{ newOwnerChip.initials }}<sc-if value="{{ newOwnerChip.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ newOwnerChip.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></span>
         <span style="min-width: 110px; text-align: left; white-space: nowrap; {{ mo.ellip }}">{{ newOwnerChip.ownerLabel }}</span>
         <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
       </button>
@@ -1150,7 +1149,7 @@ h1, h2, h3, h4 {
               <span style="width: 18px; height: 18px; flex: none; box-sizing: border-box; border: 2px solid var(--border-strong); border-radius: 5px;"></span>
               <span style="flex: 1; min-width: 0; font-size: 15px; text-transform: capitalize; color: var(--text-body); word-break: break-word;">{{ ns.title }}</span>
               <button sc-camel-on-click="{{ ns.openOwner }}" title="Owner" aria-label="{{ ns.ownerAria }}" style="display: flex; align-items: center; gap: 6px; flex: none; padding: 3px 10px 3px 3px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ ns.ownerLabelColor }}; {{ mo.subOwner }}" style-focus="box-shadow: var(--focus-ring);">
-              <span style="width: 22px; height: 22px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ ns.ownerBg }}; color: {{ ns.ownerFg }};">{{ ns.initials }}</span>
+              <span style="width: 22px; height: 22px; flex: none; border-radius: 999px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ ns.ownerBg }}; color: {{ ns.ownerFg }};">{{ ns.initials }}<sc-if value="{{ ns.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ ns.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></span>
               <span style="min-width: 84px; text-align: left; white-space: nowrap; {{ mo.ellip }} {{ ns.nameHide }}">{{ ns.ownerLabel }}</span>
               <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
               </button>
@@ -1213,7 +1212,7 @@ h1, h2, h3, h4 {
             </div>
             <div style="display: none; {{ mo.brk }}"></div>
             <button sc-camel-on-click="{{ t.openOwner }}" title="Owner" aria-label="{{ t.ownerAria }}" style="display: flex; align-items: center; gap: 6px; flex: none; padding: 3px 10px 3px 3px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ t.ownerLabelColor }}; {{ mo.taskOwner }} {{ t.ownerLock }}" style-focus="box-shadow: var(--focus-ring);">
-                    <span style="width: 24px; height: 24px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ t.ownerBg }}; color: {{ t.ownerFg }};">{{ t.initials }}</span>
+                    <span style="width: 24px; height: 24px; flex: none; border-radius: 999px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ t.ownerBg }}; color: {{ t.ownerFg }};">{{ t.initials }}<sc-if value="{{ t.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ t.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></span>
                     <span style="min-width: 84px; text-align: left; white-space: nowrap; {{ mo.ellip }} {{ t.nameHide }}">{{ t.ownerLabel }}</span>
                     <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
                   </button>
@@ -1257,7 +1256,7 @@ h1, h2, h3, h4 {
                     <span title="{{ s.editedTitle }}" style="flex: none; font-size: 12px; color: var(--text-muted); white-space: nowrap; {{ mo.edited }}">{{ s.edited }}</span>
                   </sc-if>
                   <button sc-camel-on-click="{{ s.openOwner }}" title="Owner" aria-label="{{ s.ownerAria }}" style="display: flex; align-items: center; gap: 6px; flex: none; padding: 3px 10px 3px 3px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ s.ownerLabelColor }}; {{ mo.subOwner }} {{ s.subOwnerLock }} {{ s.blurStyle }}" style-focus="box-shadow: var(--focus-ring);">
-                    <span style="width: 22px; height: 22px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ s.ownerBg }}; color: {{ s.ownerFg }};">{{ s.initials }}</span>
+                    <span style="width: 22px; height: 22px; flex: none; border-radius: 999px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ s.ownerBg }}; color: {{ s.ownerFg }};">{{ s.initials }}<sc-if value="{{ s.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ s.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></span>
                     <span style="min-width: 84px; text-align: left; white-space: nowrap; {{ mo.ellip }} {{ s.nameHide }}">{{ s.ownerLabel }}</span>
                     <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
                   </button>
@@ -1305,7 +1304,7 @@ h1, h2, h3, h4 {
         <sc-if value="{{ m.isItem }}" hint-placeholder-val="{{ true }}">
         <button sc-camel-on-click="{{ m.onClick }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 8px 10px; border-radius: 9px; font-family: var(--font-body); font-size: 14px; font-weight: 600; text-transform: capitalize; color: var(--text-body); background: {{ m.bg }}; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));">
           <sc-if value="{{ m.hasAvatar }}" hint-placeholder-val="{{ false }}">
-            <span style="width: 24px; height: 24px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ m.avBg }}; color: {{ m.avFg }};">{{ m.initials }}</span>
+            <span style="width: 24px; height: 24px; flex: none; border-radius: 999px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ m.avBg }}; color: {{ m.avFg }};">{{ m.initials }}<sc-if value="{{ m.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ m.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></span>
           </sc-if>
           <sc-if value="{{ m.hasDot }}" hint-placeholder-val="{{ false }}">
             <span style="width: 10px; height: 10px; flex: none; border-radius: 999px; background: {{ m.dot }};"></span>
@@ -1402,10 +1401,10 @@ h1, h2, h3, h4 {
 
   <sc-if value="{{ peopleOpen }}" hint-placeholder-val="{{ false }}">
     <div sc-camel-on-click="{{ closePeople }}" style="position: fixed; inset: 0; z-index: 60; background: rgba(10, 12, 24, 0.4);"></div>
-    <div role="dialog" aria-label="People" sc-camel-on-key-down="{{ peopleKey }}" style="position: fixed; z-index: 61; left: 50%; top: 24px; transform: translateX(-50%); width: calc(100% - 32px); max-width: 1060px; max-height: calc(100vh - 48px); box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); overflow: hidden; {{ mo.sheet }}">
+    <div role="dialog" aria-label="Team Members" sc-camel-on-key-down="{{ peopleKey }}" style="position: fixed; z-index: 61; left: 50%; top: 24px; transform: translateX(-50%); width: calc(100% - 32px); max-width: 1060px; max-height: calc(100vh - 48px); box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); overflow: hidden; {{ mo.sheet }}">
       <div style="display: flex; align-items: flex-start; gap: 12px; padding: 18px 20px 12px; border-bottom: 1px solid var(--border-default);">
         <div style="flex: 1; min-width: 0;">
-          <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--tchb-indigo-700);">People</h2>
+          <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--tchb-indigo-700);">Team Members</h2>
           <p style="margin: 2px 0 0; font-size: 13px; color: var(--text-muted);">Roles, main department, the departments each person sees in Team and the department toggle. {{ adminNote }}</p>
         </div>
         <button sc-camel-on-click="{{ closePeople }}" title="Close" aria-label="Close" style="width: 40px; height: 40px; flex: none; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center;" style-hover="background: var(--tchb-gray-100);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
@@ -1424,7 +1423,7 @@ h1, h2, h3, h4 {
           <sc-for list="{{ g.rows }}" as="pr" hint-placeholder-count="3">
             <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; padding: 10px 0; border-top: 1px solid var(--border-default);">
               <div style="display: flex; align-items: center; gap: 10px; flex: 1 1 190px; min-width: 0;">
-                <span style="width: 34px; height: 34px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700));">{{ pr.initials }}</span>
+                <label title="{{ pr.photoTitle }}" style="width: 40px; height: 40px; flex: none; border-radius: 999px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); {{ pr.photoCursor }}">{{ pr.initials }}<sc-if value="{{ pr.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ pr.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if><sc-if value="{{ pr.canPhoto }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 13px; display: flex; align-items: center; justify-content: center; background: rgba(10, 12, 24, 0.55);"><svg width="9" height="9" sc-camel-view-box="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg></span><input type="file" accept="image/*" sc-camel-on-change="{{ pr.onPhoto }}" style="display: none;"></sc-if></label>
                 <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
                   <input value="{{ pr.name }}" sc-camel-on-change="{{ pr.onName }}" aria-label="Name" style="border: 1px solid transparent; border-radius: 6px; padding: 2px 6px; margin-left: -7px; font-family: var(--font-display); font-weight: 700; font-size: 15px; text-transform: capitalize; color: var(--text-body); background: transparent; outline: none; min-width: 0; {{ mo.input16 }}" style-hover="border-color: var(--border-default);" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
                   <span style="font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ pr.email }}</span>
@@ -1559,6 +1558,15 @@ const DEFAULT_DIRECTORY = Object.fromEntries(SEED.map(([name, email, role, dept 
 // Companies each person can open (meta/companies); anyone not listed sees TCHB only. Managers always see both.
 const DEFAULT_COMPANIES = Object.fromEntries(['brandy@totalchb.com', 'systems@totalchb.com', 'info@totalchb.com', 'crm@kpidriver.com', 'billing@kpidriver.com'].map(k => [k, ['tchb', 'kpi']]));
 const MAX_FILE = 25 * 1024 * 1024;   // per upload; keep in step with the Storage rules
+// Profile photos: centre-cropped to a 256px square JPEG before upload, so avatars stay small and quick to load.
+const squarePhoto = (file, size = 256) => new Promise((res, rej) => {
+  const img = new Image(), url = URL.createObjectURL(file);
+  img.onload = () => { const c = document.createElement('canvas'), m = Math.min(img.width, img.height); c.width = c.height = size;
+    c.getContext('2d').drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, size, size); URL.revokeObjectURL(url);
+    c.toBlob(b => b ? res(b) : rej(new Error('Could not read that image')), 'image/jpeg', 0.86); };
+  img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('That file is not a photo this browser can open')); };
+  img.src = url;
+});
 const when = ts => ts ? new Date(ts).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
 const sizeOf = b => b < 1024 * 1024 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
 const subStatus = s => s.status || (s.done ? 'done' : 'todo');
@@ -1629,7 +1637,7 @@ const MOBILE = {
   toast: 'left: 16px; right: 16px; bottom: 16px; transform: none;',
   toastLabel: 'flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;',
   toastBtn: 'flex: none; min-height: 40px;',
-  deptSeg: 'align-self: stretch; margin-top: -4px;', deptBtn: 'flex: 1 0 auto; justify-content: center; min-height: 38px;',
+  deptSeg: 'flex: 1 1 100%;', deptBtn: 'flex: 1 0 auto; justify-content: center; min-height: 38px;',
   filterLeft: 'flex: 1 1 100%;',
   subFile: 'min-width: 40px; height: 40px;',
   chip: 'padding: 7px 10px; font-size: 12px;',
@@ -1710,6 +1718,7 @@ class Component extends DCLogic {
   nameOf(k) { return this.rec(k).name || (this.state.people || {})[k] || k; }
   keyOfName(n) { n = (n || '').trim().toLowerCase(); if (!n) return ''; const d = this.state.dir || {}; return Object.keys(d).find(k => (d[k].name || '').trim().toLowerCase() === n) || ''; }
   myName() { return this.rec(this._key).name || this._name; }
+  photoOf(name) { const k = this.keyOfName(name); return (k && this.rec(k).photo) || ''; }
   // Managers first, then each department (team leaders first), then names with no login; only people who can open this company.
   groups(co, keep = () => true) {
     const d = this.state.dir || {}, by = (a, b) => (d[a].order || 999) - (d[b].order || 999);
@@ -1913,6 +1922,15 @@ class Component extends DCLogic {
     this.setState(st => { const cur = st.pd.cos[k] || ['tchb'], next = cur.includes(co) ? cur.filter(c => c !== co) : [...cur, co];
       return next.length ? { pd: { ...st.pd, cos: { ...st.pd.cos, [k]: COMPANIES.map(c => c.key).filter(c => next.includes(c)) } } } : null; });
   }
+  // Remy only: upload a photo for someone; it is kept in the draft until Save Changes.
+  setPhoto(k, file) {
+    if (this._key !== ADMIN || !file) return;
+    this.say('Uploading photo…');
+    squarePhoto(file).then(blob => this.storage().then(st => st.ref('avatars/' + k + '/' + id() + '.jpg').put(blob, { contentType: 'image/jpeg' })))
+      .then(r => r.ref.getDownloadURL())
+      .then(url => { this.editPerson(k, r => ({ ...r, photo: url })); this.say('Photo added. Save Changes to keep it.'); })
+      .catch(e => { console.warn(e); this.say('Could not upload the photo: ' + e.message); });
+  }
   removePerson(k) {
     if (ROOT_MANAGERS.includes(k)) return;
     if (this.state.pd.dir[k].role === 'manager' && this._key !== ADMIN) return this.say('Only Remy can remove a manager');
@@ -1934,7 +1952,7 @@ class Component extends DCLogic {
     const dir = Object.fromEntries(Object.entries(pd.dir).map(([k, r]) => [k, { ...r, role: ROOT_MANAGERS.includes(k) || pd.mgrs.includes(k) ? 'manager' : r.role === 'lead' ? 'lead' : 'member', name: (r.name || '').trim() || k }]));
     const b = this.db.batch(); b.set(this.db.doc('meta/directory'), { people: dir });
     if (this._key === ADMIN) { b.set(this.db.doc('meta/managers'), { keys: pd.mgrs.filter(k => dir[k] && !ROOT_MANAGERS.includes(k)) }); b.set(this.db.doc('meta/companies'), { access: pd.cos }); }
-    b.commit().then(() => this.say('People saved')).catch(e => this.say('Could not save: ' + e.message));
+    b.commit().then(() => this.say('Team members saved')).catch(e => this.say('Could not save: ' + e.message));
     this.setState({ dir, ...(this._key === ADMIN ? { mgrs: pd.mgrs, cos: pd.cos } : {}), pd: null }, () => this.syncListeners());
   };
   // ---------- Files (Firebase Storage) ----------
@@ -2049,7 +2067,9 @@ class Component extends DCLogic {
     const deptOpts = [{ v: '', label: 'No Dept' }, ...DEPTS.map(x => ({ v: x, label: x }))];
     const row = k => {
       const r = d[k], mgr = isM(k), root = ROOT_MANAGERS.includes(k), cos = mgr ? ['tchb', 'kpi'] : pd.cos[k] || ['tchb'];
-      return { key: k, name: r.name || '', email: k, initials: initials(r.name || k) || '?',
+      return { key: k, name: r.name || '', email: k, initials: initials(r.name || k) || '?', photo: r.photo || '', hasPhoto: !!r.photo,
+        canPhoto: admin, photoCursor: admin ? 'cursor: pointer;' : '', photoTitle: admin ? 'Upload a profile photo' : '',
+        onPhoto: e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; this.setPhoto(k, f); },
         onName: e => { const v = e.target.value; this.editPerson(k, x => ({ ...x, name: v })); },
         role: mgr ? 'manager' : r.role === 'lead' ? 'lead' : 'member', lockRole: root || (mgr && !admin), roleOpts: roleOpts(admin || mgr), onRole: e => this.setRole(k, e.target.value),
         notMgr: !mgr, dept: r.dept || '', deptOpts,
@@ -2118,12 +2138,12 @@ class Component extends DCLogic {
     // Owner lists: managers, then each department (team leaders first), then older names with no login ("Other").
     const dirNames = new Set(Object.values(this.state.dir || {}).map(r => (r.name || '').trim().toLowerCase()));
     const others = owners.filter(n => n && !dirNames.has(n.trim().toLowerCase()));
-    const av = nm => ({ hasAvatar: true, initials: initials(nm), avBg: 'var(--avatar-bg, var(--tchb-indigo-700))', avFg: '#fff' });
+    const av = nm => ({ hasAvatar: true, photo: this.photoOf(nm), hasPhoto: !!this.photoOf(nm), initials: initials(nm), avBg: 'var(--avatar-bg, var(--tchb-indigo-700))', avFg: '#fff' });
     const grouped = (keep, valueOf) => [].concat(...this.groups(company, keep).map(([g, ks]) => [{ isHeader: true, label: g, value: '#' + g },
       ...ks.map(k => ({ value: valueOf(k), label: this.nameOf(k), note: this.rec(k).role === 'lead' && !this.isMgr(k) ? 'Team Leader' : '', ...av(this.nameOf(k)) }))]));
     const ownerItems = () => [...grouped(() => true, k => this.nameOf(k)), ...(others.length ? [{ isHeader: true, label: 'Other', value: '#other' }, ...others.map(o => ({ value: o, label: o, ...av(o) }))] : [])];
     // On phones, task/subtask owner pills show just the initials avatar once someone is picked (nameHide).
-    const chipOf = o => ({ owner: o || '', ownerLabel: o || 'Assign', nameHide: o && this.state.mob ? 'display: none;' : '', ownerAria: o ? 'Owner: ' + o : 'Assign owner', ownerLabelColor: o ? 'var(--text-body)' : 'var(--text-muted)', initials: initials(o) || '+', ownerBg: o ? 'var(--avatar-bg, var(--tchb-indigo-700))' : 'var(--tchb-gray-100)', ownerFg: o ? '#fff' : 'var(--tchb-gray-500)' });
+    const chipOf = o => ({ owner: o || '', photo: this.photoOf(o), hasPhoto: !!this.photoOf(o), ownerLabel: o || 'Assign', nameHide: o && this.state.mob ? 'display: none;' : '', ownerAria: o ? 'Owner: ' + o : 'Assign owner', ownerLabelColor: o ? 'var(--text-body)' : 'var(--text-muted)', initials: initials(o) || '+', ownerBg: o ? 'var(--avatar-bg, var(--tchb-indigo-700))' : 'var(--tchb-gray-100)', ownerFg: o ? '#fff' : 'var(--tchb-gray-500)' });
     const menu = this.state.menu;
     const SL = { todo: 'Not Started', progress: 'In Progress', done: 'Done' };
     let menuItems = [], menuCur = '';
@@ -2141,7 +2161,7 @@ class Component extends DCLogic {
         else menuCur = menu.kind === 'newOwner' ? this.state.newOwner : ownerFilter;
         menuItems = [{ value: '', label: menu.kind === 'ownerFilter' ? 'All Owners' : 'Unassigned', hasAvatar: true, initials: '—', avBg: 'var(--tchb-gray-100)', avFg: 'var(--tchb-gray-500)' }, ...ownerItems()];
       }
-      menuItems = menuItems.map(it => ({ hasAvatar: false, hasDot: false, isHeader: false, note: '', ...it, isItem: !it.isHeader, selected: it.value === menuCur, bg: it.value === menuCur ? 'var(--glass-hover, rgba(255,255,255,0.7))' : 'transparent', onClick: () => this.choose(it.value) }));
+      menuItems = menuItems.map(it => ({ hasAvatar: false, hasDot: false, isHeader: false, note: '', hasPhoto: false, photo: '', ...it, isItem: !it.isHeader, selected: it.value === menuCur, bg: it.value === menuCur ? 'var(--glass-hover, rgba(255,255,255,0.7))' : 'transparent', onClick: () => this.choose(it.value) }));
     }
     const ownerMatch = t => !ownerFilter || (t.owner || '').trim() === ownerFilter || t.subs.some(s => (s.owner || '').trim() === ownerFilter);
     const showProgress = this.props.showProgress ?? true;
@@ -2328,7 +2348,8 @@ class Component extends DCLogic {
       hasToast: !!this.state.toast, toast: this.state.toast,
       signIn: () => this.auth && this.auth.signInWithPopup(new this.fb.auth.GoogleAuthProvider()).catch(e => this.setState({ authError: e.message })),
       signOut: () => { if (this.auth && window.confirm('Sign out of the Team Hub?')) this.auth.signOut(); },
-      signedIn: cloud === 'ready' && !!this.state.user, userInitials: this.state.user ? initials(this.state.user.name) : '',
+      signedIn: cloud === 'ready' && !!this.state.user, userInitials: this.state.user ? initials(live ? this.myName() : this.state.user.name) : '',
+      me: { photo: live ? this.rec(this._key).photo || '' : '', hasPhoto: live && !!this.rec(this._key).photo },
       userTitle: this.state.user ? 'Signed in as ' + this.state.user.email + ' — click to sign out' : '',
       syncLabel: cloud === 'ready' ? 'Live' : cloud === 'connecting' ? 'Connecting' : cloud === 'error' ? 'Offline' : 'Local Only',
       syncTitle: cloud === 'ready' ? 'Changes sync to the whole team instantly' : 'Changes are saved in this browser only',
