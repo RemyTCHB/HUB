@@ -1008,7 +1008,7 @@ h1, h2, h3, h4 {
 </style>
   <script src="936356f7-ed54-4869-879a-6aea9f3a9e7e"></script>
   <script src="a2c42bde-a883-4c8a-885d-ad1f11af76d8"></script>
-  <title>Universal Task Tracker</title>
+  <title>Universal Team Hub</title>
   <link rel="icon" type="image/png" href="c5e512e7-0e0d-4615-a85d-91dbb794a254">
   <link rel="apple-touch-icon" href="c6771071-2b4c-40ae-a8f4-e4b36c4c706c">
   <style>
@@ -1060,7 +1060,7 @@ h1, h2, h3, h4 {
   <main style="position: relative; z-index: 1; max-width: 920px; margin: 0 auto; padding: 40px 24px 96px; display: flex; flex-direction: column; gap: 24px; {{ mo.main }}">
     <sc-if value="{{ showGate }}" hint-placeholder-val="{{ false }}">
       <section style="margin: 48px auto 0; max-width: 520px; width: 100%; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); padding: 40px 32px; display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; {{ mo.gate }}">
-        <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 28px; line-height: 1.25; width: 100%; color: var(--tchb-indigo-700); {{ mo.gateTitle }}">Sign In To The <span style="color: var(--tchb-red-500);">Task Board</span></h2>
+        <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 28px; line-height: 1.25; width: 100%; color: var(--tchb-indigo-700); {{ mo.gateTitle }}">Sign In To The <span style="color: var(--tchb-red-500);">Team Hub</span></h2>
         <p style="margin: 0; font-size: 15px; color: var(--text-muted); text-wrap: pretty;">{{ gateText }}</p>
         <sc-if value="{{ canSignIn }}" hint-placeholder-val="{{ true }}">
           <x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="primary" pill="{{ true }}" sc-camel-on-click="{{ signIn }}" hint-size="220px,48px">Sign In With Google</x-import>
@@ -1079,8 +1079,8 @@ h1, h2, h3, h4 {
           <span style="font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; color: var(--tchb-red-500);">{{ companyName }}</span>
           <span title="{{ syncTitle }}" style="display: flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.04em; background: {{ syncBg }}; color: {{ syncFg }};"><span style="width: 7px; height: 7px; border-radius: 999px; background: {{ syncDot }};"></span>{{ syncLabel }}</span>
         </div>
-        <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 44px; line-height: 1.15; color: var(--tchb-indigo-700); {{ mo.h1 }}">Universal <span style="color: var(--tchb-red-500);">Task Tracker</span></h1>
-        <p style="margin: 0; font-size: 16px; color: var(--text-muted); text-wrap: pretty; text-transform: capitalize">Add Tasks And Subtasks With Their Owners.</p>
+        <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 44px; line-height: 1.15; color: var(--tchb-indigo-700); {{ mo.h1 }}">Universal <span style="color: var(--tchb-red-500);">Team Hub</span></h1>
+        <p style="margin: 0; font-size: 16px; color: var(--text-muted); text-wrap: pretty; text-transform: capitalize">Every Department's Tasks, Owners And Files In One Place.</p>
       </div>
       <div style="display: flex; gap: 28px; align-items: flex-end; {{ mo.stats }}">
         <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-end; {{ mo.stat }}">
@@ -1111,9 +1111,16 @@ h1, h2, h3, h4 {
         <button sc-camel-on-click="{{ goBack }}" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; margin-left: auto;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back To Sign In</button>
       </sc-if>
       <sc-if value="{{ showPeopleBtn }}" hint-placeholder-val="{{ false }}">
-        <button sc-camel-on-click="{{ openPeople }}" title="Link owner names to their sign-in emails" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; margin-left: auto;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>People</button>
+        <button sc-camel-on-click="{{ openPeople }}" title="Roles, departments and access" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; margin-left: auto;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>People</button>
       </sc-if>
     </div>
+    <sc-if value="{{ showDepts }}" hint-placeholder-val="{{ false }}">
+      <div role="group" aria-label="Department" style="display: flex; gap: 4px; padding: 4px; align-self: flex-start; max-width: 100%; box-sizing: border-box; overflow-x: auto; scrollbar-width: none; background: var(--tchb-gray-100); border-radius: 999px; margin-top: -8px; {{ mo.deptSeg }}">
+        <sc-for list="{{ deptTabs }}" as="d" hint-placeholder-count="5">
+          <button sc-camel-on-click="{{ d.onClick }}" style="border: none; cursor: pointer; flex: none; padding: 7px 14px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; display: flex; gap: 6px; align-items: center; white-space: nowrap; transition: background 120ms; background: {{ d.bg }}; color: {{ d.color }}; box-shadow: {{ d.shadow }}; {{ mo.deptBtn }}">{{ d.label }}<span style="font-weight: 600; opacity: 0.7;">{{ d.count }}</span></button>
+        </sc-for>
+      </div>
+    </sc-if>
     <sc-if value="{{ showErr }}" hint-placeholder-val="{{ false }}">
       <div style="padding: 10px 14px; border-radius: var(--radius-md); background: var(--tchb-red-050); color: var(--status-error); font-size: 14px; font-weight: 600;">These tasks can't load yet. An admin needs to update the Firestore rules (see the user guide).</div>
     </sc-if>
@@ -1128,11 +1135,13 @@ h1, h2, h3, h4 {
       <sc-if value="{{ showFor }}" hint-placeholder-val="{{ false }}">
         <button sc-camel-on-click="{{ openFor }}" title="Who this task is for" style="display: flex; align-items: center; gap: 8px; flex: none; padding: 0 14px; min-height: 44px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-size: 14px; font-weight: 700; border: 1px solid var(--border-strong); background: var(--surface-card); color: {{ forColor }}; {{ mo.addOwner }}" style-focus="box-shadow: var(--focus-ring);">{{ forLabel }}<svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
       </sc-if>
+      <sc-if value="{{ showNewOwner }}" hint-placeholder-val="{{ true }}">
       <button sc-camel-on-click="{{ openNewOwner }}" title="Owner" style="display: flex; align-items: center; gap: 8px; flex: none; padding: 6px 12px 6px 6px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 15px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ newOwnerChip.ownerLabelColor }}; {{ mo.addOwner }}" style-focus="box-shadow: var(--focus-ring);">
         <span style="width: 32px; height: 32px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; background: {{ newOwnerChip.ownerBg }}; color: {{ newOwnerChip.ownerFg }};">{{ newOwnerChip.initials }}</span>
         <span style="min-width: 110px; text-align: left; white-space: nowrap; {{ mo.ellip }}">{{ newOwnerChip.ownerLabel }}</span>
         <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
       </button>
+      </sc-if>
       <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="primary" sc-camel-on-click="{{ addTask }}" hint-size="120px,48px">Add Task</x-import></div>
       <sc-if value="{{ showNewSubs }}" hint-placeholder-val="{{ false }}">
         <div style="flex: 1 1 100%; display: flex; flex-direction: column; gap: 2px; padding: 2px 2px 0 4px;">
@@ -1162,10 +1171,13 @@ h1, h2, h3, h4 {
     </sc-if>
 
     <section style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; {{ mo.filterRow }}">
+      <div style="display: flex; align-items: center; gap: 8px; min-width: 0; max-width: 100%; {{ mo.filterLeft }}">
+      <button sc-camel-on-click="{{ openFolders }}" title="Task folders: every file in this view" aria-label="Files" style="flex: none; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 14px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); border: 1px solid var(--border-strong); background: var(--surface-card);" style-hover="background: var(--tchb-indigo-050);" style-focus="box-shadow: var(--focus-ring);"><svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path></svg><span style="{{ mo.hide }}">Files</span><span style="font-weight: 600; opacity: 0.7;">{{ folderCount }}</span></button>
       <div style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.filterPills }}">
         <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
           <button sc-camel-on-click="{{ f.onClick }}" style="border: none; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; display: flex; gap: 6px; align-items: center; background: {{ f.bg }}; color: {{ f.color }}; box-shadow: {{ f.shadow }}; transition: background 120ms; {{ mo.filterBtn }}">{{ f.label }}<span style="font-weight: 600; opacity: 0.7;">{{ f.count }}</span></button>
         </sc-for>
+      </div>
       </div>
       <div style="display: flex; gap: 4px; align-items: center; {{ mo.tools }}">
         <button sc-camel-on-click="{{ openOwnerFilter }}" style="display: flex; align-items: center; gap: 8px; border-radius: 999px; padding: 8px 12px 8px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); cursor: pointer; white-space: nowrap; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); {{ mo.ownerFilter }}" style-focus="box-shadow: var(--focus-ring);"><span style="{{ mo.ellip }}">{{ ownerFilterLabel }}</span><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
@@ -1177,7 +1189,7 @@ h1, h2, h3, h4 {
     <section style="display: flex; flex-direction: column; gap: 14px;">
       <sc-for list="{{ visibleTasks }}" as="t" hint-placeholder-count="3">
         <article data-tid="{{ t.id }}" sc-camel-on-drag-over="{{ t.onDragOver }}" sc-camel-on-drop="{{ t.onDrop }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; transition: opacity 120ms; outline-offset: 2px; opacity: {{ t.dragOpacity }}; outline: {{ t.dropOutline }};">
-          <div style="display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto auto auto auto; align-items: center; gap: 14px; padding: 16px 18px 16px 8px; {{ mo.card }}">
+          <div style="display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto auto auto auto auto; align-items: center; gap: 14px; padding: 16px 18px 16px 8px; {{ mo.card }}">
             <button draggable="{{ gripDraggable }}" sc-camel-on-drag-start="{{ t.onDragStart }}" sc-camel-on-drag-end="{{ onDragEnd }}" sc-camel-on-pointer-down="{{ t.onGripDown }}" sc-camel-on-pointer-move="{{ onGripMove }}" sc-camel-on-pointer-up="{{ onGripUp }}" sc-camel-on-pointer-cancel="{{ onGripCancel }}" title="Drag to reorder" style="width: 24px; height: 36px; margin-right: -8px; border: none; background: transparent; border-radius: 8px; cursor: grab; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; padding: 0; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; {{ mo.grip }} {{ t.hideGrip }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
               <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.8"></circle><circle cx="15" cy="5" r="1.8"></circle><circle cx="9" cy="12" r="1.8"></circle><circle cx="15" cy="12" r="1.8"></circle><circle cx="9" cy="19" r="1.8"></circle><circle cx="15" cy="19" r="1.8"></circle></svg>
             </button>
@@ -1191,7 +1203,7 @@ h1, h2, h3, h4 {
                 <span aria-hidden="true" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; visibility: hidden; {{ mo.taskTitle }}">{{ t.title }} </span>
                 <textarea rows="1" value="{{ t.title }}" sc-camel-read-only="{{ t.readOnly }}" sc-camel-on-change="{{ t.onTitle }}" sc-camel-on-key-down="{{ blurOnEnter }}" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; border-radius: 6px; background: transparent; outline: none; resize: none; overflow: hidden; margin: 0; min-width: 0; width: 100%; box-sizing: border-box; color: {{ t.titleColor }}; text-decoration: {{ t.titleDeco }}; {{ mo.taskTitle }}" style-hover="border-color: var(--border-default);" style-focus="border-color: var(--tchb-indigo-500); background: var(--tchb-indigo-050);"></textarea>
               </div>
-              <span style="font-size: 13px; color: var(--text-muted);">{{ t.meta }}</span>
+              <span title="{{ t.metaTitle }}" style="font-size: 13px; color: var(--text-muted);">{{ t.meta }}</span>
               <sc-if value="{{ t.canPushLive }}" hint-placeholder-val="{{ false }}">
                 <span style="display: flex; margin-top: 6px;"><button sc-camel-on-click="{{ t.onPushLive }}" title="Move this task into your personal list" style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--tchb-indigo-500); background: transparent; color: var(--tchb-indigo-700); cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.02em; white-space: nowrap; {{ mo.pushBtn }}" style-hover="background: var(--tchb-indigo-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M12 12v9"></path><path d="m16 16-4-4-4 4"></path></svg>Push To Live</button></span>
               </sc-if>
@@ -1208,6 +1220,9 @@ h1, h2, h3, h4 {
             <x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Badge" tone="{{ t.tone }}" hint-size="100px,26px">{{ t.status }}</x-import>
             <button sc-camel-on-click="{{ t.openNotes }}" title="Notes" aria-label="{{ t.notesAria }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: {{ t.noteColor }}; {{ mo.noteBtn }} {{ mo.push }}" style-hover="background: var(--tchb-indigo-050);">
               <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M13 8H7"></path><path d="M17 12H7"></path></svg><sc-if value="{{ t.hasNotes }}" hint-placeholder-val="{{ false }}"><span>{{ t.notesCount }}</span></sc-if>
+            </button>
+            <button sc-camel-on-click="{{ t.openFiles }}" title="Files" aria-label="{{ t.filesAria }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: {{ t.fileColor }}; {{ mo.noteBtn }} {{ t.fileBusy }}" style-hover="background: var(--tchb-indigo-050);">
+              <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg><sc-if value="{{ t.hasFiles }}" hint-placeholder-val="{{ false }}"><span>{{ t.filesCount }}</span></sc-if>
             </button>
             <button sc-camel-on-click="{{ t.onExpand }}" title="Show subtasks" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-indigo-700); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }}" style-hover="background: var(--tchb-indigo-050);">
               <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 160ms; transform: {{ t.chevron }};"><path d="m6 9 6 6 6-6"></path></svg>
@@ -1250,6 +1265,9 @@ h1, h2, h3, h4 {
                   <button sc-camel-on-click="{{ s.openNotes }}" title="Notes" aria-label="{{ s.notesAria }}" style="height: 28px; min-width: 28px; padding: 0 6px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: {{ s.noteColor }}; {{ mo.subNote }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
                     <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M13 8H7"></path><path d="M17 12H7"></path></svg><sc-if value="{{ s.hasNotes }}" hint-placeholder-val="{{ false }}"><span>{{ s.notesCount }}</span></sc-if>
                   </button>
+                  <button sc-camel-on-click="{{ s.openFiles }}" title="Files" aria-label="{{ s.filesAria }}" style="height: 28px; min-width: 28px; padding: 0 6px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: {{ s.fileColor }}; {{ mo.subFile }} {{ s.fileBusy }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
+                    <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg><sc-if value="{{ s.hasFiles }}" hint-placeholder-val="{{ false }}"><span>{{ s.filesCount }}</span></sc-if>
+                  </button>
                   <button sc-camel-on-click="{{ s.onDelete }}" title="Remove subtask" style="width: 28px; height: 28px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; {{ mo.subDel }} {{ s.hideDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);">
                     <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
                   </button>
@@ -1281,6 +1299,10 @@ h1, h2, h3, h4 {
     <div sc-camel-on-click="{{ closeMenu }}" sc-camel-on-wheel="{{ closeMenu }}" sc-camel-on-touch-move="{{ closeMenu }}" style="position: fixed; inset: 0; z-index: 50; {{ mo.shade }}"></div>
     <div sc-camel-on-key-down="{{ menuKey }}" style="position: fixed; z-index: 51; min-width: 230px; max-height: 340px; overflow-y: auto; padding: 6px; border-radius: 14px; display: flex; flex-direction: column; gap: 2px; background-color: var(--menu-bg, rgba(255,255,255,0.62)); background-image: var(--menu-sheen, linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 100%)); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid var(--glass-border, rgba(255,255,255,0.9)); box-shadow: var(--menu-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 2px 4px rgba(34,29,84,0.08), 0 16px 40px rgba(34,29,84,0.18)); top: {{ menuTop }}; left: {{ menuLeft }}; transform: {{ menuTransform }}; {{ notesBox }} {{ menuSheet }}">
       <sc-for list="{{ menuItems }}" as="m" hint-placeholder-count="0">
+        <sc-if value="{{ m.isHeader }}" hint-placeholder-val="{{ false }}">
+          <div style="padding: 10px 10px 4px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tchb-red-500);">{{ m.label }}</div>
+        </sc-if>
+        <sc-if value="{{ m.isItem }}" hint-placeholder-val="{{ true }}">
         <button sc-camel-on-click="{{ m.onClick }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 8px 10px; border-radius: 9px; font-family: var(--font-body); font-size: 14px; font-weight: 600; text-transform: capitalize; color: var(--text-body); background: {{ m.bg }}; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));">
           <sc-if value="{{ m.hasAvatar }}" hint-placeholder-val="{{ false }}">
             <span style="width: 24px; height: 24px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; background: {{ m.avBg }}; color: {{ m.avFg }};">{{ m.initials }}</span>
@@ -1289,41 +1311,65 @@ h1, h2, h3, h4 {
             <span style="width: 10px; height: 10px; flex: none; border-radius: 999px; background: {{ m.dot }};"></span>
           </sc-if>
           <span style="flex: 1; white-space: nowrap;">{{ m.label }}</span>
+          <span style="flex: none; font-size: 11px; font-weight: 700; text-transform: none; color: var(--text-muted);">{{ m.note }}</span>
           <sc-if value="{{ m.selected }}" hint-placeholder-val="{{ false }}">
             <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--tchb-green-500)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
           </sc-if>
         </button>
-      </sc-for>
-      <sc-if value="{{ menuCanAdd }}" hint-placeholder-val="{{ false }}">
-        <div style="height: 1px; background: var(--glass-divider, rgba(17,29,44,0.08)); margin: 4px 6px;"></div>
-        <sc-if value="{{ notAdding }}" hint-placeholder-val="{{ true }}">
-          <button sc-camel-on-click="{{ startAdd }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 8px 10px; border-radius: 9px; font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--action-primary); background: transparent; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));">
-            <span style="width: 24px; height: 24px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; border: 1.5px dashed currentColor;">
-              <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-            </span>
-            Add New Owner
-          </button>
         </sc-if>
-        <sc-if value="{{ adding }}" hint-placeholder-val="{{ false }}">
-          <div style="display: flex; flex-wrap: wrap; gap: 6px; padding: 4px;">
-            <input sc-camel-auto-focus="{{ true }}" value="{{ addName }}" sc-camel-on-change="{{ onAddName }}" sc-camel-on-key-down="{{ onAddKey }}" placeholder="Full name" style="flex: 1; min-width: 0; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; text-transform: capitalize; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
-            <sc-if value="{{ showAddEmail }}" hint-placeholder-val="{{ false }}"><input value="{{ addEmail }}" sc-camel-on-change="{{ onAddEmail }}" sc-camel-on-key-down="{{ onAddKey }}" placeholder="Email (optional)" type="email" style="flex: 1; min-width: 0; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"></sc-if>
-            <button sc-camel-on-click="{{ confirmAdd }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 8px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Add</button>
+      </sc-for>
+      <sc-if value="{{ menuIsFiles }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 6px 8px 4px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">Files</span>
+          <span style="flex: 1; min-width: 0; font-size: 13px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ filesFor }}</span>
+        </div>
+        <sc-if value="{{ filesEmpty }}" hint-placeholder-val="{{ true }}">
+          <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No files yet. Everyone who can see this task can open its files.</div>
+        </sc-if>
+        <sc-for list="{{ filesList }}" as="fl" hint-placeholder-count="0">
+          <div style="display: flex; gap: 6px; align-items: center; padding: 6px 6px 6px 10px; margin: 2px; border-radius: 10px; background: var(--surface-subtle); border: 1px solid var(--border-default); color: var(--tchb-indigo-700);">
+            <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg>
+            <a href="{{ fl.url }}" target="_blank" rel="noopener" style="flex: 1; min-width: 0; text-decoration: none; display: flex; flex-direction: column;">
+              <span style="font-size: 14px; font-weight: 700; color: var(--tchb-indigo-700); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ fl.name }}</span>
+              <span style="font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ fl.meta }}</span>
+            </a>
+            <sc-if value="{{ fl.canDelete }}" hint-placeholder-val="{{ false }}">
+              <button sc-camel-on-click="{{ fl.onDelete }}" title="Delete file" style="width: 26px; height: 26px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; padding: 0; {{ mo.noteDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+            </sc-if>
           </div>
+        </sc-for>
+        <sc-if value="{{ uploadingNow }}" hint-placeholder-val="{{ false }}">
+          <div style="padding: 6px 10px; font-size: 13px; font-weight: 600; color: var(--tchb-indigo-700);">{{ uploadingLabel }}</div>
+        </sc-if>
+        <sc-if value="{{ canUpload }}" hint-placeholder-val="{{ true }}">
+          <label style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 6px 4px 4px; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ mo.noteAdd }}" style-hover="background: var(--action-primary-hover);">
+            <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m17 8-5-5-5 5"></path><path d="M12 3v12"></path></svg>Upload Files
+            <input type="file" multiple sc-camel-on-change="{{ onPickFiles }}" style="display: none;">
+          </label>
         </sc-if>
       </sc-if>
-      <sc-if value="{{ menuIsPeople }}" hint-placeholder-val="{{ false }}">
-        <div style="padding: 6px 8px 2px; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">People</div>
-        <div style="padding: 0 8px 8px; font-size: 12px; color: var(--text-muted);">Link each owner name to the email they sign in with. MGMT tasks they own then show in their own list. Leave blank for names without a login.</div>
-        <sc-for list="{{ peopleRows }}" as="pr" hint-placeholder-count="0">
-          <label style="display: flex; flex-direction: column; gap: 3px; padding: 4px 8px;">
-            <span style="font-size: 13px; font-weight: 700; color: var(--text-body); text-transform: capitalize;">{{ pr.name }}</span>
-            <input value="{{ pr.email }}" sc-camel-on-change="{{ pr.onEmail }}" placeholder="name@totalchb.com" type="email" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
-          </label>
+      <sc-if value="{{ menuIsFolders }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 6px 8px 2px; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">Task Folders</div>
+        <div style="padding: 0 8px 8px; font-size: 12px; color: var(--text-muted);">Files on the tasks in this view. Add files with the paperclip on a task or subtask.</div>
+        <sc-if value="{{ foldersEmpty }}" hint-placeholder-val="{{ true }}">
+          <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No files in this view yet.</div>
+        </sc-if>
+        <sc-for list="{{ folders }}" as="fo" hint-placeholder-count="0">
+          <button sc-camel-on-click="{{ fo.onToggle }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 8px 10px; border-radius: 9px; font-family: var(--font-body); font-size: 14px; font-weight: 700; color: var(--tchb-indigo-700); background: transparent; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));">
+            <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; transition: transform 140ms; transform: {{ fo.chevron }};"><path d="m9 18 6-6-6-6"></path></svg>
+            <svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path></svg>
+            <span style="flex: 1; min-width: 0; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ fo.title }}</span>
+            <span style="flex: none; font-size: 12px; color: var(--text-muted);">{{ fo.count }}</span>
+          </button>
+          <sc-if value="{{ fo.open }}" hint-placeholder-val="{{ false }}">
+            <sc-for list="{{ fo.files }}" as="ff" hint-placeholder-count="0">
+              <a href="{{ ff.url }}" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 8px; margin: 0 4px 2px 34px; padding: 6px 8px; border-radius: 8px; text-decoration: none; color: var(--tchb-indigo-700); background: var(--surface-subtle); border: 1px solid var(--border-default);">
+                <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg>
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column;"><span style="font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ ff.name }}</span><span style="font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ ff.meta }}</span></span>
+              </a>
+            </sc-for>
+          </sc-if>
         </sc-for>
-        <div style="display: flex; justify-content: flex-end; padding: 8px;">
-          <button sc-camel-on-click="{{ saveEmails }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 9px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Save Emails</button>
-        </div>
       </sc-if>
       <sc-if value="{{ menuIsNotes }}" hint-placeholder-val="{{ false }}">
         <div style="padding: 6px 8px 4px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
@@ -1354,6 +1400,67 @@ h1, h2, h3, h4 {
     </div>
   </sc-if>
 
+  <sc-if value="{{ peopleOpen }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ closePeople }}" style="position: fixed; inset: 0; z-index: 60; background: rgba(10, 12, 24, 0.4);"></div>
+    <div role="dialog" aria-label="People" sc-camel-on-key-down="{{ peopleKey }}" style="position: fixed; z-index: 61; left: 50%; top: 24px; transform: translateX(-50%); width: calc(100% - 32px); max-width: 1060px; max-height: calc(100vh - 48px); box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); overflow: hidden; {{ mo.sheet }}">
+      <div style="display: flex; align-items: flex-start; gap: 12px; padding: 18px 20px 12px; border-bottom: 1px solid var(--border-default);">
+        <div style="flex: 1; min-width: 0;">
+          <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--tchb-indigo-700);">People</h2>
+          <p style="margin: 2px 0 0; font-size: 13px; color: var(--text-muted);">Roles, main department, the departments each person sees in Team and the department toggle. {{ adminNote }}</p>
+        </div>
+        <button sc-camel-on-click="{{ closePeople }}" title="Close" aria-label="Close" style="width: 40px; height: 40px; flex: none; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center;" style-hover="background: var(--tchb-gray-100);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+      </div>
+      <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 8px 20px 16px;">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px; margin: 8px 0 4px; border-radius: var(--radius-md); background: var(--surface-subtle); border: 1px dashed var(--border-strong);">
+          <span style="flex: 1 1 100%; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700);">Add A Person</span>
+          <input value="{{ npName }}" sc-camel-on-change="{{ onNpName }}" sc-camel-on-key-down="{{ onNpKey }}" placeholder="Full name" style="flex: 1 1 180px; min-width: 0; text-transform: capitalize; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); box-sizing: border-box; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+          <input value="{{ npEmail }}" sc-camel-on-change="{{ onNpEmail }}" sc-camel-on-key-down="{{ onNpKey }}" placeholder="Sign-in email" type="email" style="flex: 1 1 200px; min-width: 0; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); box-sizing: border-box; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+          <select value="{{ npRole }}" sc-camel-on-change="{{ onNpRole }}" aria-label="Role" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-body); background: var(--surface-card); outline: none; cursor: pointer; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"><sc-for list="{{ npRoleOpts }}" as="o" hint-placeholder-count="2"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select>
+          <select value="{{ npDept }}" sc-camel-on-change="{{ onNpDept }}" aria-label="Main department" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-body); background: var(--surface-card); outline: none; cursor: pointer; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"><sc-for list="{{ deptOpts }}" as="o" hint-placeholder-count="5"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select>
+          <button sc-camel-on-click="{{ addPerson }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 9px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Add</button>
+        </div>
+        <sc-for list="{{ pdGroups }}" as="g" hint-placeholder-count="2">
+          <div style="padding: 16px 0 6px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tchb-red-500);">{{ g.label }}</div>
+          <sc-for list="{{ g.rows }}" as="pr" hint-placeholder-count="3">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; padding: 10px 0; border-top: 1px solid var(--border-default);">
+              <div style="display: flex; align-items: center; gap: 10px; flex: 1 1 190px; min-width: 0;">
+                <span style="width: 34px; height: 34px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700));">{{ pr.initials }}</span>
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+                  <input value="{{ pr.name }}" sc-camel-on-change="{{ pr.onName }}" aria-label="Name" style="border: 1px solid transparent; border-radius: 6px; padding: 2px 6px; margin-left: -7px; font-family: var(--font-display); font-weight: 700; font-size: 15px; text-transform: capitalize; color: var(--text-body); background: transparent; outline: none; min-width: 0; {{ mo.input16 }}" style-hover="border-color: var(--border-default);" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+                  <span style="font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ pr.email }}</span>
+                </div>
+              </div>
+              <select value="{{ pr.role }}" sc-camel-on-change="{{ pr.onRole }}" disabled="{{ pr.lockRole }}" aria-label="Role" style="width: 132px; border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-body); background: var(--surface-card); outline: none; cursor: pointer; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"><sc-for list="{{ pr.roleOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select>
+              <sc-if value="{{ pr.notMgr }}" hint-placeholder-val="{{ true }}">
+                <select value="{{ pr.dept }}" sc-camel-on-change="{{ pr.onDept }}" aria-label="Main department" style="width: 132px; border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-body); background: var(--surface-card); outline: none; cursor: pointer; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"><sc-for list="{{ pr.deptOpts }}" as="o" hint-placeholder-count="5"><option value="{{ o.v }}">{{ o.label }}</option></sc-for></select>
+                <div role="group" aria-label="Departments they see in Team" title="Departments they see in Team" style="display: flex; align-items: center; gap: 4px;">
+                  <span style="font-size: 12px; font-weight: 700; color: var(--text-muted); margin-right: 2px;">Sees</span>
+                  <sc-for list="{{ pr.sees }}" as="c" hint-placeholder-count="4">
+                    <button sc-camel-on-click="{{ c.onClick }}" aria-pressed="{{ c.on }}" style="border: 1px solid {{ c.border }}; cursor: pointer; padding: 4px 8px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; background: {{ c.bg }}; color: {{ c.fg }}; {{ mo.chip }}">{{ c.label }}</button>
+                  </sc-for>
+                </div>
+                <button sc-camel-on-click="{{ pr.onDeptView }}" role="switch" aria-checked="{{ pr.deptView }}" title="Show their departments' tasks in Team, as well as their own" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; cursor: pointer; padding: 4px 0; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: var(--text-body);">
+                  <span style="width: 36px; height: 20px; flex: none; border-radius: 999px; position: relative; transition: background 140ms; background: {{ pr.trackBg }};"><span style="position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 999px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.25); transition: transform 140ms; transform: {{ pr.knobX }};"></span></span>Dept View
+                </button>
+              </sc-if>
+              <div role="group" aria-label="Companies" title="Companies they can open" style="display: flex; align-items: center; gap: 4px;">
+                <sc-for list="{{ pr.cos }}" as="c" hint-placeholder-count="2">
+                  <button sc-camel-on-click="{{ c.onClick }}" aria-pressed="{{ c.on }}" style="border: 1px solid {{ c.border }}; cursor: pointer; padding: 4px 8px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; white-space: nowrap; background: {{ c.bg }}; color: {{ c.fg }}; {{ c.lock }} {{ mo.chip }}">{{ c.label }}</button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ pr.canRemove }}" hint-placeholder-val="{{ true }}">
+                <button sc-camel-on-click="{{ pr.onRemove }}" title="Remove from the directory" aria-label="Remove" style="width: 32px; height: 32px; flex: none; margin-left: auto; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center;" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+              </sc-if>
+            </div>
+          </sc-for>
+        </sc-for>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--border-default); background: var(--surface-card);">
+        <button sc-camel-on-click="{{ closePeople }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 10px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); background: var(--surface-card);" style-hover="background: var(--tchb-indigo-050);">Cancel</button>
+        <button sc-camel-on-click="{{ savePeople }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 10px 18px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Save Changes</button>
+      </div>
+    </div>
+  </sc-if>
   <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
     <div role="status" style="position: fixed; z-index: 41; left: 50%; top: 20px; transform: translateX(-50%); background: var(--tchb-indigo-900); color: #fff; border-radius: 999px; padding: 10px 18px; box-shadow: var(--shadow-raised); font-family: var(--font-display); font-weight: 700; font-size: 14px; white-space: nowrap;">{{ toast }}</div>
   </sc-if>
@@ -1370,7 +1477,6 @@ h1, h2, h3, h4 {
 const KEY = 'q4-sprint-tracker-v2';
 let uid = Date.now();
 const id = () => 'i' + (uid++).toString(36);
-const TEAM = ['Remy Ahmed', 'Brandy Pollack', 'Monz Miller', 'Motz Curran'];
 const initials = n => (n || '').trim().split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join('');
 const mk = (company, title, owner = '', subs = []) => ({ id: id(), company, title, owner, done: false, open: false,
   subs: subs.map(s => { const m = /^(.*?)\s*<([^>]+)>\s*$/.exec(s); return { id: id(), title: m ? m[1] : s, owner: m ? m[2] : owner, status: 'todo', done: false }; }) });
@@ -1430,13 +1536,41 @@ const AURORA = {
   kpi: { light: ['#47b84b', '#3a7fc2', '#ee2025'], dark: ['#5fd463', '#5b9bdb', '#ff4a4f'] }
 };
 // Who sees what. Keep these in step with the same lists in the Firestore rules.
-const MANAGERS = ['brandy@totalchb.com', 'systems@totalchb.com'];            // see MGMT and members' personal tasks
+const ROOT_MANAGERS = ['brandy@totalchb.com', 'systems@totalchb.com'];   // always managers; Remy adds others in People (meta/managers)
+const ADMIN = 'systems@totalchb.com';   // the only one who can add managers and choose which companies people see
 const SAME_PERSON = { 'brandy@kpidriver.com': 'brandy@totalchb.com', 'systems@kpidriver.com': 'systems@totalchb.com' };  // second logins
 const MANAGER_CAN_SEE = {};   // managers who may see another manager's personal tasks, e.g. { 'systems@totalchb.com': ['brandy@totalchb.com'] }
 const personKey = email => SAME_PERSON[email] || email;
-// Owner names linked to logins, written once if none are saved yet; managers change them later in People.
-const DEFAULT_EMAILS = { 'Brandy Pollack': 'brandy@totalchb.com', 'Remy Ahmed': 'systems@totalchb.com', 'Monz Miller': 'monz@totalchb.com',
-  'Motz Curran': 'billing@kpidriver.com', 'Anas Abid': 'anas@kpidriver.com', 'Jan Arpilleda': 'info@totalchb.com' };
+const DEPTS = ['TC', 'DISPO', 'ACQ', 'OPS'];
+const ROLE_LABEL = { manager: 'Manager', lead: 'Team Leader', member: 'Member' };
+// The team directory (meta/directory), written once if none is saved yet; managers change it later in People.
+// [name, sign-in email, role, main department, departments a team leader sees]
+const SEED = [
+  ['Brandy Pollack', 'brandy@totalchb.com', 'manager'], ['Remy Ahmed', 'systems@totalchb.com', 'manager'],
+  ['Monz Miller', 'monz@totalchb.com', 'lead', 'TC', ['TC', 'DISPO']], ['Motz Curran', 'billing@kpidriver.com', 'member', 'OPS'],
+  ['Anas Abid', 'crm@kpidriver.com', 'member', 'OPS'], ['Jan Arpilleda', 'info@totalchb.com', 'member', 'OPS'],
+  ['Tracksion', 'crm@totalchb.com', 'member', 'OPS'], ['Luke Pollack', 'luke@totalchb.com', 'lead', 'ACQ'],
+  ['Jessie Uvino', 'jessie@totalchb.com', 'member', 'ACQ'], ['Bryan Lopez', 'bryan@totalchb.com', 'member', 'ACQ'],
+  ['Will Robbinson', 'will@totalchb.com', 'member', 'TC'], ['Chris Williams', 'chris@totalchb.com', 'member', 'TC'],
+  ['Carlos Caballero', 'carlos@totalchb.com', 'lead', 'DISPO', ['TC', 'DISPO']], ['Moe Al Amir', 'moe@totalchb.com', 'member', 'DISPO'],
+  ['Sara Albert', 'sara@totalchb.com', 'member', 'DISPO'], ['Yanna Howard', 'yanna@totalchb.com', 'member', 'DISPO']];
+const DEFAULT_DIRECTORY = Object.fromEntries(SEED.map(([name, email, role, dept = '', sees], i) =>
+  [email, { name, role, dept, sees: sees || (dept ? [dept] : []), deptView: role === 'lead', order: i + 1 }]));
+// Companies each person can open (meta/companies); anyone not listed sees TCHB only. Managers always see both.
+const DEFAULT_COMPANIES = Object.fromEntries(['brandy@totalchb.com', 'systems@totalchb.com', 'info@totalchb.com', 'crm@kpidriver.com', 'billing@kpidriver.com'].map(k => [k, ['tchb', 'kpi']]));
+const MAX_FILE = 25 * 1024 * 1024;   // per upload; keep in step with the Storage rules
+const when = ts => ts ? new Date(ts).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+const sizeOf = b => b < 1024 * 1024 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
+const subStatus = s => s.status || (s.done ? 'done' : 'todo');
+const isDone = t => t.subs.length ? t.subs.every(s => s.done) : !!t.done;
+const statusOf = t => isDone(t) ? 'done' : (t.subs.some(s => s.done || s.status === 'progress') ? 'progress' : 'todo');
+// Dates for the EOD report: when a task or subtask was created, first moved to In Progress, and finished.
+const stamp = (prev, t) => {
+  const now = Date.now(), mark = (o, was, is) => is === was ? o : { ...o, ...(is !== 'todo' && !o.startedAt ? { startedAt: now } : {}), doneAt: is === 'done' ? now : null };
+  const subs = t.subs.map(s => { const p = prev && prev.subs.find(y => y.id === s.id); return p ? mark(s, subStatus(p), subStatus(s)) : { createdAt: now, ...mark(s, 'todo', subStatus(s)) }; });
+  const next = { ...t, subs };
+  return prev ? mark(next, statusOf(prev), statusOf(next)) : { createdAt: now, ...mark(next, 'todo', statusOf(next)) };
+};
 const MOBILE_MAX = 640;
 const isPhone = () => window.innerWidth < MOBILE_MAX;
 const isTiny = () => window.innerWidth < 360;
@@ -1494,7 +1628,12 @@ const MOBILE = {
   menuItem: 'padding: 12px; font-size: 16px;',
   toast: 'left: 16px; right: 16px; bottom: 16px; transform: none;',
   toastLabel: 'flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;',
-  toastBtn: 'flex: none; min-height: 40px;'
+  toastBtn: 'flex: none; min-height: 40px;',
+  deptSeg: 'align-self: stretch; margin-top: -4px;', deptBtn: 'flex: 1 0 auto; justify-content: center; min-height: 38px;',
+  filterLeft: 'flex: 1 1 100%;',
+  subFile: 'min-width: 40px; height: 40px;',
+  chip: 'padding: 7px 10px; font-size: 12px;',
+  sheet: 'top: auto; bottom: 0; left: 0; right: 0; transform: none; width: auto; max-width: none; max-height: 92vh; border-radius: 20px 20px 0 0;'
 };
 const MOBILE_TINY = { ...MOBILE, tabPct: 'display: none;' }; // < 360px: company tabs drop their % to fit
 // Offline tasks are kept on this device (scope 'offline') until someone pushes them, one at a time, to their personal list.
@@ -1507,12 +1646,14 @@ class Component extends DCLogic {
     this.bgRef = React.createRef();
     let company = 'tchb';
     try { company = localStorage.getItem(KEY + '-co') || 'tchb'; } catch (e) {}
-    let team = null;
-    try { team = JSON.parse(localStorage.getItem(KEY + '-team')); } catch (e) {}
-    if (!Array.isArray(team)) team = [...TEAM];
+    // Last directory seen, so owner lists work offline too.
+    let team = null, dir = null;
+    try { team = JSON.parse(localStorage.getItem(KEY + '-team')); dir = JSON.parse(localStorage.getItem(KEY + '-dir')); } catch (e) {}
+    if (!Array.isArray(team)) team = [];
+    if (!dir || typeof dir !== 'object') dir = DEFAULT_DIRECTORY;
     let mode = 'light', openMap = {};
     try { mode = localStorage.getItem(KEY + '-mode') || 'light'; openMap = JSON.parse(localStorage.getItem(KEY + '-open')) || {}; } catch (e) {}
-    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, menu: null, adding: false, addName: '', tasks: loadOffline(), emails: {}, forWho: '', addEmail: '', emailDrafts: {}, scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null };
+    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, dir, mgrs: [], cos: DEFAULT_COMPANIES, dept: 'all', pd: null, np: { name: '', email: '', role: 'member', dept: '' }, uploading: {}, folderOpen: {}, menu: null, tasks: loadOffline(), forWho: '', scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null };
   }
   applyTheme(company, mode) {
     const el = document.documentElement, dark = mode === 'dark', kpi = company === 'kpi';
@@ -1548,67 +1689,105 @@ class Component extends DCLogic {
   }
   onUser(u) {
     // Signed out: forget the board in memory so nothing shows on the sign-in screen.
-    if (!u) { this.unsub(); this._synced = null; this._pending = {}; clearTimeout(this._wt); return this.setState(st => ({ cloud: 'signedOut', user: null, tasks: st.tasks.filter(t => t.scope === 'offline'), scope: 'offline', errs: {}, people: {} })); }
+    if (!u) { this.unsub(); this._synced = null; this._pending = {}; clearTimeout(this._wt); return this.setState(st => ({ cloud: 'signedOut', user: null, tasks: st.tasks.filter(t => t.scope === 'offline'), scope: 'offline', errs: {}, people: {}, pd: null, menu: null })); }
     const email = (u.email || '').toLowerCase();
     if (this.allowed.length && !this.allowed.some(d => email.endsWith('@' + d))) {
       this.auth.signOut();
       return this.setState({ cloud: 'signedOut', user: null, authError: (u.email || 'That account') + " isn't on the team list. Use your @" + this.allowed.join(' or @') + ' Google account.' });
     }
-    this._key = personKey(email); this._mgr = MANAGERS.includes(this._key); this._name = u.displayName || email;
-    this.setState({ cloud: 'connecting', user: { name: u.displayName || email, email }, authError: '', errs: {}, scope: this._mgr ? 'mgmt' : 'personal' });
+    this._key = personKey(email); this._mgr = ROOT_MANAGERS.includes(this._key); this._name = u.displayName || email;
+    this.setState({ cloud: 'connecting', user: { name: u.displayName || email, email }, authError: '', errs: {}, scope: this._mgr ? 'mgmt' : 'personal', dept: 'all' });
     this.subscribe();
   }
-  // Managers: MGMT (tasks/), their own personal list, and every member's personal list (the Team view).
-  // Members: only their own personal list. Personal lists live at personal/{person}/items.
+  // ---------- who is who ----------
+  isMgr(k) { return ROOT_MANAGERS.includes(k) || (this.state.mgrs || []).includes(k); }
+  rec(k) { return (this.state.dir || {})[k] || {}; }
+  deptOf(k) { return this.isMgr(k) ? '' : this.rec(k).dept || ''; }
+  cosOf(k) { return this.isMgr(k) ? ['tchb', 'kpi'] : (this.state.cos || {})[k] || ['tchb']; }
+  roleOf(k) { return this.isMgr(k) ? 'manager' : this.rec(k).role === 'lead' ? 'lead' : 'member'; }
+  // Departments whose tasks this person sees in Team: managers all; others only with the department toggle on.
+  seesOf(k) { if (this.isMgr(k)) return DEPTS; const r = this.rec(k); return r.deptView ? (r.sees || []).filter(d => DEPTS.includes(d)) : []; }
+  nameOf(k) { return this.rec(k).name || (this.state.people || {})[k] || k; }
+  keyOfName(n) { n = (n || '').trim().toLowerCase(); if (!n) return ''; const d = this.state.dir || {}; return Object.keys(d).find(k => (d[k].name || '').trim().toLowerCase() === n) || ''; }
+  myName() { return this.rec(this._key).name || this._name; }
+  // Managers first, then each department (team leaders first), then names with no login; only people who can open this company.
+  groups(co, keep = () => true) {
+    const d = this.state.dir || {}, by = (a, b) => (d[a].order || 999) - (d[b].order || 999);
+    const keys = Object.keys(d).filter(k => d[k].name && this.cosOf(k).includes(co) && keep(k));
+    const out = [['Managers', keys.filter(k => this.isMgr(k)).sort(by)]];
+    DEPTS.forEach(dp => out.push([dp, keys.filter(k => !this.isMgr(k) && d[k].dept === dp).sort((a, b) => (d[b].role === 'lead') - (d[a].role === 'lead') || by(a, b))]));
+    out.push(['No Department', keys.filter(k => !this.isMgr(k) && !DEPTS.includes(d[k].dept)).sort(by)]);
+    return out.filter(g => g[1].length);
+  }
+  // Signed in: the directory, managers and company access first, then the task lists they allow (syncListeners).
   subscribe() {
-    this.unsub(); this._got = {}; this._need = this._mgr ? ['mgmt', 'personal', 'team'] : ['personal', 'assigned'];
+    this.unsub(); this._got = {}; this._parts = {}; this._dyn = {}; this._meta = {}; this._need = ['personal'];
     const db = this.db, key = this._key, ls = this._ls = [];
-    const fail = (kind, e) => { console.warn('Could not load ' + kind + ' tasks', e); this.setState(st => ({ errs: { ...st.errs, [kind]: true } })); this.applyRemote(kind, []); };
-    const listOf = (who, scope) => s => s.docs.map(d => ({ ...d.data(), scope, list: who }));
-    if (this._mgr) ls.push(db.collection('tasks').onSnapshot(s => this.applyRemote('mgmt', s.docs.map(d => ({ ...d.data(), scope: 'mgmt' }))), e => fail('mgmt', e)));
-    ls.push(this.pcol(key).onSnapshot(s => this.applyRemote('personal', listOf(key, 'personal')(s)), e => fail('personal', e)));
-    // Members also get the MGMT tasks they own something in ('members' lists their logins; see membersOf).
-    if (!this._mgr) ls.push(db.collection('tasks').where('members', 'array-contains', key).onSnapshot(s => this.applyRemote('assigned', s.docs.map(d => ({ ...d.data(), scope: 'assigned' }))), e => fail('assigned', e)));
-    // Everyone signs in to the people list, so managers know whose personal lists to open.
+    const loaded = (k, st) => this.setState(st, () => { this._meta[k] = true; this.syncListeners(); this.fixMembers(); });
+    // Everyone signs in to the people list, so managers and team leaders know whose personal lists to open.
     db.doc('meta/people').set({ keys: this.fb.firestore.FieldValue.arrayUnion(key), names: { [key]: this._name } }, { merge: true }).catch(e => console.warn(e));
-    if (this._mgr) {
-      const parts = {}, open = {}, show = () => this.applyRemote('team', [].concat(...Object.values(parts)));
-      ls.push(db.doc('meta/people').onSnapshot(d => {
-        const data = d.exists ? d.data() : {}, names = data.names || {};
-        this.setState({ people: names });
-        (data.keys || []).filter(k => k !== key && (!MANAGERS.includes(k) || (MANAGER_CAN_SEE[key] || []).includes(k))).forEach(k => {
-          if (open[k]) return;
-          open[k] = this.pcol(k).onSnapshot(s => { parts[k] = listOf(k, 'team')(s); show(); }, e => { console.warn(e); parts[k] = []; show(); });
-          ls.push(open[k]);
-        });
-        show();
-      }, e => fail('team', e)));
-    }
-    ls.push(db.doc('meta/team').onSnapshot(d => {
-      if (!d.exists) return db.doc('meta/team').set({ names: this.state.team, ...(this._mgr ? { emails: DEFAULT_EMAILS } : {}) });
-      const data = d.data();
-      if (this._mgr && !data.emails) db.doc('meta/team').set({ emails: DEFAULT_EMAILS }, { merge: true }).catch(e => console.warn(e));
-      this.setState({ team: data.names || [], emails: data.emails || {} }, () => this.fixMembers());
-    }));
+    ls.push(db.doc('meta/people').onSnapshot(d => { this.setState({ people: (d.exists && d.data().names) || {} }, () => this.syncListeners()); }, e => console.warn(e)));
+    ls.push(db.doc('meta/directory').onSnapshot(d => {
+      if (!d.exists && this.isMgr(key)) db.doc('meta/directory').set({ people: DEFAULT_DIRECTORY }).catch(e => console.warn(e));
+      const dir = d.exists ? d.data().people || {} : DEFAULT_DIRECTORY;
+      try { localStorage.setItem(KEY + '-dir', JSON.stringify(dir)); } catch (e) {}
+      loaded('dir', { dir });
+    }, e => { console.warn(e); loaded('dir', {}); }));
+    ls.push(db.doc('meta/managers').onSnapshot(d => loaded('mgrs', { mgrs: (d.exists && d.data().keys) || [] }), e => { console.warn(e); loaded('mgrs', {}); }));
+    ls.push(db.doc('meta/companies').onSnapshot(d => {
+      if (!d.exists && this.isMgr(key)) db.doc('meta/companies').set({ access: DEFAULT_COMPANIES }).catch(e => console.warn(e));
+      loaded('cos', { cos: d.exists ? d.data().access || {} : DEFAULT_COMPANIES });
+    }, e => { console.warn(e); loaded('cos', {}); }));
+    // Owner names from before the directory (no login); they still show under "Other" in owner lists.
+    ls.push(db.doc('meta/team').onSnapshot(d => this.setState({ team: (d.exists && d.data().names) || [] }), e => console.warn(e)));
   }
-  unsub() { (this._ls || []).forEach(f => f && f()); this._ls = []; }
+  // Opens and closes task listeners to match what this person may see now (re-run when the directory changes).
+  //  personal: their own list. mgmt (managers): tasks/. team: personal lists of people in departments they see
+  //  (managers: everyone but managers). assigned: tasks elsewhere where they own the task or a subtask ('members').
+  syncListeners() {
+    if (!this.db || !['dir', 'mgrs', 'cos'].every(k => this._meta[k])) return;
+    const db = this.db, key = this._key, mgr = this._mgr = this.isMgr(key), myCos = this.cosOf(key), sees = this.seesOf(key);
+    const listOf = (who, scope) => s => s.docs.map(d => ({ ...d.data(), scope, list: who }));
+    const lost = (kind, id) => e => { console.warn('Could not load ' + kind + ' tasks', e); if (kind !== 'assigned') this.setState(st => ({ errs: { ...st.errs, [kind]: true } })); this.part(kind, id, []); };
+    const want = {};
+    want.personal = () => this.pcol(key).onSnapshot(s => this.applyRemote('personal', listOf(key, 'personal')(s)), e => { lost('personal')(e); this.applyRemote('personal', []); });
+    if (mgr) want.mgmt = () => db.collection('tasks').onSnapshot(s => this.applyRemote('mgmt', s.docs.map(d => ({ ...d.data(), scope: 'mgmt' }))), e => { lost('mgmt')(e); this.applyRemote('mgmt', []); });
+    else myCos.forEach(co => { const id = 'a:tasks:' + co; want[id] = () => db.collection('tasks').where('members', 'array-contains', co + ':' + key).onSnapshot(s => this.part('assigned', id, s.docs.map(d => ({ ...d.data(), scope: 'assigned' }))), lost('assigned', id)); });
+    const everyone = [...new Set([...Object.keys(this.state.dir || {}), ...Object.keys(this.state.people || {})])].filter(k => k && k.includes('@') && k !== key);
+    everyone.forEach(k => {
+      const team = mgr ? !this.isMgr(k) || (MANAGER_CAN_SEE[key] || []).includes(k) : !this.isMgr(k) && sees.includes(this.deptOf(k));
+      if (team) { const id = 't:' + k; want[id] = () => (mgr ? this.pcol(k) : this.pcol(k).where('company', 'in', myCos)).onSnapshot(s => this.part('team', id, listOf(k, 'team')(s)), lost('team', id)); }
+      else if (!mgr) myCos.forEach(co => { const id = 'a:' + k + ':' + co; want[id] = () => this.pcol(k).where('members', 'array-contains', co + ':' + key).onSnapshot(s => this.part('assigned', id, listOf(k, 'assigned')(s)), lost('assigned', id)); });
+    });
+    const open = this._dyn;
+    Object.keys(open).forEach(id => { if (want[id]) return; open[id](); delete open[id];
+      const kind = id[0] === 't' ? 'team' : 'assigned'; if (this._parts[kind] && id in this._parts[kind]) { delete this._parts[kind][id]; this.part(kind); } });
+    Object.keys(want).forEach(id => { if (!open[id]) open[id] = want[id](); });
+    this._need = mgr ? ['mgmt', 'personal', 'team'] : ['personal', 'assigned', ...(sees.length ? ['team'] : [])];
+    ['team', 'assigned'].forEach(k => this.part(k));
+  }
+  part(kind, id, list) {
+    const p = this._parts[kind] = this._parts[kind] || {}; if (id) p[id] = list;
+    this.applyRemote(kind, [].concat(...Object.values(p)));
+  }
+  unsub() { (this._ls || []).forEach(f => f && f()); this._ls = []; Object.values(this._dyn || {}).forEach(f => f && f()); this._dyn = {}; }
   pcol(who) { return this.db.collection('personal').doc(who).collection('items'); }
-  docRef(t) { return (t.scope === 'mgmt' || t.scope === 'assigned' ? this.db.collection('tasks') : this.pcol(t.list)).doc(t.id); }
-  // Logins (other than managers) of the people who own a MGMT task or one of its subtasks, via the name -> email links.
+  docRef(t) { return (t.scope === 'mgmt' || (t.scope === 'assigned' && !t.list) ? this.db.collection('tasks') : this.pcol(t.list || this._key)).doc(t.id); }
+  // Who else should see a task in their own list: '<company>:<login>' for each owner of the task or a subtask,
+  // apart from managers and the person whose list it is in. The company keeps it from people who can't open that company.
   membersOf(t) {
-    const em = this.state.emails || {};
-    return [...new Set([t.owner, ...t.subs.map(s => s.owner)].map(n => em[(n || '').trim()]).filter(Boolean)
-      .map(e => personKey(e.trim().toLowerCase())).filter(k => !MANAGERS.includes(k)))].sort();
+    const co = t.company || 'tchb';
+    return [...new Set([t.owner, ...t.subs.map(s => s.owner)].map(n => this.keyOfName(n))
+      .filter(k => k && k !== t.list && !this.isMgr(k)).map(k => co + ':' + k))].sort();
   }
-  // Managers keep each MGMT task's 'members' up to date, so it shows in those members' lists.
+  // Keep 'members' up to date on every task this person can fully edit, so shared tasks reach their owners.
   fixMembers() {
-    if (!this._mgr || this.state.cloud !== 'ready') return;
-    const stale = this.state.tasks.filter(t => t.scope === 'mgmt' && (t.members || []).join() !== this.membersOf(t).join());
+    if (this.state.cloud !== 'ready' || !this._meta || !this._meta.dir) return;
+    const stale = this.state.tasks.filter(t => ['mgmt', 'team', 'personal'].includes(t.scope) && (t.members || []).join() !== this.membersOf(t).join());
     if (!stale.length) return;
     this._pending = this._pending || {}; stale.forEach(t => { this._pending[t.id] = t; });
     clearTimeout(this._wt); this._wt = setTimeout(() => this.flush(), 350);
   }
-  namesOf(key) { const em = this.state.emails || {}; return Object.keys(em).filter(n => personKey((em[n] || '').trim().toLowerCase()) === key); }
   applyRemote(kind, list) {
     this._got = { ...this._got, [kind]: list };   // latest snapshot of each list this person can see
     if (!this._need.every(k => this._got[k])) return;
@@ -1652,21 +1831,24 @@ class Component extends DCLogic {
   }
   flush() {
     const p = this._pending || {}; this._pending = {};
-    const b = this.db.batch(); Object.values(p).forEach(t => b.set(this.docRef(t), clean(t.scope === 'mgmt' ? { ...t, members: this.membersOf(t) } : t)));
+    const b = this.db.batch(); Object.values(p).forEach(t => b.set(this.docRef(t), clean(t.scope === 'assigned' ? t : { ...t, members: this.membersOf(t) })));
     b.commit().catch(e => console.warn('Sync failed', e));
   }
-  me() { return this.state.cloud === 'ready' && this.state.user ? this.state.user.name : null; }
+  me() { return this.state.cloud === 'ready' && this.state.user ? this.myName() : null; }
   sst() { const m = this.me(); return m ? { by: m, at: Date.now() } : {}; }
-  isDone(t) { return t.subs.length ? t.subs.every(s => s.done) : t.done; }
-  upd(tid, fn) { const m = this.me(); this.setState(st => ({ tasks: st.tasks.map(t => t.id === tid ? (m ? { ...fn(t), updatedBy: m, updatedAt: Date.now() } : fn(t)) : t) })); }
+  isDone(t) { return isDone(t); }
+  upd(tid, fn) { const m = this.me(); this.setState(st => ({ tasks: st.tasks.map(t => t.id === tid ? stamp(t, m ? { ...fn(t), updatedBy: m, updatedAt: Date.now() } : fn(t)) : t) })); }
   addTask = () => {
     const title = this.state.newTask.trim();
     if (!title) return;
     if (this.state.scope === 'team' && !this.state.forWho) return this.say('Pick who this task is for first');
     this.setState(st => {
-      const owner = st.newOwner.trim(), t = { ...mk(st.company, title, owner), ...(st.scope === 'mgmt' ? { scope: 'mgmt' } : st.scope === 'personal' ? { scope: 'personal', list: this._key } : st.scope === 'team' ? { scope: 'team', list: st.forWho } : { scope: 'offline' }), order: Date.now(), ...(this.me() ? { updatedBy: this.me(), updatedAt: Date.now() } : {}) };
+      const sc = st.scope === 'team' && st.forWho === this._key ? 'personal' : st.scope;
+      const owner = sc === 'personal' ? this.myName() : sc === 'team' ? this.nameOf(st.forWho) : st.newOwner.trim();
+      let t = { ...mk(st.company, title, owner), ...(sc === 'mgmt' ? { scope: 'mgmt' } : sc === 'personal' ? { scope: 'personal', list: this._key } : sc === 'team' ? { scope: 'team', list: st.forWho } : { scope: 'offline' }), order: Date.now(), ...(this.me() ? { createdBy: this.me(), updatedBy: this.me(), updatedAt: Date.now() } : {}) };
       // A listed subtask keeps the owner picked for it; otherwise it takes the task's owner.
       t.subs = [...st.newSubs, { title: st.newSubDraft.trim(), owner: null }].filter(s => s.title).map(s => ({ id: id(), title: s.title, owner: s.owner ?? owner, status: 'todo', done: false, ...this.sst() }));
+      t = stamp(null, t);
       return { tasks: [...st.tasks, t], newTask: '', newSubs: [], newSubDraft: '', openMap: t.subs.length ? { ...st.openMap, [t.id]: true } : st.openMap };
     });
   };
@@ -1692,19 +1874,19 @@ class Component extends DCLogic {
   }
   openMenu(e, cfg) {
     const r = e.currentTarget.getBoundingClientRect();
-    const h = cfg.kind === 'notes' ? 430 : 330, w = cfg.kind === 'notes' ? 340 : 248;
+    const wide = ['notes', 'files', 'folders'].includes(cfg.kind), h = wide ? 430 : 330, w = wide ? 340 : 248;
     const flip = r.bottom + h > window.innerHeight && r.top > h;
-    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, adding: false, addName: '', noteDraft: '' });
+    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '' });
   }
   choose(v) {
     const m = this.state.menu; if (!m) return;
     if (m.kind === 'owner') m.sid ? this.upd(m.tid, x => ({ ...x, subs: x.subs.map(y => y.id === m.sid ? { ...y, owner: v, ...this.sst() } : y) })) : this.upd(m.tid, x => ({ ...x, owner: v }));
     else if (m.kind === 'newOwner') this.setState({ newOwner: v });
     else if (m.kind === 'newSubOwner') this.setState(st => ({ newSubs: st.newSubs.map((s, j) => j === m.idx ? { ...s, owner: v } : s) }));
-    else if (m.kind === 'forMember') this.setState(st => ({ forWho: v, newOwner: st.newOwner || this.namesOf(v)[0] || '' }));
+    else if (m.kind === 'forMember') this.setState({ forWho: v });
     else if (m.kind === 'ownerFilter') this.setState(st => { const o = { ...st.openMap }; if (v) st.tasks.forEach(t => { if (t.subs.some(y => (y.owner || '').trim() === v)) o[t.id] = true; }); return { ownerFilter: v, openMap: o }; });
     else if (m.kind === 'status') this.setSubStatus(m.tid, m.sid, v);
-    this.setState({ menu: null, adding: false, addName: '' });
+    this.setState({ menu: null });
   }
   editNotes(m, fn) {
     const f = o => ({ ...o, notes: fn(o.notes || []) });
@@ -1717,24 +1899,70 @@ class Component extends DCLogic {
     this.editNotes(m, ns => [...ns, { id: id(), text, at: Date.now(), ...(me ? { by: me } : {}) }]);
     this.setState({ noteDraft: '' });
   };
-  saveEmails = () => {
-    const em = { ...this.state.emails, ...this.state.emailDrafts }, bad = Object.values(em).find(e => e && !/^[^@\s]+@[^@\s]+$/.test(e.trim()));
-    if (bad) return this.say(bad + " doesn't look like an email");
-    const clean = Object.fromEntries(Object.entries(em).map(([n, e]) => [n, (e || '').trim().toLowerCase()]).filter(([, e]) => e));
-    this.db.doc('meta/team').update({ emails: clean }).catch(e => this.say('Could not save: ' + e.message));
-    this.setState({ emails: clean, emailDrafts: {}, menu: null }); this.say('Emails saved');
+  // ---------- People (managers) ----------
+  // Edits go into a draft; Save writes the directory, and for Remy also the managers and company access.
+  openPeople = () => this.setState(st => ({ menu: null, pd: { dir: JSON.parse(JSON.stringify(st.dir || {})), mgrs: [...(st.mgrs || [])], cos: JSON.parse(JSON.stringify(st.cos || {})) }, np: { name: '', email: '', role: 'member', dept: '' } }));
+  editPerson(k, fn) { this.setState(st => st.pd ? { pd: { ...st.pd, dir: { ...st.pd.dir, [k]: fn({ ...st.pd.dir[k] }) } } } : null); }
+  setRole(k, role) {
+    if ((role === 'manager' || this.state.pd.dir[k].role === 'manager') && this._key !== ADMIN) return this.say('Only Remy can add or remove managers');
+    this.editPerson(k, r => ({ ...r, role, deptView: role === 'lead' ? true : role === 'manager' ? false : r.deptView, sees: role === 'lead' && !(r.sees || []).length && r.dept ? [r.dept] : r.sees || [] }));
+    this.setState(st => ({ pd: { ...st.pd, mgrs: role === 'manager' ? [...new Set([...st.pd.mgrs, k])] : st.pd.mgrs.filter(x => x !== k) } }));
+  }
+  setCos(k, co) {
+    if (this._key !== ADMIN) return this.say('Only Remy can change company access');
+    this.setState(st => { const cur = st.pd.cos[k] || ['tchb'], next = cur.includes(co) ? cur.filter(c => c !== co) : [...cur, co];
+      return next.length ? { pd: { ...st.pd, cos: { ...st.pd.cos, [k]: COMPANIES.map(c => c.key).filter(c => next.includes(c)) } } } : null; });
+  }
+  removePerson(k) {
+    if (ROOT_MANAGERS.includes(k)) return;
+    if (this.state.pd.dir[k].role === 'manager' && this._key !== ADMIN) return this.say('Only Remy can remove a manager');
+    if (!window.confirm('Remove ' + (this.state.pd.dir[k].name || k) + ' from the team directory? Their tasks stay where they are.')) return;
+    this.setState(st => { const dir = { ...st.pd.dir }, cos = { ...st.pd.cos }; delete dir[k]; delete cos[k]; return { pd: { ...st.pd, dir, cos, mgrs: st.pd.mgrs.filter(x => x !== k) } }; });
+  }
+  addPerson = () => {
+    const np = this.state.np, name = np.name.trim().replace(/\s+/g, ' ').replace(/\b\w/g, c => c.toUpperCase()), email = personKey(np.email.trim().toLowerCase());
+    if (!name) return this.say('Type their full name');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return this.say('Add the email they sign in with');
+    if (this.state.pd.dir[email]) return this.say(email + ' is already in the directory');
+    if (np.role === 'manager' && this._key !== ADMIN) return this.say('Only Remy can add managers');
+    const order = Math.max(0, ...Object.values(this.state.pd.dir).map(r => r.order || 0)) + 1;
+    this.setState(st => ({ pd: { ...st.pd, dir: { ...st.pd.dir, [email]: { name, role: np.role, dept: np.role === 'manager' ? '' : np.dept, sees: np.dept ? [np.dept] : [], deptView: np.role === 'lead', order } },
+      mgrs: np.role === 'manager' ? [...st.pd.mgrs, email] : st.pd.mgrs }, np: { name: '', email: '', role: 'member', dept: '' } }));
   };
-  confirmAdd = () => {
-    const name = this.state.addName.trim().replace(/\s+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-    if (!name) return;
-    const email = this._mgr ? this.state.addEmail.trim().toLowerCase() : '';
-    if (email && !/^[^@\s]+@[^@\s]+$/.test(email)) return this.say('That email doesn\'t look right');
-    if (!this.state.team.includes(name) || email) {
-      this.setState(st => ({ team: st.team.includes(name) ? st.team : [...st.team, name], emails: email ? { ...st.emails, [name]: email } : st.emails, addEmail: '' }));
-      if (this.state.cloud === 'ready') this.db.doc('meta/team').set({ names: this.fb.firestore.FieldValue.arrayUnion(name), ...(email ? { emails: { [name]: email } } : {}) }, { merge: true });
-    }
-    this.choose(name);
+  savePeople = () => {
+    const pd = this.state.pd; if (!pd) return;
+    const dir = Object.fromEntries(Object.entries(pd.dir).map(([k, r]) => [k, { ...r, role: ROOT_MANAGERS.includes(k) || pd.mgrs.includes(k) ? 'manager' : r.role === 'lead' ? 'lead' : 'member', name: (r.name || '').trim() || k }]));
+    const b = this.db.batch(); b.set(this.db.doc('meta/directory'), { people: dir });
+    if (this._key === ADMIN) { b.set(this.db.doc('meta/managers'), { keys: pd.mgrs.filter(k => dir[k] && !ROOT_MANAGERS.includes(k)) }); b.set(this.db.doc('meta/companies'), { access: pd.cos }); }
+    b.commit().then(() => this.say('People saved')).catch(e => this.say('Could not save: ' + e.message));
+    this.setState({ dir, ...(this._key === ADMIN ? { mgrs: pd.mgrs, cos: pd.cos } : {}), pd: null }, () => this.syncListeners());
   };
+  // ---------- Files (Firebase Storage) ----------
+  storage() {
+    if (!this._st) this._st = (this.fb.storage ? Promise.resolve() : loadScript(FB_V + 'firebase-storage-compat.js')).then(() => this.fb.storage());
+    return this._st;
+  }
+  // Uploads go to files/<company>/<task id>/; the task keeps the list (name, size, link, who, when, and the subtask if any).
+  uploadFiles(tid, sid, list) {
+    const t = this.state.tasks.find(x => x.id === tid); if (!t || !list || !list.length) return;
+    if (this.state.cloud !== 'ready') return this.say('Sign in to upload files');
+    const files = [...list], big = files.find(f => f.size > MAX_FILE);
+    if (big) return this.say(big.name + ' is over ' + sizeOf(MAX_FILE));
+    const k = tid + (sid || ''), bump = n => this.setState(st => ({ uploading: { ...st.uploading, [k]: Math.max(0, (st.uploading[k] || 0) + n) } }));
+    bump(files.length);
+    this.storage().then(st => Promise.all(files.map(f => {
+      const fid = id(), path = 'files/' + (t.company || 'tchb') + '/' + tid + '/' + fid + '-' + f.name.replace(/[^\w.\- ]+/g, '_');
+      return st.ref(path).put(f, { contentType: f.type || 'application/octet-stream' }).then(r => r.ref.getDownloadURL())
+        .then(url => { this.upd(tid, x => ({ ...x, files: [...(x.files || []), { id: fid, name: f.name, size: f.size, type: f.type || '', url, path, by: this.me(), at: Date.now(), ...(sid ? { sid } : {}) }] })); })
+        .catch(e => { console.warn(e); this.say('Could not upload ' + f.name + (/unauthorized|403|bucket/i.test(e.code + e.message) ? ': file storage is not switched on yet' : '')); })
+        .finally(() => bump(-1));
+    }))).catch(e => { bump(-files.length); this.say('File storage is unavailable: ' + e.message); });
+  }
+  removeFile(tid, f) {
+    if (!window.confirm('Delete ' + f.name + '?')) return;
+    this.upd(tid, x => ({ ...x, files: (x.files || []).filter(y => y.id !== f.id) }));
+    this.storage().then(st => st.ref(f.path).delete()).catch(e => console.warn(e));
+  }
   moveTask(from, to) {
     if (!from || from === to) return;
     this.setState(st => {
@@ -1808,60 +2036,112 @@ class Component extends DCLogic {
     if (window.visualViewport) { window.visualViewport.removeEventListener('resize', this._onResize); window.visualViewport.removeEventListener('scroll', this._onResize); }
   }
 
+  // People panel: everyone grouped like the owner lists, with role, main department, the departments they see in Team,
+  // the department toggle and (Remy only) which companies they can open.
+  peopleVals() {
+    const pd = this.state.pd, admin = this._key === ADMIN;
+    if (!pd) return { peopleOpen: false, pdGroups: [] };
+    const d = pd.dir, isM = k => ROOT_MANAGERS.includes(k) || pd.mgrs.includes(k), by = (a, b) => (d[a].order || 999) - (d[b].order || 999), ks = Object.keys(d);
+    const groups = [['Managers', ks.filter(isM).sort(by)], ...DEPTS.map(dp => [dp, ks.filter(k => !isM(k) && d[k].dept === dp).sort((a, b) => (d[b].role === 'lead') - (d[a].role === 'lead') || by(a, b))]),
+      ['No Department', ks.filter(k => !isM(k) && !DEPTS.includes(d[k].dept)).sort(by)]].filter(g => g[1].length);
+    const chip = (on, lock) => ({ on, bg: on ? 'var(--action-secondary)' : 'transparent', fg: on ? '#fff' : 'var(--tchb-gray-700)', border: on ? 'var(--action-secondary)' : 'var(--border-strong)', lock: lock ? 'opacity: 0.5; cursor: default;' : '' });
+    const roleOpts = mgrOk => [['member', 'Member'], ['lead', 'Team Leader'], ...(mgrOk ? [['manager', 'Manager']] : [])].map(([v, label]) => ({ v, label }));
+    const deptOpts = [{ v: '', label: 'No Dept' }, ...DEPTS.map(x => ({ v: x, label: x }))];
+    const row = k => {
+      const r = d[k], mgr = isM(k), root = ROOT_MANAGERS.includes(k), cos = mgr ? ['tchb', 'kpi'] : pd.cos[k] || ['tchb'];
+      return { key: k, name: r.name || '', email: k, initials: initials(r.name || k) || '?',
+        onName: e => { const v = e.target.value; this.editPerson(k, x => ({ ...x, name: v })); },
+        role: mgr ? 'manager' : r.role === 'lead' ? 'lead' : 'member', lockRole: root || (mgr && !admin), roleOpts: roleOpts(admin || mgr), onRole: e => this.setRole(k, e.target.value),
+        notMgr: !mgr, dept: r.dept || '', deptOpts,
+        onDept: e => { const v = e.target.value; this.editPerson(k, x => ({ ...x, dept: v, sees: x.role === 'lead' ? DEPTS.filter(z => z === v || (x.sees || []).includes(z)) : v ? [v] : [] })); },
+        sees: DEPTS.map(x => { const on = (r.sees || []).includes(x);
+          return { label: x, ...chip(on, false), onClick: () => this.editPerson(k, y => ({ ...y, sees: on ? (y.sees || []).filter(z => z !== x) : DEPTS.filter(z => z === x || (y.sees || []).includes(z)) })) }; }),
+        deptView: !!r.deptView,
+        onDeptView: () => this.editPerson(k, y => ({ ...y, deptView: !y.deptView, sees: (y.sees || []).length ? y.sees : y.dept ? [y.dept] : [] })),
+        trackBg: r.deptView ? 'var(--action-secondary)' : 'var(--tchb-gray-300)', knobX: r.deptView ? 'translateX(16px)' : 'none',
+        cos: COMPANIES.map(c => ({ label: c.key === 'kpi' ? 'KPI' : c.label, ...chip(cos.includes(c.key), !admin || mgr), onClick: () => { if (!mgr) this.setCos(k, c.key); } })),
+        canRemove: !root && (!mgr || admin), onRemove: () => this.removePerson(k) };
+    };
+    const np = this.state.np, setNp = (f, v) => this.setState(st => ({ np: { ...st.np, [f]: v } }));
+    return { peopleOpen: true, pdGroups: groups.map(([g, rows]) => ({ label: g, rows: rows.map(row) })),
+      adminNote: admin ? 'You can add managers and choose which companies each person can open.' : 'Only Remy can add managers or change which companies people can open.',
+      npName: np.name, npEmail: np.email, npRole: np.role, npDept: np.dept, npRoleOpts: roleOpts(admin), deptOpts,
+      onNpName: e => setNp('name', e.target.value), onNpEmail: e => setNp('email', e.target.value), onNpRole: e => setNp('role', e.target.value), onNpDept: e => setNp('dept', e.target.value),
+      onNpKey: e => { if (e.key === 'Enter') this.addPerson(); },
+      addPerson: this.addPerson, savePeople: this.savePeople, closePeople: () => this.setState({ pd: null }),
+      peopleKey: e => { if (e.key === 'Escape') this.setState({ pd: null }); } };
+  }
   renderVals() {
-    const { filter, ownerFilter, drafts, undo, company } = this.state;
+    const { filter, ownerFilter, drafts, undo } = this.state;
     const allTasks = this.state.tasks;
     if (!this._cloudInit) { this._cloudInit = true; this.initCloud(); }
-    const cloud = this.state.cloud, mode = this.state.mode;
-    if (cloud === 'ready') this.syncOut(allTasks.filter(t => t.scope !== 'offline'));
+    const cloud = this.state.cloud, mode = this.state.mode, live = cloud === 'ready';
+    // Companies this person can open (Remy sets them in People); offline shows both.
+    const myCos = live ? this.cosOf(this._key) : COMPANIES.map(c => c.key);
+    const company = myCos.includes(this.state.company) ? this.state.company : myCos[0];
+    if (live) this.syncOut(allTasks.filter(t => t.scope !== 'offline'));
     if (this._savedTasks !== allTasks) { this._savedTasks = allTasks; try { localStorage.setItem(KEY + '-offline', JSON.stringify(allTasks.filter(t => t.scope === 'offline'))); } catch (e) {} }
     if (this._savedOpen !== this.state.openMap) { this._savedOpen = this.state.openMap; try { localStorage.setItem(KEY + '-open', JSON.stringify(this.state.openMap)); } catch (e) {} }
-    if (this._themed !== company + mode) { this._themed = company + mode; this.applyTheme(company, mode); try { localStorage.setItem(KEY + '-co', company); localStorage.setItem(KEY + '-mode', mode); } catch (e) {} }
-    // What counts toward someone's %: on a MGMT task shown in a member's list, only the parts they own (all of it if they own the task).
-    const myNames = cloud === 'ready' ? this.namesOf(this._key) : [], mineName = n => myNames.includes((n || '').trim());
+    // What counts toward someone's %: on a task shared into their list, only the parts they own (all of it if they own the task).
+    const mineName = n => live && this.keyOfName(n) === this._key;
     const ownsAll = t => t.scope !== 'assigned' || mineName(t.owner);
     const unitSubs = t => ownsAll(t) ? t.subs : t.subs.filter(s => mineName(s.owner));
     const unitTot = ts => ts.reduce((a, t) => a + (t.subs.length ? unitSubs(t).length : (ownsAll(t) ? 1 : 0)), 0);
     const unitDone = ts => ts.reduce((a, t) => a + (t.subs.length ? unitSubs(t).filter(s => s.done).length : (ownsAll(t) && t.done ? 1 : 0)), 0);
     const pctOf = ts => { const tot = unitTot(ts), dn = unitDone(ts); return (tot ? Math.round(dn / tot * 100) : 0) + '%'; };
-    const gate = ['init', 'connecting', 'signedOut'].includes(cloud), live = cloud === 'ready';
+    const gate = ['init', 'connecting', 'signedOut'].includes(cloud);
     const hasOffline = allTasks.some(t => t.scope === 'offline');
-    // Managers: MGMT / Team / Personal; members: Personal only. Offline appears while this device holds offline tasks.
-    const views = !live ? ['offline'] : [...(this._mgr ? ['mgmt', 'team', 'personal'] : ['personal']), ...(hasOffline ? ['offline'] : [])];
+    // Managers: MGMT / Team / Personal. Team leaders, and members with the department toggle on: Team / Personal.
+    // Everyone else: Personal only. Offline appears while this device holds offline tasks.
+    const role = live ? this.roleOf(this._key) : 'member', teamDepts = live ? this.seesOf(this._key) : [], myDept = live ? this.deptOf(this._key) : '';
+    const views = !live ? ['offline'] : [...(role === 'manager' ? ['mgmt', 'team', 'personal'] : teamDepts.length ? ['team', 'personal'] : ['personal']), ...(hasOffline ? ['offline'] : [])];
     const scope = views.includes(this.state.scope) ? this.state.scope : views[0];
+    const dept = teamDepts.includes(this.state.dept) ? this.state.dept : teamDepts.length > 1 ? 'all' : teamDepts[0] || 'all';
+    const keyOfToken = m => m.slice(m.indexOf(':') + 1);
+    // A personal list's tasks belong to its owner's main department; a MGMT task to the departments of the members on it.
+    const deptsOf = t => t.scope === 'mgmt' ? [...new Set(this.membersOf(t).map(m => this.deptOf(keyOfToken(m))))] : [this.deptOf(t.list || this._key)];
+    const inTeam = t => { const sc = t.scope || 'mgmt';
+      return sc === 'team' || (sc === 'mgmt' && this.membersOf(t).length > 0) || (sc === 'personal' && role !== 'manager' && teamDepts.includes(myDept)); };
+    const inDept = (t, d) => d === 'all' ? role === 'manager' || deptsOf(t).some(x => teamDepts.includes(x)) : deptsOf(t).includes(d);
     const inScope = t => { const sc = t.scope || 'mgmt';
-      if (scope === 'personal') return sc === 'personal' || sc === 'assigned';             // members also see MGMT tasks they own parts of
-      if (scope === 'team') return sc === 'team' || (sc === 'mgmt' && this.membersOf(t).length > 0);
+      if (scope === 'personal') return sc === 'personal' || sc === 'assigned';             // plus tasks elsewhere they own parts of
+      if (scope === 'team') return inTeam(t) && inDept(t, dept);
       return sc === scope; };
     // Completion % is hidden on the sign-in screen; when shown it counts the list being viewed (team or personal).
-    const companyTabs = COMPANIES.map(c => ({ label: c.label, pct: gate ? '' : pctOf(allTasks.filter(t => (t.company || 'tchb') === c.key && inScope(t))),
+    const companyTabs = COMPANIES.filter(c => myCos.includes(c.key)).map(c => ({ label: c.label, pct: gate ? '' : pctOf(allTasks.filter(t => (t.company || 'tchb') === c.key && inScope(t))),
       onClick: () => this.setState({ company: c.key, ownerFilter: '', filter: 'all' }),
       bg: company === c.key ? 'var(--action-secondary)' : 'transparent', color: company === c.key ? '#fff' : 'var(--tchb-gray-700)', shadow: company === c.key ? 'var(--shadow-button)' : 'none' }));
     const tasks = allTasks.filter(t => (t.company || 'tchb') === company && inScope(t));
     const owners = this.state.team;
     if (this._savedTeam !== owners) { this._savedTeam = owners; try { localStorage.setItem(KEY + '-team', JSON.stringify(owners)); } catch (e) {} }
+    if (this._themed !== company + mode) { this._themed = company + mode; this.applyTheme(company, mode); try { localStorage.setItem(KEY + '-co', company); localStorage.setItem(KEY + '-mode', mode); } catch (e) {} }
+    // Owner lists: managers, then each department (team leaders first), then older names with no login ("Other").
+    const dirNames = new Set(Object.values(this.state.dir || {}).map(r => (r.name || '').trim().toLowerCase()));
+    const others = owners.filter(n => n && !dirNames.has(n.trim().toLowerCase()));
+    const av = nm => ({ hasAvatar: true, initials: initials(nm), avBg: 'var(--avatar-bg, var(--tchb-indigo-700))', avFg: '#fff' });
+    const grouped = (keep, valueOf) => [].concat(...this.groups(company, keep).map(([g, ks]) => [{ isHeader: true, label: g, value: '#' + g },
+      ...ks.map(k => ({ value: valueOf(k), label: this.nameOf(k), note: this.rec(k).role === 'lead' && !this.isMgr(k) ? 'Team Leader' : '', ...av(this.nameOf(k)) }))]));
+    const ownerItems = () => [...grouped(() => true, k => this.nameOf(k)), ...(others.length ? [{ isHeader: true, label: 'Other', value: '#other' }, ...others.map(o => ({ value: o, label: o, ...av(o) }))] : [])];
     // On phones, task/subtask owner pills show just the initials avatar once someone is picked (nameHide).
     const chipOf = o => ({ owner: o || '', ownerLabel: o || 'Assign', nameHide: o && this.state.mob ? 'display: none;' : '', ownerAria: o ? 'Owner: ' + o : 'Assign owner', ownerLabelColor: o ? 'var(--text-body)' : 'var(--text-muted)', initials: initials(o) || '+', ownerBg: o ? 'var(--avatar-bg, var(--tchb-indigo-700))' : 'var(--tchb-gray-100)', ownerFg: o ? '#fff' : 'var(--tchb-gray-500)' });
     const menu = this.state.menu;
     const SL = { todo: 'Not Started', progress: 'In Progress', done: 'Done' };
     let menuItems = [], menuCur = '';
-    if (menu && menu.kind !== 'notes' && menu.kind !== 'people') {
+    if (menu && !['notes', 'files', 'folders'].includes(menu.kind)) {
       if (menu.kind === 'status') {
         const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : '';
         menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
       } else if (menu.kind === 'forMember') {
+        // Managers add for anyone but managers; team leaders for people in the departments they see.
         menuCur = this.state.forWho;
-        const em = this.state.emails || {}, keys = new Set([...Object.values(em).map(e => personKey(e.trim().toLowerCase())), ...Object.keys(this.state.people || {})]);
-        menuItems = [...keys].filter(k => k && !MANAGERS.includes(k)).map(k => { const nm = this.namesOf(k)[0] || (this.state.people || {})[k] || k; return { value: k, label: nm, sub: k, hasAvatar: true, initials: initials(nm), avBg: 'var(--avatar-bg, var(--tchb-indigo-700))', avFg: '#fff' }; })
-          .sort((a, b) => a.label.localeCompare(b.label));
+        menuItems = grouped(k => !this.isMgr(k) && (role === 'manager' || teamDepts.includes(this.deptOf(k))), k => k);
       } else {
         if (menu.kind === 'owner') { const tk = allTasks.find(x => x.id === menu.tid); menuCur = tk ? (menu.sid ? (tk.subs.find(y => y.id === menu.sid) || {}).owner : tk.owner) || '' : ''; }
         else if (menu.kind === 'newSubOwner') { const ns = this.state.newSubs[menu.idx]; menuCur = ns ? ns.owner ?? this.state.newOwner : ''; }
         else menuCur = menu.kind === 'newOwner' ? this.state.newOwner : ownerFilter;
-        menuItems = [{ value: '', label: menu.kind === 'ownerFilter' ? 'All Owners' : 'Unassigned', hasAvatar: true, initials: '—', avBg: 'var(--tchb-gray-100)', avFg: 'var(--tchb-gray-500)' },
-          ...owners.map(o => ({ value: o, label: o, hasAvatar: true, initials: initials(o), avBg: 'var(--avatar-bg, var(--tchb-indigo-700))', avFg: '#fff' }))];
+        menuItems = [{ value: '', label: menu.kind === 'ownerFilter' ? 'All Owners' : 'Unassigned', hasAvatar: true, initials: '—', avBg: 'var(--tchb-gray-100)', avFg: 'var(--tchb-gray-500)' }, ...ownerItems()];
       }
-      menuItems = menuItems.map(it => ({ hasAvatar: false, hasDot: false, ...it, selected: it.value === menuCur, bg: it.value === menuCur ? 'var(--glass-hover, rgba(255,255,255,0.7))' : 'transparent', onClick: () => this.choose(it.value) }));
+      menuItems = menuItems.map(it => ({ hasAvatar: false, hasDot: false, isHeader: false, note: '', ...it, isItem: !it.isHeader, selected: it.value === menuCur, bg: it.value === menuCur ? 'var(--glass-hover, rgba(255,255,255,0.7))' : 'transparent', onClick: () => this.choose(it.value) }));
     }
     const ownerMatch = t => !ownerFilter || (t.owner || '').trim() === ownerFilter || t.subs.some(s => (s.owner || '').trim() === ownerFilter);
     const showProgress = this.props.showProgress ?? true;
@@ -1881,11 +2161,18 @@ class Component extends DCLogic {
     const RANK = { progress: 0, todo: 1, done: 2 };
     list = list.map((t, i) => [t, i]).sort((a, b) => RANK[statusOf(a[0])] - RANK[statusOf(b[0])] || a[1] - b[1]).map(([t]) => t);
     const STAT = { done: ['Done', 'green'], progress: ['In Progress', 'indigo'], todo: ['Not Started', 'neutral'] };
+    const fileBtn = (n, k, idle) => ({ hasFiles: n > 0, filesCount: n, fileColor: n ? 'var(--tchb-indigo-700)' : idle, filesAria: n ? n + (n === 1 ? ' file' : ' files') : 'Add a file', fileBusy: this.state.uploading[k] ? 'opacity: 0.5;' : '' });
+    const datesOf = o => [['Created', o.createdAt], ['Started', o.startedAt], ['Done', o.doneAt]].filter(x => x[1]).map(([l, v]) => l + ' ' + when(v)).join(' · ');
     const noteBtn = (o, idle) => { const n = (o.notes || []).length; return { hasNotes: n > 0, notesCount: n, noteColor: n ? 'var(--tchb-indigo-700)' : idle, notesAria: n ? n + (n === 1 ? ' note' : ' notes') : 'Add a note' }; };
     const visibleTasks = list.map(t => {
       const d = this.isDone(t), st = statusOf(t);
       const asg = t.scope === 'assigned', whole = ownsAll(t), mgmtInTeam = scope === 'team' && t.scope === 'mgmt';
-      const who = mgmtInTeam ? this.membersOf(t).map(k => this.namesOf(k)[0] || k).join(', ') : '';
+      const who = mgmtInTeam ? this.membersOf(t).map(m => this.nameOf(keyOfToken(m))).join(', ') : '';
+      // Members with the department toggle can work on their department's tasks but only team leaders and managers delete them.
+      const noDelete = asg || (t.scope === 'team' && role === 'member');
+      const deptTag = scope === 'team' ? deptsOf(t).filter(Boolean).join(', ') : '';
+      // Tasks created by another app (the Title Agent, later the EOD tools) carry source: '<app name>'.
+      const whose = t.source ? 'From ' + t.source : asg ? (t.list ? 'Shared by ' + this.nameOf(t.list) : 'Added by MGMT') : mgmtInTeam ? 'Added by MGMT for ' + who : t.scope === 'team' ? this.nameOf(t.list) + "'s task" : scope === 'team' ? 'Your task' : '';
       const n = t.subs.filter(s => s.done).length;
       const pct = t.subs.length ? Math.round(n / t.subs.length * 100) : (d ? 100 : 0);
       return {
@@ -1898,13 +2185,15 @@ class Component extends DCLogic {
         ...chipOf(t.owner), openOwner: e => this.openMenu(e, { kind: 'owner', tid: t.id }),
         ...noteBtn(t, 'var(--tchb-gray-500)'), openNotes: e => this.openMenu(e, { kind: 'notes', tid: t.id }),
         canPushLive: t.scope === 'offline' && !!this.auth, onPushLive: () => this.pushLive(t.id),
+        ...fileBtn((t.files || []).length, t.id, 'var(--tchb-gray-500)'), openFiles: e => this.openMenu(e, { kind: 'files', tid: t.id }),
         // A member's view of a MGMT task: no moving, deleting or changing owners; only the task owner can tick or rename the whole task.
         lockMain: asg && !whole ? 'pointer-events: none; opacity: 0.55;' : '', readOnly: asg && !whole,
-        hideEdit: asg ? 'display: none;' : '', hideGrip: asg ? 'visibility: hidden; pointer-events: none;' : '', ownerLock: asg ? 'pointer-events: none;' : '', addSubStyle: asg && !whole ? 'display: none;' : '',
-        canPushMgmt: live && this._mgr && t.scope === 'personal', onPushMgmt: () => this.pushMgmt(t.id),
+        hideEdit: noDelete ? 'display: none;' : '', hideGrip: asg ? 'visibility: hidden; pointer-events: none;' : '', ownerLock: asg ? 'pointer-events: none;' : '', addSubStyle: asg && !whole ? 'display: none;' : '',
+        canPushMgmt: live && role === 'manager' && t.scope === 'personal', onPushMgmt: () => this.pushMgmt(t.id),
         id: t.id, title: t.title, isDone: d, open: !!this.state.openMap[t.id], draft: drafts[t.id] || '',
         status: STAT[st][0], tone: STAT[st][1], pct: pct + '%',
-        meta: (asg ? 'Added by MGMT · ' : mgmtInTeam ? 'Added by MGMT for ' + who + ' · ' : t.scope === 'team' ? (this.namesOf(t.list)[0] || this.state.people[t.list] || t.list) + "'s task · " : '') + (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks — check off directly') + (t.updatedBy ? ` · Edited by ${t.updatedBy} · ${ago(t.updatedAt)}` : ''),
+        metaTitle: datesOf(t),
+        meta: [whose, deptTag].filter(Boolean).map(x => x + ' · ').join('') + (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks — check off directly') + (t.updatedBy ? ` · Edited by ${t.updatedBy} · ${ago(t.updatedAt)}` : ''),
         boxBg: d ? 'var(--tchb-green-500)' : 'var(--surface-card)',
         boxBorder: d ? 'var(--tchb-green-500)' : 'var(--border-strong)',
         titleColor: d ? 'var(--text-muted)' : 'var(--tchb-indigo-700)',
@@ -1929,7 +2218,8 @@ class Component extends DCLogic {
           onDragOver: e => { const d = this.state.subDrag; if (!d || d.tid !== t.id) return; e.preventDefault(); e.stopPropagation(); e.dataTransfer.dropEffect = 'move'; if (this.state.subOver !== s.id) this.setState({ subOver: s.id }); },
           onDrop: e => { const d = this.state.subDrag; if (!d || d.tid !== t.id) return; e.preventDefault(); e.stopPropagation(); this.setState({ subDrag: null, subOver: null }); this.moveSub(t.id, d.sid, s.id); },
           onGripDown: e => { if (e.pointerType === 'mouse') return; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {} this.setState({ subDrag: { tid: t.id, sid: s.id }, subOver: null }); },
-          title: s.title, done: s.done, hasEdited: !!s.by, edited: s.by ? firstName(s.by) + ' · ' + ago(s.at) : '', editedTitle: s.by ? 'Last edited by ' + s.by : '', ...chipOf(s.owner), status: s.status || (s.done ? 'done' : 'todo'),
+          title: s.title, done: s.done, hasEdited: !!s.by, edited: s.by ? firstName(s.by) + ' · ' + ago(s.at) : '', editedTitle: [s.by ? 'Last edited by ' + s.by : '', datesOf(s)].filter(Boolean).join(' · '),
+          ...fileBtn((t.files || []).filter(f => f.sid === s.id).length, t.id + s.id, 'var(--tchb-gray-300)'), openFiles: e => this.openMenu(e, { kind: 'files', tid: t.id, sid: s.id }), ...chipOf(s.owner), status: s.status || (s.done ? 'done' : 'todo'),
           matchStyle: ownerFilter && (s.owner || '').trim() === ownerFilter ? 'background: color-mix(in srgb, var(--tchb-green-500) 11%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--tchb-green-500) 45%, transparent), 0 0 14px color-mix(in srgb, var(--tchb-green-500) 30%, transparent);' : '',
           statusBg: s.done ? 'var(--tchb-green-050)' : s.status === 'progress' ? 'var(--tchb-indigo-050)' : 'var(--tchb-gray-100)',
           statusFg: s.done ? 'var(--tchb-green-600)' : s.status === 'progress' ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
@@ -1992,29 +2282,52 @@ class Component extends DCLogic {
       lightBg: mode !== 'dark' ? 'var(--action-secondary)' : 'transparent', lightFg: mode !== 'dark' ? '#fff' : 'var(--tchb-gray-700)',
       darkBg: mode === 'dark' ? 'var(--action-secondary)' : 'transparent', darkFg: mode === 'dark' ? '#fff' : 'var(--tchb-gray-700)',
       showGate: gate, showBoard: !gate,
-      canSignIn: cloud === 'signedOut', gateText: cloud !== 'signedOut' ? 'Connecting to the team board…' : 'Use your @kpidriver.com or @totalchb.com Google account to see and edit the live board.',
+      canSignIn: cloud === 'signedOut', gateText: cloud !== 'signedOut' ? 'Connecting to the Team Hub…' : 'Use your @kpidriver.com or @totalchb.com Google account to see and edit the live board.',
       hasAuthError: !!this.state.authError, authError: this.state.authError,
       workLocal: () => this.goLocal(),
       showScopes: views.length > 1, isMember: live && views.length === 1,
+      // Team is split by department: All plus each department this person sees (one department: just that one).
+      showDepts: scope === 'team' && teamDepts.length > 1,
+      deptTabs: [...(teamDepts.length > 1 ? ['all'] : []), ...teamDepts].map(d => { const on = d === dept, n = allTasks.filter(t => (t.company || 'tchb') === company && inTeam(t) && inDept(t, d)).length;
+        return { label: d === 'all' ? 'All' : d, count: n, onClick: () => this.setState({ dept: d, ownerFilter: '', filter: 'all' }),
+          bg: on ? 'var(--surface-card)' : 'transparent', color: on ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: on ? 'var(--shadow-button)' : 'none' }; }),
       ...Object.fromEntries(['mgmt', 'team', 'personal', 'offline'].map(k => [k + 'Tab', { on: scope === k, show: views.includes(k),
         onClick: () => this.setState({ scope: k, ownerFilter: '', filter: 'all', menu: null }),
         bg: scope === k ? 'var(--surface-card)' : 'transparent', color: scope === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: scope === k ? 'var(--shadow-button)' : 'none' }])),
-      scopeHint: { mgmt: 'Shared by the managers only.', team: "Everyone else's personal tasks, plus MGMT tasks they own.",
+      scopeHint: { mgmt: 'Shared by the managers only.',
+        team: role === 'manager' ? 'Everyone’s personal tasks by department, plus MGMT tasks they own.' : teamDepts.length > 1 ? 'Tasks in the departments you lead.' : 'Your department’s tasks: ' + teamDepts[0] + '.',
         offline: live ? 'On this device only. Push a task to move it into your personal list.' : 'Saved on this device only. Push a task to your personal list when you are online.',
-        personal: this._mgr ? 'Only you can see these.' : 'Only you and the managers can see these.' }[scope],
-      showErr: !!this.state.errs[scope], canAdd: scope !== 'team' || this._mgr,
-      showFor: scope === 'team', forLabel: this.state.forWho ? 'For: ' + (this.namesOf(this.state.forWho)[0] || (this.state.people || {})[this.state.forWho] || this.state.forWho) : 'Pick a team member',
+        personal: role === 'manager' ? 'Only you can see these.' : 'You, your team leaders and the managers can see these.' }[scope],
+      showErr: !!this.state.errs[scope], canAdd: scope !== 'team' || role !== 'member',
+      // Personal tasks are yours, and Team tasks belong to the person they're for, so only MGMT and Offline ask for an owner.
+      showNewOwner: scope === 'mgmt' || scope === 'offline',
+      showFor: scope === 'team', forLabel: this.state.forWho ? 'For: ' + this.nameOf(this.state.forWho) : 'Pick a team member',
       forColor: this.state.forWho ? 'var(--text-body)' : 'var(--status-error)', openFor: e => this.openMenu(e, { kind: 'forMember' }),
       showBack: !live, goBack: () => this.auth ? this.setState({ cloud: 'signedOut', authError: '' }) : window.location.reload(),
-      showPeopleBtn: live && this._mgr, openPeople: e => this.openMenu(e, { kind: 'people' }),
-      menuIsPeople: !!menu && menu.kind === 'people',
-      peopleRows: owners.map(n => ({ name: n, email: n in this.state.emailDrafts ? this.state.emailDrafts[n] : (this.state.emails[n] || ''),
-        onEmail: e => { const v = e.target.value; this.setState(st => ({ emailDrafts: { ...st.emailDrafts, [n]: v } })); } })),
-      saveEmails: this.saveEmails, showAddEmail: live && this._mgr, addEmail: this.state.addEmail, onAddEmail: e => this.setState({ addEmail: e.target.value }),
+      showPeopleBtn: live && role === 'manager', openPeople: this.openPeople,
+      ...this.peopleVals(),
       newTaskPlaceholder: { mgmt: 'Add a MGMT task', personal: 'Add a personal task', offline: 'Add an offline task', team: 'Add a task for a team member' }[scope] || '',
+      ...(() => {
+        // Files on one task or subtask: open, upload, delete. Parts of a shared task you don't own are read-only.
+        const on = !!menu && menu.kind === 'files', tk = on && allTasks.find(x => x.id === menu.tid), sb = tk && menu.sid ? tk.subs.find(y => y.id === menu.sid) : null;
+        if (!tk) return { menuIsFiles: false, filesList: [], filesEmpty: true };
+        const locked = tk.scope === 'assigned' && !ownsAll(tk) && !(sb && mineName(sb.owner)), up = this.state.uploading[tk.id + (menu.sid || '')] || 0;
+        const list = (tk.files || []).filter(f => menu.sid ? f.sid === menu.sid : true);
+        return { menuIsFiles: true, filesFor: sb ? sb.title : tk.title, filesEmpty: !list.length, canUpload: !locked && live, uploadingNow: up > 0, uploadingLabel: 'Uploading ' + up + (up === 1 ? ' file…' : ' files…'),
+          filesList: list.map(f => { const s = f.sid && !menu.sid ? tk.subs.find(y => y.id === f.sid) : null;
+            return { name: f.name, url: f.url, meta: [s ? 'Subtask: ' + s.title : '', sizeOf(f.size || 0), f.by, ago(f.at)].filter(Boolean).join(' · '), canDelete: !locked, onDelete: () => this.removeFile(tk.id, f) }; }),
+          onPickFiles: e => { const fl = [...(e.target.files || [])]; e.target.value = ''; this.uploadFiles(tk.id, menu.sid, fl); } };
+      })(),
+      // Files button (left of the filters): every task in this view that has files, as a folder.
+      openFolders: e => this.openMenu(e, { kind: 'folders' }), folderCount: tasks.filter(t => (t.files || []).length).length,
+      menuIsFolders: !!menu && menu.kind === 'folders',
+      folders: tasks.filter(t => (t.files || []).length).map(t => { const op = !!this.state.folderOpen[t.id];
+        return { title: t.title, count: (t.files || []).length, open: op, chevron: op ? 'rotate(90deg)' : 'none', onToggle: () => this.setState(st => ({ folderOpen: { ...st.folderOpen, [t.id]: !st.folderOpen[t.id] } })),
+          files: (t.files || []).map(f => { const s = f.sid ? t.subs.find(y => y.id === f.sid) : null; return { name: f.name, url: f.url, meta: [s ? s.title : '', sizeOf(f.size || 0), ago(f.at)].filter(Boolean).join(' · ') }; }) }; }),
+      foldersEmpty: !tasks.some(t => (t.files || []).length),
       hasToast: !!this.state.toast, toast: this.state.toast,
       signIn: () => this.auth && this.auth.signInWithPopup(new this.fb.auth.GoogleAuthProvider()).catch(e => this.setState({ authError: e.message })),
-      signOut: () => { if (this.auth && window.confirm('Sign out of the task board?')) this.auth.signOut(); },
+      signOut: () => { if (this.auth && window.confirm('Sign out of the Team Hub?')) this.auth.signOut(); },
       signedIn: cloud === 'ready' && !!this.state.user, userInitials: this.state.user ? initials(this.state.user.name) : '',
       userTitle: this.state.user ? 'Signed in as ' + this.state.user.email + ' — click to sign out' : '',
       syncLabel: cloud === 'ready' ? 'Live' : cloud === 'connecting' ? 'Connecting' : cloud === 'error' ? 'Offline' : 'Local Only',
@@ -2029,29 +2342,24 @@ class Component extends DCLogic {
       ownerFilterLabel: ownerFilter || 'All Owners',
       openNewOwner: e => this.openMenu(e, { kind: 'newOwner' }),
       openOwnerFilter: e => this.openMenu(e, { kind: 'ownerFilter' }),
-      menuOpen: !!menu, menuItems, menuCanAdd: !!menu && ['owner', 'newOwner', 'newSubOwner'].includes(menu.kind),
+      menuOpen: !!menu, menuItems,
       menuTop: menu ? menu.top + 'px' : '0px', menuLeft: menu ? menu.left + 'px' : '0px', menuTransform: menu && menu.flip ? 'translateY(-100%)' : 'none',
-      closeMenu: () => this.setState({ menu: null, adding: false, addName: '' }),
+      closeMenu: () => this.setState({ menu: null }),
       ...(() => {
         // Notes panel: who wrote each note and when, oldest first; you can delete your own.
         const on = !!menu && menu.kind === 'notes', tk = on && allTasks.find(x => x.id === menu.tid);
         const item = tk ? (menu.sid ? tk.subs.find(y => y.id === menu.sid) : tk) : null, notes = (item && item.notes) || [];
         return {
           menuIsNotes: on && !!item, notesFor: item ? item.title : '', notesEmpty: !notes.length,
-          notesBox: on || (menu && menu.kind === 'people') ? 'width: 340px; max-width: calc(100vw - 16px); max-height: 440px; box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
-          notesList: notes.map(n => ({ text: n.text, meta: (n.by || 'Note') + ' · ' + ago(n.at), canDelete: !n.by || n.by === this.me(),
+          notesBox: on || (menu && ['files', 'folders'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: 440px; box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
+          notesList: notes.map(n => ({ text: n.text, meta: (n.by || 'Note') + ' · ' + ago(n.at), canDelete: !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name),
             onDelete: () => this.editNotes(menu, ns => ns.filter(x => x.id !== n.id)) })),
           notesAutoFocus: !this.state.mob, noteDraft: this.state.noteDraft || '', addNote: this.addNote,
           onNoteDraft: e => this.setState({ noteDraft: e.target.value }),
           onNoteKey: e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); this.addNote(); } }
         };
       })(),
-      menuKey: e => { if (e.key === 'Escape') this.setState({ menu: null, adding: false, addName: '' }); },
-      adding: this.state.adding, notAdding: !this.state.adding, addName: this.state.addName,
-      startAdd: () => this.setState({ adding: true, addName: '' }),
-      onAddName: e => this.setState({ addName: e.target.value }),
-      onAddKey: e => { if (e.key === 'Enter') this.confirmAdd(); if (e.key === 'Escape') this.setState({ menu: null, adding: false }); },
-      confirmAdd: this.confirmAdd,
+      menuKey: e => { if (e.key === 'Escape') this.setState({ menu: null }); },
       blurOnEnter: e => { if (e.key === 'Enter') { e.preventDefault(); e.currentTarget.blur(); } },
       onNewTask: e => this.setState({ newTask: e.target.value }),
       onNewTaskKey: e => { if (e.key === 'Enter') this.addTask(); },
@@ -2068,7 +2376,7 @@ class Component extends DCLogic {
       collapseAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = false; }); return { openMap: o }; }),
       isEmpty: visibleTasks.length === 0,
       emptyTitle: tasks.length ? 'Nothing here' : { personal: 'No personal tasks yet', team: 'No team tasks yet', mgmt: 'No MGMT tasks yet', offline: 'No offline tasks' }[scope] || 'No tasks yet',
-      emptyBody: tasks.length ? 'No tasks match these filters.' : scope === 'team' ? "Members' personal tasks show up here as they add them." : 'Add your first task above to get started.',
+      emptyBody: tasks.length ? 'No tasks match these filters.' : scope === 'team' ? 'Personal tasks in this department show up here as people add them.' : 'Add your first task above to get started.',
       hasUndo: !!undo, undoLabel: undo ? undo.t.title : '',
       undo: () => { clearTimeout(this._u); this.setState(st => { const a = [...st.tasks]; a.splice(st.undo.idx, 0, st.undo.t); return { tasks: a, undo: null }; }); }
     };

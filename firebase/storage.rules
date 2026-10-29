@@ -1,0 +1,15 @@
+rules_version = '2';
+// Universal Team Hub files. Paste into Firebase console > Storage > Rules.
+// Everyone signed in with a team account can open, add and delete task files; 25 MB per file (MAX_FILE in the app).
+service firebase.storage {
+  match /b/{bucket}/o {
+    function team() {
+      return request.auth != null && request.auth.token.email_verified == true
+        && request.auth.token.email.lower().matches('.*@(totalchb|kpidriver)[.]com$');
+    }
+    match /files/{company}/{taskId}/{fileName} {
+      allow read, delete: if team();
+      allow create: if team() && request.resource.size < 25 * 1024 * 1024;
+    }
+  }
+}

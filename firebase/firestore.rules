@@ -1,0 +1,81 @@
+rules_version = '2';
+// Universal Team Hub: who can read and change what. Paste into Firebase console > Firestore > Rules.
+// Keep the manager, alias and company lists in step with ROOT_MANAGERS, SAME_PERSON and ADMIN in app/app.dc.html.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null && request.auth.token.email_verified == true
+        && request.auth.token.email.lower().matches('.*@(totalchb|kpidriver)[.]com$');
+    }
+    function aliases() { return {'brandy@kpidriver.com': 'brandy@totalchb.com', 'systems@kpidriver.com': 'systems@totalchb.com'}; }
+    function me() { return aliases().get(request.auth.token.email.lower(), request.auth.token.email.lower()); }
+    function meta(name) { return /databases/$(database)/documents/meta/$(name); }
+
+    // Managers: the two root managers plus anyone Remy adds (meta/managers).
+    function rootManagers() { return ['brandy@totalchb.com', 'systems@totalchb.com']; }
+    function extraManagers() { return exists(meta('managers')) ? get(meta('managers')).data.get('keys', []) : []; }
+    function isMgr(k) { return k in rootManagers() || k in extraManagers(); }
+    function isManager() { return signedIn() && isMgr(me()); }
+    function isRemy() { return signedIn() && me() == 'systems@totalchb.com'; }
+
+    // The team directory (meta/directory): role, main department, departments seen in Team, department toggle.
+    function people() { return exists(meta('directory')) ? get(meta('directory')).data.get('people', {}) : {}; }
+    function mine() { return people().get(me(), {}); }
+    function deptOf(k) { return people().get(k, {}).get('dept', ''); }
+    function seesDept(d) { return d != '' && mine().get('deptView', false) == true && d in mine().get('sees', []); }
+    function isLead() { return mine().get('role', '') == 'lead'; }
+
+    // Companies each person can open (meta/companies); managers always both, anyone not listed TCHB only.
+    function companies() {
+      return isMgr(me()) ? ['tchb', 'kpi']
+        : (exists(meta('companies')) ? get(meta('companies')).data.get('access', {}).get(me(), ['tchb']) : ['tchb']);
+    }
+    // Managers who may also see another manager's personal tasks, e.g. {'systems@totalchb.com': ['brandy@totalchb.com']}.
+    function sharedWith() { return {}; }
+
+    // A task shared with you: you own it or one of its subtasks ('members' holds '<company>:<login>').
+    function onTask(data) {
+      return signedIn() && ((('tchb:' + me()) in data.members && 'tchb' in companies())
+        || (('kpi:' + me()) in data.members && 'kpi' in companies()));
+    }
+    // ...and you may only work on it: no new owners, no moving it.
+    function sharedEdit() {
+      return onTask(resource.data)
+        && request.resource.data.get('members', []) == resource.data.get('members', [])
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['subs', 'done', 'notes', 'title', 'updatedBy', 'updatedAt', 'startedAt', 'doneAt', 'files']);
+    }
+
+    // MGMT tasks.
+    match /tasks/{taskId} {
+      allow read: if isManager() || onTask(resource.data);
+      allow create, delete: if isManager();
+      allow update: if isManager() || sharedEdit();
+    }
+
+    // Personal lists. Team leaders (and members with the department toggle) see the lists of people whose
+    // main department they see; team leaders can also add and delete tasks there.
+    match /personal/{owner}/items/{itemId} {
+      function fullAccess() {
+        return signedIn() && (owner == me() || (isManager() && (!isMgr(owner) || owner in sharedWith().get(me(), []))));
+      }
+      allow read: if fullAccess()
+        || (signedIn() && seesDept(deptOf(owner)) && resource.data.company in companies())
+        || onTask(resource.data);
+      allow create, delete: if fullAccess() || (signedIn() && isLead() && seesDept(deptOf(owner)));
+      allow update: if fullAccess() || (signedIn() && seesDept(deptOf(owner))) || sharedEdit();
+    }
+
+    match /meta/directory { allow read: if signedIn(); allow write: if isManager(); }
+    match /meta/managers { allow read: if signedIn(); allow write: if isRemy(); }
+    match /meta/companies { allow read: if signedIn(); allow create: if isManager(); allow update, delete: if isRemy(); }
+    // Everyone adds themselves to the sign-in list; nobody can drop others from it.
+    match /meta/people {
+      allow read, create: if signedIn();
+      allow update: if signedIn() && request.resource.data.get('keys', []).hasAll(resource.data.get('keys', []));
+      allow delete: if isManager();
+    }
+    // Owner names from before the directory.
+    match /meta/team { allow read: if signedIn(); allow write: if isManager(); }
+  }
+}
