@@ -1078,6 +1078,10 @@ h1, h2, h3, h4 {
         <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
           <span style="font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; color: var(--tchb-red-500);">{{ companyName }}</span>
           <span title="{{ syncTitle }}" style="display: flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.04em; background: {{ syncBg }}; color: {{ syncFg }};"><span style="width: 7px; height: 7px; border-radius: 999px; background: {{ syncDot }};"></span>{{ syncLabel }}</span>
+          <span title="Hub clock, Eastern time. Every date in the hub comes from this clock." aria-label="Hub clock, Eastern time" style="display: flex; flex-direction: column; gap: 1px; line-height: 1.15; font-family: var(--font-display); font-variant-numeric: tabular-nums; white-space: nowrap;">
+            <span ref="{{ clockARef }}" style="font-weight: 700; font-size: 12px; letter-spacing: 0.03em; color: var(--tchb-indigo-700);"></span>
+            <span ref="{{ clockBRef }}" style="font-weight: 600; font-size: 11px; letter-spacing: 0.03em; color: var(--text-muted);"></span>
+          </span>
         </div>
         <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 44px; line-height: 1.15; color: var(--tchb-indigo-700); {{ mo.h1 }}">Universal <span style="color: var(--tchb-red-500);">Team Hub</span></h1>
         <p style="margin: 0; font-size: 16px; color: var(--text-muted); text-wrap: pretty; text-transform: capitalize">Every Department's Tasks, Owners And Files In One Place.</p>
@@ -1132,7 +1136,11 @@ h1, h2, h3, h4 {
     <section style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; {{ mo.addBar }}">
       <input value="{{ newTask }}" sc-camel-on-change="{{ onNewTask }}" sc-camel-on-key-down="{{ onNewTaskKey }}" placeholder="{{ newTaskPlaceholder }}" style="flex: 1; min-width: 220px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 12px 14px; font-family: var(--font-body); font-size: 16px; text-transform: capitalize; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.addInput }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
       <sc-if value="{{ showFor }}" hint-placeholder-val="{{ false }}">
-        <button sc-camel-on-click="{{ openFor }}" title="Who this task is for" style="display: flex; align-items: center; gap: 8px; flex: none; padding: 0 14px; min-height: 44px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-size: 14px; font-weight: 700; border: 1px solid var(--border-strong); background: var(--surface-card); color: {{ forColor }}; {{ mo.addOwner }}" style-focus="box-shadow: var(--focus-ring);">{{ forLabel }}<svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <button sc-camel-on-click="{{ openFor }}" title="Who this task is for" style="display: flex; align-items: center; gap: 8px; flex: none; padding: 6px 12px 6px 6px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 15px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ forChip.ownerLabelColor }}; {{ mo.addOwner }}" style-focus="box-shadow: var(--focus-ring);">
+          <span style="width: 32px; height: 32px; flex: none; border-radius: 999px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; background: {{ forChip.ownerBg }}; color: {{ forChip.ownerFg }};">{{ forChip.initials }}<sc-if value="{{ forChip.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ forChip.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></span>
+          <span style="min-width: 110px; text-align: left; white-space: nowrap; {{ mo.ellip }}">{{ forChip.ownerLabel }}</span>
+          <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
       </sc-if>
       <sc-if value="{{ showNewOwner }}" hint-placeholder-val="{{ true }}">
       <button sc-camel-on-click="{{ openNewOwner }}" title="Owner" style="display: flex; align-items: center; gap: 8px; flex: none; padding: 6px 12px 6px 6px; border-radius: 999px; cursor: pointer; font-family: var(--font-body); font-size: 15px; font-weight: 600; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); color: {{ newOwnerChip.ownerLabelColor }}; {{ mo.addOwner }}" style-focus="box-shadow: var(--focus-ring);">
@@ -1371,10 +1379,15 @@ h1, h2, h3, h4 {
         </sc-for>
       </sc-if>
       <sc-if value="{{ menuIsNotes }}" hint-placeholder-val="{{ false }}">
-        <div style="padding: 6px 8px 4px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
-          <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">Notes</span>
+        <div style="padding: 4px 4px 4px; display: flex; align-items: center; gap: 8px; min-width: 0;">
+          <div role="tablist" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--tchb-gray-100); flex: none;">
+            <sc-for list="{{ noteTabs }}" as="nb" hint-placeholder-count="2">
+              <button role="tab" aria-selected="{{ nb.on }}" sc-camel-on-click="{{ nb.onClick }}" style="border: none; cursor: pointer; padding: 5px 12px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; background: {{ nb.bg }}; color: {{ nb.color }}; box-shadow: {{ nb.shadow }};">{{ nb.label }}</button>
+            </sc-for>
+          </div>
           <span style="flex: 1; min-width: 0; font-size: 13px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ notesFor }}</span>
         </div>
+        <sc-if value="{{ onNotesTab }}" hint-placeholder-val="{{ true }}">
         <sc-if value="{{ notesEmpty }}" hint-placeholder-val="{{ true }}">
           <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No notes yet. Add the first one below.</div>
         </sc-if>
@@ -1395,6 +1408,21 @@ h1, h2, h3, h4 {
           <textarea rows="2" sc-camel-auto-focus="{{ notesAutoFocus }}" value="{{ noteDraft }}" sc-camel-on-change="{{ onNoteDraft }}" sc-camel-on-key-down="{{ onNoteKey }}" placeholder="Write a note" style="flex: 1; min-width: 0; resize: none; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; line-height: 1.4; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"></textarea>
           <button sc-camel-on-click="{{ addNote }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 9px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ mo.noteAdd }}" style-hover="background: var(--action-primary-hover);">Add</button>
         </div>
+        </sc-if>
+        <sc-if value="{{ onActivityTab }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ activityEmpty }}" hint-placeholder-val="{{ true }}">
+            <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No activity recorded yet. Changes from now on are logged here with who made them and when (Eastern time).</div>
+          </sc-if>
+          <sc-for list="{{ activity }}" as="ac" hint-placeholder-count="0">
+            <div style="display: flex; gap: 10px; align-items: flex-start; padding: 7px 8px; margin: 0 2px; border-bottom: 1px solid var(--border-default);">
+              <span style="width: 8px; height: 8px; flex: none; margin-top: 6px; border-radius: 999px; background: {{ ac.dot }};"></span>
+              <div style="flex: 1; min-width: 0;">
+                <div style="font-size: 14px; line-height: 1.4; color: var(--text-body); word-break: break-word;">{{ ac.text }}</div>
+                <div style="font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums;">{{ ac.meta }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </sc-if>
       </sc-if>
     </div>
   </sc-if>
@@ -1527,7 +1555,7 @@ const ALL_VARS = [...new Set([DARK_BASE, KPI_DARK, GLASS_LIGHT, GLASS_DARK].flat
 const FB_V = 'https://www.gstatic.com/firebasejs/10.12.2/';
 const loadScript = src => new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
 const clean = t => { const { open, scope, list, ...rest } = t; return JSON.parse(JSON.stringify(rest)); };
-const ago = ts => { const s = (Date.now() - ts) / 1000; return s < 60 ? 'just now' : s < 3600 ? Math.floor(s / 60) + 'm ago' : s < 86400 ? Math.floor(s / 3600) + 'h ago' : Math.floor(s / 86400) + 'd ago'; };
+const ago = ts => { const s = (hubNow() - ts) / 1000; return s < 60 ? 'just now' : s < 3600 ? Math.floor(s / 60) + 'm ago' : s < 86400 ? Math.floor(s / 3600) + 'h ago' : Math.floor(s / 86400) + 'd ago'; };
 const firstName = n => (n || '').split(/[\s@]/)[0];
 // Aurora background: [green that follows the pointer, then the company's other two colours], per company and theme.
 const AURORA = {
@@ -1567,19 +1595,58 @@ const squarePhoto = (file, size = 256) => new Promise((res, rej) => {
   img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('That file is not a photo this browser can open')); };
   img.src = url;
 });
-// Dates are stored as exact moments (ms) and always shown in Eastern time, wherever the viewer is.
-const when = ts => ts ? new Date(ts).toLocaleString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' ET' : '';
+// The Hub clock: every date the hub records comes from the website server's clock (its Date header), not the
+// device's, and is shown in Eastern time. clockOffset = server time minus this device's time, refreshed every 15 minutes.
+let clockOffset = 0;
+try { clockOffset = +localStorage.getItem(KEY + '-clock') || 0; } catch (e) {}
+const hubNow = () => Math.round(Date.now() + clockOffset);
+const syncClock = () => { const t0 = Date.now();
+  return fetch(location.pathname + '?clock=' + t0, { method: 'HEAD', cache: 'no-store' }).then(r => {
+    const d = Date.parse(r.headers.get('date')), t1 = Date.now();
+    if (!isNaN(d)) { clockOffset = d + 500 - (t0 + t1) / 2; try { localStorage.setItem(KEY + '-clock', String(Math.round(clockOffset))); } catch (e) {} }
+  }).catch(() => {}); };
+const ET_PARTS = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', timeZoneName: 'short' });
+const ET_12 = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', second: '2-digit' });
+const etParts = ts => Object.fromEntries(ET_PARTS.formatToParts(new Date(ts)).map(p => [p.type, p.value]));
+const etDate = ts => { const p = etParts(ts); return p.month + '/' + p.day + '/' + p.year; };          // MM/DD/YYYY
+const et24 = ts => { const p = etParts(ts); return p.hour + ':' + p.minute + ':' + p.second; };       // 21:30:15
+const et12 = ts => ET_12.format(new Date(ts));                                                          // 9:30:15 PM
+const etZone = ts => etParts(ts).timeZoneName;                                                          // EST or EDT
+const when = ts => ts ? etDate(ts) + ' ' + et24(ts) + ' ' + etZone(ts) : '';
 const sizeOf = b => b < 1024 * 1024 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
 const subStatus = s => s.status || (s.done ? 'done' : 'todo');
 const isDone = t => t.subs.length ? t.subs.every(s => s.done) : !!t.done;
 const statusOf = t => isDone(t) ? 'done' : (t.subs.some(s => s.done || s.status === 'progress') ? 'progress' : 'todo');
-// Dates for the EOD report: when a task or subtask was created, first moved to In Progress, and finished.
-const stamp = (prev, t) => {
-  const now = Date.now(), mark = (o, was, is) => is === was ? o : { ...o, ...(is !== 'todo' && !o.startedAt ? { startedAt: now } : {}), doneAt: is === 'done' ? now : null };
-  const subs = t.subs.map(s => { const p = prev && prev.subs.find(y => y.id === s.id); return p ? mark(s, subStatus(p), subStatus(s)) : { createdAt: now, ...mark(s, 'todo', subStatus(s)) }; });
-  const next = { ...t, subs };
-  return prev ? mark(next, statusOf(prev), statusOf(next)) : { createdAt: now, ...mark(next, 'todo', statusOf(next)) };
+// Dates for the EOD report (when a task or subtask was created, first moved to In Progress, and finished) and the
+// activity log: every status change, reopen, subtask added or removed and owner change, with who and when (Hub clock).
+const EV = { started: 'moved to In Progress', done: 'marked Done', reopened: 'reopened', 'not started': 'set back to Not Started' };
+const stamp = (prev, t, by) => {
+  const now = hubNow(), log = [...(t.log || [])], add = (ev, x) => log.push({ at: now, ...(by ? { by } : {}), ev, ...x });
+  const mark = (o, was, is) => is === was ? o : { ...o, ...(is !== 'todo' && !o.startedAt ? { startedAt: now } : {}), doneAt: is === 'done' ? now : null };
+  const evOf = (was, is) => is === 'done' ? 'done' : was === 'done' ? 'reopened' : is === 'progress' ? 'started' : 'not started';
+  if (!prev) add('created', { title: t.title });
+  const subs = t.subs.map(s => {
+    const p = prev && prev.subs.find(y => y.id === s.id), is = subStatus(s);
+    if (!p) { if (prev) add('subtask added', { sid: s.id, title: s.title, ...(s.owner ? { to: s.owner } : {}) }); return { createdAt: now, ...mark(s, 'todo', is) }; }
+    if ((p.owner || '') !== (s.owner || '')) add('owner', { sid: s.id, title: s.title, to: s.owner || 'Unassigned' });
+    if (subStatus(p) !== is) add(evOf(subStatus(p), is), { sid: s.id, title: s.title });
+    return mark(s, subStatus(p), is);
+  });
+  if (prev) prev.subs.forEach(p => { if (!t.subs.some(s => s.id === p.id)) add('subtask removed', { sid: p.id, title: p.title }); });
+  if (prev && (prev.owner || '') !== (t.owner || '')) add('owner', { to: t.owner || 'Unassigned' });
+  const next = { ...t, subs }, was = prev ? statusOf(prev) : 'todo', is = statusOf(next);
+  if (prev && was !== is) add(evOf(was, is));
+  const out = prev ? mark(next, was, is) : { createdAt: now, ...(by ? { createdBy: by } : {}), ...mark(next, 'todo', is) };
+  return log.length === (t.log || []).length ? out : { ...out, log: log.slice(-300) };
 };
+// One line of the activity log, e.g. 'Reopened' or '"Order Title" marked Done'.
+const evText = e => { const q = e.title ? '“' + e.title + '”' : '';
+  if (e.ev === 'created') return 'Task created';
+  if (e.ev === 'subtask added') return 'Added subtask ' + q + (e.to ? ' for ' + e.to : '');
+  if (e.ev === 'subtask removed') return 'Removed subtask ' + q;
+  if (e.ev === 'owner') return (e.sid ? q + ' assigned to ' : 'Assigned to ') + e.to;
+  if (e.ev in EV) return e.sid ? q + ' ' + EV[e.ev] : 'Task ' + EV[e.ev];
+  return e.ev.charAt(0).toUpperCase() + e.ev.slice(1) + (q && e.ev !== 'pushed to live' ? ' ' + q : ''); };
 const MOBILE_MAX = 640;
 const isPhone = () => window.innerWidth < MOBILE_MAX;
 const isTiny = () => window.innerWidth < 360;
@@ -1652,6 +1719,7 @@ class Component extends DCLogic {
   constructor(p) {
     super(p);
     this.rootRef = React.createRef();
+    this.clockARef = React.createRef(); this.clockBRef = React.createRef();
     this.bgRef = React.createRef();
     let company = 'tchb';
     try { company = localStorage.getItem(KEY + '-co') || 'tchb'; } catch (e) {}
@@ -1822,14 +1890,14 @@ class Component extends DCLogic {
     }
     const m = this.me();
     this.setState(st => {
-      const tasks = st.tasks.map(t => t.id === tid ? { ...t, scope: 'personal', list: this._key, order: Date.now(), ...(m ? { updatedBy: m, updatedAt: Date.now() } : {}) } : t);
+      const at = hubNow(), tasks = st.tasks.map(t => t.id === tid ? { ...t, scope: 'personal', list: this._key, order: at, updatedBy: m, updatedAt: at, log: [...(t.log || []), { at, by: m, ev: 'pushed to live' }].slice(-300) } : t);
       return { tasks, scope: tasks.some(t => t.scope === 'offline') ? st.scope : 'personal' };
     });
     this.say('Pushed to your personal tasks');
   }
   // Push To MGMT (managers): move one of your personal tasks into the shared MGMT list.
   pushMgmt(tid) {
-    this.upd(tid, ({ list, ...t }) => ({ ...t, scope: 'mgmt', order: Date.now() }));
+    this.upd(tid, ({ list, ...t }) => ({ ...t, scope: 'mgmt', order: hubNow(), log: [...(t.log || []), { at: hubNow(), by: this.me(), ev: 'moved to MGMT' }].slice(-300) }));
     this.say('Moved to MGMT');
   }
   syncOut(tasks) {
@@ -1845,20 +1913,20 @@ class Component extends DCLogic {
     b.commit().catch(e => console.warn('Sync failed', e));
   }
   me() { return this.state.cloud === 'ready' && this.state.user ? this.myName() : null; }
-  sst() { const m = this.me(); return m ? { by: m, at: Date.now() } : {}; }
+  sst() { const m = this.me(); return m ? { by: m, at: hubNow() } : {}; }
   isDone(t) { return isDone(t); }
-  upd(tid, fn) { const m = this.me(); this.setState(st => ({ tasks: st.tasks.map(t => t.id === tid ? stamp(t, m ? { ...fn(t), updatedBy: m, updatedAt: Date.now() } : fn(t)) : t) })); }
+  upd(tid, fn) { const m = this.me(); this.setState(st => ({ tasks: st.tasks.map(t => t.id === tid ? stamp(t, m ? { ...fn(t), updatedBy: m, updatedAt: hubNow() } : fn(t), m) : t) })); }
   addTask = () => {
     const title = this.state.newTask.trim();
     if (!title) return;
-    if (this.state.scope === 'team' && !this.state.forWho) return this.say('Pick who this task is for first');
+    if (this.state.scope === 'team' && !this.state.forWho) return this.say('Assign this task to someone first');
     this.setState(st => {
       const sc = st.scope === 'team' && st.forWho === this._key ? 'personal' : st.scope;
       const owner = sc === 'personal' ? this.myName() : sc === 'team' ? this.nameOf(st.forWho) : st.newOwner.trim();
-      let t = { ...mk(st.company, title, owner), ...(sc === 'mgmt' ? { scope: 'mgmt' } : sc === 'personal' ? { scope: 'personal', list: this._key } : sc === 'team' ? { scope: 'team', list: st.forWho } : { scope: 'offline' }), order: Date.now(), ...(this.me() ? { createdBy: this.me(), updatedBy: this.me(), updatedAt: Date.now() } : {}) };
+      let t = { ...mk(st.company, title, owner), ...(sc === 'mgmt' ? { scope: 'mgmt' } : sc === 'personal' ? { scope: 'personal', list: this._key } : sc === 'team' ? { scope: 'team', list: st.forWho } : { scope: 'offline' }), order: hubNow(), ...(this.me() ? { updatedBy: this.me(), updatedAt: hubNow() } : {}) };
       // A listed subtask keeps the owner picked for it; otherwise it takes the task's owner.
       t.subs = [...st.newSubs, { title: st.newSubDraft.trim(), owner: null }].filter(s => s.title).map(s => ({ id: id(), title: s.title, owner: s.owner ?? owner, status: 'todo', done: false, ...this.sst() }));
-      t = stamp(null, t);
+      t = stamp(null, t, this.me());
       return { tasks: [...st.tasks, t], newTask: '', newSubs: [], newSubDraft: '', openMap: t.subs.length ? { ...st.openMap, [t.id]: true } : st.openMap };
     });
   };
@@ -1886,7 +1954,7 @@ class Component extends DCLogic {
     const r = e.currentTarget.getBoundingClientRect();
     const wide = ['notes', 'files', 'folders'].includes(cfg.kind), h = wide ? 430 : 330, w = wide ? 340 : 248;
     const flip = r.bottom + h > window.innerHeight && r.top > h;
-    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '' });
+    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '', noteTab: 'notes' });
   }
   choose(v) {
     const m = this.state.menu; if (!m) return;
@@ -1906,7 +1974,7 @@ class Component extends DCLogic {
     const m = this.state.menu, text = this.state.noteDraft.trim();
     if (!m || m.kind !== 'notes' || !text) return;
     const me = this.me();
-    this.editNotes(m, ns => [...ns, { id: id(), text, at: Date.now(), ...(me ? { by: me } : {}) }]);
+    this.editNotes(m, ns => [...ns, { id: id(), text, at: hubNow(), ...(me ? { by: me } : {}) }]);
     this.setState({ noteDraft: '' });
   };
   // ---------- People (managers) ----------
@@ -1972,7 +2040,7 @@ class Component extends DCLogic {
     this.storage().then(st => Promise.all(files.map(f => {
       const fid = id(), path = 'files/' + (t.company || 'tchb') + '/' + tid + '/' + fid + '-' + f.name.replace(/[^\w.\- ]+/g, '_');
       return st.ref(path).put(f, { contentType: f.type || 'application/octet-stream' }).then(r => r.ref.getDownloadURL())
-        .then(url => { this.upd(tid, x => ({ ...x, files: [...(x.files || []), { id: fid, name: f.name, size: f.size, type: f.type || '', url, path, by: this.me(), at: Date.now(), ...(sid ? { sid } : {}) }] })); })
+        .then(url => { this.upd(tid, x => ({ ...x, files: [...(x.files || []), { id: fid, name: f.name, size: f.size, type: f.type || '', url, path, by: this.me(), at: hubNow(), ...(sid ? { sid } : {}) }] })); })
         .catch(e => { console.warn(e); this.say('Could not upload ' + f.name + (/unauthorized|403|bucket/i.test(e.code + e.message) ? ': file storage is not switched on yet' : '')); })
         .finally(() => bump(-1));
     }))).catch(e => { bump(-files.length); this.say('File storage is unavailable: ' + e.message); });
@@ -2010,6 +2078,15 @@ class Component extends DCLogic {
     window.addEventListener('resize', this._onResize);
     if (window.visualViewport) { window.visualViewport.addEventListener('resize', this._onResize); window.visualViewport.addEventListener('scroll', this._onResize); }
     this.startAurora();
+    // Hub clock: synced with the server now, every 15 minutes and whenever the tab comes back; redrawn each second.
+    syncClock(); this._cs = setInterval(syncClock, 15 * 60 * 1000);
+    this._onVis = () => { if (!document.hidden) syncClock(); }; document.addEventListener('visibilitychange', this._onVis);
+    this._clk = setInterval(() => this.tickClock(), 250);
+  }
+  tickClock() {
+    const a = this.clockARef.current, b = this.clockBRef.current; if (!a || !b) return;
+    const n = hubNow(), sec = Math.floor(n / 1000); if (a.dataset.s === String(sec) && a.textContent) return;
+    a.dataset.s = sec; a.textContent = etDate(n) + '  ' + et24(n); b.textContent = et12(n) + ' ' + etZone(n);
   }
   // Soft glows behind the board: two drift slowly, the green one eases toward the pointer (or a tap).
   startAurora() {
@@ -2049,6 +2126,7 @@ class Component extends DCLogic {
     this._auRaf = requestAnimationFrame(frame);
   }
   componentWillUnmount() {
+    clearInterval(this._clk); clearInterval(this._cs); document.removeEventListener('visibilitychange', this._onVis);
     clearTimeout(this._u); Object.keys(KPI_THEME).forEach(k => document.documentElement.style.removeProperty(k));
     window.removeEventListener('resize', this._onResize);
     cancelAnimationFrame(this._auRaf); window.removeEventListener('pointermove', this._onPtr); window.removeEventListener('pointerdown', this._onPtr); document.removeEventListener('pointerout', this._onPtrOut);
@@ -2322,8 +2400,7 @@ class Component extends DCLogic {
       showErr: !!this.state.errs[scope], canAdd: scope !== 'team' || role !== 'member',
       // Personal tasks are yours, and Team tasks belong to the person they're for, so only MGMT and Offline ask for an owner.
       showNewOwner: scope === 'mgmt' || scope === 'offline',
-      showFor: scope === 'team', forLabel: this.state.forWho ? 'For: ' + this.nameOf(this.state.forWho) : 'Pick a team member',
-      forColor: this.state.forWho ? 'var(--text-body)' : 'var(--status-error)', openFor: e => this.openMenu(e, { kind: 'forMember' }),
+      showFor: scope === 'team', forChip: chipOf(this.state.forWho ? this.nameOf(this.state.forWho) : ''), openFor: e => this.openMenu(e, { kind: 'forMember' }),
       showBack: !live, goBack: () => this.auth ? this.setState({ cloud: 'signedOut', authError: '' }) : window.location.reload(),
       showPeopleBtn: live && role === 'manager', openPeople: this.openPeople,
       ...this.peopleVals(),
@@ -2357,7 +2434,7 @@ class Component extends DCLogic {
       syncBg: cloud === 'ready' ? 'var(--tchb-green-050)' : cloud === 'error' ? 'var(--tchb-red-050)' : 'var(--tchb-gray-100)',
       syncFg: cloud === 'ready' ? 'var(--tchb-green-600)' : cloud === 'error' ? 'var(--status-error)' : 'var(--tchb-gray-700)',
       syncDot: cloud === 'ready' ? 'var(--tchb-green-500)' : cloud === 'error' ? 'var(--status-error)' : 'var(--tchb-gray-500)',
-      companyTabs, isTchb: company === 'tchb', isKpi: company === 'kpi', rootRef: this.rootRef, bgRef: this.bgRef,
+      companyTabs, isTchb: company === 'tchb', isKpi: company === 'kpi', rootRef: this.rootRef, bgRef: this.bgRef, clockARef: this.clockARef, clockBRef: this.clockBRef,
       companyName: COMPANIES.find(c => c.key === company).name,
       newTask: this.state.newTask, newOwner: this.state.newOwner, owners, ownerFilter,
       newOwnerChip: chipOf(this.state.newOwner),
@@ -2373,6 +2450,14 @@ class Component extends DCLogic {
         const item = tk ? (menu.sid ? tk.subs.find(y => y.id === menu.sid) : tk) : null, notes = (item && item.notes) || [];
         return {
           menuIsNotes: on && !!item, notesFor: item ? item.title : '', notesEmpty: !notes.length,
+          // Activity: the task's log (a subtask's own entries when opened from a subtask), newest first.
+          ...(() => { const tab = this.state.noteTab === 'activity' ? 'activity' : 'notes';
+            const acts = tk ? (tk.log || []).filter(e => !menu.sid || e.sid === menu.sid).slice().reverse() : [];
+            const DOT = { done: 'var(--tchb-green-500)', reopened: 'var(--tchb-red-500)', started: 'var(--tchb-indigo-500)' };
+            return { onNotesTab: tab === 'notes', onActivityTab: tab === 'activity', activityEmpty: !acts.length,
+              noteTabs: [['notes', 'Notes' + (notes.length ? ' ' + notes.length : '')], ['activity', 'Activity']].map(([k, label]) => ({ label, on: tab === k,
+                onClick: () => this.setState({ noteTab: k }), bg: tab === k ? 'var(--surface-card)' : 'transparent', color: tab === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: tab === k ? 'var(--shadow-button)' : 'none' })),
+              activity: acts.map(e => ({ text: evText(e), meta: [e.by, when(e.at)].filter(Boolean).join(' · '), dot: DOT[e.ev] || 'var(--tchb-gray-300)' })) }; })(),
           notesBox: on || (menu && ['files', 'folders'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: 440px; box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
           notesList: notes.map(n => ({ text: n.text, meta: (n.by || 'Note') + ' · ' + ago(n.at), canDelete: !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name),
             onDelete: () => this.editNotes(menu, ns => ns.filter(x => x.id !== n.id)) })),

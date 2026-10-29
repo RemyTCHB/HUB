@@ -43,7 +43,7 @@ service cloud.firestore {
       return onTask(resource.data)
         && request.resource.data.get('members', []) == resource.data.get('members', [])
         && request.resource.data.diff(resource.data).affectedKeys()
-             .hasOnly(['subs', 'done', 'notes', 'title', 'updatedBy', 'updatedAt', 'startedAt', 'doneAt', 'files']);
+             .hasOnly(['subs', 'done', 'notes', 'title', 'updatedBy', 'updatedAt', 'startedAt', 'doneAt', 'files', 'log']);
     }
 
     // MGMT tasks.
