@@ -1427,23 +1427,21 @@ h1, h2, h3, h4 {
       </sc-if>
       <sc-if value="{{ menuIsNotes }}" hint-placeholder-val="{{ false }}">
         <div style="padding: 4px 4px 4px; display: flex; align-items: center; gap: 8px; min-width: 0;">
-          <sc-if value="{{ showNoteToggle }}" hint-placeholder-val="{{ true }}">
-            <div role="tablist" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--tchb-gray-100); flex: none;">
-              <sc-for list="{{ noteTabs }}" as="nb" hint-placeholder-count="2">
-                <button role="tab" aria-selected="{{ nb.on }}" sc-camel-on-click="{{ nb.onClick }}" style="border: none; cursor: pointer; padding: 5px 12px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; background: {{ nb.bg }}; color: {{ nb.color }}; box-shadow: {{ nb.shadow }};">{{ nb.label }}</button>
-              </sc-for>
-            </div>
-          </sc-if>
-          <sc-if value="{{ noNoteToggle }}" hint-placeholder-val="{{ false }}"><span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700); padding-left: 4px;">Notes</span></sc-if>
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700); padding-left: 4px;">Notes</span>
           <span style="flex: 1; min-width: 0; font-size: 13px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ notesFor }}</span>
         </div>
-        <sc-if value="{{ onTaskNotes }}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{ showNoteToggle }}" hint-placeholder-val="{{ true }}">
+          <button sc-camel-on-click="{{ toggleSubNotes }}" role="switch" aria-checked="{{ subNotesOn }}" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; cursor: pointer; padding: 2px 8px 8px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--text-body);">
+            <span style="width: 36px; height: 20px; flex: none; border-radius: 999px; position: relative; transition: background 140ms; background: {{ subTrack }};"><span style="position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 999px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.25); transition: transform 140ms; transform: {{ subKnob }};"></span></span>Include Subtask Notes<span style="font-weight: 600; color: var(--text-muted);">{{ subNotesCount }}</span>
+          </button>
+        </sc-if>
         <sc-if value="{{ notesEmpty }}" hint-placeholder-val="{{ true }}">
           <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No notes yet. Add the first one below.</div>
         </sc-if>
         <sc-for list="{{ notesList }}" as="nt" hint-placeholder-count="0">
           <div style="display: flex; gap: 6px; align-items: flex-start; padding: 8px 6px 8px 10px; margin: 2px 2px; border-radius: 10px; background: var(--surface-subtle); border: 1px solid var(--border-default);">
             <div style="flex: 1; min-width: 0;">
+              <sc-if value="{{ nt.hasTag }}" hint-placeholder-val="{{ false }}"><span style="display: inline-block; max-width: 100%; box-sizing: border-box; margin-bottom: 3px; padding: 1px 8px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.03em; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: {{ nt.tagBg }}; color: {{ nt.tagFg }};">{{ nt.tag }}</span></sc-if>
               <div style="font-size: 12px; font-weight: 600; color: var(--text-muted);">{{ nt.meta }}</div>
               <div style="font-size: 14px; line-height: 1.45; color: var(--text-body); white-space: pre-wrap; word-break: break-word;">{{ nt.text }}</div>
             </div>
@@ -1458,24 +1456,6 @@ h1, h2, h3, h4 {
           <textarea rows="2" sc-camel-auto-focus="{{ notesAutoFocus }}" value="{{ noteDraft }}" sc-camel-on-change="{{ onNoteDraft }}" sc-camel-on-key-down="{{ onNoteKey }}" placeholder="Write a note" style="flex: 1; min-width: 0; resize: none; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; line-height: 1.4; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"></textarea>
           <button sc-camel-on-click="{{ addNote }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 9px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ mo.noteAdd }}" style-hover="background: var(--action-primary-hover);">Add</button>
         </div>
-        </sc-if>
-        <sc-if value="{{ onSubNotes }}" hint-placeholder-val="{{ false }}">
-          <sc-if value="{{ subNotesEmpty }}" hint-placeholder-val="{{ true }}">
-            <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No subtask notes yet. Add them with the note button on each subtask.</div>
-          </sc-if>
-          <sc-for list="{{ subNotesList }}" as="nt" hint-placeholder-count="0">
-            <div style="display: flex; gap: 6px; align-items: flex-start; padding: 8px 6px 8px 10px; margin: 2px 2px; border-radius: 10px; background: var(--surface-subtle); border: 1px solid var(--border-default);">
-              <div style="flex: 1; min-width: 0;">
-                <div style="font-size: 12px; font-weight: 700; color: var(--tchb-indigo-700); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ nt.sub }}</div>
-                <div style="font-size: 12px; font-weight: 600; color: var(--text-muted);">{{ nt.meta }}</div>
-                <div style="font-size: 14px; line-height: 1.45; color: var(--text-body); white-space: pre-wrap; word-break: break-word;">{{ nt.text }}</div>
-              </div>
-              <sc-if value="{{ nt.canDelete }}" hint-placeholder-val="{{ false }}">
-                <button sc-camel-on-click="{{ nt.onDelete }}" title="Delete note" style="width: 26px; height: 26px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; padding: 0; {{ mo.noteDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
-              </sc-if>
-            </div>
-          </sc-for>
-        </sc-if>
       </sc-if>
       <sc-if value="{{ menuIsActivity }}" hint-placeholder-val="{{ false }}">
       <div style="padding: 6px 8px 4px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
@@ -2594,18 +2574,21 @@ class Component extends DCLogic {
         const on = !!menu && menu.kind === 'notes', tk = on && allTasks.find(x => x.id === menu.tid);
         const item = tk ? (menu.sid ? tk.subs.find(y => y.id === menu.sid) : tk) : null, notes = (item && item.notes) || [];
         return {
-          menuIsNotes: on && !!item, notesFor: item ? item.title : '', notesEmpty: !notes.length,
-          // A task's notes: Task (its own) or Subtasks (every subtask's notes in one list, oldest first).
-          ...(() => { const toggle = on && !!tk && !menu.sid, subMode = toggle && this.state.noteTab === 'subs';
-            const subNotes = toggle ? [].concat(...tk.subs.map(sb => (sb.notes || []).map(n => ({ n, sb })))).sort((x, y) => (x.n.at || 0) - (y.n.at || 0)) : [];
-            return { showNoteToggle: toggle, noNoteToggle: !toggle, onTaskNotes: !subMode, onSubNotes: subMode, subNotesEmpty: !subNotes.length,
-              noteTabs: [['task', 'Task' + (notes.length ? ' ' + notes.length : '')], ['subs', 'Subtasks' + (subNotes.length ? ' ' + subNotes.length : '')]].map(([k, label]) => { const sel = (subMode ? 'subs' : 'task') === k;
-                return { label, on: sel, onClick: () => this.setState({ noteTab: k }), bg: sel ? 'var(--surface-card)' : 'transparent', color: sel ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: sel ? 'var(--shadow-button)' : 'none' }; }),
-              subNotesList: subNotes.map(({ n, sb }) => ({ sub: sb.title, text: n.text, meta: (this.canon(n.by) || 'Note') + ' · ' + ago(n.at),
-                canDelete: !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name), onDelete: () => this.editNotes({ tid: tk.id, sid: sb.id }, ns => ns.filter(x => x.id !== n.id)) })) }; })(),
+          menuIsNotes: on && !!item, notesFor: item ? item.title : '', notesEmpty: !notes.length && !(on && tk && !menu.sid && this.state.subNotesOn && tk.subs.some(sb => (sb.notes || []).length)),
+          // On a task: one switch adds every subtask's notes to the list, each tagged with its subtask.
+          ...(() => { const toggle = on && !!tk && !menu.sid, all = toggle && !!this.state.subNotesOn;
+            const subNotes = toggle ? [].concat(...tk.subs.map(sb => (sb.notes || []).map(n => ({ n, sb })))) : [];
+            return { showNoteToggle: toggle, subNotesOn: all, subNotesCount: subNotes.length ? String(subNotes.length) : '',
+              subTrack: all ? 'var(--action-secondary)' : 'var(--tchb-gray-300)', subKnob: all ? 'translateX(16px)' : 'none',
+              toggleSubNotes: () => this.setState(st => ({ subNotesOn: !st.subNotesOn })) }; })(),
           notesBox: on || (menu && ['files', 'folders', 'due', 'activity'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: min(560px, calc(100vh - 16px)); box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
-          notesList: notes.map(n => ({ text: n.text, meta: (this.canon(n.by) || 'Note') + ' · ' + ago(n.at), canDelete: !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name),
-            onDelete: () => this.editNotes(menu, ns => ns.filter(x => x.id !== n.id)) })),
+          notesList: (() => { const mine = n => !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name);
+            const all = !!(on && tk && !menu.sid && this.state.subNotesOn);
+            const rows = [...notes.map(n => ({ n, sb: null })), ...(all ? [].concat(...tk.subs.map(sb => (sb.notes || []).map(n => ({ n, sb })))) : [])]
+              .sort((x, y) => (x.n.at || 0) - (y.n.at || 0));
+            return rows.map(({ n, sb }) => ({ text: n.text, meta: (this.canon(n.by) || 'Note') + ' · ' + ago(n.at), canDelete: mine(n),
+              hasTag: all, tag: sb ? sb.title : 'Task', tagBg: sb ? 'var(--tchb-indigo-050)' : 'var(--tchb-gray-100)', tagFg: sb ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
+              onDelete: () => this.editNotes(sb ? { tid: tk.id, sid: sb.id } : menu, ns => ns.filter(x => x.id !== n.id)) })); })(),
           notesAutoFocus: !this.state.mob, noteDraft: this.state.noteDraft || '', addNote: this.addNote,
           onNoteDraft: e => this.setState({ noteDraft: e.target.value }),
           onNoteKey: e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); this.addNote(); } }
