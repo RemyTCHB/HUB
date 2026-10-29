@@ -43,6 +43,7 @@ Team members sign in with their company Google account. Access is limited to app
 ```
 index.html            The complete app (self-unpacking bundle)
 app/app.dc.html       Readable source of the app (node tools/bundle.mjs unpack / pack)
+api/                  Vercel functions that connect other apps (the Title Commitment Agent)
 firebase/             Firestore and Storage security rules
 README.md             This file
 tchb-logo.png         Brand logo (README only)
@@ -61,21 +62,31 @@ Hosted on **Vercel**, connected to this repository. Every commit to `main` redep
 
 ## Connecting Other Apps
 
-The hub is built so other tools (the Title Agent, the daily EOD report) can read and create tasks. Each task records:
+The hub is built so other tools can create and update tasks. Each task records:
 
 | Field | Meaning |
 | --- | --- |
 | `company` | `tchb` or `kpi` |
 | `title`, `owner` | Task title and owner name (as in the team directory) |
-| `subs[]` | Subtasks: `id`, `title`, `owner`, `status` (`todo` / `progress` / `done`), `createdAt`, `startedAt`, `doneAt` |
-| `createdAt`, `startedAt`, `doneAt` | When the task was created, first went In Progress, and was finished (ms since epoch) |
+| `subs[]` | Subtasks: `id`, `title`, `owner`, `status` (`todo` / `progress` / `done`), `due`, `notes[]`, `createdAt`, `startedAt`, `doneAt` |
+| `createdAt`, `startedAt`, `doneAt`, `due` | Dates (ms since epoch, shown in Eastern time) |
 | `members` | `<company>:<login>` of everyone else who owns part of it, so it shows in their list |
-| `files[]`, `notes[]` | Attachments and notes |
-| `source` | Name of the app that created it, shown on the card as "From …" |
+| `files[]`, `notes[]`, `log[]` | Attachments, notes and the activity log |
+| `source`, `ext` | The app that created it (shown as a tag on the card) and that app's link back |
 
-Tasks live in a person's list (`personal/<login>/items`) and belong to that person's main department; MGMT tasks live in `tasks`. People, roles and departments are in `meta/directory`. An app creating a department task (for example "Property X Title Blockers" in TC) writes it to that department's team leader's list with the blockers as subtasks.
+Tasks live in a person's list (`personal/<login>/items`) and belong to that person's main department; MGMT tasks live in `tasks`. People, roles and departments are in `meta/directory`.
 
+### Title Commitment Agent
 
+Only **Closing Blockers** come over: one task per deal, **Title - &lt;address&gt;**, in Monz's list (TC), tagged *Added by Title Commitment Agent* with a link back to the deal. Each blocker is a subtask (the item; a note with the action needed and the source; its due date at 9:00 AM Eastern). Ticking or unticking a blocker in either app updates the other.
+
+| Piece | Where |
+| --- | --- |
+| `POST /api/title-agent` | The agent sends a deal's Closing Blockers (after each review, re-run or change, and every 15 minutes); the hub creates or updates the task and answers with blockers ticked or unticked here. |
+| `POST /api/title-agent/hub` | The hub page calls it after saving one of these tasks; the server sends the agent any blocker ticked or unticked here. |
+| `api/_lib/titleagent.js` | The rules (tested in `tests/`: `node --test tests/title-agent.test.js`). |
+
+Messages between the apps are signed with a shared secret. Vercel settings for this project: `HUB_FIREBASE_SERVICE_ACCOUNT` (a service account key for this Firebase project, role Cloud Datastore User), `TITLE_AGENT_SYNC_SECRET` (the shared secret; the agent has the same value as `HUB_SYNC_SECRET`), and optionally `TITLE_AGENT_ENGINE_URL` and `HUB_TITLE_OWNER` (default monz@totalchb.com).
 
 ## Support
 

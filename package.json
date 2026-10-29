@@ -1,0 +1,9 @@
+{
+  "name": "universal-team-hub",
+  "private": true,
+  "description": "The hub page is index.html (static). api/ holds the Vercel functions that connect other apps (the Title Commitment Agent).",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "firebase-admin": "^12.7.0"
+  }
+}

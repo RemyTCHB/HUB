@@ -1214,6 +1214,12 @@ h1, h2, h3, h4 {
               <sc-if value="{{ t.canPushLive }}" hint-placeholder-val="{{ false }}">
                 <span style="display: flex; margin-top: 6px;"><button sc-camel-on-click="{{ t.onPushLive }}" title="Move this task into your personal list" style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--tchb-indigo-500); background: transparent; color: var(--tchb-indigo-700); cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.02em; white-space: nowrap; {{ mo.pushBtn }}" style-hover="background: var(--tchb-indigo-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M12 12v9"></path><path d="m16 16-4-4-4 4"></path></svg>Push To Live</button></span>
               </sc-if>
+              <sc-if value="{{ t.hasSource }}" hint-placeholder-val="{{ false }}">
+                <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 6px;">
+                  <span title="Created by another app and kept in step with it" style="display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: 999px; background: var(--tchb-indigo-050); color: var(--tchb-indigo-700); font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>{{ t.sourceTag }}</span>
+                  <sc-if value="{{ t.hasExtLink }}" hint-placeholder-val="{{ false }}"><a href="{{ t.extUrl }}" target="_blank" rel="noopener" title="Open this deal in the Title Commitment Agent" style="display: flex; align-items: center; gap: 6px; height: 26px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--tchb-indigo-500); color: var(--tchb-indigo-700); text-decoration: none; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.02em; white-space: nowrap; {{ mo.pushBtn }}" style-hover="background: var(--tchb-indigo-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>{{ t.extLabel }}</a></sc-if>
+                </span>
+              </sc-if>
               <sc-if value="{{ t.canPushMgmt }}" hint-placeholder-val="{{ false }}">
                 <span style="display: flex; margin-top: 6px;"><button sc-camel-on-click="{{ t.onPushMgmt }}" title="Move this task into the shared MGMT list" style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--tchb-indigo-500); background: transparent; color: var(--tchb-indigo-700); cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.02em; white-space: nowrap; {{ mo.pushBtn }}" style-hover="background: var(--tchb-indigo-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>Push To MGMT</button></span>
               </sc-if>
@@ -1752,6 +1758,7 @@ const mergeTask = (base, mine, theirs) => {
   if (out.subs && out.subs.length) out.done = out.subs.every(x => x.done);
   return out;
 };
+const AGENT_TITLE = 'Title Commitment Agent';   // tasks the Title Commitment Agent creates (api/title-agent)
 const MOBILE_MAX = 640;
 const isPhone = () => window.innerWidth < MOBILE_MAX;
 const isTiny = () => window.innerWidth < 360;
@@ -2034,7 +2041,18 @@ class Component extends DCLogic {
       const latest = snap.exists ? snap.data() : null;
       const out = base && latest ? mergeTask(clean(base), clean(t), latest) : clean(t);
       tx.set(ref, clean(t.scope === 'assigned' ? { ...out, members: (latest || out).members || [] } : { ...out, members: this.membersOf({ ...out, list: t.list }) }));
-    })), () => { (this._pending = this._pending || {})[t.id] = this._pending[t.id] || t; if (!(t.id in this._base)) this._base[t.id] = base; });
+    })).then(() => { if (t.source === AGENT_TITLE && t.ext) this.tellTitleAgent(t); }), () => { (this._pending = this._pending || {})[t.id] = this._pending[t.id] || t; if (!(t.id in this._base)) this._base[t.id] = base; });
+  }
+  // A Title Commitment Agent task was saved: the hub server sends any blocker ticked or unticked here to the agent
+  // (it reads the task as saved, so this only says "look now"). Missed calls are caught by the agent's 15-minute sync.
+  tellTitleAgent(t) {
+    clearTimeout((this._ta = this._ta || {})[t.id]);
+    this._ta[t.id] = setTimeout(() => {
+      const u = this.auth && this.auth.currentUser; if (!u) return;
+      u.getIdToken().then(token => fetch('/api/title-agent/hub', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+        body: JSON.stringify({ list: t.list || this._key, id: t.id }) })).then(r => { if (!r.ok) console.warn('Title Commitment Agent not updated yet', r.status); })
+        .catch(e => console.warn('Title Commitment Agent not updated yet', e));
+    }, 800);
   }
   // Every save is tracked: the badge says Saving… until the server confirms. No connection: the change waits and retries.
   // Refused (e.g. no permission): Not Saved with the reason, and the screen goes back to what is really saved.
@@ -2455,7 +2473,7 @@ class Component extends DCLogic {
       const noDelete = asg || (t.scope === 'team' && role === 'member');
       const deptTag = scope === 'team' ? deptsOf(t).filter(Boolean).join(', ') : '';
       // Tasks created by another app (the Title Agent, later the EOD tools) carry source: '<app name>'.
-      const whose = t.source ? 'From ' + t.source : asg ? (t.list ? 'Shared by ' + this.nameOf(t.list) : 'Added by MGMT') : mgmtInTeam ? 'Added by MGMT for ' + who : t.scope === 'team' ? this.nameOf(t.list) + "'s task" : scope === 'team' ? 'Your task' : '';
+      const whose = t.source ? '' : asg ? (t.list ? 'Shared by ' + this.nameOf(t.list) : 'Added by MGMT') : mgmtInTeam ? 'Added by MGMT for ' + who : t.scope === 'team' ? this.nameOf(t.list) + "'s task" : scope === 'team' ? 'Your task' : '';
       const n = t.subs.filter(s => s.done).length;
       const pct = t.subs.length ? Math.round(n / t.subs.length * 100) : (d ? 100 : 0);
       return {
@@ -2474,6 +2492,8 @@ class Component extends DCLogic {
         // A member's view of a MGMT task: no moving, deleting or changing owners; only the task owner can tick or rename the whole task.
         lockMain: asg && !whole ? 'pointer-events: none; opacity: 0.55;' : '', readOnly: asg && !whole,
         hideEdit: noDelete ? 'display: none;' : '', hideGrip: asg ? 'visibility: hidden; pointer-events: none;' : '', ownerLock: asg ? 'pointer-events: none;' : '', addSubStyle: asg && !whole ? 'display: none;' : '',
+        hasSource: !!t.source, sourceTag: 'Added by ' + t.source,
+        hasExtLink: !!(t.ext && t.ext.url), extUrl: (t.ext && t.ext.url) || '', extLabel: t.source === AGENT_TITLE ? 'Open In Title Agent' : 'Open',
         canPushMgmt: live && role === 'manager' && t.scope === 'personal', onPushMgmt: () => this.pushMgmt(t.id),
         id: t.id, title: t.title, isDone: d, open: !!this.state.openMap[t.id], draft: drafts[t.id] || '',
         status: STAT[st][0], tone: STAT[st][1], pct: pct + '%',
@@ -2503,7 +2523,7 @@ class Component extends DCLogic {
           onDragOver: e => { const d = this.state.subDrag; if (!d || d.tid !== t.id) return; e.preventDefault(); e.stopPropagation(); e.dataTransfer.dropEffect = 'move'; if (this.state.subOver !== s.id) this.setState({ subOver: s.id }); },
           onDrop: e => { const d = this.state.subDrag; if (!d || d.tid !== t.id) return; e.preventDefault(); e.stopPropagation(); this.setState({ subDrag: null, subOver: null }); this.moveSub(t.id, d.sid, s.id); },
           onGripDown: e => { if (e.pointerType === 'mouse') return; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {} this.setState({ subDrag: { tid: t.id, sid: s.id }, subOver: null }); },
-          title: s.title, done: s.done, hasEdited: !!s.by, edited: s.by ? firstName(this.canon(s.by)) + ' · ' + ago(s.at) : '', editedTitle: [s.by ? 'Last edited by ' + this.canon(s.by) : '', datesOf(s)].filter(Boolean).join(' · '),
+          title: s.title, done: s.done, hasEdited: !!s.by, edited: s.by ? (s.by === AGENT_TITLE ? 'Title Agent' : firstName(this.canon(s.by))) + ' · ' + ago(s.at) : '', editedTitle: [s.by ? 'Last edited by ' + this.canon(s.by) : '', datesOf(s)].filter(Boolean).join(' · '),
           ...dueOf(s, s.done), openDue: e => this.openMenu(e, { kind: 'due', tid: t.id, sid: s.id, due: s.due }),
           ...fileBtn((t.files || []).filter(f => f.sid === s.id).length, t.id + s.id, 'var(--tchb-gray-300)'), openFiles: e => this.openMenu(e, { kind: 'files', tid: t.id, sid: s.id }), ...chipOf(s.owner), status: s.status || (s.done ? 'done' : 'todo'),
           matchStyle: ownerFilter && (s.owner || '').trim() === ownerFilter ? 'background: color-mix(in srgb, var(--tchb-green-500) 11%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--tchb-green-500) 45%, transparent), 0 0 14px color-mix(in srgb, var(--tchb-green-500) 30%, transparent);' : '',
