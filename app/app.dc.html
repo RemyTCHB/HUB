@@ -1361,19 +1361,40 @@ h1, h2, h3, h4 {
         </sc-if>
       </sc-if>
       <sc-if value="{{ menuIsDue }}" hint-placeholder-val="{{ false }}">
-        <div style="padding: 6px 8px 4px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
+        <div style="padding: 6px 8px 2px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
           <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">Due Date</span>
           <span style="flex: 1; min-width: 0; font-size: 13px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ dueFor }}</span>
         </div>
-        <div style="display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 6px;">
-          <sc-for list="{{ dueQuick }}" as="q" hint-placeholder-count="4">
-            <button sc-camel-on-click="{{ q.onClick }}" style="border: 1px solid var(--border-strong); cursor: pointer; padding: 6px 10px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; background: {{ q.bg }}; color: {{ q.fg }}; {{ mo.chip }}">{{ q.label }}</button>
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 6px 6px 4px;">
+          <button sc-camel-on-click="{{ dpPrev }}" aria-label="Previous month" style="width: 34px; height: 34px; border-radius: 999px; display: flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10)); color: var(--tchb-indigo-700); cursor: pointer;" style-hover="filter: brightness(0.97);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+          <span style="font-family: var(--font-display); font-weight: 800; font-size: 16px; color: var(--tchb-indigo-700);">{{ dpTitle }}</span>
+          <button sc-camel-on-click="{{ dpNext }}" aria-label="Next month" style="width: 34px; height: 34px; border-radius: 999px; display: flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10)); color: var(--tchb-indigo-700); cursor: pointer;" style-hover="filter: brightness(0.97);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></button>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; padding: 0 6px;">
+          <sc-for list="{{ dpWeek }}" as="w" hint-placeholder-count="7">
+            <span style="text-align: center; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.06em; color: var(--text-muted); padding: 4px 0;">{{ w.label }}</span>
+          </sc-for>
+          <sc-for list="{{ dpDays }}" as="dd" hint-placeholder-count="35">
+            <button sc-camel-on-click="{{ dd.onClick }}" aria-label="{{ dd.aria }}" aria-pressed="{{ dd.on }}" style="height: 36px; border-radius: 999px; padding: 0; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 14px; font-variant-numeric: tabular-nums; border: 1.5px solid {{ dd.border }}; background: {{ dd.bg }}; color: {{ dd.fg }}; box-shadow: {{ dd.shadow }}; {{ dd.hide }} {{ mo.dpDay }}" style-hover="border-color: var(--tchb-indigo-500);">{{ dd.label }}</button>
           </sc-for>
         </div>
-        <label style="display: flex; flex-direction: column; gap: 4px; padding: 6px 8px;">
-          <span style="font-size: 12px; font-weight: 700; color: var(--text-muted);">Date and time ({{ dueZone }}, Eastern)</span>
-          <input type="datetime-local" value="{{ dueDraft }}" sc-camel-on-change="{{ onDueDraft }}" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); color-scheme: inherit; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
-        </label>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 10px 6px 4px; padding: 10px 12px; border-radius: 14px; border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10)); color: var(--tchb-indigo-700); cursor: pointer; cursor: default;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <div role="group" aria-label="Hour" style="display: flex; align-items: center; gap: 4px;">
+              <button sc-camel-on-click="{{ hourDown }}" aria-label="Earlier hour" style="width: 30px; height: 30px; border-radius: 999px; display: flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10)); color: var(--tchb-indigo-700); cursor: pointer; {{ mo.dpStep }}" style-hover="filter: brightness(0.97);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></button>
+              <span style="min-width: 30px; text-align: center; font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--tchb-indigo-700); font-variant-numeric: tabular-nums;">{{ dpHH }}</span>
+              <button sc-camel-on-click="{{ hourUp }}" aria-label="Later hour" style="width: 30px; height: 30px; border-radius: 999px; display: flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10)); color: var(--tchb-indigo-700); cursor: pointer; {{ mo.dpStep }}" style-hover="filter: brightness(0.97);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"></path></svg></button>
+            </div>
+            <span style="font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--tchb-indigo-700);">:</span>
+            <div role="group" aria-label="Minutes" style="display: flex; align-items: center; gap: 4px;">
+              <button sc-camel-on-click="{{ minDown }}" aria-label="Earlier minutes" style="width: 30px; height: 30px; border-radius: 999px; display: flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10)); color: var(--tchb-indigo-700); cursor: pointer; {{ mo.dpStep }}" style-hover="filter: brightness(0.97);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></button>
+              <span style="min-width: 30px; text-align: center; font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--tchb-indigo-700); font-variant-numeric: tabular-nums;">{{ dpMM }}</span>
+              <button sc-camel-on-click="{{ minUp }}" aria-label="Later minutes" style="width: 30px; height: 30px; border-radius: 999px; display: flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10)); color: var(--tchb-indigo-700); cursor: pointer; {{ mo.dpStep }}" style-hover="filter: brightness(0.97);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"></path></svg></button>
+            </div>
+          </div>
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--text-muted); text-align: right; white-space: nowrap;">{{ dp12 }}</span>
+        </div>
+        <div style="padding: 2px 10px 4px; font-size: 12px; font-weight: 600; color: var(--text-muted);">{{ dpSummary }}</div>
         <div style="display: flex; gap: 6px; padding: 6px 4px 4px;">
           <sc-if value="{{ dueHas }}" hint-placeholder-val="{{ false }}">
             <button sc-camel-on-click="{{ clearDue }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 9px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); background: var(--surface-card);" style-hover="background: var(--tchb-indigo-050);">Remove</button>
@@ -1406,14 +1427,17 @@ h1, h2, h3, h4 {
       </sc-if>
       <sc-if value="{{ menuIsNotes }}" hint-placeholder-val="{{ false }}">
         <div style="padding: 4px 4px 4px; display: flex; align-items: center; gap: 8px; min-width: 0;">
-          <div role="tablist" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--tchb-gray-100); flex: none;">
-            <sc-for list="{{ noteTabs }}" as="nb" hint-placeholder-count="2">
-              <button role="tab" aria-selected="{{ nb.on }}" sc-camel-on-click="{{ nb.onClick }}" style="border: none; cursor: pointer; padding: 5px 12px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; background: {{ nb.bg }}; color: {{ nb.color }}; box-shadow: {{ nb.shadow }};">{{ nb.label }}</button>
-            </sc-for>
-          </div>
+          <sc-if value="{{ showNoteToggle }}" hint-placeholder-val="{{ true }}">
+            <div role="tablist" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--tchb-gray-100); flex: none;">
+              <sc-for list="{{ noteTabs }}" as="nb" hint-placeholder-count="2">
+                <button role="tab" aria-selected="{{ nb.on }}" sc-camel-on-click="{{ nb.onClick }}" style="border: none; cursor: pointer; padding: 5px 12px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; background: {{ nb.bg }}; color: {{ nb.color }}; box-shadow: {{ nb.shadow }};">{{ nb.label }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ noNoteToggle }}" hint-placeholder-val="{{ false }}"><span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700); padding-left: 4px;">Notes</span></sc-if>
           <span style="flex: 1; min-width: 0; font-size: 13px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ notesFor }}</span>
         </div>
-        <sc-if value="{{ onNotesTab }}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{ onTaskNotes }}" hint-placeholder-val="{{ true }}">
         <sc-if value="{{ notesEmpty }}" hint-placeholder-val="{{ true }}">
           <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No notes yet. Add the first one below.</div>
         </sc-if>
@@ -1435,20 +1459,41 @@ h1, h2, h3, h4 {
           <button sc-camel-on-click="{{ addNote }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 9px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ mo.noteAdd }}" style-hover="background: var(--action-primary-hover);">Add</button>
         </div>
         </sc-if>
-        <sc-if value="{{ onActivityTab }}" hint-placeholder-val="{{ false }}">
-          <sc-if value="{{ activityEmpty }}" hint-placeholder-val="{{ true }}">
-            <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No activity recorded yet. Changes from now on are logged here with who made them and when (Eastern time).</div>
+        <sc-if value="{{ onSubNotes }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ subNotesEmpty }}" hint-placeholder-val="{{ true }}">
+            <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No subtask notes yet. Add them with the note button on each subtask.</div>
           </sc-if>
-          <sc-for list="{{ activity }}" as="ac" hint-placeholder-count="0">
-            <div style="display: flex; gap: 10px; align-items: flex-start; padding: 7px 8px; margin: 0 2px; border-bottom: 1px solid var(--border-default);">
-              <span style="width: 8px; height: 8px; flex: none; margin-top: 6px; border-radius: 999px; background: {{ ac.dot }};"></span>
+          <sc-for list="{{ subNotesList }}" as="nt" hint-placeholder-count="0">
+            <div style="display: flex; gap: 6px; align-items: flex-start; padding: 8px 6px 8px 10px; margin: 2px 2px; border-radius: 10px; background: var(--surface-subtle); border: 1px solid var(--border-default);">
               <div style="flex: 1; min-width: 0;">
-                <div style="font-size: 14px; line-height: 1.4; color: var(--text-body); word-break: break-word;">{{ ac.text }}</div>
-                <div style="font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums;">{{ ac.meta }}</div>
+                <div style="font-size: 12px; font-weight: 700; color: var(--tchb-indigo-700); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ nt.sub }}</div>
+                <div style="font-size: 12px; font-weight: 600; color: var(--text-muted);">{{ nt.meta }}</div>
+                <div style="font-size: 14px; line-height: 1.45; color: var(--text-body); white-space: pre-wrap; word-break: break-word;">{{ nt.text }}</div>
               </div>
+              <sc-if value="{{ nt.canDelete }}" hint-placeholder-val="{{ false }}">
+                <button sc-camel-on-click="{{ nt.onDelete }}" title="Delete note" style="width: 26px; height: 26px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; padding: 0; {{ mo.noteDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+              </sc-if>
             </div>
           </sc-for>
         </sc-if>
+      </sc-if>
+      <sc-if value="{{ menuIsActivity }}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 6px 8px 4px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
+        <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">Activity</span>
+        <span style="flex: 1; min-width: 0; font-size: 13px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ activityFor }}</span>
+      </div>
+        <sc-if value="{{ activityEmpty }}" hint-placeholder-val="{{ true }}">
+          <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No activity recorded yet. Changes from now on are logged here with who made them and when (Eastern time).</div>
+        </sc-if>
+        <sc-for list="{{ activity }}" as="ac" hint-placeholder-count="0">
+          <div style="display: flex; gap: 10px; align-items: flex-start; padding: 7px 8px; margin: 0 2px; border-bottom: 1px solid var(--border-default);">
+            <span style="width: 8px; height: 8px; flex: none; margin-top: 6px; border-radius: 999px; background: {{ ac.dot }};"></span>
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 14px; line-height: 1.4; color: var(--text-body); word-break: break-word;">{{ ac.text }}</div>
+              <div style="font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums;">{{ ac.meta }}</div>
+            </div>
+          </div>
+        </sc-for>
       </sc-if>
     </div>
   </sc-if>
@@ -1748,6 +1793,7 @@ const MOBILE = {
   subFile: 'min-width: 40px; height: 40px; order: 10;',
   chip: 'padding: 7px 10px; font-size: 12px;',
   dueText: 'max-width: 120px; overflow: hidden; text-overflow: ellipsis;',
+  dpDay: 'height: 40px; font-size: 15px;', dpStep: 'width: 36px; height: 36px;',
   sheet: 'top: auto; bottom: 0; left: 0; right: 0; transform: none; width: auto; max-width: none; max-height: 92vh; border-radius: 20px 20px 0 0;'
 };
 const MOBILE_TINY = { ...MOBILE, tabPct: 'display: none;' }; // < 360px: company tabs drop their % to fit
@@ -1994,9 +2040,9 @@ class Component extends DCLogic {
   }
   openMenu(e, cfg) {
     const r = e.currentTarget.getBoundingClientRect();
-    const wide = ['notes', 'files', 'folders', 'due'].includes(cfg.kind), h = wide ? 430 : 330, w = wide ? 340 : 248;
+    const wide = ['notes', 'files', 'folders', 'due', 'activity'].includes(cfg.kind), h = wide ? (cfg.kind === 'due' ? 540 : 430) : 330, w = wide ? 340 : 248;
     const flip = r.bottom + h > window.innerHeight && r.top > h;
-    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '', noteTab: cfg.tab || 'notes', dueDraft: cfg.due ? etInput(cfg.due) : '' });
+    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '', noteTab: 'task', ...(cfg.kind === 'due' ? { dp: this.dpFrom(cfg.due) } : {}) });
   }
   choose(v) {
     const m = this.state.menu; if (!m) return;
@@ -2007,6 +2053,11 @@ class Component extends DCLogic {
     else if (m.kind === 'ownerFilter') this.setState(st => { const o = { ...st.openMap }; if (v) st.tasks.forEach(t => { if (t.subs.some(y => (y.owner || '').trim() === v)) o[t.id] = true; }); return { ownerFilter: v, openMap: o }; });
     else if (m.kind === 'status') this.setSubStatus(m.tid, m.sid, v);
     this.setState({ menu: null });
+  }
+  // Date picker state: the month in view (vy, vm), the picked day 'YYYY-MM-DD' and time (hh, mm), all Eastern.
+  dpFrom(due) {
+    const p = etParts(due || hubNow());
+    return { vy: +p.year, vm: p.month - 1, date: due ? p.year + '-' + p.month + '-' + p.day : '', hh: due ? +p.hour : 17, mm: due ? +p.minute : 0 };
   }
   // Due date on a task or subtask (null clears it). dueSet marks when it was set: the colour runs from then to the due time.
   setDue(m, ts) {
@@ -2275,7 +2326,7 @@ class Component extends DCLogic {
     const menu = this.state.menu;
     const SL = { todo: 'Not Started', progress: 'In Progress', done: 'Done' };
     let menuItems = [], menuCur = '';
-    if (menu && !['notes', 'files', 'folders'].includes(menu.kind)) {
+    if (menu && !['notes', 'files', 'folders', 'due', 'activity'].includes(menu.kind)) {   // the rest are pick lists
       if (menu.kind === 'status') {
         const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : '';
         menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
@@ -2345,7 +2396,7 @@ class Component extends DCLogic {
         canPushLive: t.scope === 'offline' && !!this.auth, onPushLive: () => this.pushLive(t.id),
         ...fileBtn((t.files || []).length, t.id, 'var(--tchb-gray-500)'), openFiles: e => this.openMenu(e, { kind: 'files', tid: t.id }),
         ...dueOf(t, d), openDue: e => this.openMenu(e, { kind: 'due', tid: t.id, due: t.due }), dueLock: asg ? 'pointer-events: none; opacity: 0.55;' : '',   // a shared task's own due date stays with its list's owner and managers
-        openActivity: e => this.openMenu(e, { kind: 'notes', tid: t.id, tab: 'activity' }),
+        openActivity: e => this.openMenu(e, { kind: 'activity', tid: t.id }),
         // A member's view of a MGMT task: no moving, deleting or changing owners; only the task owner can tick or rename the whole task.
         lockMain: asg && !whole ? 'pointer-events: none; opacity: 0.55;' : '', readOnly: asg && !whole,
         hideEdit: noDelete ? 'display: none;' : '', hideGrip: asg ? 'visibility: hidden; pointer-events: none;' : '', ownerLock: asg ? 'pointer-events: none;' : '', addSubStyle: asg && !whole ? 'display: none;' : '',
@@ -2479,17 +2530,36 @@ class Component extends DCLogic {
           onPickFiles: e => { const fl = [...(e.target.files || [])]; e.target.value = ''; this.uploadFiles(tk.id, menu.sid, fl); } };
       })(),
       ...(() => {
-        // Due date picker (Eastern time) with quick picks.
+        // Due date picker: month calendar plus hour and minute steppers, Eastern time.
         const on = !!menu && menu.kind === 'due', tk = on && allTasks.find(x => x.id === menu.tid), sb = tk && menu.sid ? tk.subs.find(y => y.id === menu.sid) : null;
-        if (!tk) return { menuIsDue: false, dueQuick: [] };
-        const day = n => etInput(hubNow() + n * 86400e3).slice(0, 10), pick = v => this.setState({ dueDraft: v });
-        const nextMon = (() => { const wd = etParts(hubNow()).weekday, i = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(wd); return day(7 - i); })();
-        return { menuIsDue: true, dueFor: sb ? sb.title : tk.title, dueDraft: this.state.dueDraft || '', onDueDraft: e => this.setState({ dueDraft: e.target.value }),
-          dueZone: etZone(hubNow()), dueHas: !!(sb ? sb.due : tk.due),
-          dueQuick: [['Today 17:00', day(0) + 'T17:00'], ['Tomorrow 09:00', day(1) + 'T09:00'], ['Tomorrow 17:00', day(1) + 'T17:00'], ['Next Mon 09:00', nextMon + 'T09:00']]
-            .map(([label, v]) => ({ label, onClick: () => pick(v), bg: this.state.dueDraft === v ? 'var(--action-secondary)' : 'transparent', fg: this.state.dueDraft === v ? '#fff' : 'var(--tchb-indigo-700)' })),
-          saveDue: () => { const ts = fromEtInput(this.state.dueDraft); if (!ts) return this.say('Pick a date and time'); this.setDue(menu, ts); },
+        if (!tk || !this.state.dp) return { menuIsDue: false, dpDays: [], dpWeek: [] };
+        const dp = this.state.dp, pad = n => String(n).padStart(2, '0'), set = x => this.setState(st => ({ dp: { ...st.dp, ...x } }));
+        const first = new Date(Date.UTC(dp.vy, dp.vm, 1)).getUTCDay(), days = new Date(Date.UTC(dp.vy, dp.vm + 1, 0)).getUTCDate(), tp = etParts(hubNow()), today = tp.year + '-' + tp.month + '-' + tp.day;
+        const cells = [...Array(first).fill(null), ...Array.from({ length: days }, (_, i) => i + 1)];
+        const shift = n => { const m = dp.vm + n; set({ vy: dp.vy + Math.floor(m / 12), vm: ((m % 12) + 12) % 12 }); };
+        const ts = dp.date ? fromEtInput(dp.date + 'T' + pad(dp.hh) + ':' + pad(dp.mm)) : null;
+        return { menuIsDue: true, dueFor: sb ? sb.title : tk.title, dueHas: !!(sb ? sb.due : tk.due),
+          dpTitle: new Date(Date.UTC(dp.vy, dp.vm, 1)).toLocaleString('en-US', { timeZone: 'UTC', month: 'long', year: 'numeric' }),
+          dpPrev: () => shift(-1), dpNext: () => shift(1),
+          dpWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(label => ({ label })),
+          dpDays: cells.map(d => { const v = d && dp.vy + '-' + pad(dp.vm + 1) + '-' + pad(d), sel = !!d && v === dp.date, now = v === today;
+            return { label: d || '', aria: d ? v : '', on: sel, hide: d ? '' : 'visibility: hidden; pointer-events: none;', onClick: () => d && set({ date: v }),
+              bg: sel ? 'var(--action-secondary)' : 'transparent', fg: sel ? '#fff' : v && v < today ? 'var(--text-muted)' : 'var(--text-body)',
+              border: sel ? 'var(--action-secondary)' : now ? 'var(--tchb-indigo-500)' : 'transparent', shadow: sel ? 'var(--shadow-button)' : 'none' }; }),
+          dpHH: pad(dp.hh), dpMM: pad(dp.mm),
+          hourUp: () => set({ hh: (dp.hh + 1) % 24 }), hourDown: () => set({ hh: (dp.hh + 23) % 24 }),
+          minUp: () => set({ mm: (Math.floor(dp.mm / 5) * 5 + 5) % 60 }), minDown: () => set({ mm: (Math.ceil(dp.mm / 5) * 5 + 55) % 60 }),
+          dp12: ts ? et12(ts).replace(':00 ', ' ') + ' ' + etZone(ts) : (((dp.hh + 11) % 12) + 1) + ':' + pad(dp.mm) + (dp.hh < 12 ? ' AM' : ' PM'),
+          dpSummary: ts ? 'Due ' + when(ts).replace(/:\d\d (E[SD]T)$/, ' $1') : 'Pick a day on the calendar.',
+          saveDue: () => { if (!ts) return this.say('Pick a day first'); this.setDue(menu, ts); },
           clearDue: () => this.setDue(menu, null) };
+      })(),
+      ...(() => {
+        // Activity: every change on the task and its subtasks, newest first.
+        const on = !!menu && menu.kind === 'activity', tk = on && allTasks.find(x => x.id === menu.tid);
+        const acts = tk ? (tk.log || []).slice().reverse() : [], DOT = { done: 'var(--tchb-green-500)', reopened: 'var(--tchb-red-500)', started: 'var(--tchb-indigo-500)' };
+        return { menuIsActivity: !!tk, activityFor: tk ? tk.title : '', activityEmpty: !acts.length,
+          activity: acts.map(e => ({ text: evText(e), meta: [this.canon(e.by), when(e.at)].filter(Boolean).join(' · '), dot: DOT[e.ev] || 'var(--tchb-gray-300)' })) };
       })(),
       // Files button (left of the filters): every task in this view that has files, as a folder.
       openFolders: e => this.openMenu(e, { kind: 'folders' }), folderCount: tasks.filter(t => (t.files || []).length).length,
@@ -2525,15 +2595,15 @@ class Component extends DCLogic {
         const item = tk ? (menu.sid ? tk.subs.find(y => y.id === menu.sid) : tk) : null, notes = (item && item.notes) || [];
         return {
           menuIsNotes: on && !!item, notesFor: item ? item.title : '', notesEmpty: !notes.length,
-          // Activity: the task's log (a subtask's own entries when opened from a subtask), newest first.
-          ...(() => { const tab = this.state.noteTab === 'activity' ? 'activity' : 'notes';
-            const acts = tk ? (tk.log || []).filter(e => !menu.sid || e.sid === menu.sid).slice().reverse() : [];
-            const DOT = { done: 'var(--tchb-green-500)', reopened: 'var(--tchb-red-500)', started: 'var(--tchb-indigo-500)' };
-            return { onNotesTab: tab === 'notes', onActivityTab: tab === 'activity', activityEmpty: !acts.length,
-              noteTabs: [['notes', 'Notes' + (notes.length ? ' ' + notes.length : '')], ['activity', 'Activity']].map(([k, label]) => ({ label, on: tab === k,
-                onClick: () => this.setState({ noteTab: k }), bg: tab === k ? 'var(--surface-card)' : 'transparent', color: tab === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: tab === k ? 'var(--shadow-button)' : 'none' })),
-              activity: acts.map(e => ({ text: evText(e), meta: [this.canon(e.by), when(e.at)].filter(Boolean).join(' · '), dot: DOT[e.ev] || 'var(--tchb-gray-300)' })) }; })(),
-          notesBox: on || (menu && ['files', 'folders'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: 440px; box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
+          // A task's notes: Task (its own) or Subtasks (every subtask's notes in one list, oldest first).
+          ...(() => { const toggle = on && !!tk && !menu.sid, subMode = toggle && this.state.noteTab === 'subs';
+            const subNotes = toggle ? [].concat(...tk.subs.map(sb => (sb.notes || []).map(n => ({ n, sb })))).sort((x, y) => (x.n.at || 0) - (y.n.at || 0)) : [];
+            return { showNoteToggle: toggle, noNoteToggle: !toggle, onTaskNotes: !subMode, onSubNotes: subMode, subNotesEmpty: !subNotes.length,
+              noteTabs: [['task', 'Task' + (notes.length ? ' ' + notes.length : '')], ['subs', 'Subtasks' + (subNotes.length ? ' ' + subNotes.length : '')]].map(([k, label]) => { const sel = (subMode ? 'subs' : 'task') === k;
+                return { label, on: sel, onClick: () => this.setState({ noteTab: k }), bg: sel ? 'var(--surface-card)' : 'transparent', color: sel ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: sel ? 'var(--shadow-button)' : 'none' }; }),
+              subNotesList: subNotes.map(({ n, sb }) => ({ sub: sb.title, text: n.text, meta: (this.canon(n.by) || 'Note') + ' · ' + ago(n.at),
+                canDelete: !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name), onDelete: () => this.editNotes({ tid: tk.id, sid: sb.id }, ns => ns.filter(x => x.id !== n.id)) })) }; })(),
+          notesBox: on || (menu && ['files', 'folders', 'due', 'activity'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: min(560px, calc(100vh - 16px)); box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
           notesList: notes.map(n => ({ text: n.text, meta: (this.canon(n.by) || 'Note') + ' · ' + ago(n.at), canDelete: !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name),
             onDelete: () => this.editNotes(menu, ns => ns.filter(x => x.id !== n.id)) })),
           notesAutoFocus: !this.state.mob, noteDraft: this.state.noteDraft || '', addNote: this.addNote,
