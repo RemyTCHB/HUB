@@ -1195,8 +1195,8 @@ h1, h2, h3, h4 {
 
     <section style="display: flex; flex-direction: column; gap: 14px;">
       <sc-for list="{{ visibleTasks }}" as="t" hint-placeholder-count="3">
-        <article data-tid="{{ t.id }}" sc-camel-on-drag-over="{{ t.onDragOver }}" sc-camel-on-drop="{{ t.onDrop }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; transition: opacity 120ms; outline-offset: 2px; opacity: {{ t.dragOpacity }}; outline: {{ t.dropOutline }};">
-          <div style="display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto auto auto auto auto; align-items: center; gap: 14px; padding: 16px 18px 16px 8px; {{ mo.card }}">
+        <article data-tid="{{ t.id }}" sc-camel-on-drag-over="{{ t.onDragOver }}" sc-camel-on-drop="{{ t.onDrop }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; transition: opacity 120ms; outline-offset: 2px; opacity: {{ t.dragOpacity }}; outline: {{ t.dropOutline }}; {{ t.dueEdge }}">
+          <div style="display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto auto auto auto auto auto auto; align-items: center; gap: 14px; padding: 16px 18px 16px 8px; {{ mo.card }}">
             <button draggable="{{ gripDraggable }}" sc-camel-on-drag-start="{{ t.onDragStart }}" sc-camel-on-drag-end="{{ onDragEnd }}" sc-camel-on-pointer-down="{{ t.onGripDown }}" sc-camel-on-pointer-move="{{ onGripMove }}" sc-camel-on-pointer-up="{{ onGripUp }}" sc-camel-on-pointer-cancel="{{ onGripCancel }}" title="Drag to reorder" style="width: 24px; height: 36px; margin-right: -8px; border: none; background: transparent; border-radius: 8px; cursor: grab; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; padding: 0; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; {{ mo.grip }} {{ t.hideGrip }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
               <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.8"></circle><circle cx="15" cy="5" r="1.8"></circle><circle cx="9" cy="12" r="1.8"></circle><circle cx="15" cy="12" r="1.8"></circle><circle cx="9" cy="19" r="1.8"></circle><circle cx="15" cy="19" r="1.8"></circle></svg>
             </button>
@@ -1225,16 +1225,19 @@ h1, h2, h3, h4 {
                     <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
                   </button>
             <x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Badge" tone="{{ t.tone }}" hint-size="100px,26px">{{ t.status }}</x-import>
-            <button sc-camel-on-click="{{ t.openNotes }}" title="Notes" aria-label="{{ t.notesAria }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: {{ t.noteColor }}; {{ mo.noteBtn }} {{ mo.push }}" style-hover="background: var(--tchb-indigo-050);">
+            <div style="display: none; {{ mo.brk2 }}"></div>
+            <button sc-camel-on-click="{{ t.openDue }}" title="{{ t.dueTitle }}" aria-label="{{ t.dueTitle }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; color: {{ t.dueColor }}; background: {{ t.dueBg }}; {{ mo.noteBtn }} {{ mo.row3 }} {{ t.dueLock }}" style-hover="filter: brightness(0.96);"><svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg><sc-if value="{{ t.hasDue }}" hint-placeholder-val="{{ false }}"><span style="{{ mo.dueText }}">{{ t.dueLabel }}</span></sc-if></button>
+            <button sc-camel-on-click="{{ t.openNotes }}" title="Notes" aria-label="{{ t.notesAria }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: {{ t.noteColor }}; {{ mo.noteBtn }} {{ mo.row3 }}" style-hover="background: var(--tchb-indigo-050);">
               <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M13 8H7"></path><path d="M17 12H7"></path></svg><sc-if value="{{ t.hasNotes }}" hint-placeholder-val="{{ false }}"><span>{{ t.notesCount }}</span></sc-if>
             </button>
-            <button sc-camel-on-click="{{ t.openFiles }}" title="Files" aria-label="{{ t.filesAria }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: {{ t.fileColor }}; {{ mo.noteBtn }} {{ t.fileBusy }}" style-hover="background: var(--tchb-indigo-050);">
+            <button sc-camel-on-click="{{ t.openActivity }}" title="Activity: every change, who made it and when" aria-label="Activity" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }} {{ mo.row3 }}" style-hover="background: var(--tchb-indigo-050); color: var(--tchb-indigo-700);"><svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg></button>
+            <button sc-camel-on-click="{{ t.openFiles }}" title="Files" aria-label="{{ t.filesAria }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: {{ t.fileColor }}; {{ mo.noteBtn }} {{ mo.row3 }} {{ t.fileBusy }}" style-hover="background: var(--tchb-indigo-050);">
               <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg><sc-if value="{{ t.hasFiles }}" hint-placeholder-val="{{ false }}"><span>{{ t.filesCount }}</span></sc-if>
             </button>
-            <button sc-camel-on-click="{{ t.onExpand }}" title="Show subtasks" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-indigo-700); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }}" style-hover="background: var(--tchb-indigo-050);">
+            <button sc-camel-on-click="{{ t.onExpand }}" title="Show subtasks" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-indigo-700); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }} {{ mo.push }}" style-hover="background: var(--tchb-indigo-050);">
               <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 160ms; transform: {{ t.chevron }};"><path d="m6 9 6 6 6-6"></path></svg>
             </button>
-            <button sc-camel-on-click="{{ t.onDelete }}" title="Delete task" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }} {{ t.hideEdit }}" style-hover="background: var(--tchb-red-050); color: var(--tchb-red-400);">
+            <button sc-camel-on-click="{{ t.onDelete }}" title="Delete task" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }} {{ mo.row3end }} {{ t.hideEdit }}" style-hover="background: var(--tchb-red-050); color: var(--tchb-red-400);">
               <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
             </button>
           </div>
@@ -1260,6 +1263,7 @@ h1, h2, h3, h4 {
                     <textarea rows="1" value="{{ s.title }}" sc-camel-on-change="{{ s.onTitle }}" sc-camel-on-key-down="{{ blurOnEnter }}" style="font-family: var(--font-body); font-size: 15px; line-height: 1.4; text-transform: capitalize; padding: 4px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; border-radius: 6px; background: transparent; outline: none; resize: none; overflow: hidden; margin: 0; min-width: 0; width: 100%; box-sizing: border-box; color: {{ s.color }}; text-decoration: {{ s.deco }}; {{ mo.input16 }} {{ s.blurStyle }}" style-focus="border-color: var(--tchb-indigo-500); background: var(--surface-card);"></textarea>
                   </div>
                   <div style="display: none; {{ mo.brk }}"></div>
+                  <div style="display: none; {{ mo.brkSub }}"></div>
                   <sc-if value="{{ s.hasEdited }}" hint-placeholder-val="{{ false }}">
                     <span title="{{ s.editedTitle }}" style="flex: none; font-size: 12px; color: var(--text-muted); white-space: nowrap; {{ mo.edited }}">{{ s.edited }}</span>
                   </sc-if>
@@ -1269,6 +1273,7 @@ h1, h2, h3, h4 {
                     <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
                   </button>
                   <button sc-camel-on-click="{{ s.openStatus }}" title="Subtask status" style="display: flex; align-items: center; gap: 6px; flex: none; border-radius: 999px; padding: 5px 10px 5px 12px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; white-space: nowrap; background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); background-color: {{ s.statusBg }}; color: {{ s.statusFg }}; {{ mo.subStatus }}" style-focus="box-shadow: var(--focus-ring);">{{ s.statusLabel }}<svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
+                  <button sc-camel-on-click="{{ s.openDue }}" title="{{ s.dueTitle }}" aria-label="{{ s.dueTitle }}" style="height: 28px; min-width: 28px; padding: 0 6px; flex: none; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 11px; white-space: nowrap; font-variant-numeric: tabular-nums; color: {{ s.dueColor }}; background: {{ s.dueBg }}; {{ mo.subDue }}" style-hover="filter: brightness(0.96);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg><sc-if value="{{ s.hasDue }}" hint-placeholder-val="{{ false }}"><span>{{ s.dueLabel }}</span></sc-if></button>
                   <button sc-camel-on-click="{{ s.openNotes }}" title="Notes" aria-label="{{ s.notesAria }}" style="height: 28px; min-width: 28px; padding: 0 6px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: {{ s.noteColor }}; {{ mo.subNote }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
                     <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M13 8H7"></path><path d="M17 12H7"></path></svg><sc-if value="{{ s.hasNotes }}" hint-placeholder-val="{{ false }}"><span>{{ s.notesCount }}</span></sc-if>
                   </button>
@@ -1354,6 +1359,27 @@ h1, h2, h3, h4 {
             <input type="file" multiple sc-camel-on-change="{{ onPickFiles }}" style="display: none;">
           </label>
         </sc-if>
+      </sc-if>
+      <sc-if value="{{ menuIsDue }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 6px 8px 4px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">Due Date</span>
+          <span style="flex: 1; min-width: 0; font-size: 13px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ dueFor }}</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 6px;">
+          <sc-for list="{{ dueQuick }}" as="q" hint-placeholder-count="4">
+            <button sc-camel-on-click="{{ q.onClick }}" style="border: 1px solid var(--border-strong); cursor: pointer; padding: 6px 10px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; background: {{ q.bg }}; color: {{ q.fg }}; {{ mo.chip }}">{{ q.label }}</button>
+          </sc-for>
+        </div>
+        <label style="display: flex; flex-direction: column; gap: 4px; padding: 6px 8px;">
+          <span style="font-size: 12px; font-weight: 700; color: var(--text-muted);">Date and time ({{ dueZone }}, Eastern)</span>
+          <input type="datetime-local" value="{{ dueDraft }}" sc-camel-on-change="{{ onDueDraft }}" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); color-scheme: inherit; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+        </label>
+        <div style="display: flex; gap: 6px; padding: 6px 4px 4px;">
+          <sc-if value="{{ dueHas }}" hint-placeholder-val="{{ false }}">
+            <button sc-camel-on-click="{{ clearDue }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 9px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); background: var(--surface-card);" style-hover="background: var(--tchb-indigo-050);">Remove</button>
+          </sc-if>
+          <button sc-camel-on-click="{{ saveDue }}" style="flex: 1; border: none; cursor: pointer; border-radius: 8px; padding: 9px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ mo.noteAdd }}" style-hover="background: var(--action-primary-hover);">Set Due Date</button>
+        </div>
       </sc-if>
       <sc-if value="{{ menuIsFolders }}" hint-placeholder-val="{{ false }}">
         <div style="padding: 6px 8px 2px; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">Task Folders</div>
@@ -1605,14 +1631,21 @@ const syncClock = () => { const t0 = Date.now();
     const d = Date.parse(r.headers.get('date')), t1 = Date.now();
     if (!isNaN(d)) { clockOffset = d + 500 - (t0 + t1) / 2; try { localStorage.setItem(KEY + '-clock', String(Math.round(clockOffset))); } catch (e) {} }
   }).catch(() => {}); };
-const ET_PARTS = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', timeZoneName: 'short' });
+const ET_PARTS = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', timeZoneName: 'short' });
 const ET_12 = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', second: '2-digit' });
 const etParts = ts => Object.fromEntries(ET_PARTS.formatToParts(new Date(ts)).map(p => [p.type, p.value]));
-const etDate = ts => { const p = etParts(ts); return p.month + '/' + p.day + '/' + p.year; };          // MM/DD/YYYY
+const etDate = ts => { const p = etParts(ts); return p.weekday + ' ' + p.month + '/' + p.day + '/' + p.year; };   // Wed 10/28/2026
 const et24 = ts => { const p = etParts(ts); return p.hour + ':' + p.minute + ':' + p.second; };       // 21:30:15
 const et12 = ts => ET_12.format(new Date(ts));                                                          // 9:30:15 PM
 const etZone = ts => etParts(ts).timeZoneName;                                                          // EST or EDT
 const when = ts => ts ? etDate(ts) + ' ' + et24(ts) + ' ' + etZone(ts) : '';
+// Due dates are picked in Eastern time, whatever the device's time zone ('YYYY-MM-DDTHH:mm' <-> ms).
+const etInput = ts => { const p = etParts(ts); return p.year + '-' + p.month + '-' + p.day + 'T' + p.hour + ':' + p.minute; };
+const fromEtInput = v => { const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(v || ''); if (!m) return null;
+  const want = Date.UTC(+m[1], m[2] - 1, +m[3], +m[4], +m[5]); let ts = want;
+  for (let i = 0; i < 3; i++) { const p = etParts(ts); ts += want - Date.UTC(+p.year, p.month - 1, +p.day, +p.hour, +p.minute); }
+  return ts; };
+const dueShort = ts => { const p = etParts(ts); return p.weekday + ' ' + p.month + '/' + p.day + ' ' + p.hour + ':' + p.minute; };   // Fri 10/30 17:00
 const sizeOf = b => b < 1024 * 1024 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
 const subStatus = s => s.status || (s.done ? 'done' : 'todo');
 const isDone = t => t.subs.length ? t.subs.every(s => s.done) : !!t.done;
@@ -1629,11 +1662,13 @@ const stamp = (prev, t, by) => {
     const p = prev && prev.subs.find(y => y.id === s.id), is = subStatus(s);
     if (!p) { if (prev) add('subtask added', { sid: s.id, title: s.title, ...(s.owner ? { to: s.owner } : {}) }); return { createdAt: now, ...mark(s, 'todo', is) }; }
     if ((p.owner || '') !== (s.owner || '')) add('owner', { sid: s.id, title: s.title, to: s.owner || 'Unassigned' });
+    if ((p.due || null) !== (s.due || null)) add('due', { sid: s.id, title: s.title, due: s.due || null });
     if (subStatus(p) !== is) add(evOf(subStatus(p), is), { sid: s.id, title: s.title });
     return mark(s, subStatus(p), is);
   });
   if (prev) prev.subs.forEach(p => { if (!t.subs.some(s => s.id === p.id)) add('subtask removed', { sid: p.id, title: p.title }); });
   if (prev && (prev.owner || '') !== (t.owner || '')) add('owner', { to: t.owner || 'Unassigned' });
+  if (prev && (prev.due || null) !== (t.due || null)) add('due', { due: t.due || null });
   const next = { ...t, subs }, was = prev ? statusOf(prev) : 'todo', is = statusOf(next);
   if (prev && was !== is) add(evOf(was, is));
   const out = prev ? mark(next, was, is) : { createdAt: now, ...(by ? { createdBy: by } : {}), ...mark(next, 'todo', is) };
@@ -1645,6 +1680,7 @@ const evText = e => { const q = e.title ? '“' + e.title + '”' : '';
   if (e.ev === 'subtask added') return 'Added subtask ' + q + (e.to ? ' for ' + e.to : '');
   if (e.ev === 'subtask removed') return 'Removed subtask ' + q;
   if (e.ev === 'owner') return (e.sid ? q + ' assigned to ' : 'Assigned to ') + e.to;
+  if (e.ev === 'due') return (e.sid ? q + ' due date ' : 'Due date ') + (e.due ? 'set to ' + when(e.due) : 'removed');
   if (e.ev in EV) return e.sid ? q + ' ' + EV[e.ev] : 'Task ' + EV[e.ev];
   return e.ev.charAt(0).toUpperCase() + e.ev.slice(1) + (q && e.ev !== 'pushed to live' ? ' ' + q : ''); };
 const MOBILE_MAX = 640;
@@ -1692,11 +1728,13 @@ const MOBILE = {
   pushBtn: 'height: 36px;',
   subGrip: 'margin: 0 -4px 0 -6px; width: 28px; height: 40px;',
   input16: 'font-size: 16px;',
-  edited: 'order: 9; flex-basis: 100%; padding-left: 34px; white-space: normal;',
+  edited: 'order: 9; flex: 1 1 0; min-width: 0; padding-left: 34px; white-space: normal;',
+  brk2: 'display: block; flex-basis: 100%; height: 0; order: 2;', row3: 'order: 2;', row3end: 'order: 2; margin-left: auto;',
+  brkSub: 'display: block; flex-basis: 100%; height: 0; order: 8;', subDue: 'min-height: 36px;',
   subOwner: 'flex: 1 1 0; max-width: max-content; min-width: 0; min-height: 36px;',
   subStatus: 'min-height: 36px;',
-  subDel: 'width: 40px; height: 40px;',
-  subNote: 'min-width: 40px; height: 40px; margin-left: auto;',
+  subDel: 'width: 40px; height: 40px; order: 10;',
+  subNote: 'min-width: 40px; height: 40px; margin-left: auto; order: 10;',
   noteBtn: 'min-width: 44px; height: 44px; flex: none;',
   noteDel: 'width: 36px; height: 36px;',
   noteAdd: 'min-height: 44px;',
@@ -1707,8 +1745,9 @@ const MOBILE = {
   toastBtn: 'flex: none; min-height: 40px;',
   deptSeg: 'flex: 1 1 100%;', deptBtn: 'flex: 1 0 auto; justify-content: center; min-height: 38px;',
   filterLeft: 'flex: 1 1 100%;',
-  subFile: 'min-width: 40px; height: 40px;',
+  subFile: 'min-width: 40px; height: 40px; order: 10;',
   chip: 'padding: 7px 10px; font-size: 12px;',
+  dueText: 'max-width: 120px; overflow: hidden; text-overflow: ellipsis;',
   sheet: 'top: auto; bottom: 0; left: 0; right: 0; transform: none; width: auto; max-width: none; max-height: 92vh; border-radius: 20px 20px 0 0;'
 };
 const MOBILE_TINY = { ...MOBILE, tabPct: 'display: none;' }; // < 360px: company tabs drop their % to fit
@@ -1787,6 +1826,9 @@ class Component extends DCLogic {
   nameOf(k) { return this.rec(k).name || (this.state.people || {})[k] || k; }
   keyOfName(n) { n = (n || '').trim().toLowerCase(); if (!n) return ''; const d = this.state.dir || {}; return Object.keys(d).find(k => (d[k].name || '').trim().toLowerCase() === n) || ''; }
   myName() { return this.rec(this._key).name || this._name; }
+  canon(n) { if (!n) return n; const d = this.state.dir || {}, pp = this.state.people || {};
+    if (Object.values(d).some(r => r.name === n)) return n;
+    const k = Object.keys(pp).find(x => pp[x] === n); return (k && d[k] && d[k].name) || n; }
   photoOf(name) { const k = this.keyOfName(name); return (k && this.rec(k).photo) || ''; }
   // Managers first, then each department (team leaders first), then names with no login; only people who can open this company.
   groups(co, keep = () => true) {
@@ -1952,9 +1994,9 @@ class Component extends DCLogic {
   }
   openMenu(e, cfg) {
     const r = e.currentTarget.getBoundingClientRect();
-    const wide = ['notes', 'files', 'folders'].includes(cfg.kind), h = wide ? 430 : 330, w = wide ? 340 : 248;
+    const wide = ['notes', 'files', 'folders', 'due'].includes(cfg.kind), h = wide ? 430 : 330, w = wide ? 340 : 248;
     const flip = r.bottom + h > window.innerHeight && r.top > h;
-    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '', noteTab: 'notes' });
+    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '', noteTab: cfg.tab || 'notes', dueDraft: cfg.due ? etInput(cfg.due) : '' });
   }
   choose(v) {
     const m = this.state.menu; if (!m) return;
@@ -1964,6 +2006,12 @@ class Component extends DCLogic {
     else if (m.kind === 'forMember') this.setState({ forWho: v });
     else if (m.kind === 'ownerFilter') this.setState(st => { const o = { ...st.openMap }; if (v) st.tasks.forEach(t => { if (t.subs.some(y => (y.owner || '').trim() === v)) o[t.id] = true; }); return { ownerFilter: v, openMap: o }; });
     else if (m.kind === 'status') this.setSubStatus(m.tid, m.sid, v);
+    this.setState({ menu: null });
+  }
+  // Due date on a task or subtask (null clears it). dueSet marks when it was set: the colour runs from then to the due time.
+  setDue(m, ts) {
+    const f = o => ({ ...o, due: ts || null, dueSet: ts ? hubNow() : null });
+    if (m.sid) this.upd(m.tid, x => ({ ...x, subs: x.subs.map(y => y.id === m.sid ? f(y) : y) })); else this.upd(m.tid, f);
     this.setState({ menu: null });
   }
   editNotes(m, fn) {
@@ -2082,11 +2130,12 @@ class Component extends DCLogic {
     syncClock(); this._cs = setInterval(syncClock, 15 * 60 * 1000);
     this._onVis = () => { if (!document.hidden) syncClock(); }; document.addEventListener('visibilitychange', this._onVis);
     this._clk = setInterval(() => this.tickClock(), 250);
+    this._min = setInterval(() => this.setState({ minute: hubNow() }), 60000);   // due-date colours deepen as time passes
   }
   tickClock() {
     const a = this.clockARef.current, b = this.clockBRef.current; if (!a || !b) return;
     const n = hubNow(), sec = Math.floor(n / 1000); if (a.dataset.s === String(sec) && a.textContent) return;
-    a.dataset.s = sec; a.textContent = etDate(n) + '  ' + et24(n); b.textContent = et12(n) + ' ' + etZone(n);
+    a.dataset.s = sec; a.textContent = etDate(n) + '  ' + et24(n); b.textContent = etDate(n) + '  ' + et12(n) + ' ' + etZone(n);
   }
   // Soft glows behind the board: two drift slowly, the green one eases toward the pointer (or a tap).
   startAurora() {
@@ -2126,7 +2175,7 @@ class Component extends DCLogic {
     this._auRaf = requestAnimationFrame(frame);
   }
   componentWillUnmount() {
-    clearInterval(this._clk); clearInterval(this._cs); document.removeEventListener('visibilitychange', this._onVis);
+    clearInterval(this._clk); clearInterval(this._cs); clearInterval(this._min); document.removeEventListener('visibilitychange', this._onVis);
     clearTimeout(this._u); Object.keys(KPI_THEME).forEach(k => document.documentElement.style.removeProperty(k));
     window.removeEventListener('resize', this._onResize);
     cancelAnimationFrame(this._auRaf); window.removeEventListener('pointermove', this._onPtr); window.removeEventListener('pointerdown', this._onPtr); document.removeEventListener('pointerout', this._onPtrOut);
@@ -2261,7 +2310,17 @@ class Component extends DCLogic {
     list = list.map((t, i) => [t, i]).sort((a, b) => RANK[statusOf(a[0])] - RANK[statusOf(b[0])] || a[1] - b[1]).map(([t]) => t);
     const STAT = { done: ['Done', 'green'], progress: ['In Progress', 'indigo'], todo: ['Not Started', 'neutral'] };
     const fileBtn = (n, k, idle) => ({ hasFiles: n > 0, filesCount: n, fileColor: n ? 'var(--tchb-indigo-700)' : idle, filesAria: n ? n + (n === 1 ? ' file' : ' files') : 'Add a file', fileBusy: this.state.uploading[k] ? 'opacity: 0.5;' : '' });
-    const datesOf = o => [['Created', o.createdAt], ['Started', o.startedAt], ['Done', o.doneAt]].filter(x => x[1]).map(([l, v]) => l + ' ' + when(v)).join(' · ');
+    // Due chip: indigo when just set, redder as the due time gets closer, full red once overdue; grey once done.
+    const dueOf = (o, done) => {
+      if (!o.due) return { hasDue: false, dueLabel: '', dueColor: 'var(--tchb-gray-500)', dueBg: 'transparent', dueTitle: 'Set a due date', dueEdge: '' };
+      const now = hubNow(), start = Math.min(o.dueSet || o.createdAt || o.due - 7 * 86400e3, o.due - 3600e3), late = now >= o.due;
+      const pct = done ? 0 : Math.round(100 * Math.max(0, Math.min(1, (now - start) / (o.due - start))));
+      const color = done ? 'var(--tchb-gray-500)' : `color-mix(in srgb, var(--tchb-red-500) ${pct}%, var(--tchb-indigo-700))`;
+      return { hasDue: true, dueLabel: (late && !done ? (this.state.mob ? 'Late ' : 'Overdue · ') : '') + (this.state.mob ? dueShort(o.due).slice(4) : dueShort(o.due)), dueColor: color, dueTitle: 'Due ' + when(o.due) + (late && !done ? ' (overdue)' : ''),
+        dueBg: done ? 'var(--tchb-gray-100)' : `color-mix(in srgb, var(--tchb-red-500) ${Math.round(5 + pct * 0.15)}%, transparent)`,
+        dueEdge: done ? '' : `box-shadow: inset 4px 0 0 color-mix(in srgb, var(--tchb-red-500) ${pct}%, var(--tchb-indigo-100)), var(--shadow-card);` };
+    };
+    const datesOf = o => [['Created', o.createdAt], ['Started', o.startedAt], ['Done', o.doneAt], ['Due', o.due]].filter(x => x[1]).map(([l, v]) => l + ' ' + when(v)).join(' · ');
     const noteBtn = (o, idle) => { const n = (o.notes || []).length; return { hasNotes: n > 0, notesCount: n, noteColor: n ? 'var(--tchb-indigo-700)' : idle, notesAria: n ? n + (n === 1 ? ' note' : ' notes') : 'Add a note' }; };
     const visibleTasks = list.map(t => {
       const d = this.isDone(t), st = statusOf(t);
@@ -2285,6 +2344,8 @@ class Component extends DCLogic {
         ...noteBtn(t, 'var(--tchb-gray-500)'), openNotes: e => this.openMenu(e, { kind: 'notes', tid: t.id }),
         canPushLive: t.scope === 'offline' && !!this.auth, onPushLive: () => this.pushLive(t.id),
         ...fileBtn((t.files || []).length, t.id, 'var(--tchb-gray-500)'), openFiles: e => this.openMenu(e, { kind: 'files', tid: t.id }),
+        ...dueOf(t, d), openDue: e => this.openMenu(e, { kind: 'due', tid: t.id, due: t.due }), dueLock: asg ? 'pointer-events: none; opacity: 0.55;' : '',   // a shared task's own due date stays with its list's owner and managers
+        openActivity: e => this.openMenu(e, { kind: 'notes', tid: t.id, tab: 'activity' }),
         // A member's view of a MGMT task: no moving, deleting or changing owners; only the task owner can tick or rename the whole task.
         lockMain: asg && !whole ? 'pointer-events: none; opacity: 0.55;' : '', readOnly: asg && !whole,
         hideEdit: noDelete ? 'display: none;' : '', hideGrip: asg ? 'visibility: hidden; pointer-events: none;' : '', ownerLock: asg ? 'pointer-events: none;' : '', addSubStyle: asg && !whole ? 'display: none;' : '',
@@ -2292,7 +2353,7 @@ class Component extends DCLogic {
         id: t.id, title: t.title, isDone: d, open: !!this.state.openMap[t.id], draft: drafts[t.id] || '',
         status: STAT[st][0], tone: STAT[st][1], pct: pct + '%',
         metaTitle: datesOf(t),
-        meta: [whose, deptTag].filter(Boolean).map(x => x + ' · ').join('') + (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks — check off directly') + (t.updatedBy ? ` · Edited by ${t.updatedBy} · ${ago(t.updatedAt)}` : ''),
+        meta: [whose, deptTag].filter(Boolean).map(x => x + ' · ').join('') + (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks — check off directly') + (t.updatedBy ? ` · Edited by ${this.canon(t.updatedBy)} · ${ago(t.updatedAt)}` : ''),
         boxBg: d ? 'var(--tchb-green-500)' : 'var(--surface-card)',
         boxBorder: d ? 'var(--tchb-green-500)' : 'var(--border-strong)',
         titleColor: d ? 'var(--text-muted)' : 'var(--tchb-indigo-700)',
@@ -2317,7 +2378,8 @@ class Component extends DCLogic {
           onDragOver: e => { const d = this.state.subDrag; if (!d || d.tid !== t.id) return; e.preventDefault(); e.stopPropagation(); e.dataTransfer.dropEffect = 'move'; if (this.state.subOver !== s.id) this.setState({ subOver: s.id }); },
           onDrop: e => { const d = this.state.subDrag; if (!d || d.tid !== t.id) return; e.preventDefault(); e.stopPropagation(); this.setState({ subDrag: null, subOver: null }); this.moveSub(t.id, d.sid, s.id); },
           onGripDown: e => { if (e.pointerType === 'mouse') return; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {} this.setState({ subDrag: { tid: t.id, sid: s.id }, subOver: null }); },
-          title: s.title, done: s.done, hasEdited: !!s.by, edited: s.by ? firstName(s.by) + ' · ' + ago(s.at) : '', editedTitle: [s.by ? 'Last edited by ' + s.by : '', datesOf(s)].filter(Boolean).join(' · '),
+          title: s.title, done: s.done, hasEdited: !!s.by, edited: s.by ? firstName(this.canon(s.by)) + ' · ' + ago(s.at) : '', editedTitle: [s.by ? 'Last edited by ' + this.canon(s.by) : '', datesOf(s)].filter(Boolean).join(' · '),
+          ...dueOf(s, s.done), openDue: e => this.openMenu(e, { kind: 'due', tid: t.id, sid: s.id, due: s.due }),
           ...fileBtn((t.files || []).filter(f => f.sid === s.id).length, t.id + s.id, 'var(--tchb-gray-300)'), openFiles: e => this.openMenu(e, { kind: 'files', tid: t.id, sid: s.id }), ...chipOf(s.owner), status: s.status || (s.done ? 'done' : 'todo'),
           matchStyle: ownerFilter && (s.owner || '').trim() === ownerFilter ? 'background: color-mix(in srgb, var(--tchb-green-500) 11%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--tchb-green-500) 45%, transparent), 0 0 14px color-mix(in srgb, var(--tchb-green-500) 30%, transparent);' : '',
           statusBg: s.done ? 'var(--tchb-green-050)' : s.status === 'progress' ? 'var(--tchb-indigo-050)' : 'var(--tchb-gray-100)',
@@ -2413,8 +2475,21 @@ class Component extends DCLogic {
         const list = (tk.files || []).filter(f => menu.sid ? f.sid === menu.sid : true);
         return { menuIsFiles: true, filesFor: sb ? sb.title : tk.title, filesEmpty: !list.length, canUpload: !locked && live, uploadingNow: up > 0, uploadingLabel: 'Uploading ' + up + (up === 1 ? ' file…' : ' files…'),
           filesList: list.map(f => { const s = f.sid && !menu.sid ? tk.subs.find(y => y.id === f.sid) : null;
-            return { name: f.name, url: f.url, meta: [s ? 'Subtask: ' + s.title : '', sizeOf(f.size || 0), f.by, ago(f.at)].filter(Boolean).join(' · '), canDelete: !locked, onDelete: () => this.removeFile(tk.id, f) }; }),
+            return { name: f.name, url: f.url, meta: [s ? 'Subtask: ' + s.title : '', sizeOf(f.size || 0), this.canon(f.by), ago(f.at)].filter(Boolean).join(' · '), canDelete: !locked, onDelete: () => this.removeFile(tk.id, f) }; }),
           onPickFiles: e => { const fl = [...(e.target.files || [])]; e.target.value = ''; this.uploadFiles(tk.id, menu.sid, fl); } };
+      })(),
+      ...(() => {
+        // Due date picker (Eastern time) with quick picks.
+        const on = !!menu && menu.kind === 'due', tk = on && allTasks.find(x => x.id === menu.tid), sb = tk && menu.sid ? tk.subs.find(y => y.id === menu.sid) : null;
+        if (!tk) return { menuIsDue: false, dueQuick: [] };
+        const day = n => etInput(hubNow() + n * 86400e3).slice(0, 10), pick = v => this.setState({ dueDraft: v });
+        const nextMon = (() => { const wd = etParts(hubNow()).weekday, i = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(wd); return day(7 - i); })();
+        return { menuIsDue: true, dueFor: sb ? sb.title : tk.title, dueDraft: this.state.dueDraft || '', onDueDraft: e => this.setState({ dueDraft: e.target.value }),
+          dueZone: etZone(hubNow()), dueHas: !!(sb ? sb.due : tk.due),
+          dueQuick: [['Today 17:00', day(0) + 'T17:00'], ['Tomorrow 09:00', day(1) + 'T09:00'], ['Tomorrow 17:00', day(1) + 'T17:00'], ['Next Mon 09:00', nextMon + 'T09:00']]
+            .map(([label, v]) => ({ label, onClick: () => pick(v), bg: this.state.dueDraft === v ? 'var(--action-secondary)' : 'transparent', fg: this.state.dueDraft === v ? '#fff' : 'var(--tchb-indigo-700)' })),
+          saveDue: () => { const ts = fromEtInput(this.state.dueDraft); if (!ts) return this.say('Pick a date and time'); this.setDue(menu, ts); },
+          clearDue: () => this.setDue(menu, null) };
       })(),
       // Files button (left of the filters): every task in this view that has files, as a folder.
       openFolders: e => this.openMenu(e, { kind: 'folders' }), folderCount: tasks.filter(t => (t.files || []).length).length,
@@ -2457,9 +2532,9 @@ class Component extends DCLogic {
             return { onNotesTab: tab === 'notes', onActivityTab: tab === 'activity', activityEmpty: !acts.length,
               noteTabs: [['notes', 'Notes' + (notes.length ? ' ' + notes.length : '')], ['activity', 'Activity']].map(([k, label]) => ({ label, on: tab === k,
                 onClick: () => this.setState({ noteTab: k }), bg: tab === k ? 'var(--surface-card)' : 'transparent', color: tab === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: tab === k ? 'var(--shadow-button)' : 'none' })),
-              activity: acts.map(e => ({ text: evText(e), meta: [e.by, when(e.at)].filter(Boolean).join(' · '), dot: DOT[e.ev] || 'var(--tchb-gray-300)' })) }; })(),
+              activity: acts.map(e => ({ text: evText(e), meta: [this.canon(e.by), when(e.at)].filter(Boolean).join(' · '), dot: DOT[e.ev] || 'var(--tchb-gray-300)' })) }; })(),
           notesBox: on || (menu && ['files', 'folders'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: 440px; box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
-          notesList: notes.map(n => ({ text: n.text, meta: (n.by || 'Note') + ' · ' + ago(n.at), canDelete: !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name),
+          notesList: notes.map(n => ({ text: n.text, meta: (this.canon(n.by) || 'Note') + ' · ' + ago(n.at), canDelete: !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name),
             onDelete: () => this.editNotes(menu, ns => ns.filter(x => x.id !== n.id)) })),
           notesAutoFocus: !this.state.mob, noteDraft: this.state.noteDraft || '', addNote: this.addNote,
           onNoteDraft: e => this.setState({ noteDraft: e.target.value }),
