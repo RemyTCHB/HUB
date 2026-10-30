@@ -118,4 +118,16 @@ function verify(secret, body, ts, sig, nowSec = Math.floor(Date.now() / 1000)) {
   return want.length === got.length && crypto.timingSafeEqual(want, got);
 }
 
-module.exports = { AGENT, DONE, applyDeal, hubChanges, dueMs, sign, verify, hash, toHub };
+/** The people the agent needs from the team directory: the Managers, then the TC department (Team Leaders first),
+ *  each in the directory's own order. Managers are the root managers plus meta/managers, as in the app. */
+function teamFor(people, managers) {
+  const isM = k => managers.includes(k), rec = k => people[k] || {};
+  const by = (a, b) => (rec(a).order || 999) - (rec(b).order || 999) || (rec(a).name || a).localeCompare(rec(b).name || b);
+  const tc = Object.keys(people).filter(k => !isM(k) && rec(k).dept === 'TC').sort((a, b) => (rec(b).role === 'lead') - (rec(a).role === 'lead') || by(a, b));
+  return [...[...new Set(managers)].sort(by), ...tc].map(k => {
+    const r = rec(k);
+    return { name: (r.name || '').trim() || k, email: k, role: isM(k) ? 'manager' : r.role === 'lead' ? 'lead' : 'member', dept: r.dept || '', photo: r.photo || '' };
+  });
+}
+
+module.exports = { AGENT, DONE, applyDeal, hubChanges, dueMs, sign, verify, hash, toHub, teamFor };

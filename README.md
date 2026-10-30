@@ -83,6 +83,7 @@ Only **Closing Blockers** come over: one task per deal, **Title - &lt;address&gt
 | Piece | Where |
 | --- | --- |
 | `POST /api/title-agent` | The agent sends a deal's Closing Blockers (after each review, re-run or change, and every 15 minutes); the hub creates or updates the task and answers with blockers ticked or unticked here. |
+| `POST /api/title-agent/team` | The agent asks who is on the team (signed the same way, body `{}`); the hub answers `{"people": [{name, email, role, dept, photo}]}` with the Managers and the TC department from the team directory. Logs counts only. |
 | `POST /api/title-agent/hub` | The hub page calls it after saving one of these tasks; the server sends the agent any blocker ticked or unticked here. |
 | `api/_lib/titleagent.js` | The rules (tested in `tests/`: `node --test tests/title-agent.test.js`). |
 

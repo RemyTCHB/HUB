@@ -74,3 +74,20 @@ test('signatures', () => {
   assert.equal(verify('s3cret', body, h['X-Hub-Timestamp'], h['X-Hub-Signature'], 2000), false, 'too old');
   assert.equal(hash('k').length, 12);
 });
+
+test('team: the Managers, then the TC department with Team Leaders first; other departments left out', () => {
+  const { teamFor } = require('../api/_lib/titleagent');
+  const people = {
+    'systems@totalchb.com': { name: 'Ahmed Ramy', order: 1, photo: 'https://img.example/a.jpg' },
+    'boss@totalchb.com': { name: 'Bo Boss', role: 'member', order: 2 },
+    'monz@totalchb.com': { name: 'Monz Miller', role: 'member', dept: 'TC', order: 5 },
+    'tl@totalchb.com': { name: 'Tia Lead', role: 'lead', dept: 'TC', order: 9 },
+    'dispo@totalchb.com': { name: 'Dee Spo', role: 'lead', dept: 'DISPO', order: 3 } };
+  const out = teamFor(people, ['brandy@totalchb.com', 'systems@totalchb.com', 'boss@totalchb.com']);
+  assert.deepEqual(out.map(p => [p.email, p.role, p.dept]), [
+    ['systems@totalchb.com', 'manager', ''], ['boss@totalchb.com', 'manager', ''], ['brandy@totalchb.com', 'manager', ''],
+    ['tl@totalchb.com', 'lead', 'TC'], ['monz@totalchb.com', 'member', 'TC']]);
+  assert.deepEqual(out[0], { name: 'Ahmed Ramy', email: 'systems@totalchb.com', role: 'manager', dept: '', photo: 'https://img.example/a.jpg' });
+  assert.equal(out[2].name, 'brandy@totalchb.com', 'a manager missing from the directory falls back to the email');
+  assert.equal(out[4].photo, '');
+});
