@@ -1021,7 +1021,7 @@ h1, h2, h3, h4 {
 <div style="min-height: 100vh; background: var(--surface-subtle); font-family: var(--font-body); color: var(--text-body);">
   <canvas ref="{{ bgRef }}" aria-hidden="true" style="position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block;"></canvas>
   <header style="position: relative; z-index: 1; background: color-mix(in srgb, var(--surface-card) 78%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-default);">
-    <div style="max-width: 920px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; {{ mo.headRow }}">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; {{ mo.headRow }}">
       <div style="height: 64px; display: flex; align-items: center; {{ mo.logoBox }}">
         <sc-if value="{{ tchbLight }}" hint-placeholder-val="{{ true }}">
           <img src="eacd85cb-342b-497b-9f44-adad94715c27" alt="Total Cash Home Buyers" style="height: 64px; width: auto; display: block; {{ mo.logoTchb }}">
@@ -1057,7 +1057,7 @@ h1, h2, h3, h4 {
     </div>
   </header>
 
-  <main style="position: relative; z-index: 1; max-width: 920px; margin: 0 auto; padding: 40px 24px 96px; display: flex; flex-direction: column; gap: 24px; {{ mo.main }}">
+  <main style="position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 36px 24px 96px; display: flex; flex-direction: column; gap: 24px; {{ mo.main }}">
     <sc-if value="{{ showGate }}" hint-placeholder-val="{{ false }}">
       <section style="margin: 48px auto 0; max-width: 520px; width: 100%; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); padding: 40px 32px; display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; {{ mo.gate }}">
         <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 28px; line-height: 1.25; width: 100%; color: var(--tchb-indigo-700); {{ mo.gateTitle }}">Sign In To The <span style="color: var(--tchb-red-500);">Team Hub</span></h2>
@@ -1214,9 +1214,10 @@ h1, h2, h3, h4 {
               <sc-if value="{{ t.canPushLive }}" hint-placeholder-val="{{ false }}">
                 <span style="display: flex; margin-top: 6px;"><button sc-camel-on-click="{{ t.onPushLive }}" title="Move this task into your personal list" style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--tchb-indigo-500); background: transparent; color: var(--tchb-indigo-700); cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.02em; white-space: nowrap; {{ mo.pushBtn }}" style-hover="background: var(--tchb-indigo-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M12 12v9"></path><path d="m16 16-4-4-4 4"></path></svg>Push To Live</button></span>
               </sc-if>
-              <sc-if value="{{ t.hasSource }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ t.hasTagRow }}" hint-placeholder-val="{{ false }}">
                 <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 6px;">
-                  <span title="Created by another app and kept in step with it" style="display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: 999px; background: var(--tchb-indigo-050); color: var(--tchb-indigo-700); font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>{{ t.sourceTag }}</span>
+                  <sc-if value="{{ t.hasTag }}" hint-placeholder-val="{{ false }}"><span title="{{ t.tagTitle }}" style="display: inline-flex; align-items: center; gap: 5px; min-height: 26px; padding: 4px 10px; box-sizing: border-box; max-width: 100%; line-height: 1.3; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; white-space: normal; text-transform: uppercase; background: {{ t.tagBg }}; color: {{ t.tagFg }};"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path sc-camel-d="{{ t.tagIcon }}"></path></svg>{{ t.tagText }}</span></sc-if>
+                  <sc-if value="{{ t.hasDue }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ t.openDue }}" title="{{ t.dueTitle }}" style="display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; white-space: nowrap; border: none; cursor: pointer; font-variant-numeric: tabular-nums; background: {{ t.dueBg }}; color: {{ t.dueColor }}; {{ t.dueLock }}" style-hover="filter: brightness(0.96);"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>{{ t.dueLabel }}</button></sc-if>
                   <sc-if value="{{ t.hasExtLink }}" hint-placeholder-val="{{ false }}"><a href="{{ t.extUrl }}" target="_blank" rel="noopener" title="Open this deal in the Title Commitment Agent" style="display: flex; align-items: center; gap: 6px; height: 26px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--tchb-indigo-500); color: var(--tchb-indigo-700); text-decoration: none; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.02em; white-space: nowrap; {{ mo.pushBtn }}" style-hover="background: var(--tchb-indigo-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>{{ t.extLabel }}</a></sc-if>
                 </span>
               </sc-if>
@@ -1232,7 +1233,7 @@ h1, h2, h3, h4 {
                   </button>
             <x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Badge" tone="{{ t.tone }}" hint-size="100px,26px">{{ t.status }}</x-import>
             <div style="display: none; {{ mo.brk2 }}"></div>
-            <button sc-camel-on-click="{{ t.openDue }}" title="{{ t.dueTitle }}" aria-label="{{ t.dueTitle }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; color: {{ t.dueColor }}; background: {{ t.dueBg }}; {{ mo.noteBtn }} {{ mo.row3 }} {{ t.dueLock }}" style-hover="filter: brightness(0.96);"><svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg><sc-if value="{{ t.hasDue }}" hint-placeholder-val="{{ false }}"><span style="{{ mo.dueText }}">{{ t.dueLabel }}</span></sc-if></button>
+            <button sc-camel-on-click="{{ t.openDue }}" title="{{ t.dueTitle }}" aria-label="{{ t.dueTitle }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; color: {{ t.dueColor }}; background: {{ t.dueBg }}; {{ mo.noteBtn }} {{ mo.row3 }} {{ t.dueLock }}" style-hover="filter: brightness(0.96);"><svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg></button>
             <button sc-camel-on-click="{{ t.openNotes }}" title="Notes" aria-label="{{ t.notesAria }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: {{ t.noteColor }}; {{ mo.noteBtn }} {{ mo.row3 }}" style-hover="background: var(--tchb-indigo-050);">
               <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M13 8H7"></path><path d="M17 12H7"></path></svg><sc-if value="{{ t.hasNotes }}" hint-placeholder-val="{{ false }}"><span>{{ t.notesCount }}</span></sc-if>
             </button>
@@ -1758,7 +1759,14 @@ const mergeTask = (base, mine, theirs) => {
   if (out.subs && out.subs.length) out.done = out.subs.every(x => x.done);
   return out;
 };
-const AGENT_TITLE = 'Title Commitment Agent';   // tasks the Title Commitment Agent creates (api/title-agent)
+const AGENT_TITLE = 'Title Commitment Agent';
+// Where a task comes from, as a coloured pill on the card: [light background, light text, dark background, dark text, icon]
+const TAGS = {
+  mgmt: ['#fbe9ec', '#bd2239', 'rgba(239,90,111,0.16)', '#ff8a9a', 'M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16M4 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z'],
+  agent: ['#fdf1d6', '#8a6100', 'rgba(253,177,26,0.16)', '#f5c451', 'M12 8V4H8M6 8h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2zM2 14h2M20 14h2M9 13v2M15 13v2'],
+  shared: ['#e3f4ea', '#2e7d4f', 'rgba(79,217,138,0.14)', '#7be3a5', 'M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13'],
+  person: ['#ecebf7', '#4d458a', 'rgba(143,135,221,0.18)', '#c9c4f2', 'M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z']
+};   // tasks the Title Commitment Agent creates (api/title-agent)
 const MOBILE_MAX = 640;
 const isPhone = () => window.innerWidth < MOBILE_MAX;
 const isTiny = () => window.innerWidth < 360;
@@ -2473,7 +2481,10 @@ class Component extends DCLogic {
       const noDelete = asg || (t.scope === 'team' && role === 'member');
       const deptTag = scope === 'team' ? deptsOf(t).filter(Boolean).join(', ') : '';
       // Tasks created by another app (the Title Agent, later the EOD tools) carry source: '<app name>'.
-      const whose = t.source ? '' : asg ? (t.list ? 'Shared by ' + this.nameOf(t.list) : 'Added by MGMT') : mgmtInTeam ? 'Added by MGMT for ' + who : t.scope === 'team' ? this.nameOf(t.list) + "'s task" : scope === 'team' ? 'Your task' : '';
+      // Where it comes from: MGMT red, Title Commitment Agent gold, shared from someone's list green, someone's own list indigo.
+      const tag = t.source ? ['agent', 'Added by ' + t.source] : asg ? (t.list ? ['shared', 'Shared by ' + this.nameOf(t.list)] : ['mgmt', 'Added by MGMT'])
+        : mgmtInTeam ? ['mgmt', 'Added by MGMT for ' + who] : t.scope === 'team' ? ['person', this.nameOf(t.list) + "'s Task"] : scope === 'team' ? ['person', 'Your Task'] : null;
+      const tc = tag && TAGS[tag[0]], dk = mode === 'dark', due = dueOf(t, d);
       const n = t.subs.filter(s => s.done).length;
       const pct = t.subs.length ? Math.round(n / t.subs.length * 100) : (d ? 100 : 0);
       return {
@@ -2487,18 +2498,20 @@ class Component extends DCLogic {
         ...noteBtn(t, 'var(--tchb-gray-500)'), openNotes: e => this.openMenu(e, { kind: 'notes', tid: t.id }),
         canPushLive: t.scope === 'offline' && !!this.auth, onPushLive: () => this.pushLive(t.id),
         ...fileBtn((t.files || []).length, t.id, 'var(--tchb-gray-500)'), openFiles: e => this.openMenu(e, { kind: 'files', tid: t.id }),
-        ...dueOf(t, d), openDue: e => this.openMenu(e, { kind: 'due', tid: t.id, due: t.due }), dueLock: asg ? 'pointer-events: none; opacity: 0.55;' : '',   // a shared task's own due date stays with its list's owner and managers
+        ...due, openDue: e => this.openMenu(e, { kind: 'due', tid: t.id, due: t.due }), dueLock: asg ? 'pointer-events: none; opacity: 0.55;' : '',   // a shared task's own due date stays with its list's owner and managers
         openActivity: e => this.openMenu(e, { kind: 'activity', tid: t.id }),
         // A member's view of a MGMT task: no moving, deleting or changing owners; only the task owner can tick or rename the whole task.
         lockMain: asg && !whole ? 'pointer-events: none; opacity: 0.55;' : '', readOnly: asg && !whole,
         hideEdit: noDelete ? 'display: none;' : '', hideGrip: asg ? 'visibility: hidden; pointer-events: none;' : '', ownerLock: asg ? 'pointer-events: none;' : '', addSubStyle: asg && !whole ? 'display: none;' : '',
-        hasSource: !!t.source, sourceTag: 'Added by ' + t.source,
+        hasTag: !!tag, tagText: tag ? tag[1] : '', tagIcon: tc ? tc[4] : '', tagBg: tc ? tc[dk ? 2 : 0] : '', tagFg: tc ? tc[dk ? 3 : 1] : '',
+        tagTitle: tag ? { agent: 'Created by the Title Commitment Agent and kept in step with it', mgmt: 'A MGMT task', shared: 'From someone else\'s list: you own part of it', person: 'From this person\'s own list' }[tag[0]] : '',
+        hasTagRow: !!tag || due.hasDue || !!(t.ext && t.ext.url),
         hasExtLink: !!(t.ext && t.ext.url), extUrl: (t.ext && t.ext.url) || '', extLabel: t.source === AGENT_TITLE ? 'Open In Title Agent' : 'Open',
         canPushMgmt: live && role === 'manager' && t.scope === 'personal', onPushMgmt: () => this.pushMgmt(t.id),
         id: t.id, title: t.title, isDone: d, open: !!this.state.openMap[t.id], draft: drafts[t.id] || '',
         status: STAT[st][0], tone: STAT[st][1], pct: pct + '%',
         metaTitle: datesOf(t),
-        meta: [whose, deptTag].filter(Boolean).map(x => x + ' · ').join('') + (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks — check off directly') + (t.updatedBy ? ` · Edited by ${this.canon(t.updatedBy)} · ${ago(t.updatedAt)}` : ''),
+        meta: [deptTag].filter(Boolean).map(x => x + ' · ').join('') + (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks — check off directly') + (t.updatedBy ? ` · Edited by ${this.canon(t.updatedBy)} · ${ago(t.updatedAt)}` : ''),
         boxBg: d ? 'var(--tchb-green-500)' : 'var(--surface-card)',
         boxBorder: d ? 'var(--tchb-green-500)' : 'var(--border-strong)',
         titleColor: d ? 'var(--text-muted)' : 'var(--tchb-indigo-700)',
