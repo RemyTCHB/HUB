@@ -1179,7 +1179,7 @@ h1, h2, h3, h4 {
 
     <section style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; {{ mo.filterRow }}">
       <div style="display: flex; align-items: center; gap: 8px; min-width: 0; max-width: 100%; {{ mo.filterLeft }}">
-      <button sc-camel-on-click="{{ openFolders }}" title="Task folders: every file in this view" aria-label="Files" style="flex: none; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 14px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); border: 1px solid var(--border-strong); background: var(--surface-card);" style-hover="background: var(--tchb-indigo-050);" style-focus="box-shadow: var(--focus-ring);"><svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path></svg><span style="{{ mo.hide }}">Files</span><span style="font-weight: 600; opacity: 0.7;">{{ folderCount }}</span></button>
+      <button sc-camel-on-click="{{ openFolders }}" title="Task folders: every file and link in this view" aria-label="Files" style="flex: none; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 14px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); border: 1px solid var(--border-strong); background: var(--surface-card);" style-hover="background: var(--tchb-indigo-050);" style-focus="box-shadow: var(--focus-ring);"><svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path></svg><span style="{{ mo.hide }}">Files</span><span style="font-weight: 600; opacity: 0.7;">{{ folderCount }}</span></button>
       <div style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.filterPills }}">
         <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
           <button sc-camel-on-click="{{ f.onClick }}" style="border: none; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; display: flex; gap: 6px; align-items: center; background: {{ f.bg }}; color: {{ f.color }}; box-shadow: {{ f.shadow }}; transition: background 120ms; {{ mo.filterBtn }}">{{ f.label }}<span style="font-weight: 600; opacity: 0.7;">{{ f.count }}</span></button>
@@ -1238,7 +1238,7 @@ h1, h2, h3, h4 {
               <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M13 8H7"></path><path d="M17 12H7"></path></svg><sc-if value="{{ t.hasNotes }}" hint-placeholder-val="{{ false }}"><span>{{ t.notesCount }}</span></sc-if>
             </button>
             <button sc-camel-on-click="{{ t.openActivity }}" title="Activity: every change, who made it and when" aria-label="Activity" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }} {{ mo.row3 }}" style-hover="background: var(--tchb-indigo-050); color: var(--tchb-indigo-700);"><svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg></button>
-            <button sc-camel-on-click="{{ t.openFiles }}" title="Files" aria-label="{{ t.filesAria }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: {{ t.fileColor }}; {{ mo.noteBtn }} {{ mo.row3 }} {{ t.fileBusy }}" style-hover="background: var(--tchb-indigo-050);">
+            <button sc-camel-on-click="{{ t.openFiles }}" title="Files &amp; Links" aria-label="{{ t.filesAria }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: {{ t.fileColor }}; {{ mo.noteBtn }} {{ mo.row3 }} {{ t.fileBusy }}" style-hover="background: var(--tchb-indigo-050);">
               <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg><sc-if value="{{ t.hasFiles }}" hint-placeholder-val="{{ false }}"><span>{{ t.filesCount }}</span></sc-if>
             </button>
             <button sc-camel-on-click="{{ t.onExpand }}" title="Show subtasks" style="width: 36px; height: 36px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-indigo-700); display: flex; align-items: center; justify-content: center; {{ mo.iconBtn }} {{ mo.push }}" style-hover="background: var(--tchb-indigo-050);">
@@ -1284,7 +1284,7 @@ h1, h2, h3, h4 {
                   <button sc-camel-on-click="{{ s.openNotes }}" title="Notes" aria-label="{{ s.notesAria }}" style="height: 28px; min-width: 28px; padding: 0 6px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: {{ s.noteColor }}; {{ mo.subNote }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
                     <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M13 8H7"></path><path d="M17 12H7"></path></svg><sc-if value="{{ s.hasNotes }}" hint-placeholder-val="{{ false }}"><span>{{ s.notesCount }}</span></sc-if>
                   </button>
-                  <button sc-camel-on-click="{{ s.openFiles }}" title="Files" aria-label="{{ s.filesAria }}" style="height: 28px; min-width: 28px; padding: 0 6px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: {{ s.fileColor }}; {{ mo.subFile }} {{ s.fileBusy }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
+                  <button sc-camel-on-click="{{ s.openFiles }}" title="Files &amp; Links" aria-label="{{ s.filesAria }}" style="height: 28px; min-width: 28px; padding: 0 6px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: {{ s.fileColor }}; {{ mo.subFile }} {{ s.fileBusy }}" style-hover="color: var(--tchb-indigo-700); background: var(--tchb-indigo-050);">
                     <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg><sc-if value="{{ s.hasFiles }}" hint-placeholder-val="{{ false }}"><span>{{ s.filesCount }}</span></sc-if>
                   </button>
                   <button sc-camel-on-click="{{ s.onDelete }}" title="Remove subtask" style="width: 28px; height: 28px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-300); display: flex; align-items: center; justify-content: center; {{ mo.subDel }} {{ s.hideDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);">
@@ -1339,21 +1339,21 @@ h1, h2, h3, h4 {
       </sc-for>
       <sc-if value="{{ menuIsFiles }}" hint-placeholder-val="{{ false }}">
         <div style="padding: 6px 8px 4px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
-          <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">Files</span>
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700); white-space: nowrap;">Files &amp; Links</span>
           <span style="flex: 1; min-width: 0; font-size: 13px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ filesFor }}</span>
         </div>
         <sc-if value="{{ filesEmpty }}" hint-placeholder-val="{{ true }}">
-          <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No files yet. Everyone who can see this task can open its files.</div>
+          <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No files or links yet. Everyone who can see this task can open them.</div>
         </sc-if>
         <sc-for list="{{ filesList }}" as="fl" hint-placeholder-count="0">
           <div style="display: flex; gap: 6px; align-items: center; padding: 6px 6px 6px 10px; margin: 2px; border-radius: 10px; background: var(--surface-subtle); border: 1px solid var(--border-default); color: var(--tchb-indigo-700);">
-            <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg>
+            <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path sc-camel-d="{{ fl.icon }}"></path></svg>
             <a href="{{ fl.url }}" target="_blank" rel="noopener" style="flex: 1; min-width: 0; text-decoration: none; display: flex; flex-direction: column;">
               <span style="font-size: 14px; font-weight: 700; color: var(--tchb-indigo-700); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ fl.name }}</span>
               <span style="font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ fl.meta }}</span>
             </a>
             <sc-if value="{{ fl.canDelete }}" hint-placeholder-val="{{ false }}">
-              <button sc-camel-on-click="{{ fl.onDelete }}" title="Delete file" style="width: 26px; height: 26px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; padding: 0; {{ mo.noteDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+              <button sc-camel-on-click="{{ fl.onDelete }}" title="{{ fl.delTitle }}" style="width: 26px; height: 26px; flex: none; border: none; background: transparent; border-radius: 8px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; padding: 0; {{ mo.noteDel }}" style-hover="color: var(--tchb-red-400); background: var(--tchb-red-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
             </sc-if>
           </div>
         </sc-for>
@@ -1361,6 +1361,22 @@ h1, h2, h3, h4 {
           <div style="padding: 6px 10px; font-size: 13px; font-weight: 600; color: var(--tchb-indigo-700);">{{ uploadingLabel }}</div>
         </sc-if>
         <sc-if value="{{ canUpload }}" hint-placeholder-val="{{ true }}">
+          <div role="group" aria-label="Add a file or a link" style="display: flex; gap: 4px; padding: 4px; margin: 8px 4px 2px; background: var(--tchb-gray-100); border-radius: 999px;">
+            <sc-for list="{{ attachTabs }}" as="at" hint-placeholder-count="2">
+              <button sc-camel-on-click="{{ at.onClick }}" aria-pressed="{{ at.on }}" style="flex: 1; border: none; cursor: pointer; padding: 7px 10px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; display: flex; gap: 6px; align-items: center; justify-content: center; transition: background 120ms; background: {{ at.bg }}; color: {{ at.color }}; box-shadow: {{ at.shadow }};"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path sc-camel-d="{{ at.icon }}"></path></svg>{{ at.label }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ canAddLink }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 6px; padding: 6px 4px 4px;">
+            <input type="url" inputmode="url" sc-camel-auto-focus="{{ linkAutoFocus }}" value="{{ linkUrl }}" sc-camel-on-input="{{ onLinkUrl }}" sc-camel-on-key-down="{{ onLinkKey }}" placeholder="Paste a link (https://…)" aria-label="Link" style="min-width: 0; border: 1px solid var(--border-strong); border-radius: 8px; padding: 9px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+            <div style="display: flex; gap: 6px;">
+              <input type="text" value="{{ linkName }}" sc-camel-on-input="{{ onLinkName }}" sc-camel-on-key-down="{{ onLinkKey }}" placeholder="Name (optional)" aria-label="Link name" style="flex: 1; min-width: 0; border: 1px solid var(--border-strong); border-radius: 8px; padding: 9px 10px; font-family: var(--font-body); font-size: 14px; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+              <button sc-camel-on-click="{{ addLink }}" style="flex: none; border: none; cursor: pointer; border-radius: 8px; padding: 9px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ mo.noteAdd }}" style-hover="background: var(--action-primary-hover);">Add Link</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ canPickFiles }}" hint-placeholder-val="{{ true }}">
           <label style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 6px 4px 4px; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ mo.noteAdd }}" style-hover="background: var(--action-primary-hover);">
             <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m17 8-5-5-5 5"></path><path d="M12 3v12"></path></svg>Upload Files
             <input type="file" multiple sc-camel-on-change="{{ onPickFiles }}" style="display: none;">
@@ -1411,9 +1427,9 @@ h1, h2, h3, h4 {
       </sc-if>
       <sc-if value="{{ menuIsFolders }}" hint-placeholder-val="{{ false }}">
         <div style="padding: 6px 8px 2px; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">Task Folders</div>
-        <div style="padding: 0 8px 8px; font-size: 12px; color: var(--text-muted);">Files on the tasks in this view. Add files with the paperclip on a task or subtask.</div>
+        <div style="padding: 0 8px 8px; font-size: 12px; color: var(--text-muted);">Files and links on the tasks in this view. Add them with the paperclip on a task or subtask.</div>
         <sc-if value="{{ foldersEmpty }}" hint-placeholder-val="{{ true }}">
-          <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No files in this view yet.</div>
+          <div style="padding: 2px 8px 8px; font-size: 13px; color: var(--text-muted);">No files or links in this view yet.</div>
         </sc-if>
         <sc-for list="{{ folders }}" as="fo" hint-placeholder-count="0">
           <button sc-camel-on-click="{{ fo.onToggle }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 8px 10px; border-radius: 9px; font-family: var(--font-body); font-size: 14px; font-weight: 700; color: var(--tchb-indigo-700); background: transparent; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));">
@@ -1425,7 +1441,7 @@ h1, h2, h3, h4 {
           <sc-if value="{{ fo.open }}" hint-placeholder-val="{{ false }}">
             <sc-for list="{{ fo.files }}" as="ff" hint-placeholder-count="0">
               <a href="{{ ff.url }}" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 8px; margin: 0 4px 2px 34px; padding: 6px 8px; border-radius: 8px; text-decoration: none; color: var(--tchb-indigo-700); background: var(--surface-subtle); border: 1px solid var(--border-default);">
-                <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path></svg>
+                <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path sc-camel-d="{{ ff.icon }}"></path></svg>
                 <span style="flex: 1; min-width: 0; display: flex; flex-direction: column;"><span style="font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ ff.name }}</span><span style="font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ ff.meta }}</span></span>
               </a>
             </sc-for>
@@ -1689,6 +1705,14 @@ const fromEtInput = v => { const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.
   for (let i = 0; i < 3; i++) { const p = etParts(ts); ts += want - Date.UTC(+p.year, p.month - 1, +p.day, +p.hour, +p.minute); }
   return ts; };
 const dueShort = ts => { const p = etParts(ts); return p.weekday + ' ' + p.month + '/' + p.day + ' ' + p.hour + ':' + p.minute; };   // Fri 10/30 17:00
+const ICON_FILE = 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7ZM14 2v4a2 2 0 0 0 2 2h4', ICON_LINK = 'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71';
+const ICON_UPLOAD = 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12';
+// A pasted link: add https:// when missing; only web links are kept.
+const webLink = s => { s = (s || '').trim(); if (!s) return null; if (!/^[a-z][\w+.-]*:/i.test(s)) s = 'https://' + s;
+  try { const u = new URL(s); return /^https?:$/.test(u.protocol) && u.hostname.includes('.') ? u : null; } catch (e) { return null; } };
+const hostOf = url => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch (e) { return ''; } };
+// What a file or link row says under its name.
+const fileMeta = f => f.link ? hostOf(f.url) : sizeOf(f.size || 0);
 const sizeOf = b => b < 1024 * 1024 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
 const subStatus = s => s.status || (s.done ? 'done' : 'todo');
 const isDone = t => t.subs.length ? t.subs.every(s => s.done) : !!t.done;
@@ -2123,7 +2147,7 @@ class Component extends DCLogic {
     const r = e.currentTarget.getBoundingClientRect();
     const wide = ['notes', 'files', 'folders', 'due', 'activity'].includes(cfg.kind), h = wide ? (cfg.kind === 'due' ? 540 : 430) : 330, w = wide ? 340 : 248;
     const flip = r.bottom + h > window.innerHeight && r.top > h;
-    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '', noteTab: 'task', ...(cfg.kind === 'due' ? { dp: this.dpFrom(cfg.due) } : {}) });
+    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '', noteTab: 'task', attach: 'file', linkUrl: '', linkName: '', ...(cfg.kind === 'due' ? { dp: this.dpFrom(cfg.due) } : {}) });
   }
   choose(v) {
     const m = this.state.menu; if (!m) return;
@@ -2237,10 +2261,18 @@ class Component extends DCLogic {
         .finally(() => bump(-1));
     }))).catch(e => { bump(-files.length); this.say('File storage is unavailable: ' + e.message); });
   }
+  // Links sit in the same list as files (link: true, no storage path), so they show in the folders and counts too.
+  addLink = () => {
+    const m = this.state.menu; if (!m || m.kind !== 'files') return;
+    const u = webLink(this.state.linkUrl); if (!u) return this.say('Paste a web link, like https://example.com');
+    const fid = id(), name = (this.state.linkName || '').trim() || (u.hostname.replace(/^www\./, '') + u.pathname.replace(/\/$/, '')).slice(0, 120);
+    this.upd(m.tid, x => ({ ...x, files: [...(x.files || []), { id: fid, name, url: u.href, link: true, by: this.me(), at: hubNow(), ...(m.sid ? { sid: m.sid } : {}) }] }));
+    this.setState({ linkUrl: '', linkName: '' });
+  };
   removeFile(tid, f) {
-    if (!window.confirm('Delete ' + f.name + '?')) return;
+    if (!window.confirm((f.link ? 'Remove the link ' : 'Delete ') + f.name + '?')) return;
     this.upd(tid, x => ({ ...x, files: (x.files || []).filter(y => y.id !== f.id) }));
-    this.storage().then(st => st.ref(f.path).delete()).catch(e => console.warn(e));
+    if (f.path) this.storage().then(st => st.ref(f.path).delete()).catch(e => console.warn(e));
   }
   moveTask(from, to) {
     if (!from || from === to) return;
@@ -2460,7 +2492,7 @@ class Component extends DCLogic {
     const RANK = { progress: 0, todo: 1, done: 2 };
     list = list.map((t, i) => [t, i]).sort((a, b) => RANK[statusOf(a[0])] - RANK[statusOf(b[0])] || a[1] - b[1]).map(([t]) => t);
     const STAT = { done: ['Done', 'green'], progress: ['In Progress', 'indigo'], todo: ['Not Started', 'neutral'] };
-    const fileBtn = (n, k, idle) => ({ hasFiles: n > 0, filesCount: n, fileColor: n ? 'var(--tchb-indigo-700)' : idle, filesAria: n ? n + (n === 1 ? ' file' : ' files') : 'Add a file', fileBusy: this.state.uploading[k] ? 'opacity: 0.5;' : '' });
+    const fileBtn = (n, k, idle) => ({ hasFiles: n > 0, filesCount: n, fileColor: n ? 'var(--tchb-indigo-700)' : idle, filesAria: n ? n + (n === 1 ? ' file or link' : ' files and links') : 'Add a file or link', fileBusy: this.state.uploading[k] ? 'opacity: 0.5;' : '' });
     // Due chip: indigo when just set, redder as the due time gets closer, full red once overdue; grey once done.
     const dueOf = (o, done) => {
       if (!o.due) return { hasDue: false, dueLabel: '', dueColor: 'var(--tchb-gray-500)', dueBg: 'transparent', dueTitle: 'Set a due date', dueEdge: '' };
@@ -2628,12 +2660,20 @@ class Component extends DCLogic {
       ...(() => {
         // Files on one task or subtask: open, upload, delete. Parts of a shared task you don't own are read-only.
         const on = !!menu && menu.kind === 'files', tk = on && allTasks.find(x => x.id === menu.tid), sb = tk && menu.sid ? tk.subs.find(y => y.id === menu.sid) : null;
-        if (!tk) return { menuIsFiles: false, filesList: [], filesEmpty: true };
+        if (!tk) return { menuIsFiles: false, filesList: [], attachTabs: [], filesEmpty: true };
         const locked = tk.scope === 'assigned' && !ownsAll(tk) && !(sb && mineName(sb.owner)), up = this.state.uploading[tk.id + (menu.sid || '')] || 0;
         const list = (tk.files || []).filter(f => menu.sid ? f.sid === menu.sid : true);
-        return { menuIsFiles: true, filesFor: sb ? sb.title : tk.title, filesEmpty: !list.length, canUpload: !locked && live, uploadingNow: up > 0, uploadingLabel: 'Uploading ' + up + (up === 1 ? ' file…' : ' files…'),
+        const can = !locked && live, mode = this.state.attach === 'link' ? 'link' : 'file';
+        return { menuIsFiles: true, filesFor: sb ? sb.title : tk.title, filesEmpty: !list.length, canUpload: can, uploadingNow: up > 0, uploadingLabel: 'Uploading ' + up + (up === 1 ? ' file…' : ' files…'),
+          // Upload Files / Add Link switch; the popover opens on Upload Files.
+          canPickFiles: can && mode === 'file', canAddLink: can && mode === 'link',
+          attachTabs: [['file', 'Upload Files', ICON_UPLOAD], ['link', 'Add Link', ICON_LINK]].map(([k, label, icon]) => ({ label, icon, on: mode === k,
+            onClick: () => this.setState({ attach: k }), bg: mode === k ? 'var(--surface-card)' : 'transparent', color: mode === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: mode === k ? 'var(--shadow-button)' : 'none' })),
+          linkUrl: this.state.linkUrl || '', linkName: this.state.linkName || '', linkAutoFocus: !this.state.mob, addLink: this.addLink,
+          onLinkUrl: e => this.setState({ linkUrl: e.target.value }), onLinkName: e => this.setState({ linkName: e.target.value }),
+          onLinkKey: e => { if (e.key === 'Enter') { e.preventDefault(); this.addLink(); } },
           filesList: list.map(f => { const s = f.sid && !menu.sid ? tk.subs.find(y => y.id === f.sid) : null;
-            return { name: f.name, url: f.url, meta: [s ? 'Subtask: ' + s.title : '', sizeOf(f.size || 0), this.canon(f.by), ago(f.at)].filter(Boolean).join(' · '), canDelete: !locked, onDelete: () => this.removeFile(tk.id, f) }; }),
+            return { name: f.name, url: f.url, icon: f.link ? ICON_LINK : ICON_FILE, delTitle: f.link ? 'Remove link' : 'Delete file', meta: [s ? 'Subtask: ' + s.title : '', fileMeta(f), this.canon(f.by), ago(f.at)].filter(Boolean).join(' · '), canDelete: !locked, onDelete: () => this.removeFile(tk.id, f) }; }),
           onPickFiles: e => { const fl = [...(e.target.files || [])]; e.target.value = ''; this.uploadFiles(tk.id, menu.sid, fl); } };
       })(),
       ...(() => {
@@ -2673,7 +2713,7 @@ class Component extends DCLogic {
       menuIsFolders: !!menu && menu.kind === 'folders',
       folders: tasks.filter(t => (t.files || []).length).map(t => { const op = !!this.state.folderOpen[t.id];
         return { title: t.title, count: (t.files || []).length, open: op, chevron: op ? 'rotate(90deg)' : 'none', onToggle: () => this.setState(st => ({ folderOpen: { ...st.folderOpen, [t.id]: !st.folderOpen[t.id] } })),
-          files: (t.files || []).map(f => { const s = f.sid ? t.subs.find(y => y.id === f.sid) : null; return { name: f.name, url: f.url, meta: [s ? s.title : '', sizeOf(f.size || 0), ago(f.at)].filter(Boolean).join(' · ') }; }) }; }),
+          files: (t.files || []).map(f => { const s = f.sid ? t.subs.find(y => y.id === f.sid) : null; return { name: f.name, url: f.url, icon: f.link ? ICON_LINK : ICON_FILE, meta: [s ? s.title : '', fileMeta(f), ago(f.at)].filter(Boolean).join(' · ') }; }) }; }),
       foldersEmpty: !tasks.some(t => (t.files || []).length),
       hasToast: !!this.state.toast, toast: this.state.toast,
       signIn: () => this.auth && this.auth.signInWithPopup(new this.fb.auth.GoogleAuthProvider()).catch(e => this.setState({ authError: e.message })),
