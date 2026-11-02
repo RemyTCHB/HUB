@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
     || (kind === 'sub' && !/^[\w-]{1,80}$/.test(sid || ''))) return send(res, 400, { error: 'Which task?' });
   const me = personKey(email), conf = readPasswords(process.env.HUB_DELETE_PASSWORDS);
   try {
-    const who = await team(), name = who.nameOf(me);
+    const who = await team(), name = who.nameOf(me) + (claims.imp ? ' (via ' + who.nameOf(personKey(String(claims.imp).toLowerCase())) + ')' : '');   // Login As User
     const ref = db().doc(list ? `personal/${list}/items/${id}` : `tasks/${id}`);
     const out = await db().runTransaction(async tx => {
       const snap = await tx.get(ref);

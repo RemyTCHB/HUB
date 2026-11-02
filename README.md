@@ -74,6 +74,14 @@ with who and when. The Firestore rules don't let the page delete anyone else's t
 The passwords are only in the Vercel setting `HUB_DELETE_PASSWORDS` (JSON: `leads` and `subtasks` by department, `people`
 by email for anyone with their own delete password); never put them in the code or this README.
 
+## Login As User (Remy)
+
+In Team Members, Remy can sign in as anyone who has signed in to the hub before (`POST /api/hub/login-as`). The hub signs
+him in with a one-time Firebase sign-in for that person (marked `imp`), so he sees and changes exactly what they can.
+An orange bar shows whose view it is, with Back To Remy. Changes are logged as `<their name> (via Ahmed Ramy)`, they
+don't show as online, and each use is kept in `audit/` (server only). The service account in
+`HUB_FIREBASE_SERVICE_ACCOUNT` needs the Firebase Authentication Admin role for this.
+
 ## Task Templates, Upload Tasks And GHL
 
 - Saved lists live in `templates/<login>` (each person's own; managers can see them). Monz starts with TC Deal Tasks,

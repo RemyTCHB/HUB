@@ -29,11 +29,12 @@ module.exports = async (req, res) => {
     const inDept = who.managers.includes(me) || rec.dept === tpl.dept || (rec.sees || []).includes(tpl.dept);
     if (!inDept) return send(res, 403, { error: 'This upload is for the ' + tpl.dept + ' department.' });
     const lead = leadOf(who.people, who.managers, tpl.dept) || me, name = who.nameOf(me), now = Date.now();
+    const by = name + (claims.imp ? ' (via ' + who.nameOf(personKey(String(claims.imp).toLowerCase())) + ')' : '');   // Login As User
     const ref = db().doc(`personal/${lead}/items/${id}`);
-    const task = buildTask({ id, title: tpl.title(addr), owner: who.nameOf(lead), subOwner: name, by: name, now,
+    const task = buildTask({ id, title: tpl.title(addr), owner: who.nameOf(lead), subOwner: name, by, now,
       subs: rows.map(r => ({ title: r.title, note: typeof r.note === 'string' ? r.note : '' })),
-      extra: { upload: { template: template, by: name, at: now },
-        files: okFile ? [{ id: 'f' + id.slice(4), name: clip(file.name || 'upload.csv', 200), size: Number(file.size) || 0, type: 'text/csv', url: file.url, path: file.path, by: name, at: now }] : [] } });
+      extra: { upload: { template: template, by, at: now },
+        files: okFile ? [{ id: 'f' + id.slice(4), name: clip(file.name || 'upload.csv', 200), size: Number(file.size) || 0, type: 'text/csv', url: file.url, path: file.path, by, at: now }] : [] } });
     task.members = who.members(task, lead);
     await db().runTransaction(async tx => { if ((await tx.get(ref)).exists) throw Object.assign(new Error('exists'), { code: 'exists' }); tx.set(ref, task); });
     console.log(`hub upload: ${template}, ${task.subs.length} subtasks${okFile ? ', file kept' : ''}`);
