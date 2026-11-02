@@ -93,11 +93,11 @@ Only **Closing Blockers** come over: one task per deal, **Title - &lt;address&gt
 | Piece | Where |
 | --- | --- |
 | `POST /api/title-agent` | The agent sends a deal's Closing Blockers (after each review, re-run or change, and every 15 minutes); the hub creates or updates the task and answers with blockers ticked or unticked here. |
-| `POST /api/title-agent/team` | The agent asks who is on the team (signed the same way, body `{}`); the hub answers `{"people": [{name, email, role, dept, photo}]}` with the Managers and the TC department from the team directory. Logs counts only. |
+| `POST /api/title-agent/team` | The agent asks who is on the team (signed the same way, body `{}`); the hub answers `{"people": [{name, email, role, dept, photo}]}` with the Managers and the TC department from the team directory. Another app can add departments with `{"depts": ["TC", "DISPO"]}` (TC Checklist does, for names, signed with its own `TC_CHECKLIST_SYNC_SECRET`, which opens only this list). Logs counts only. |
 | `POST /api/title-agent/hub` | The hub page calls it after saving one of these tasks; the server sends the agent any blocker ticked or unticked here. |
 | `api/_lib/titleagent.js` | The rules (tested in `tests/`: `node --test tests/title-agent.test.js`). |
 
-Messages between the apps are signed with a shared secret. Vercel settings for this project: `HUB_FIREBASE_SERVICE_ACCOUNT` (a service account key for this Firebase project, role Cloud Datastore User), `TITLE_AGENT_SYNC_SECRET` (the shared secret; the agent has the same value as `HUB_SYNC_SECRET`), and optionally `TITLE_AGENT_ENGINE_URL` and `HUB_TITLE_OWNER` (default monz@totalchb.com).
+Messages between the apps are signed with a shared secret. Vercel settings for this project: `HUB_FIREBASE_SERVICE_ACCOUNT` (a service account key for this Firebase project, role Cloud Datastore User), `TITLE_AGENT_SYNC_SECRET` (the shared secret; the agent has the same value as `HUB_SYNC_SECRET`), and optionally `TITLE_AGENT_ENGINE_URL` and `HUB_TITLE_OWNER` (default monz@totalchb.com). For TC Checklist's names: `TC_CHECKLIST_SYNC_SECRET` (the same value as TC Checklist's `HUB_SYNC_SECRET`).
 
 ## Support
 
