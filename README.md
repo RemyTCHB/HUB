@@ -80,7 +80,7 @@ In Team Members, Remy can sign in as anyone who has signed in to the hub before 
 him in with a one-time Firebase sign-in for that person (marked `imp`), so he sees and changes exactly what they can.
 An orange bar shows whose view it is, with Back To Remy. Changes are logged as `<their name> (via Ahmed Ramy)`, they
 don't show as online, and each use is kept in `audit/` (server only). The service account in
-`HUB_FIREBASE_SERVICE_ACCOUNT` needs the Firebase Authentication Admin role for this.
+`HUB_FIREBASE_SERVICE_ACCOUNT` (hub-integrations) needs the Firebase Authentication Viewer role for this (it only looks people up; the sign-in is made with its own key).
 
 ## Task Templates, Upload Tasks And GHL
 
