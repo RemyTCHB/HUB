@@ -82,6 +82,11 @@ service cloud.firestore {
       allow update: if signedIn() && request.resource.data.get('keys', []).hasAll(resource.data.get('keys', []));
       allow delete: if isManager();
     }
+    // Who's online: each person checks in their own devices; everyone signed in can see who's online.
+    match /presence/{person} {
+      allow read: if signedIn();
+      allow write: if signedIn() && person == me() && request.resource.data.keys().hasOnly(['sessions']);
+    }
     // Owner names from before the directory.
     match /meta/team { allow read: if signedIn(); allow write: if isManager(); }
   }

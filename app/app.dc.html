@@ -1016,6 +1016,7 @@ h1, h2, h3, h4 {
     a { color: var(--tchb-indigo-700); }
     a:hover { color: var(--tchb-indigo-900); }
     input::placeholder { color: var(--tchb-gray-500); }
+    @keyframes hubPing { 0% { box-shadow: 0 0 0 0 rgba(16, 150, 72, 0.55); } 80%, 100% { box-shadow: 0 0 0 7px rgba(16, 150, 72, 0); } }
   </style>
 </helmet>
 <div style="min-height: 100vh; background: var(--surface-subtle); font-family: var(--font-body); color: var(--text-body);">
@@ -1082,6 +1083,9 @@ h1, h2, h3, h4 {
             <span ref="{{ clockARef }}" style="font-weight: 700; font-size: 12px; letter-spacing: 0.03em; color: var(--tchb-indigo-700);"></span>
             <span ref="{{ clockBRef }}" style="font-weight: 600; font-size: 11px; letter-spacing: 0.03em; color: var(--text-muted);"></span>
           </span>
+          <sc-if value="{{ showActive }}" hint-placeholder-val="{{ false }}">
+            <button sc-camel-on-click="{{ openActive }}" title="Who's online now" aria-haspopup="true" aria-label="{{ activeAria }}" style="display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 6px 0 12px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); white-space: nowrap; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10));" style-focus="box-shadow: var(--focus-ring);"><span style="width: 8px; height: 8px; border-radius: 999px; background: var(--tchb-green-500); flex: none; animation: hubPing 2.2s ease-out infinite;"></span><span style="{{ mo.hide }}">Active</span><span style="min-width: 24px; height: 22px; padding: 0 7px; box-sizing: border-box; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; background: var(--tchb-green-050); color: var(--tchb-green-600); font-size: 13px; box-shadow: 0 0 10px color-mix(in srgb, var(--tchb-green-500) 25%, transparent);">{{ activeCount }}</span></button>
+          </sc-if>
         </div>
         <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 44px; line-height: 1.15; color: var(--tchb-indigo-700); {{ mo.h1 }}">Universal <span style="color: var(--tchb-red-500);">Team Hub</span></h1>
         <p style="margin: 0; font-size: 16px; color: var(--text-muted); text-wrap: pretty; text-transform: capitalize">Every Department's Tasks, Owners And Files In One Place.</p>
@@ -1481,6 +1485,23 @@ h1, h2, h3, h4 {
           <button sc-camel-on-click="{{ addNote }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 9px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ mo.noteAdd }}" style-hover="background: var(--action-primary-hover);">Add</button>
         </div>
       </sc-if>
+      <sc-if value="{{ menuIsActive }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 8px 10px 4px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">{{ activeHead }}</div>
+        <sc-if value="{{ activeEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="padding: 10px 12px; font-size: 13px; color: var(--text-muted);">No One Else Is Online</div>
+        </sc-if>
+        <sc-for list="{{ activeList }}" as="au" hint-placeholder-count="0">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 9px;">
+            <span style="width: 8px; height: 8px; border-radius: 999px; background: var(--tchb-green-500); flex: none; animation: hubPing 2.2s ease-out infinite;"></span>
+            <span style="width: 32px; height: 32px; flex: none; border-radius: 999px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 12px; background: var(--avatar-bg, var(--tchb-indigo-700)); color: #fff;">{{ au.initials }}<sc-if value="{{ au.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ au.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></span>
+            <span style="flex: 1; min-width: 0; display: flex; flex-direction: column;"><b style="font-family: var(--font-display); font-size: 14px; color: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: capitalize;">{{ au.name }}</b><span style="font-size: 12px; color: var(--text-muted);">{{ au.sub }}</span></span>
+            <span style="display: flex; gap: 6px; flex: none;">
+              <span title="Phone" aria-label="{{ au.mobAria }}" style="display: flex; color: {{ au.mobColor }};"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg></span>
+              <span title="Desktop" aria-label="{{ au.deskAria }}" style="display: flex; color: {{ au.deskColor }};"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"></rect><path d="M8 21h8"></path><path d="M12 17v4"></path></svg></span>
+            </span>
+          </div>
+        </sc-for>
+      </sc-if>
       <sc-if value="{{ menuIsActivity }}" hint-placeholder-val="{{ false }}">
       <div style="padding: 6px 8px 4px; display: flex; align-items: baseline; gap: 8px; min-width: 0;">
         <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">Activity</span>
@@ -1816,6 +1837,10 @@ const TAGS = {
 };   // tasks the Title Commitment Agent creates (api/title-agent)
 const MOBILE_MAX = 640;
 const isPhone = () => window.innerWidth < MOBILE_MAX;
+// Who's online (presence/<login>): each device checks in every minute; seen in the last five minutes = online.
+const ONLINE_MS = 5 * 60 * 1000, BEAT_MS = 60 * 1000;
+const DEVICE = (() => { try { let d = localStorage.getItem(KEY + '-device'); if (!d) { d = 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); localStorage.setItem(KEY + '-device', d); } return d; } catch (e) { return 'd-nostore'; } })();
+const DEVICE_TYPE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
 const isTiny = () => window.innerWidth < 360;
 const isTouch = () => !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 // Phone-only style overrides, appended to inline styles; desktop gets '' so its layout is untouched.
@@ -1979,6 +2004,10 @@ class Component extends DCLogic {
     // Everyone signs in to the people list, so managers and team leaders know whose personal lists to open.
     db.doc('meta/people').set({ keys: this.fb.firestore.FieldValue.arrayUnion(key), names: { [key]: this._name } }, { merge: true }).catch(e => console.warn(e));
     ls.push(db.doc('meta/people').onSnapshot(d => { this.setState({ people: (d.exists && d.data().names) || {} }, () => this.syncListeners()); }, e => console.warn(e)));
+    // Online now: check in every minute, and read everyone's check-ins (recounted each minute as they age).
+    const beat = () => db.doc('presence/' + key).set({ sessions: { [DEVICE]: { at: hubNow(), type: DEVICE_TYPE } } }, { merge: true }).catch(e => console.warn('presence', e.code || e));
+    beat(); this._beat = setInterval(() => { beat(); this.setState({ presTick: hubNow() }); }, BEAT_MS);
+    ls.push(db.collection('presence').onSnapshot(s => this.setState({ presence: s.docs.map(d => ({ key: d.id, sessions: d.data().sessions || {} })) }), e => console.warn('presence', e.code || e)));
     ls.push(db.doc('meta/directory').onSnapshot(d => {
       if (!d.exists && this.isMgr(key) && !this._seeded.dir) { this._seeded.dir = true; db.doc('meta/directory').set({ people: DEFAULT_DIRECTORY }).catch(e => console.warn(e)); }
       const dir = d.exists ? d.data().people || {} : DEFAULT_DIRECTORY;
@@ -2022,7 +2051,7 @@ class Component extends DCLogic {
     const p = this._parts[kind] = this._parts[kind] || {}; if (id) p[id] = list;
     this.applyRemote(kind, [].concat(...Object.values(p)));
   }
-  unsub() { (this._ls || []).forEach(f => f && f()); this._ls = []; Object.values(this._dyn || {}).forEach(f => f && f()); this._dyn = {}; }
+  unsub() { clearInterval(this._beat); this._beat = null; (this._ls || []).forEach(f => f && f()); this._ls = []; Object.values(this._dyn || {}).forEach(f => f && f()); this._dyn = {}; }
   pcol(who) { return this.db.collection('personal').doc(who).collection('items'); }
   docRef(t) { return (t.scope === 'mgmt' || (t.scope === 'assigned' && !t.list) ? this.db.collection('tasks') : this.pcol(t.list || this._key)).doc(t.id); }
   // Who else should see a task in their own list: '<company>:<login>' for each owner of the task or a subtask,
@@ -2212,7 +2241,7 @@ class Component extends DCLogic {
   }
   openMenu(e, cfg) {
     const r = e.currentTarget.getBoundingClientRect();
-    const wide = ['notes', 'files', 'folders', 'due', 'activity'].includes(cfg.kind), h = wide ? (cfg.kind === 'due' ? 540 : 430) : 330, w = wide ? 340 : 248;
+    const wide = ['notes', 'files', 'folders', 'due', 'activity', 'active'].includes(cfg.kind), h = wide ? (cfg.kind === 'due' ? 540 : 430) : 330, w = wide ? 340 : 248;
     const flip = r.bottom + h > window.innerHeight && r.top > h;
     this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '', noteTab: 'task', attach: 'file', linkUrl: '', linkName: '', ...(cfg.kind === 'due' ? { dp: this.dpFrom(cfg.due) } : {}) });
   }
@@ -2525,7 +2554,7 @@ class Component extends DCLogic {
     const menu = this.state.menu;
     const SL = { todo: 'Not Started', progress: 'In Progress', done: 'Done' };
     let menuItems = [], menuCur = '';
-    if (menu && !['notes', 'files', 'folders', 'due', 'activity'].includes(menu.kind)) {   // the rest are pick lists
+    if (menu && !['notes', 'files', 'folders', 'due', 'activity', 'active'].includes(menu.kind)) {   // the rest are pick lists
       if (menu.kind === 'status') {
         const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : tk && !menu.sid ? statusOf(tk) : '';
         menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
@@ -2787,7 +2816,9 @@ class Component extends DCLogic {
       foldersEmpty: !tasks.some(t => (t.files || []).length),
       hasToast: !!this.state.toast, toast: this.state.toast,
       signIn: () => this.auth && this.auth.signInWithPopup(new this.fb.auth.GoogleAuthProvider()).catch(e => this.setState({ authError: e.message })),
-      signOut: () => { if (this.auth && window.confirm('Sign out of the Team Hub?')) this.auth.signOut(); },
+      signOut: () => { if (!this.auth || !window.confirm('Sign out of the Team Hub?')) return;
+        const out = () => this.auth.signOut();
+        if (this.db && this._key) this.db.doc('presence/' + this._key).set({ sessions: { [DEVICE]: { at: 0, type: DEVICE_TYPE } } }, { merge: true }).then(out, out); else out(); },
       signedIn: cloud === 'ready' && !!this.state.user, userInitials: this.state.user ? initials(live ? this.myName() : this.state.user.name) : '',
       me: { photo: live ? this.rec(this._key).photo || '' : '', hasPhoto: live && !!this.rec(this._key).photo },
       userTitle: this.state.user ? 'Signed in as ' + this.state.user.email + ' — click to sign out' : '',
@@ -2819,7 +2850,7 @@ class Component extends DCLogic {
             return { showNoteToggle: toggle, subNotesOn: all, subNotesCount: subNotes.length ? String(subNotes.length) : '',
               subTrack: all ? 'var(--action-secondary)' : 'var(--tchb-gray-300)', subKnob: all ? 'translateX(16px)' : 'none',
               toggleSubNotes: () => this.setState(st => ({ subNotesOn: !st.subNotesOn })) }; })(),
-          notesBox: on || (menu && ['files', 'folders', 'due', 'activity'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: min(560px, calc(100vh - 16px)); box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
+          notesBox: on || (menu && ['files', 'folders', 'due', 'activity', 'active'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: min(560px, calc(100vh - 16px)); box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
           notesList: (() => { const mine = n => !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name);
             const all = !!(on && tk && !menu.sid && this.state.subNotesOn);
             const rows = [...notes.map(n => ({ n, sb: null })), ...(all ? [].concat(...tk.subs.map(sb => (sb.notes || []).map(n => ({ n, sb })))) : [])]
@@ -2851,6 +2882,18 @@ class Component extends DCLogic {
       emptyTitle: tasks.length ? 'Nothing here' : { personal: 'No personal tasks yet', team: 'No team tasks yet', mgmt: 'No MGMT tasks yet', offline: 'No offline tasks' }[scope] || 'No tasks yet',
       emptyBody: tasks.length ? 'No tasks match these filters.' : scope === 'team' ? 'Personal tasks in this department show up here as people add them.' : 'Add your first task above to get started.',
       hasUndo: !!undo, undoLabel: undo ? undo.t.title : '',
+      ...(() => {
+        // Online now: everyone with a device seen in the last five minutes (Hub clock), by name, with phone / desktop.
+        const now = hubNow(), on = (this.state.presence || []).map(p => { const ss = Object.values(p.sessions || {}).filter(x => x && now - (x.at || 0) < ONLINE_MS);
+          return { key: p.key, mob: ss.some(x => x.type === 'Mobile'), desk: ss.some(x => x.type !== 'Mobile') }; })
+          .filter(p => p.mob || p.desk).sort((a, b) => this.nameOf(a.key).localeCompare(this.nameOf(b.key)));
+        const dim = 'var(--tchb-gray-300)', lit = 'var(--tchb-green-600)';
+        return { showActive: live, activeCount: on.length, activeAria: 'Active: ' + on.length + ' online now', openActive: e => this.openMenu(e, { kind: 'active' }),
+          menuIsActive: !!menu && menu.kind === 'active', activeHead: 'Online Now · ' + on.length, activeEmpty: !on.length,
+          activeList: on.map(p => { const n = this.nameOf(p.key), photo = this.rec(p.key).photo || '';
+            return { name: n, initials: initials(n) || '?', photo, hasPhoto: !!photo, sub: [this.isMgr(p.key) ? 'Manager' : this.deptOf(p.key), p.key === this._key ? 'You' : ''].filter(Boolean).join(' · ') || 'Team',
+              mobColor: p.mob ? lit : dim, deskColor: p.desk ? lit : dim, mobAria: p.mob ? 'On a phone' : 'Not on a phone', deskAria: p.desk ? 'On a desktop' : 'Not on a desktop' }; }) };
+      })(),
       ...(() => { const d = this.state.del;
         if (!d) return { delOpen: false, delNeedPw: false, hasDelErr: false };
         const close = () => { if (!this.state.del || !this.state.del.busy) this.setState({ del: null }); };
