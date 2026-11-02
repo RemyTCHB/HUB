@@ -1671,6 +1671,21 @@ h1, h2, h3, h4 {
     </div>
   </sc-if>
 
+  <sc-if value="{{ askOpen }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ askNo }}" style="position: fixed; inset: 0; z-index: 80; background: rgba(10, 12, 24, 0.4);"></div>
+    <div role="alertdialog" aria-label="{{ askTitle }}" style="position: fixed; z-index: 81; left: 50%; top: 50%; transform: translate(-50%, -50%); width: calc(100% - 32px); max-width: 420px; box-sizing: border-box; padding: 20px; border-radius: var(--radius-lg); background-color: var(--surface-card); border: 1px solid var(--border-default); box-shadow: var(--shadow-raised); display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="width: 36px; height: 36px; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: {{ askIconBg }}; color: {{ askIconFg }};"><svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path sc-camel-d="{{ askIcon }}"></path></svg></span>
+        <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 21px; line-height: 1.25; color: var(--tchb-indigo-700); word-break: break-word;">{{ askTitle }}</h2>
+      </div>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--text-body); word-break: break-word;">{{ askText }}</p>
+      <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px;">
+        <button sc-camel-on-click="{{ askNo }}" sc-camel-on-key-down="{{ askKey }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 10px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); background: var(--surface-card);" style-hover="background: var(--tchb-indigo-050);">Cancel</button>
+        <button sc-camel-on-click="{{ askYes }}" sc-camel-on-key-down="{{ askKey }}" sc-camel-auto-focus="{{ true }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 10px 18px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: {{ askOkBg }};" style-hover="filter: brightness(0.94);" style-focus="box-shadow: var(--focus-ring);">{{ askOk }}</button>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ delOpen }}" hint-placeholder-val="{{ false }}">
     <div sc-camel-on-click="{{ delCancel }}" style="position: fixed; inset: 0; z-index: 70; background: rgba(10, 12, 24, 0.4);"></div>
     <div role="dialog" aria-label="{{ delHead }}" style="position: fixed; z-index: 71; left: 50%; top: 50%; transform: translate(-50%, -50%); width: calc(100% - 32px); max-width: 400px; box-sizing: border-box; padding: 20px; border-radius: var(--radius-lg); background-color: var(--surface-card); border: 1px solid var(--border-default); box-shadow: var(--shadow-raised); display: flex; flex-direction: column; gap: 12px;">
@@ -2168,8 +2183,8 @@ class Component extends DCLogic {
     this._key = personKey(email); this._mgr = ROOT_MANAGERS.includes(this._key); this._name = u.displayName || email;
     this.setState({ cloud: 'connecting', user: { name: u.displayName || email, email }, authError: '', errs: {}, scope: this._mgr ? 'mgmt' : 'personal', dept: 'all', imp: '', pd: null, settings: null });
     // Login As User: Remy's one-time sign-in as someone else carries imp (his email). Read it before loading anything.
-    u.getIdTokenResult().catch(() => ({ claims: {} })).then(r => {
-      if (!this.auth || this.auth.currentUser !== u) return;
+    (typeof u.getIdTokenResult === 'function' ? u.getIdTokenResult() : Promise.resolve({ claims: {} })).catch(() => ({ claims: {} })).then(r => {
+      if (!this.auth || ((this.auth.currentUser || {}).uid !== u.uid)) return;   // signed in as someone else meanwhile
       this._imp = personKey(String(r.claims.imp || '').toLowerCase());
       this.setState({ imp: this._imp });
       this.subscribe();
@@ -2411,10 +2426,17 @@ class Component extends DCLogic {
   setTaskStatus(tid, v) {
     this.upd(tid, x => x.subs.length ? x : { ...x, status: v, done: v === 'done' });
   }
+  // A branded confirm box instead of the browser's: ask({ title, text, ok, tone: 'danger' | 'warn' | 'plain' }, then).
+  ask(cfg, then) { this._askThen = then; this.setState({ ask: { tone: 'plain', ok: 'OK', ...cfg } }); }
   // ---------- Login As User (Remy) ----------
   loginAs(k) {
     const u = this.auth && this.auth.currentUser; if (!u || this._key !== ADMIN || this._imp) return;
-    if (!window.confirm('Sign in as ' + this.nameOf(k) + ' to see and work in the hub as they do? Anything you change is logged as made for them via you. Use Back To Remy to return.')) return;
+    const n = this.nameOf(k);
+    this.ask({ title: 'Login As ' + n + '?', tone: 'warn', ok: 'Login As ' + n.split(' ')[0],
+      text: 'You will see and work in the hub exactly as ' + n + ' does. Anything you change is logged as made for them via you. Use Back To Remy at the top to come back.' }, () => this.doLoginAs(k));
+  }
+  doLoginAs(k) {
+    const u = this.auth && this.auth.currentUser; if (!u) return;
     this.setState({ loginAsBusy: k });
     u.getIdToken().then(token => fetch('/api/hub/login-as', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }, body: JSON.stringify({ email: k }) }))
       .then(r => r.json().catch(() => ({})).then(b => { if (!r.ok) throw new Error(b.error || 'Could not sign in as them.'); return this.auth.signInWithCustomToken(b.token); }))
@@ -2580,8 +2602,8 @@ class Component extends DCLogic {
   removePerson(k) {
     if (ROOT_MANAGERS.includes(k)) return;
     if (this.state.pd.dir[k].role === 'manager' && this._key !== ADMIN) return this.say('Only Remy can remove a manager');
-    if (!window.confirm('Remove ' + (this.state.pd.dir[k].name || k) + ' from the team directory? Their tasks stay where they are.')) return;
-    this.setState(st => { const dir = { ...st.pd.dir }, cos = { ...st.pd.cos }; delete dir[k]; delete cos[k]; return { pd: { ...st.pd, dir, cos, mgrs: st.pd.mgrs.filter(x => x !== k) } }; });
+    this.ask({ title: 'Remove ' + (this.state.pd.dir[k].name || k) + '?', tone: 'danger', ok: 'Remove', text: 'They come out of the team directory when you Save Changes. Their tasks stay where they are.' },
+      () => this.setState(st => { const dir = { ...st.pd.dir }, cos = { ...st.pd.cos }; delete dir[k]; delete cos[k]; return { pd: { ...st.pd, dir, cos, mgrs: st.pd.mgrs.filter(x => x !== k) } }; }));
   }
   addPerson = () => {
     const np = this.state.np, name = np.name.trim().replace(/\s+/g, ' ').replace(/\b\w/g, c => c.toUpperCase()), email = personKey(np.email.trim().toLowerCase());
@@ -2631,9 +2653,10 @@ class Component extends DCLogic {
     this.setState({ linkUrl: '', linkName: '' });
   };
   removeFile(tid, f) {
-    if (!window.confirm((f.link ? 'Remove the link ' : 'Delete ') + f.name + '?')) return;
-    this.upd(tid, x => ({ ...x, files: (x.files || []).filter(y => y.id !== f.id) }));
-    if (f.path) this.storage().then(st => st.ref(f.path).delete()).catch(e => console.warn(e));
+    this.ask({ title: f.link ? 'Remove This Link?' : 'Delete This File?', tone: 'danger', ok: f.link ? 'Remove' : 'Delete', text: '“' + f.name + '” will be ' + (f.link ? 'removed from' : 'deleted from') + ' this task for everyone.' }, () => {
+      this.upd(tid, x => ({ ...x, files: (x.files || []).filter(y => y.id !== f.id) }));
+      if (f.path) this.storage().then(st => st.ref(f.path).delete()).catch(e => console.warn(e));
+    });
   }
   moveTask(from, to) {
     if (!from || from === to) return;
@@ -3133,11 +3156,13 @@ class Component extends DCLogic {
           tplRows: tpls.map(l => ({ name: l.name, summary: (l.subs || []).length + ' subtasks · ' + (l.subs || []).slice(0, 3).join(' · ') + ((l.subs || []).length > 3 ? ' …' : ''),
             onDeploy: () => this.setState({ deploy: { id: l.id, name: '', err: '' } }),
             onEdit: () => this.setState({ settings: { edit: { id: l.id, name: l.name, text: (l.subs || []).join('\n'), err: '' } } }),
-            onDelete: () => { if (window.confirm('Delete the template “' + l.name + '”? Tasks already deployed stay as they are.')) this.saveTpls(tpls.filter(x => x.id !== l.id)); } })),
+            onDelete: () => this.ask({ title: 'Delete “' + l.name + '”?', tone: 'danger', ok: 'Delete', text: 'This template is removed from My Settings. Tasks already deployed from it stay as they are.' },
+              () => this.saveTpls((this.state.myTpls || []).filter(x => x.id !== l.id))) })),
           openDeployPick: e => { if (!tpls.length) { this.say('Add a template in My Settings first'); return this.setState({ settings: { edit: { id: '', name: '', text: '', err: '' } } }); } this.openMenu(e, { kind: 'deployPick' }); },
-          signOut: () => { if (!this.auth || !window.confirm('Sign out of the Team Hub?')) return;
-            const out = () => { this.setState({ settings: null }); this.auth.signOut(); };
-            if (this.db && this._key) this.db.doc('presence/' + this._key).set({ sessions: { [DEVICE]: { at: 0, type: DEVICE_TYPE } } }, { merge: true }).then(out, out); else out(); } };
+          signOut: () => { if (!this.auth) return;
+            this.ask({ title: 'Sign Out?', ok: 'Sign Out', text: 'You will need to sign in with your Google account again to see the hub.' }, () => {
+              const out = () => { this.setState({ settings: null }); this.auth.signOut(); };
+              if (this.db && this._key && !this._imp) this.db.doc('presence/' + this._key).set({ sessions: { [DEVICE]: { at: 0, type: DEVICE_TYPE } } }, { merge: true }).then(out, out); else out(); }); } };
       })(),
       ...(() => {
         // Deploy: name the new task.
@@ -3231,6 +3256,14 @@ class Component extends DCLogic {
       emptyTitle: tasks.length ? (filter === 'pending' && !q && !ownerFilter ? 'All caught up' : 'Nothing here') : { personal: 'No personal tasks yet', team: 'No team tasks yet', mgmt: 'No MGMT tasks yet', offline: 'No offline tasks' }[scope] || 'No tasks yet',
       emptyBody: tasks.length ? (q ? 'No tasks or subtasks match “' + this.state.search.trim() + '”.' : filter === 'pending' && !ownerFilter ? 'Every task here is done. They are under Done.' : 'No tasks match these filters.') : scope === 'team' ? 'Personal tasks in this department show up here as people add them.' : 'Add your first task above to get started.',
       hasUndo: !!undo, undoLabel: undo ? undo.t.title : '',
+      ...(() => { const a = this.state.ask;
+        if (!a) return { askOpen: false };
+        const T = { danger: ['var(--tchb-red-050)', 'var(--tchb-red-500)', 'var(--action-primary)', 'M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6'],
+          warn: ['#fff1e0', '#b45309', '#b45309', 'M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3'],
+          plain: ['var(--tchb-indigo-050)', 'var(--tchb-indigo-700)', 'var(--action-secondary, var(--tchb-indigo-700))', 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 16v-4M12 8h.01'] }[a.tone] || [];
+        const no = () => { this._askThen = null; this.setState({ ask: null }); }, yes = () => { const f = this._askThen; this._askThen = null; this.setState({ ask: null }); if (f) f(); };
+        return { askOpen: true, askTitle: a.title, askText: a.text, askOk: a.ok, askIconBg: T[0], askIconFg: T[1], askOkBg: T[2], askIcon: T[3], askYes: yes, askNo: no,
+          askKey: e => { if (e.key === 'Escape') { e.preventDefault(); no(); } } }; })(),
       ...(() => {
         // Online now: everyone with a device seen in the last five minutes (Hub clock), by name, with phone / desktop.
         const now = hubNow(), on = (this.state.presence || []).map(p => { const ss = Object.values(p.sessions || {}).filter(x => x && now - (x.at || 0) < ONLINE_MS);
