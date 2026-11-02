@@ -1037,13 +1037,18 @@ h1, h2, h3, h4 {
           <img src="c6cb2c3c-4eaf-48c9-a4d4-8658f9419f52" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }}">
         </sc-if>
       </div>
-      <div title="Theme" style="display: flex; gap: 2px; padding: 4px; border-radius: 999px; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); {{ mo.theme }}">
-        <button sc-camel-on-click="{{ setLight }}" title="Light theme" style="border: none; cursor: pointer; padding: 7px 12px; border-radius: 999px; display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; transition: background 120ms; background: {{ lightBg }}; color: {{ lightFg }}; {{ mo.themeBtn }}" aria-label="Light theme">
-          <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg><span style="{{ mo.hide }}">Light</span>
-        </button>
-        <button sc-camel-on-click="{{ setDark }}" title="Dark theme" style="border: none; cursor: pointer; padding: 7px 12px; border-radius: 999px; display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; transition: background 120ms; background: {{ darkBg }}; color: {{ darkFg }}; {{ mo.themeBtn }}" aria-label="Dark theme">
-          <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg><span style="{{ mo.hide }}">Dark</span>
-        </button>
+      <div style="display: flex; align-items: center; gap: 10px; {{ mo.theme }}">
+        <div title="Theme" style="display: flex; gap: 2px; padding: 4px; border-radius: 999px; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10));">
+          <button sc-camel-on-click="{{ setLight }}" title="Light theme" style="border: none; cursor: pointer; padding: 7px 12px; border-radius: 999px; display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; transition: background 120ms; background: {{ lightBg }}; color: {{ lightFg }}; {{ mo.themeBtn }}" aria-label="Light theme">
+            <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg><span style="{{ mo.hide }}">Light</span>
+          </button>
+          <button sc-camel-on-click="{{ setDark }}" title="Dark theme" style="border: none; cursor: pointer; padding: 7px 12px; border-radius: 999px; display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; transition: background 120ms; background: {{ darkBg }}; color: {{ darkFg }}; {{ mo.themeBtn }}" aria-label="Dark theme">
+            <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg><span style="{{ mo.hide }}">Dark</span>
+          </button>
+        </div>
+        <sc-if value="{{ showActive }}" hint-placeholder-val="{{ false }}">
+          <button sc-camel-on-click="{{ openActive }}" title="Who's online now" aria-haspopup="true" aria-label="{{ activeAria }}" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; flex: none; padding: 0 7px 0 14px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); white-space: nowrap; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10));" style-focus="box-shadow: var(--focus-ring);"><span style="width: 8px; height: 8px; border-radius: 999px; background: var(--tchb-green-500); flex: none; animation: hubPing 2.2s ease-out infinite;"></span><span style="{{ mo.hide }}">Active</span><span style="min-width: 24px; height: 22px; padding: 0 7px; box-sizing: border-box; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; background: var(--tchb-green-050); color: var(--tchb-green-600); font-size: 13px; box-shadow: 0 0 10px color-mix(in srgb, var(--tchb-green-500) 25%, transparent);">{{ activeCount }}</span></button>
+        </sc-if>
       </div>
       <div style="display: flex; align-items: center; gap: 10px; {{ mo.navGroup }}">
       <nav style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.nav }}">
@@ -1083,9 +1088,6 @@ h1, h2, h3, h4 {
             <span ref="{{ clockARef }}" style="font-weight: 700; font-size: 12px; letter-spacing: 0.03em; color: var(--tchb-indigo-700);"></span>
             <span ref="{{ clockBRef }}" style="font-weight: 600; font-size: 11px; letter-spacing: 0.03em; color: var(--text-muted);"></span>
           </span>
-          <sc-if value="{{ showActive }}" hint-placeholder-val="{{ false }}">
-            <button sc-camel-on-click="{{ openActive }}" title="Who's online now" aria-haspopup="true" aria-label="{{ activeAria }}" style="display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 6px 0 12px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); white-space: nowrap; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10));" style-focus="box-shadow: var(--focus-ring);"><span style="width: 8px; height: 8px; border-radius: 999px; background: var(--tchb-green-500); flex: none; animation: hubPing 2.2s ease-out infinite;"></span><span style="{{ mo.hide }}">Active</span><span style="min-width: 24px; height: 22px; padding: 0 7px; box-sizing: border-box; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; background: var(--tchb-green-050); color: var(--tchb-green-600); font-size: 13px; box-shadow: 0 0 10px color-mix(in srgb, var(--tchb-green-500) 25%, transparent);">{{ activeCount }}</span></button>
-          </sc-if>
         </div>
         <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 44px; line-height: 1.15; color: var(--tchb-indigo-700); {{ mo.h1 }}">Universal <span style="color: var(--tchb-red-500);">Team Hub</span></h1>
         <p style="margin: 0; font-size: 16px; color: var(--text-muted); text-wrap: pretty; text-transform: capitalize">Every Department's Tasks, Owners And Files In One Place.</p>
@@ -1191,6 +1193,17 @@ h1, h2, h3, h4 {
       </div>
       </div>
       <div style="display: flex; gap: 4px; align-items: center; {{ mo.tools }}">
+        <sc-if value="{{ searchClosed }}" hint-placeholder-val="{{ true }}">
+          <button sc-camel-on-click="{{ openSearch }}" title="Search tasks and subtasks" aria-label="Search tasks and subtasks" style="display: flex; align-items: center; gap: 8px; height: 40px; border-radius: 999px; padding: 0 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); cursor: pointer; white-space: nowrap; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); {{ mo.searchBtn }}" style-focus="box-shadow: var(--focus-ring);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><span style="{{ mo.hide }}">Search</span></button>
+        </sc-if>
+        <sc-if value="{{ searchOpen }}" hint-placeholder-val="{{ false }}">
+          <label style="display: flex; align-items: center; gap: 6px; height: 40px; width: 260px; box-sizing: border-box; border-radius: 999px; padding: 0 4px 0 14px; color: var(--tchb-indigo-700); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid {{ searchEdge }}; box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); {{ mo.searchBox }}">
+            <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            <input type="text" enterkeyhint="search" autocomplete="off" sc-camel-auto-focus="{{ true }}" value="{{ search }}" sc-camel-on-input="{{ onSearch }}" sc-camel-on-key-down="{{ onSearchKey }}" placeholder="Search tasks and subtasks" aria-label="Search tasks and subtasks" style="flex: 1; min-width: 0; border: none; background: transparent; outline: none; padding: 0; font-family: var(--font-body); font-size: 14px; color: var(--text-body); {{ mo.input16 }}">
+            <sc-if value="{{ searchHasCount }}" hint-placeholder-val="{{ false }}"><span style="flex: none; font-family: var(--font-display); font-weight: 700; font-size: 12px; color: {{ searchCountColor }};">{{ searchCount }}</span></sc-if>
+            <button sc-camel-on-click="{{ closeSearch }}" title="Clear search" aria-label="Clear search" style="width: 32px; height: 32px; flex: none; border: none; background: transparent; border-radius: 999px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center; padding: 0;" style-hover="background: var(--tchb-indigo-050); color: var(--tchb-indigo-700);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+          </label>
+        </sc-if>
         <button sc-camel-on-click="{{ openOwnerFilter }}" style="display: flex; align-items: center; gap: 8px; border-radius: 999px; padding: 8px 12px 8px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); cursor: pointer; white-space: nowrap; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); {{ mo.ownerFilter }}" style-focus="box-shadow: var(--focus-ring);"><span style="{{ mo.ellip }}">{{ ownerFilterLabel }}</span><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
         <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="ghost" size="sm" sc-camel-on-click="{{ expandAll }}" hint-size="100px,36px">Expand All</x-import></div>
         <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="ghost" size="sm" sc-camel-on-click="{{ collapseAll }}" hint-size="100px,36px">Collapse All</x-import></div>
@@ -1210,7 +1223,7 @@ h1, h2, h3, h4 {
               </sc-if>
             </button>
             <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0; {{ mo.grow }}">
-              <div style="display: grid; margin-left: -7px; min-width: 0;">
+              <div style="display: grid; margin-left: -7px; min-width: 0; border-radius: 8px; {{ t.titleMatch }}">
                 <span aria-hidden="true" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; visibility: hidden; {{ mo.taskTitle }}">{{ t.title }} </span>
                 <textarea rows="1" value="{{ t.title }}" sc-camel-read-only="{{ t.readOnly }}" sc-camel-on-change="{{ t.onTitle }}" sc-camel-on-key-down="{{ blurOnEnter }}" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; border-radius: 6px; background: transparent; outline: none; resize: none; overflow: hidden; margin: 0; min-width: 0; width: 100%; box-sizing: border-box; color: {{ t.titleColor }}; text-decoration: {{ t.titleDeco }}; {{ mo.taskTitle }}" style-hover="border-color: var(--border-default);" style-focus="border-color: var(--tchb-indigo-500); background: var(--tchb-indigo-050);"></textarea>
               </div>
@@ -1836,6 +1849,8 @@ const TAGS = {
   person: ['#ecebf7', '#4d458a', 'rgba(143,135,221,0.18)', '#c9c4f2', 'M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z']
 };   // tasks the Title Commitment Agent creates (api/title-agent)
 const MOBILE_MAX = 640;
+// Green glow on what an assignee filter or a search matched.
+const MATCH_GLOW = 'background: color-mix(in srgb, var(--tchb-green-500) 11%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--tchb-green-500) 45%, transparent), 0 0 14px color-mix(in srgb, var(--tchb-green-500) 30%, transparent);';
 const isPhone = () => window.innerWidth < MOBILE_MAX;
 // Who's online (presence/<login>): each device checks in every minute; seen in the last five minutes = online.
 const ONLINE_MS = 5 * 60 * 1000, BEAT_MS = 60 * 1000;
@@ -1852,7 +1867,7 @@ const MOBILE = {
   themeBtn: 'padding: 0; width: 44px; height: 40px; justify-content: center;',
   hide: 'display: none;',
   navGroup: 'display: contents;',
-  nav: 'order: 4; flex: 1 1 0; min-width: 0;',
+  nav: 'order: 4; flex: 1 1 auto;',   // wraps to its own line when the company tabs don't fit beside the theme and Active pills
   tab: 'flex: 1 1 0; min-width: 0; justify-content: center; padding: 0 8px; height: 40px; font-size: 13px; gap: 6px; white-space: nowrap;',
   avatar: 'position: absolute; top: 10px; right: 16px; width: 44px; height: 44px;', // keeps the logo centred
   main: 'padding: 20px 16px 96px; gap: 16px;',
@@ -1868,8 +1883,10 @@ const MOBILE = {
   filterRow: 'gap: 10px;',
   filterPills: 'max-width: 100%; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;',
   filterBtn: 'flex: none; white-space: nowrap; height: 40px; padding: 0 14px;',
-  tools: 'flex: 1 1 100%; min-width: 0;',
-  ownerFilter: 'flex: 1 1 auto; min-width: 0; min-height: 44px; justify-content: space-between;',
+  tools: 'flex: 1 1 100%; min-width: 0; flex-wrap: wrap;',
+  ownerFilter: 'flex: 1 1 0; min-width: 0; min-height: 44px; justify-content: space-between;',
+  searchBtn: 'flex: none; height: 44px; padding: 0 14px;',
+  searchBox: 'flex: 1 1 100%; width: auto; height: 44px; order: -1;',
   card: 'display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 10px 12px 2px;',
   grip: 'width: 32px; height: 44px; margin-right: -4px; flex: none;',
   grow: 'flex: 1 1 0;',
@@ -1926,7 +1943,7 @@ class Component extends DCLogic {
     if (!dir || typeof dir !== 'object') dir = DEFAULT_DIRECTORY;
     let mode = 'light', openMap = {};
     try { mode = localStorage.getItem(KEY + '-mode') || 'light'; openMap = JSON.parse(localStorage.getItem(KEY + '-open')) || {}; } catch (e) {}
-    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, dir, mgrs: [], cos: DEFAULT_COMPANIES, dept: 'all', pd: null, np: { name: '', email: '', role: 'member', dept: '' }, uploading: {}, folderOpen: {}, menu: null, tasks: loadOffline(), forWho: '', scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null, del: null };
+    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, dir, mgrs: [], cos: DEFAULT_COMPANIES, dept: 'all', pd: null, np: { name: '', email: '', role: 'member', dept: '' }, uploading: {}, folderOpen: {}, menu: null, tasks: loadOffline(), forWho: '', scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null, del: null, search: '', searchOpen: false };
   }
   applyTheme(company, mode) {
     const el = document.documentElement, dark = mode === 'dark', kpi = company === 'kpi';
@@ -2571,6 +2588,9 @@ class Component extends DCLogic {
       menuItems = menuItems.map(it => ({ hasAvatar: false, hasDot: false, isHeader: false, note: '', hasPhoto: false, photo: '', ...it, isItem: !it.isHeader, selected: it.value === menuCur, bg: it.value === menuCur ? 'var(--glass-hover, rgba(255,255,255,0.7))' : 'transparent', onClick: () => this.choose(it.value) }));
     }
     const ownerMatch = t => !ownerFilter || (t.owner || '').trim() === ownerFilter || t.subs.some(s => (s.owner || '').trim() === ownerFilter);
+    // Search: a task shows when its title or one of its subtasks' titles has the words (any case); matches glow green.
+    const q = (this.state.search || '').trim().toLowerCase(), hit = txt => !!q && (txt || '').toLowerCase().includes(q);
+    const searchMatch = t => !q || hit(t.title) || t.subs.some(s => hit(s.title));
     const showProgress = this.props.showProgress ?? true;
     const done = tasks.filter(t => this.isDone(t));
     const subsTotal = unitTot(tasks), subsDone = unitDone(tasks);
@@ -2582,7 +2602,7 @@ class Component extends DCLogic {
       color: filter === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
       shadow: filter === k ? 'var(--shadow-button)' : 'none'
     }));
-    let list = tasks.filter(t => (filter === 'all' || statusOf(t) === filter) && ownerMatch(t));
+    let list = tasks.filter(t => (filter === 'all' || statusOf(t) === filter) && ownerMatch(t) && searchMatch(t));
     // Group by status (In Progress, then Not Started, then Done); within a group keep the saved drag order.
     const RANK = { progress: 0, todo: 1, done: 2 };
     list = list.map((t, i) => [t, i]).sort((a, b) => RANK[statusOf(a[0])] - RANK[statusOf(b[0])] || a[1] - b[1]).map(([t]) => t);
@@ -2635,6 +2655,7 @@ class Component extends DCLogic {
         hasTagRow: !!tag || due.hasDue || !!(t.ext && t.ext.url),
         hasExtLink: !!(t.ext && t.ext.url), extUrl: (t.ext && t.ext.url) || '', extLabel: t.source === AGENT_TITLE ? 'Open In Title Agent' : 'Open',
         canPushMgmt: live && role === 'manager' && t.scope === 'personal', onPushMgmt: () => this.pushMgmt(t.id),
+        titleMatch: hit(t.title) ? MATCH_GLOW : '',
         id: t.id, title: t.title, isDone: d, open: !!this.state.openMap[t.id], draft: drafts[t.id] || '',
         status: STAT[st][0], tone: STAT[st][1], pct: pct + '%',
         // No subtasks: the status is a pick list (same pill as a subtask's); with subtasks it's a badge that follows them.
@@ -2670,7 +2691,7 @@ class Component extends DCLogic {
           title: s.title, done: s.done, hasEdited: !!s.by, edited: s.by ? (s.by === AGENT_TITLE ? 'Title Agent' : firstName(this.canon(s.by))) + ' · ' + ago(s.at) : '', editedTitle: [s.by ? 'Last edited by ' + this.canon(s.by) : '', datesOf(s)].filter(Boolean).join(' · '),
           ...dueOf(s, s.done), openDue: e => this.openMenu(e, { kind: 'due', tid: t.id, sid: s.id, due: s.due }),
           ...fileBtn((t.files || []).filter(f => f.sid === s.id).length, t.id + s.id, 'var(--tchb-gray-300)'), openFiles: e => this.openMenu(e, { kind: 'files', tid: t.id, sid: s.id }), ...chipOf(s.owner), status: s.status || (s.done ? 'done' : 'todo'),
-          matchStyle: ownerFilter && (s.owner || '').trim() === ownerFilter ? 'background: color-mix(in srgb, var(--tchb-green-500) 11%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--tchb-green-500) 45%, transparent), 0 0 14px color-mix(in srgb, var(--tchb-green-500) 30%, transparent);' : '',
+          matchStyle: (ownerFilter && (s.owner || '').trim() === ownerFilter) || hit(s.title) ? MATCH_GLOW : '',
           statusBg: s.done ? 'var(--tchb-green-050)' : s.status === 'progress' ? 'var(--tchb-indigo-050)' : 'var(--tchb-gray-100)',
           statusFg: s.done ? 'var(--tchb-green-600)' : s.status === 'progress' ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
           openOwner: e => this.openMenu(e, { kind: 'owner', tid: t.id, sid: s.id }),
@@ -2835,6 +2856,16 @@ class Component extends DCLogic {
       ownerFilterLabel: ownerFilter || 'All Owners',
       openNewOwner: e => this.openMenu(e, { kind: 'newOwner' }),
       openOwnerFilter: e => this.openMenu(e, { kind: 'ownerFilter' }),
+      // Search: typing opens every task with a matching subtask (as the assignee filter does); the X or Esc clears it.
+      searchOpen: !!this.state.searchOpen, searchClosed: !this.state.searchOpen, search: this.state.search,
+      openSearch: () => this.setState({ searchOpen: true }),
+      closeSearch: () => this.setState({ search: '', searchOpen: false }),
+      onSearch: e => { const v = e.target.value, w = v.trim().toLowerCase();
+        this.setState(st => { const o = { ...st.openMap }; if (w) st.tasks.forEach(t => { if (t.subs.some(y => (y.title || '').toLowerCase().includes(w))) o[t.id] = true; }); return { search: v, openMap: o }; }); },
+      onSearchKey: e => { if (e.key === 'Escape') { e.preventDefault(); this.setState({ search: '', searchOpen: false }); } },
+      searchHasCount: !!q, searchCount: list.length + (list.length === 1 ? ' task' : ' tasks'),
+      searchCountColor: list.length ? 'var(--tchb-green-600)' : 'var(--tchb-red-500)',
+      searchEdge: q ? (list.length ? 'color-mix(in srgb, var(--tchb-green-500) 55%, transparent)' : 'color-mix(in srgb, var(--tchb-red-500) 45%, transparent)') : 'var(--glass-border, rgba(255,255,255,0.85))',
       menuOpen: !!menu, menuItems,
       menuTop: menu ? menu.top + 'px' : '0px', menuLeft: menu ? menu.left + 'px' : '0px', menuTransform: menu && menu.flip ? 'translateY(-100%)' : 'none',
       closeMenu: () => this.setState({ menu: null }),
@@ -2880,7 +2911,7 @@ class Component extends DCLogic {
       collapseAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = false; }); return { openMap: o }; }),
       isEmpty: visibleTasks.length === 0,
       emptyTitle: tasks.length ? 'Nothing here' : { personal: 'No personal tasks yet', team: 'No team tasks yet', mgmt: 'No MGMT tasks yet', offline: 'No offline tasks' }[scope] || 'No tasks yet',
-      emptyBody: tasks.length ? 'No tasks match these filters.' : scope === 'team' ? 'Personal tasks in this department show up here as people add them.' : 'Add your first task above to get started.',
+      emptyBody: tasks.length ? (q ? 'No tasks or subtasks match “' + this.state.search.trim() + '”.' : 'No tasks match these filters.') : scope === 'team' ? 'Personal tasks in this department show up here as people add them.' : 'Add your first task above to get started.',
       hasUndo: !!undo, undoLabel: undo ? undo.t.title : '',
       ...(() => {
         // Online now: everyone with a device seen in the last five minutes (Hub clock), by name, with phone / desktop.

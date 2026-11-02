@@ -33,6 +33,7 @@ Plan the work, assign it, and watch it move — by department, in real time.
 - **Safe Deleting** — delete tasks in your own list as before. Anyone else's task needs the department's Team Leader password; removing a subtask needs the department's subtask password; MGMT tasks and their subtasks are for managers. Checked on the server, and a copy of everything deleted is kept.
 - **Two Company Boards** — TCHB and KPI DRIVER, each with its own tasks, progress, and brand look; access is set per person.
 - **People** — managers set roles, departments and access in one place.
+- **Search** — find tasks and subtasks by name; matching titles glow green and tasks open to show the subtasks that matched.
 - **Who's Online** — the Active pill shows how many people are in the hub right now; click it for who, on phone or desktop (seen in the last five minutes).
 - **Light & Dark Themes**, phone-ready, and **Work Offline** with Push To Live.
 
