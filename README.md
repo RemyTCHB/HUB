@@ -69,6 +69,7 @@ The hub is built so other tools can create and update tasks. Each task records:
 | `company` | `tchb` or `kpi` |
 | `title`, `owner` | Task title and owner name (as in the team directory) |
 | `subs[]` | Subtasks: `id`, `title`, `owner`, `status` (`todo` / `progress` / `done`), `due`, `notes[]`, `createdAt`, `startedAt`, `doneAt` |
+| `status` | Only on a task with no subtasks: `todo` / `progress` / `done` (with subtasks, the task's status follows them) |
 | `createdAt`, `startedAt`, `doneAt`, `due` | Dates (ms since epoch, shown in Eastern time) |
 | `members` | `<company>:<login>` of everyone else who owns part of it, so it shows in their list |
 | `files[]`, `notes[]`, `log[]` | Attachments, notes and the activity log |

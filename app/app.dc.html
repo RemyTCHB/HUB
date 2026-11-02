@@ -1231,7 +1231,8 @@ h1, h2, h3, h4 {
                     <span style="min-width: 84px; text-align: left; white-space: nowrap; {{ mo.ellip }} {{ t.nameHide }}">{{ t.ownerLabel }}</span>
                     <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg>
                   </button>
-            <x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Badge" tone="{{ t.tone }}" hint-size="100px,26px">{{ t.status }}</x-import>
+            <sc-if value="{{ t.canStatus }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ t.openStatus }}" title="Task status" style="display: flex; align-items: center; gap: 6px; flex: none; border-radius: 999px; padding: 5px 10px 5px 12px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; white-space: nowrap; background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); background-color: {{ t.statusBg }}; color: {{ t.statusFg }}; {{ mo.subStatus }} {{ t.lockMain }}" style-focus="box-shadow: var(--focus-ring);">{{ t.status }}<svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button></sc-if>
+            <sc-if value="{{ t.noStatusPick }}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Badge" tone="{{ t.tone }}" hint-size="100px,26px">{{ t.status }}</x-import></sc-if>
             <div style="display: none; {{ mo.brk2 }}"></div>
             <button sc-camel-on-click="{{ t.openDue }}" title="{{ t.dueTitle }}" aria-label="{{ t.dueTitle }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; color: {{ t.dueColor }}; background: {{ t.dueBg }}; {{ mo.noteBtn }} {{ mo.row3 }} {{ t.dueLock }}" style-hover="filter: brightness(0.96);"><svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg></button>
             <button sc-camel-on-click="{{ t.openNotes }}" title="Notes" aria-label="{{ t.notesAria }}" style="height: 36px; min-width: 36px; padding: 0 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: {{ t.noteColor }}; {{ mo.noteBtn }} {{ mo.row3 }}" style-hover="background: var(--tchb-indigo-050);">
@@ -1716,7 +1717,8 @@ const fileMeta = f => f.link ? hostOf(f.url) : sizeOf(f.size || 0);
 const sizeOf = b => b < 1024 * 1024 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
 const subStatus = s => s.status || (s.done ? 'done' : 'todo');
 const isDone = t => t.subs.length ? t.subs.every(s => s.done) : !!t.done;
-const statusOf = t => isDone(t) ? 'done' : (t.subs.some(s => s.done || s.status === 'progress') ? 'progress' : 'todo');
+// A task with no subtasks has its own status (Not Started / In Progress / Done); with subtasks it follows them.
+const statusOf = t => isDone(t) ? 'done' : (t.subs.length ? t.subs.some(s => s.done || s.status === 'progress') : t.status === 'progress') ? 'progress' : 'todo';
 // Dates for the EOD report (when a task or subtask was created, first moved to In Progress, and finished) and the
 // activity log: every status change, reopen, subtask added or removed and owner change, with who and when (Hub clock).
 const EV = { started: 'moved to In Progress', done: 'marked Done', reopened: 'reopened', 'not started': 'set back to Not Started' };
@@ -2132,13 +2134,17 @@ class Component extends DCLogic {
   }
   toggleTask(t) {
     const d = !this.isDone(t);
-    this.upd(t.id, x => ({ ...x, done: d, subs: x.subs.map(s => ({ ...s, done: d, status: d ? 'done' : (s.status === 'done' ? 'todo' : s.status), ...this.sst() })) }));
+    this.upd(t.id, x => ({ ...x, done: d, ...(x.subs.length ? {} : { status: d ? 'done' : 'todo' }), subs: x.subs.map(s => ({ ...s, done: d, status: d ? 'done' : (s.status === 'done' ? 'todo' : s.status), ...this.sst() })) }));
   }
   deleteTask(t) {
     clearTimeout(this._u);
     const idx = this.state.tasks.indexOf(t);
     this.setState(st => ({ tasks: st.tasks.filter(x => x.id !== t.id), undo: { t, idx } }));
     this._u = setTimeout(() => this.setState({ undo: null }), 6000);
+  }
+  // Only for a task with no subtasks: its own status.
+  setTaskStatus(tid, v) {
+    this.upd(tid, x => x.subs.length ? x : { ...x, status: v, done: v === 'done' });
   }
   setSubStatus(tid, sid, v) {
     this.upd(tid, x => { const subs = x.subs.map(y => y.id === sid ? { ...y, status: v, done: v === 'done', ...this.sst() } : y); return { ...x, subs, done: subs.every(y => y.done) }; });
@@ -2156,7 +2162,7 @@ class Component extends DCLogic {
     else if (m.kind === 'newSubOwner') this.setState(st => ({ newSubs: st.newSubs.map((s, j) => j === m.idx ? { ...s, owner: v } : s) }));
     else if (m.kind === 'forMember') this.setState({ forWho: v });
     else if (m.kind === 'ownerFilter') this.setState(st => { const o = { ...st.openMap }; if (v) st.tasks.forEach(t => { if (t.subs.some(y => (y.owner || '').trim() === v)) o[t.id] = true; }); return { ownerFilter: v, openMap: o }; });
-    else if (m.kind === 'status') this.setSubStatus(m.tid, m.sid, v);
+    else if (m.kind === 'status') m.sid ? this.setSubStatus(m.tid, m.sid, v) : this.setTaskStatus(m.tid, v);
     this.setState({ menu: null });
   }
   // Date picker state: the month in view (vy, vm), the picked day 'YYYY-MM-DD' and time (hh, mm), all Eastern.
@@ -2460,7 +2466,7 @@ class Component extends DCLogic {
     let menuItems = [], menuCur = '';
     if (menu && !['notes', 'files', 'folders', 'due', 'activity'].includes(menu.kind)) {   // the rest are pick lists
       if (menu.kind === 'status') {
-        const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : '';
+        const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : tk && !menu.sid ? statusOf(tk) : '';
         menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
       } else if (menu.kind === 'forMember') {
         // Managers add for anyone but managers; team leaders for people in the departments they see.
@@ -2478,7 +2484,6 @@ class Component extends DCLogic {
     const showProgress = this.props.showProgress ?? true;
     const done = tasks.filter(t => this.isDone(t));
     const subsTotal = unitTot(tasks), subsDone = unitDone(tasks);
-    const statusOf = t => this.isDone(t) ? 'done' : (t.subs.some(s => s.done || s.status === 'progress') ? 'progress' : 'todo');
     const counts = { all: tasks.length, todo: 0, progress: 0, done: 0 };
     tasks.forEach(t => counts[statusOf(t)]++);
     const filters = [['all', 'All'], ['todo', 'Not Started'], ['progress', 'In Progress'], ['done', 'Done']].map(([k, label]) => ({
@@ -2542,8 +2547,12 @@ class Component extends DCLogic {
         canPushMgmt: live && role === 'manager' && t.scope === 'personal', onPushMgmt: () => this.pushMgmt(t.id),
         id: t.id, title: t.title, isDone: d, open: !!this.state.openMap[t.id], draft: drafts[t.id] || '',
         status: STAT[st][0], tone: STAT[st][1], pct: pct + '%',
+        // No subtasks: the status is a pick list (same pill as a subtask's); with subtasks it's a badge that follows them.
+        canStatus: !t.subs.length, noStatusPick: !!t.subs.length, openStatus: e => this.openMenu(e, { kind: 'status', tid: t.id }),
+        statusBg: st === 'done' ? 'var(--tchb-green-050)' : st === 'progress' ? 'var(--tchb-indigo-050)' : 'var(--tchb-gray-100)',
+        statusFg: st === 'done' ? 'var(--tchb-green-600)' : st === 'progress' ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
         metaTitle: datesOf(t),
-        meta: [deptTag].filter(Boolean).map(x => x + ' · ').join('') + (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks — check off directly') + (t.updatedBy ? ` · Edited by ${this.canon(t.updatedBy)} · ${ago(t.updatedAt)}` : ''),
+        meta: [deptTag].filter(Boolean).map(x => x + ' · ').join('') + (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks') + (t.updatedBy ? ` · Edited by ${this.canon(t.updatedBy)} · ${ago(t.updatedAt)}` : ''),
         boxBg: d ? 'var(--tchb-green-500)' : 'var(--surface-card)',
         boxBorder: d ? 'var(--tchb-green-500)' : 'var(--border-strong)',
         titleColor: d ? 'var(--text-muted)' : 'var(--tchb-indigo-700)',

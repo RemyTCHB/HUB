@@ -27,7 +27,7 @@ function dueMs(v) {
 const when = ts => { const p = etParts(ts); return `${p.month}/${p.day}/${p.year} ${p.hour}:${p.minute} ET`; };
 
 const subStatus = s => s.status || (s.done ? 'done' : 'todo');
-const statusOf = t => (t.subs.length ? t.subs.every(s => s.done) : t.done) ? 'done' : t.subs.some(s => s.done || s.status === 'progress') ? 'progress' : 'todo';
+const statusOf = t => (t.subs.length ? t.subs.every(s => s.done) : t.done) ? 'done' : (t.subs.length ? t.subs.some(s => s.done || s.status === 'progress') : t.status === 'progress') ? 'progress' : 'todo';
 // Same dates the app keeps for the EOD report: first time In Progress (or Done), and when finished.
 const mark = (o, was, is, now) => is === was ? o : { ...o, ...(is !== 'todo' && !o.startedAt ? { startedAt: now } : {}), doneAt: is === 'done' ? now : null };
 const noteText = b => ['Action needed: ' + (b.action || '').trim(), 'Source: ' + ((b.sources || []).filter(Boolean).join(', ') || 'Title commitment')].join('\n');
