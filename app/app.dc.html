@@ -1849,6 +1849,12 @@ const TAGS = {
   person: ['#ecebf7', '#4d458a', 'rgba(143,135,221,0.18)', '#c9c4f2', 'M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z']
 };   // tasks the Title Commitment Agent creates (api/title-agent)
 const MOBILE_MAX = 640;
+// Search: every word typed must start a word in the title, in any case ("AI" finds "AI Review", not "Failsafe";
+// "walk" finds "Walkthrough"). Returns null for an empty search.
+const searchTest = q => { const ws = (q || '').trim().toLowerCase().split(/\s+/).filter(Boolean);
+  if (!ws.length) return null;
+  const res = ws.map(w => new RegExp('(^|[^\\p{L}\\p{N}])' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'iu'));
+  return txt => res.every(r => r.test(txt || '')); };
 // Green glow on what an assignee filter or a search matched.
 const MATCH_GLOW = 'background: color-mix(in srgb, var(--tchb-green-500) 11%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--tchb-green-500) 45%, transparent), 0 0 14px color-mix(in srgb, var(--tchb-green-500) 30%, transparent);';
 const isPhone = () => window.innerWidth < MOBILE_MAX;
@@ -2589,7 +2595,7 @@ class Component extends DCLogic {
     }
     const ownerMatch = t => !ownerFilter || (t.owner || '').trim() === ownerFilter || t.subs.some(s => (s.owner || '').trim() === ownerFilter);
     // Search: a task shows when its title or one of its subtasks' titles has the words (any case); matches glow green.
-    const q = (this.state.search || '').trim().toLowerCase(), hit = txt => !!q && (txt || '').toLowerCase().includes(q);
+    const q = (this.state.search || '').trim().toLowerCase(), test = searchTest(q), hit = txt => !!test && test(txt);
     const searchMatch = t => !q || hit(t.title) || t.subs.some(s => hit(s.title));
     const showProgress = this.props.showProgress ?? true;
     const done = tasks.filter(t => this.isDone(t));
@@ -2860,8 +2866,8 @@ class Component extends DCLogic {
       searchOpen: !!this.state.searchOpen, searchClosed: !this.state.searchOpen, search: this.state.search,
       openSearch: () => this.setState({ searchOpen: true }),
       closeSearch: () => this.setState({ search: '', searchOpen: false }),
-      onSearch: e => { const v = e.target.value, w = v.trim().toLowerCase();
-        this.setState(st => { const o = { ...st.openMap }; if (w) st.tasks.forEach(t => { if (t.subs.some(y => (y.title || '').toLowerCase().includes(w))) o[t.id] = true; }); return { search: v, openMap: o }; }); },
+      onSearch: e => { const v = e.target.value, w = searchTest(v);
+        this.setState(st => { const o = { ...st.openMap }; if (w) st.tasks.forEach(t => { if (t.subs.some(y => w(y.title))) o[t.id] = true; }); return { search: v, openMap: o }; }); },
       onSearchKey: e => { if (e.key === 'Escape') { e.preventDefault(); this.setState({ search: '', searchOpen: false }); } },
       searchHasCount: !!q, searchCount: list.length + (list.length === 1 ? ' task' : ' tasks'),
       searchCountColor: list.length ? 'var(--tchb-green-600)' : 'var(--tchb-red-500)',
