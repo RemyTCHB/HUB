@@ -118,16 +118,20 @@ function verify(secret, body, ts, sig, nowSec = Math.floor(Date.now() / 1000)) {
   return want.length === got.length && crypto.timingSafeEqual(want, got);
 }
 
-/** The people the agent needs from the team directory: the Managers, then the TC department (Team Leaders first),
- *  each in the directory's own order. Managers are the root managers plus meta/managers, as in the app. */
-function teamFor(people, managers) {
+/** The people an app needs from the team directory: the Managers, then each asked-for department in turn (Team Leaders
+ *  first), each in the directory's own order. Departments default to TC alone (the Title Commitment Agent); TC Checklist
+ *  asks for TC and DISPO. Managers are the root managers plus meta/managers, as in the app. */
+const TEAM_DEPTS = ['TC', 'DISPO', 'ACQ', 'OPS'];
+const deptsFrom = list => { const d = (Array.isArray(list) ? list : []).map(x => String(x).toUpperCase()).filter(x => TEAM_DEPTS.includes(x));
+  return d.length ? [...new Set(d)] : ['TC']; };
+function teamFor(people, managers, depts = ['TC']) {
   const isM = k => managers.includes(k), rec = k => people[k] || {};
   const by = (a, b) => (rec(a).order || 999) - (rec(b).order || 999) || (rec(a).name || a).localeCompare(rec(b).name || b);
-  const tc = Object.keys(people).filter(k => !isM(k) && rec(k).dept === 'TC').sort((a, b) => (rec(b).role === 'lead') - (rec(a).role === 'lead') || by(a, b));
-  return [...[...new Set(managers)].sort(by), ...tc].map(k => {
+  const inDept = d => Object.keys(people).filter(k => !isM(k) && rec(k).dept === d).sort((a, b) => (rec(b).role === 'lead') - (rec(a).role === 'lead') || by(a, b));
+  return [...[...new Set(managers)].sort(by), ...deptsFrom(depts).flatMap(inDept)].map(k => {
     const r = rec(k);
     return { name: (r.name || '').trim() || k, email: k, role: isM(k) ? 'manager' : r.role === 'lead' ? 'lead' : 'member', dept: r.dept || '', photo: r.photo || '' };
   });
 }
 
-module.exports = { AGENT, DONE, applyDeal, hubChanges, dueMs, sign, verify, hash, toHub, teamFor };
+module.exports = { AGENT, DONE, applyDeal, hubChanges, dueMs, sign, verify, hash, toHub, teamFor, deptsFrom };

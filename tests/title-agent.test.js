@@ -91,3 +91,20 @@ test('team: the Managers, then the TC department with Team Leaders first; other 
   assert.equal(out[2].name, 'brandy@totalchb.com', 'a manager missing from the directory falls back to the email');
   assert.equal(out[4].photo, '');
 });
+
+test('team: an app can ask for more departments (TC Checklist: TC and DISPO); unknown ones are ignored', () => {
+  const { teamFor, deptsFrom } = require('../api/_lib/titleagent');
+  const people = {
+    'systems@totalchb.com': { name: 'Ahmed Ramy', order: 1 },
+    'monz@totalchb.com': { name: 'Monz Miller', role: 'member', dept: 'TC', order: 5 },
+    'dm@totalchb.com': { name: 'Dana Member', role: 'member', dept: 'DISPO', order: 4 },
+    'dispo@totalchb.com': { name: 'Dee Spo', role: 'lead', dept: 'DISPO', order: 6 },
+    'acq@totalchb.com': { name: 'Ace Q', role: 'member', dept: 'ACQ', order: 2 } };
+  const out = teamFor(people, ['systems@totalchb.com'], deptsFrom(['tc', 'DISPO', 'nope']));
+  assert.deepEqual(out.map(p => [p.email, p.role, p.dept]), [
+    ['systems@totalchb.com', 'manager', ''], ['monz@totalchb.com', 'member', 'TC'],
+    ['dispo@totalchb.com', 'lead', 'DISPO'], ['dm@totalchb.com', 'member', 'DISPO']]);
+  assert.deepEqual(deptsFrom(undefined), ['TC'], 'no list: TC only, as before');
+  assert.deepEqual(deptsFrom(['nope']), ['TC']);
+  assert.deepEqual(teamFor(people, ['systems@totalchb.com']).map(p => p.email), ['systems@totalchb.com', 'monz@totalchb.com'], 'the Title Commitment Agent still gets Managers + TC');
+});
