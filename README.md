@@ -78,7 +78,7 @@ by email for anyone with their own delete password); never put them in the code 
 
 In Team Members, Remy can sign in as anyone who has signed in to the hub before (`POST /api/hub/login-as`). The hub signs
 him in with a one-time Firebase sign-in for that person (marked `imp`), so he sees and changes exactly what they can.
-An orange bar shows whose view it is, with Back To Remy. Changes are logged as `<their name> (via Ahmed Ramy)`, they
+An orange bar shows whose view it is, with Back To Remy, which switches straight back to his own account (the server only allows that from a sign-in he started; Google sign-in if it fails). Changes are logged as `<their name> (via Ahmed Ramy)`, they
 don't show as online, and each use is kept in `audit/` (server only). The service account in
 `HUB_FIREBASE_SERVICE_ACCOUNT` (hub-integrations) needs the Firebase Authentication Viewer role for this (it only looks people up; the sign-in is made with its own key).
 
