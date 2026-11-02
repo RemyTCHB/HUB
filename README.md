@@ -30,6 +30,7 @@ Plan the work, assign it, and watch it move — by department, in real time.
 - **Clear Statuses** — Not Started, In Progress, Done, with the date each one started and finished.
 - **Files** — attach documents to any task or subtask; the Files button shows every task folder in the current view.
 - **Notes** — leave notes on tasks and subtasks, with who wrote them and when.
+- **Safe Deleting** — delete tasks in your own list as before. Anyone else's task needs the department's Team Leader password; removing a subtask needs the department's subtask password; MGMT tasks and their subtasks are for managers. Checked on the server, and a copy of everything deleted is kept.
 - **Two Company Boards** — TCHB and KPI DRIVER, each with its own tasks, progress, and brand look; access is set per person.
 - **People** — managers set roles, departments and access in one place.
 - **Light & Dark Themes**, phone-ready, and **Work Offline** with Push To Live.
@@ -59,6 +60,14 @@ Hosted on **Vercel**, connected to this repository. Every commit to `main` redep
 1. `node tools/bundle.mjs unpack`, edit `app/app.dc.html`, then `node tools/bundle.mjs pack`.
 2. Commit both files.
 3. Vercel publishes the update in about 30 seconds. Task data is stored separately and is never affected by updates.
+
+## Deleting Tasks And Subtasks
+
+The page sends these to `POST /api/hub/delete` (with the person's sign-in), which checks the rules in
+`api/_lib/deletes.js` (tested: `node --test tests/deletes.test.js`), deletes, and keeps a copy in `trash/` (server only)
+with who and when. The Firestore rules don't let the page delete anyone else's task or shrink a task's subtask list itself.
+The passwords are only in the Vercel setting `HUB_DELETE_PASSWORDS` (JSON: `leads` and `subtasks` by department, `people`
+by email for anyone with their own delete password); never put them in the code or this README.
 
 ## Connecting Other Apps
 

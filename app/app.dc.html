@@ -1502,6 +1502,26 @@ h1, h2, h3, h4 {
     </div>
   </sc-if>
 
+  <sc-if value="{{ delOpen }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ delCancel }}" style="position: fixed; inset: 0; z-index: 70; background: rgba(10, 12, 24, 0.4);"></div>
+    <div role="dialog" aria-label="{{ delHead }}" style="position: fixed; z-index: 71; left: 50%; top: 50%; transform: translate(-50%, -50%); width: calc(100% - 32px); max-width: 400px; box-sizing: border-box; padding: 20px; border-radius: var(--radius-lg); background-color: var(--surface-card); border: 1px solid var(--border-default); box-shadow: var(--shadow-raised); display: flex; flex-direction: column; gap: 12px;">
+      <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--tchb-indigo-700);">{{ delHead }}</h2>
+      <p style="margin: 0; font-size: 14px; line-height: 1.45; color: var(--text-body); word-break: break-word;">{{ delWhat }}</p>
+      <sc-if value="{{ delNeedPw }}" hint-placeholder-val="{{ false }}">
+        <label style="display: flex; flex-direction: column; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--text-muted);">{{ delPrompt }}
+          <input type="password" autocomplete="off" sc-camel-auto-focus="{{ true }}" value="{{ delValue }}" sc-camel-on-input="{{ onDelValue }}" sc-camel-on-key-down="{{ onDelKey }}" aria-label="{{ delPrompt }}" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 10px 12px; font-family: var(--font-body); font-size: 15px; color: var(--text-body); outline: none; background: var(--surface-card); {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+        </label>
+      </sc-if>
+      <sc-if value="{{ hasDelErr }}" hint-placeholder-val="{{ false }}">
+        <div role="alert" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 700; color: var(--tchb-red-500); background: var(--tchb-red-050);">{{ delErr }}</div>
+      </sc-if>
+      <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px;">
+        <button sc-camel-on-click="{{ delCancel }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 10px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); background: var(--surface-card);" style-hover="background: var(--tchb-indigo-050);">Cancel</button>
+        <button sc-camel-on-click="{{ delGo }}" sc-camel-on-key-down="{{ onDelKey }}" sc-camel-auto-focus="{{ delFocusGo }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 10px 18px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ delBusy }}" style-hover="background: var(--action-primary-hover);">{{ delGoLabel }}</button>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ peopleOpen }}" hint-placeholder-val="{{ false }}">
     <div sc-camel-on-click="{{ closePeople }}" style="position: fixed; inset: 0; z-index: 60; background: rgba(10, 12, 24, 0.4);"></div>
     <div role="dialog" aria-label="Team Members" sc-camel-on-key-down="{{ peopleKey }}" style="position: fixed; z-index: 61; left: 50%; top: 24px; transform: translateX(-50%); width: calc(100% - 32px); max-width: 1060px; max-height: calc(100vh - 48px); box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); overflow: hidden; {{ mo.sheet }}">
@@ -1652,6 +1672,7 @@ const AURORA = {
 const ROOT_MANAGERS = ['brandy@totalchb.com', 'systems@totalchb.com'];   // always managers; Remy adds others in People (meta/managers)
 const ADMIN = 'systems@totalchb.com';   // the only one who can add managers and choose which companies people see
 const SAME_PERSON = { 'brandy@kpidriver.com': 'brandy@totalchb.com', 'systems@kpidriver.com': 'systems@totalchb.com' };  // second logins
+const OWN_DELETE_PW = ['brandy@totalchb.com'];   // people with their own delete password (kept on the server, HUB_DELETE_PASSWORDS)
 const MANAGER_CAN_SEE = {};   // managers who may see another manager's personal tasks, e.g. { 'systems@totalchb.com': ['brandy@totalchb.com'] }
 const personKey = email => SAME_PERSON[email] || email;
 const DEPTS = ['TC', 'DISPO', 'ACQ', 'OPS'];
@@ -1880,7 +1901,7 @@ class Component extends DCLogic {
     if (!dir || typeof dir !== 'object') dir = DEFAULT_DIRECTORY;
     let mode = 'light', openMap = {};
     try { mode = localStorage.getItem(KEY + '-mode') || 'light'; openMap = JSON.parse(localStorage.getItem(KEY + '-open')) || {}; } catch (e) {}
-    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, dir, mgrs: [], cos: DEFAULT_COMPANIES, dept: 'all', pd: null, np: { name: '', email: '', role: 'member', dept: '' }, uploading: {}, folderOpen: {}, menu: null, tasks: loadOffline(), forWho: '', scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null };
+    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, dir, mgrs: [], cos: DEFAULT_COMPANIES, dept: 'all', pd: null, np: { name: '', email: '', role: 'member', dept: '' }, uploading: {}, folderOpen: {}, menu: null, tasks: loadOffline(), forWho: '', scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null, del: null };
   }
   applyTheme(company, mode) {
     const el = document.documentElement, dark = mode === 'dark', kpi = company === 'kpi';
@@ -1916,7 +1937,7 @@ class Component extends DCLogic {
   }
   onUser(u) {
     // Signed out: forget the board in memory so nothing shows on the sign-in screen.
-    if (!u) { this.unsub(); this._synced = null; this._pending = {}; clearTimeout(this._wt); return this.setState(st => ({ cloud: 'signedOut', user: null, tasks: st.tasks.filter(t => t.scope === 'offline'), scope: 'offline', errs: {}, people: {}, pd: null, menu: null })); }
+    if (!u) { this.unsub(); this._synced = null; this._pending = {}; clearTimeout(this._wt); this._wt = null; return this.setState(st => ({ cloud: 'signedOut', user: null, tasks: st.tasks.filter(t => t.scope === 'offline'), scope: 'offline', errs: {}, people: {}, pd: null, menu: null })); }
     const email = (u.email || '').toLowerCase();
     if (this.allowed.length && !this.allowed.some(d => email.endsWith('@' + d))) {
       this.auth.signOut();
@@ -1952,21 +1973,21 @@ class Component extends DCLogic {
   }
   // Signed in: the directory, managers and company access first, then the task lists they allow (syncListeners).
   subscribe() {
-    this.unsub(); this._got = {}; this._parts = {}; this._dyn = {}; this._meta = {}; this._need = ['personal'];
+    this.unsub(); this._got = {}; this._parts = {}; this._dyn = {}; this._meta = {}; this._seeded = {}; this._need = ['personal'];
     const db = this.db, key = this._key, ls = this._ls = [];
     const loaded = (k, st) => this.setState(st, () => { this._meta[k] = true; this.syncListeners(); this.fixMembers(); });
     // Everyone signs in to the people list, so managers and team leaders know whose personal lists to open.
     db.doc('meta/people').set({ keys: this.fb.firestore.FieldValue.arrayUnion(key), names: { [key]: this._name } }, { merge: true }).catch(e => console.warn(e));
     ls.push(db.doc('meta/people').onSnapshot(d => { this.setState({ people: (d.exists && d.data().names) || {} }, () => this.syncListeners()); }, e => console.warn(e)));
     ls.push(db.doc('meta/directory').onSnapshot(d => {
-      if (!d.exists && this.isMgr(key)) db.doc('meta/directory').set({ people: DEFAULT_DIRECTORY }).catch(e => console.warn(e));
+      if (!d.exists && this.isMgr(key) && !this._seeded.dir) { this._seeded.dir = true; db.doc('meta/directory').set({ people: DEFAULT_DIRECTORY }).catch(e => console.warn(e)); }
       const dir = d.exists ? d.data().people || {} : DEFAULT_DIRECTORY;
       try { localStorage.setItem(KEY + '-dir', JSON.stringify(dir)); } catch (e) {}
       loaded('dir', { dir });
     }, e => { console.warn(e); loaded('dir', {}); }));
     ls.push(db.doc('meta/managers').onSnapshot(d => loaded('mgrs', { mgrs: (d.exists && d.data().keys) || [] }), e => { console.warn(e); loaded('mgrs', {}); }));
     ls.push(db.doc('meta/companies').onSnapshot(d => {
-      if (!d.exists && this.isMgr(key)) db.doc('meta/companies').set({ access: DEFAULT_COMPANIES }).catch(e => console.warn(e));
+      if (!d.exists && this.isMgr(key) && !this._seeded.cos) { this._seeded.cos = true; db.doc('meta/companies').set({ access: DEFAULT_COMPANIES }).catch(e => console.warn(e)); }
       loaded('cos', { cos: d.exists ? d.data().access || {} : DEFAULT_COMPANIES });
     }, e => { console.warn(e); loaded('cos', {}); }));
     // Owner names from before the directory (no login); they still show under "Other" in owner lists.
@@ -2017,7 +2038,7 @@ class Component extends DCLogic {
     const stale = this.state.tasks.filter(t => ['mgmt', 'team', 'personal'].includes(t.scope) && (t.members || []).join() !== this.membersOf(t).join());
     if (!stale.length) return;
     this._pending = this._pending || {}; stale.forEach(t => { this._pending[t.id] = t; });
-    clearTimeout(this._wt); this._wt = setTimeout(() => this.flush(), 350);
+    this.flushSoon();
   }
   applyRemote(kind, list) {
     this._got = { ...this._got, [kind]: list };   // latest snapshot of each list this person can see
@@ -2026,7 +2047,7 @@ class Component extends DCLogic {
     const remote = [].concat(...this._need.map(k => this._got[k]));
     this._remote = new Map(remote.map(t => [t.id, t]));   // latest saved version of every task (merge partner for saves)
     const tasks = remote.map(t => pend[t.id] || t);
-    Object.values(pend).forEach(p => { if (!tasks.some(t => t.id === p.id)) tasks.push(p); });
+    Object.values(pend).forEach(p => { if (!tasks.some(t => t.id === p.id) && !(this._gone && this._gone.has(p.id))) tasks.push(p); });
     tasks.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
     this._synced = new Map(tasks.map(t => [t.id, t]));
     this.setState(st => ({ tasks: [...tasks, ...st.tasks.filter(t => t.scope === 'offline')], cloud: 'ready' }), () => {
@@ -2061,10 +2082,13 @@ class Component extends DCLogic {
     tasks.forEach(t => { next.set(t.id, t); const was = prev.get(t.id); if (was !== t) { (this._pending = this._pending || {})[t.id] = t; if (!(t.id in this._base)) this._base[t.id] = (this._remote && this._remote.get(t.id)) || null; if (was && this.docRef(was).path !== this.docRef(t).path) this.write(was, () => this.docRef(was).delete()); } });
     prev.forEach((t, tid) => { if (!next.has(tid)) { if (this._pending) delete this._pending[tid]; this.write(t, () => this.docRef(t).delete()); } });
     this._synced = next;
-    if (this._pending && Object.keys(this._pending).length && !this._retry) { clearTimeout(this._wt); this._wt = setTimeout(() => this.flush(), 350); }   // while offline, the retry timer flushes
+    if (this._pending && Object.keys(this._pending).length && !this._retry) this.flushSoon();   // while offline, the retry timer flushes
   }
   // Each task is saved on its own (one refused save can't sink the others). A save reads the task's latest copy from the
   // server and lays your changes over it in one step (a transaction), so a tab that is behind can't wipe out anyone's work.
+  // Saves go out 350 ms after the first change. A running timer is never restarted, so a busy stream of updates from
+  // the server (or quick edits) can't keep pushing a save back.
+  flushSoon() { if (!this._wt) this._wt = setTimeout(() => { this._wt = null; this.flush(); }, 350); }
   flush() {
     const p = this._pending || {}; this._pending = {};
     Object.values(p).forEach(t => { const base = this._base[t.id]; delete this._base[t.id]; this.save(t, base); });
@@ -2073,6 +2097,7 @@ class Component extends DCLogic {
     const ref = this.docRef(t);
     this.write(t, () => this.db.runTransaction(tx => tx.get(ref).then(snap => {
       const latest = snap.exists ? snap.data() : null;
+      if (!latest && this._gone && this._gone.has(t.id)) return;   // deleted on the server meanwhile
       const out = base && latest ? mergeTask(clean(base), clean(t), latest) : clean(t);
       tx.set(ref, clean(t.scope === 'assigned' ? { ...out, members: (latest || out).members || [] } : { ...out, members: this.membersOf({ ...out, list: t.list }) }));
     })).then(() => { if (t.source === AGENT_TITLE && t.ext) this.tellTitleAgent(t); }), () => { (this._pending = this._pending || {})[t.id] = this._pending[t.id] || t; if (!(t.id in this._base)) this._base[t.id] = base; });
@@ -2136,7 +2161,10 @@ class Component extends DCLogic {
     const d = !this.isDone(t);
     this.upd(t.id, x => ({ ...x, done: d, ...(x.subs.length ? {} : { status: d ? 'done' : 'todo' }), subs: x.subs.map(s => ({ ...s, done: d, status: d ? 'done' : (s.status === 'done' ? 'todo' : s.status), ...this.sst() })) }));
   }
+  // Your own list (and offline tasks): gone at once, with Undo. Anyone else's: the delete dialog, checked by the server.
+  ownList(t) { return (t.scope === 'personal' || t.scope === 'team') && (t.list || this._key) === this._key; }
   deleteTask(t) {
+    if (t.scope !== 'offline' && !this.ownList(t)) return this.askDelete('task', t);
     clearTimeout(this._u);
     const idx = this.state.tasks.indexOf(t);
     this.setState(st => ({ tasks: st.tasks.filter(x => x.id !== t.id), undo: { t, idx } }));
@@ -2146,6 +2174,39 @@ class Component extends DCLogic {
   setTaskStatus(tid, v) {
     this.upd(tid, x => x.subs.length ? x : { ...x, status: v, done: v === 'done' });
   }
+  removeSub(t, s) {
+    if (t.scope === 'offline') return this.upd(t.id, x => ({ ...x, subs: x.subs.filter(y => y.id !== s.id) }));
+    this.askDelete('sub', t, s);
+  }
+  // Deleting someone else's task or removing any subtask: Remy confirms; Brandy uses her own password; otherwise the
+  // department's Team Leader password (tasks) or subtask password (subtasks). The server decides (api/hub/delete.js).
+  askDelete(kind, t, s) {
+    if (this.state.cloud !== 'ready') return this.say('Sign in to delete');
+    const mgmt = t.scope === 'mgmt' || (t.scope === 'assigned' && !t.list), dept = mgmt ? '' : this.deptOf(t.list || this._key);
+    const pw = this._key === ADMIN || (kind === 'task' && this.ownList(t)) ? '' : OWN_DELETE_PW.includes(this._key) ? 'Enter your delete password'
+      : !dept ? '' : 'Enter the ' + dept + (kind === 'task' ? ' Team Leader password' : ' subtask password');
+    this.setState({ menu: null, del: { kind, tid: t.id, sid: s ? s.id : '', list: mgmt ? '' : t.list || this._key, title: (s || t).title || '', pw, value: '', err: '', busy: false } });
+  }
+  confirmDelete = () => {
+    const d = this.state.del; if (!d || d.busy) return;
+    if (d.pw && !d.value) return this.setState({ del: { ...d, err: d.pw + '.' } });
+    const u = this.auth && this.auth.currentUser; if (!u) return this.setState({ del: { ...d, err: 'Sign in again.' } });
+    const fail = (err, clear) => this.setState(st => ({ del: st.del && { ...st.del, busy: false, err, value: clear ? '' : st.del.value } }));
+    this.setState({ del: { ...d, busy: true, err: '' } });
+    u.getIdToken().then(token => fetch('/api/hub/delete', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+      body: JSON.stringify({ kind: d.kind, list: d.list, id: d.tid, ...(d.sid ? { sid: d.sid } : {}), ...(d.value ? { password: d.value } : {}) }) }))
+      .then(r => r.json().catch(() => ({})).then(b => {
+        if (!r.ok) return fail(b.error || 'Could not delete it. Try again.', b.wrong);
+        if (d.kind === 'task') {   // gone on the server: drop it here too, and never save it again
+          (this._gone = this._gone || new Set()).add(d.tid);
+          if (this._pending) delete this._pending[d.tid];
+          if (this._synced) this._synced.delete(d.tid);
+          this.setState(st => ({ tasks: st.tasks.filter(x => x.id !== d.tid) }));
+        } else if (b.gone) this.upd(d.tid, x => ({ ...x, subs: x.subs.filter(y => y.id !== d.sid) }));   // never saved: just drop it here
+        this.setState({ del: null }); this.say(d.kind === 'task' ? 'Task deleted' : 'Subtask removed');
+      }))
+      .catch(() => fail('No connection. Try again.'));
+  };
   setSubStatus(tid, sid, v) {
     this.upd(tid, x => { const subs = x.subs.map(y => y.id === sid ? { ...y, status: v, done: v === 'done', ...this.sst() } : y); return { ...x, subs, done: subs.every(y => y.done) }; });
   }
@@ -2570,7 +2631,7 @@ class Component extends DCLogic {
           // Subtasks a member doesn't own stay visible (done or not) but are blurred and can't be clicked.
           rowLock: whole || mineName(s.owner) ? '' : 'pointer-events: none;',
           blurStyle: whole || mineName(s.owner) ? '' : 'filter: blur(3px); user-select: none;',
-          subOwnerLock: asg ? 'pointer-events: none;' : '', hideDel: asg && !whole ? 'display: none;' : '', hideGrip: asg ? 'visibility: hidden;' : '',
+          subOwnerLock: asg ? 'pointer-events: none;' : '', hideDel: (asg && !whole) || ((t.scope === 'mgmt' || (asg && !t.list)) && role !== 'manager') ? 'display: none;' : '',   // MGMT subtasks: managers only hideGrip: asg ? 'visibility: hidden;' : '',
           dragOpacity: this.state.subDrag && this.state.subDrag.sid === s.id ? 0.45 : 1,
           dropOutline: this.state.subOver === s.id && this.state.subDrag && this.state.subDrag.sid !== s.id ? '2px solid var(--tchb-indigo-500)' : 'none',
           onDragStart: e => { e.stopPropagation(); e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', s.id); } catch (_) {} const row = e.currentTarget.closest('[data-sid]'); if (row) e.dataTransfer.setDragImage(row, 16, 18); this.setState({ subDrag: { tid: t.id, sid: s.id } }); },
@@ -2599,7 +2660,7 @@ class Component extends DCLogic {
             return { ...x, subs, done: subs.every(y => y.done) };
           }); },
           onTitle: e => { const v = e.target.value; this.upd(t.id, x => ({ ...x, subs: x.subs.map(y => y.id === s.id ? { ...y, title: v, ...this.sst() } : y) })); },
-          onDelete: () => this.upd(t.id, x => ({ ...x, subs: x.subs.filter(y => y.id !== s.id) }))
+          onDelete: () => this.removeSub(t, s)
         }))
       };
     });
@@ -2790,6 +2851,16 @@ class Component extends DCLogic {
       emptyTitle: tasks.length ? 'Nothing here' : { personal: 'No personal tasks yet', team: 'No team tasks yet', mgmt: 'No MGMT tasks yet', offline: 'No offline tasks' }[scope] || 'No tasks yet',
       emptyBody: tasks.length ? 'No tasks match these filters.' : scope === 'team' ? 'Personal tasks in this department show up here as people add them.' : 'Add your first task above to get started.',
       hasUndo: !!undo, undoLabel: undo ? undo.t.title : '',
+      ...(() => { const d = this.state.del;
+        if (!d) return { delOpen: false, delNeedPw: false, hasDelErr: false };
+        const close = () => { if (!this.state.del || !this.state.del.busy) this.setState({ del: null }); };
+        return { delOpen: true, delHead: d.kind === 'task' ? 'Delete Task' : 'Remove Subtask',
+          delWhat: '“' + d.title + '” will be ' + (d.kind === 'task' ? 'deleted' : 'removed') + ' for everyone.',
+          delNeedPw: !!d.pw, delPrompt: d.pw, delValue: d.value, delFocusGo: !d.pw,
+          onDelValue: e => { const v = e.target.value; this.setState(st => ({ del: st.del && { ...st.del, value: v, err: '' } })); },
+          onDelKey: e => { if (e.key === 'Enter') { e.preventDefault(); this.confirmDelete(); } else if (e.key === 'Escape') close(); },
+          hasDelErr: !!d.err, delErr: d.err, delBusy: d.busy ? 'opacity: 0.6; pointer-events: none;' : '',
+          delGoLabel: d.busy ? 'Deleting…' : d.kind === 'task' ? 'Delete Task' : 'Remove Subtask', delGo: this.confirmDelete, delCancel: close }; })(),
       undo: () => { clearTimeout(this._u); this.setState(st => { const a = [...st.tasks]; a.splice(st.undo.idx, 0, st.undo.t); return { tasks: a, undo: null }; }); }
     };
   }

@@ -46,15 +46,21 @@ service cloud.firestore {
              .hasOnly(['subs', 'done', 'status', 'notes', 'title', 'updatedBy', 'updatedAt', 'startedAt', 'doneAt', 'files', 'log']);
     }
 
+    // Deleting tasks (other than in your own list) and removing subtasks go through the hub's server, which checks
+    // the department passwords (api/hub/delete.js). So the page may never shrink a task's subtask list.
+    function keepsSubs() {
+      return request.resource.data.get('subs', []).size() >= resource.data.get('subs', []).size();
+    }
+
     // MGMT tasks.
     match /tasks/{taskId} {
       allow read: if isManager() || onTask(resource.data);
-      allow create, delete: if isManager();
-      allow update: if isManager() || sharedEdit();
+      allow create: if isManager();
+      allow update: if (isManager() || sharedEdit()) && keepsSubs();
     }
 
     // Personal lists. Team leaders (and members with the department toggle) see the lists of people whose
-    // main department they see; team leaders can also add and delete tasks there.
+    // main department they see; team leaders can also add tasks there. You delete tasks in your own list yourself.
     match /personal/{owner}/items/{itemId} {
       function fullAccess() {
         return signedIn() && (owner == me() || (isManager() && (!isMgr(owner) || owner in sharedWith().get(me(), []))));
@@ -62,8 +68,9 @@ service cloud.firestore {
       allow read: if fullAccess()
         || (signedIn() && seesDept(deptOf(owner)) && resource.data.company in companies())
         || onTask(resource.data);
-      allow create, delete: if fullAccess() || (signedIn() && isLead() && seesDept(deptOf(owner)));
-      allow update: if fullAccess() || (signedIn() && seesDept(deptOf(owner))) || sharedEdit();
+      allow create: if fullAccess() || (signedIn() && isLead() && seesDept(deptOf(owner)));
+      allow delete: if signedIn() && owner == me();
+      allow update: if (fullAccess() || (signedIn() && seesDept(deptOf(owner))) || sharedEdit()) && keepsSubs();
     }
 
     match /meta/directory { allow read: if signedIn(); allow write: if isManager(); }
