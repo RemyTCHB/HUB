@@ -1057,7 +1057,7 @@ h1, h2, h3, h4 {
         </sc-for>
       </nav>
       <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
-        <button sc-camel-on-click="{{ signOut }}" title="{{ userTitle }}" style="width: 40px; height: 40px; flex: none; border-radius: 999px; cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-shadow: var(--shadow-button); {{ mo.avatar }}">{{ userInitials }}<sc-if value="{{ me.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ me.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></button>
+        <button sc-camel-on-click="{{ openSettings }}" title="{{ userTitle }}" style="width: 40px; height: 40px; flex: none; border-radius: 999px; cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-shadow: var(--shadow-button); {{ mo.avatar }}">{{ userInitials }}<sc-if value="{{ me.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ me.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></button>
       </sc-if>
       </div>
     </div>
@@ -1156,6 +1156,11 @@ h1, h2, h3, h4 {
       </button>
       </sc-if>
       <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="primary" sc-camel-on-click="{{ addTask }}" hint-size="120px,48px">Add Task</x-import></div>
+      <sc-if value="{{ showTplBtns }}" hint-placeholder-val="{{ false }}">
+        <div aria-hidden="true" style="{{ tplBreak }}"></div>
+        <button sc-camel-on-click="{{ openDeployPick }}" title="Deploy one of your task templates" style="display: flex; align-items: center; gap: 8px; border-radius: var(--radius-md); cursor: pointer; font-family: var(--font-display); font-weight: 700; color: var(--tchb-indigo-700); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); border: 1px solid var(--border-strong); box-shadow: var(--shadow-button); {{ tplBtnBox }}" style-hover="filter: brightness(0.97);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>Deploy</button>
+        <button sc-camel-on-click="{{ openUpload }}" title="Make a task from a CSV file" style="display: flex; align-items: center; gap: 8px; border-radius: var(--radius-md); cursor: pointer; font-family: var(--font-display); font-weight: 700; color: var(--tchb-indigo-700); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); border: 1px solid var(--border-strong); box-shadow: var(--shadow-button); {{ tplBtnBox }}" style-hover="filter: brightness(0.97);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>Upload Tasks</button>
+      </sc-if>
       <sc-if value="{{ showNewSubs }}" hint-placeholder-val="{{ false }}">
         <div style="flex: 1 1 100%; display: flex; flex-direction: column; gap: 2px; padding: 2px 2px 0 4px;">
           <sc-for list="{{ newSubList }}" as="ns" hint-placeholder-count="0">
@@ -1234,6 +1239,7 @@ h1, h2, h3, h4 {
               <sc-if value="{{ t.hasTagRow }}" hint-placeholder-val="{{ false }}">
                 <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 6px;">
                   <sc-if value="{{ t.hasTag }}" hint-placeholder-val="{{ false }}"><span title="{{ t.tagTitle }}" style="display: inline-flex; align-items: center; gap: 5px; min-height: 26px; padding: 4px 10px; box-sizing: border-box; max-width: 100%; line-height: 1.3; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; white-space: normal; text-transform: uppercase; background: {{ t.tagBg }}; color: {{ t.tagFg }};"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path sc-camel-d="{{ t.tagIcon }}"></path></svg>{{ t.tagText }}</span></sc-if>
+                  <sc-if value="{{ t.canAddTpl }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ t.openAddTpl }}" title="Add another template's subtasks to this task" style="display: inline-flex; align-items: center; gap: 4px; min-height: 26px; padding: 3px 10px; box-sizing: border-box; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: {{ t.tagFg }}; background: transparent; border: 1px dashed {{ t.tagFg }};" style-hover="background: {{ t.tagBg }};"><svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Template</button></sc-if>
                   <sc-if value="{{ t.hasDue }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ t.openDue }}" title="{{ t.dueTitle }}" style="display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; white-space: nowrap; border: none; cursor: pointer; font-variant-numeric: tabular-nums; background: {{ t.dueBg }}; color: {{ t.dueColor }}; {{ t.dueLock }}" style-hover="filter: brightness(0.96);"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>{{ t.dueLabel }}</button></sc-if>
                   <sc-if value="{{ t.hasExtLink }}" hint-placeholder-val="{{ false }}"><a href="{{ t.extUrl }}" target="_blank" rel="noopener" title="Open this deal in the Title Commitment Agent" style="display: flex; align-items: center; gap: 6px; height: 26px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--tchb-indigo-500); color: var(--tchb-indigo-700); text-decoration: none; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.02em; white-space: nowrap; {{ mo.pushBtn }}" style-hover="background: var(--tchb-indigo-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>{{ t.extLabel }}</a></sc-if>
                 </span>
@@ -1533,6 +1539,129 @@ h1, h2, h3, h4 {
           </div>
         </sc-for>
       </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ setOpen }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ closeSettings }}" style="position: fixed; inset: 0; z-index: 64; background: rgba(10, 12, 24, 0.4);"></div>
+    <div role="dialog" aria-label="My Settings" style="position: fixed; z-index: 65; left: 50%; top: 24px; transform: translateX(-50%); width: calc(100% - 32px); max-width: 600px; max-height: calc(100vh - 48px); box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); overflow: hidden; {{ mo.sheet }}">
+      <div style="display: flex; align-items: flex-start; gap: 12px; padding: 18px 20px 12px; border-bottom: 1px solid var(--border-default);">
+        <div style="flex: 1; min-width: 0;">
+          <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--tchb-indigo-700);">My Settings</h2>
+          <p style="margin: 2px 0 0; font-size: 13px; color: var(--text-muted); word-break: break-word;">{{ setWho }}</p>
+        </div>
+        <button sc-camel-on-click="{{ closeSettings }}" title="Close" aria-label="Close" style="width: 40px; height: 40px; flex: none; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center;" style-hover="background: var(--tchb-gray-100);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+      </div>
+      <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--tchb-indigo-700);">My Task Templates</div>
+        <p style="margin: 0 0 4px; font-size: 13px; color: var(--text-muted);">Lists of subtasks you use again and again. Deploy one to make a new task in your list (it asks for the name), or add one to a task you deployed before.</p>
+        <sc-if value="{{ tplEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="padding: 12px; border-radius: var(--radius-md); background: var(--surface-subtle); font-size: 14px; color: var(--text-muted);">No templates yet. Add your first one below.</div>
+        </sc-if>
+        <sc-for list="{{ tplRows }}" as="tp" hint-placeholder-count="0">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border-default); background: var(--surface-subtle);">
+            <div style="flex: 1 1 200px; min-width: 0;">
+              <div style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700); word-break: break-word;">{{ tp.name }}</div>
+              <div style="font-size: 12px; color: var(--text-muted); word-break: break-word;">{{ tp.summary }}</div>
+            </div>
+            <div style="display: flex; gap: 6px; flex: none;">
+              <button sc-camel-on-click="{{ tp.onDeploy }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 10px 18px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); padding: 7px 14px; font-size: 13px;" style-hover="background: var(--action-primary-hover);">Deploy</button>
+              <button sc-camel-on-click="{{ tp.onEdit }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 7px 12px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); background: var(--surface-card);" style-hover="background: var(--tchb-indigo-050);">Edit</button>
+              <button sc-camel-on-click="{{ tp.onDelete }}" title="Delete template" aria-label="Delete template" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 7px 12px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); background: var(--surface-card); color: var(--tchb-red-500);" style-hover="background: var(--tchb-red-050);">Delete</button>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ tplEditing }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: var(--radius-md); border: 1px dashed var(--border-strong); background: var(--surface-subtle);">
+            <div style="font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700);">{{ tplEditHead }}</div>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--text-muted);">Template name
+              <input value="{{ tplEditName }}" sc-camel-on-input="{{ onTplName }}" placeholder="e.g. Wholesale" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 10px 12px; font-family: var(--font-body); font-size: 15px; color: var(--text-body); outline: none; background: var(--surface-card); width: 100%; box-sizing: border-box; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+            </label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--text-muted);">Subtasks, one per line
+              <textarea rows="7" value="{{ tplEditText }}" sc-camel-on-input="{{ onTplText }}" placeholder="Do seller call&#10;Order title&#10;Schedule closing" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 10px 12px; font-family: var(--font-body); font-size: 15px; color: var(--text-body); outline: none; background: var(--surface-card); width: 100%; box-sizing: border-box; resize: vertical; line-height: 1.45; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);"></textarea>
+            </label>
+            <sc-if value="{{ tplHasErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="font-size: 13px; font-weight: 700; color: var(--tchb-red-500);">{{ tplErr }}</div></sc-if>
+            <div style="display: flex; gap: 8px; justify-content: flex-end;">
+              <button sc-camel-on-click="{{ cancelTpl }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 7px 12px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); background: var(--surface-card); padding: 9px 14px; font-size: 14px;" style-hover="background: var(--tchb-indigo-050);">Cancel</button>
+              <button sc-camel-on-click="{{ saveTpl }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 10px 18px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Save Template</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ tplCanNew }}" hint-placeholder-val="{{ true }}">
+          <button sc-camel-on-click="{{ newTpl }}" style="align-self: flex-start; display: flex; align-items: center; gap: 6px; border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 7px 12px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); background: var(--surface-card); padding: 9px 14px; font-size: 14px;" style-hover="background: var(--tchb-indigo-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>New Template</button>
+        </sc-if>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 20px; border-top: 1px solid var(--border-default);">
+        <span style="font-size: 12px; color: var(--text-muted);">Your templates are saved to your account.</span>
+        <button sc-camel-on-click="{{ signOut }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 7px 12px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); background: var(--surface-card); padding: 9px 14px; font-size: 14px; color: var(--tchb-red-500);" style-hover="background: var(--tchb-red-050);">Sign Out</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ upOpen }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ closeUpload }}" style="position: fixed; inset: 0; z-index: 64; background: rgba(10, 12, 24, 0.4);"></div>
+    <div role="dialog" aria-label="Upload Tasks" style="position: fixed; z-index: 65; left: 50%; top: 24px; transform: translateX(-50%); width: calc(100% - 32px); max-width: 560px; max-height: calc(100vh - 48px); box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); overflow: hidden; {{ mo.sheet }}">
+      <div style="display: flex; align-items: flex-start; gap: 12px; padding: 18px 20px 12px; border-bottom: 1px solid var(--border-default);">
+        <div style="flex: 1; min-width: 0;">
+          <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--tchb-indigo-700);">Upload Tasks</h2>
+          <p style="margin: 2px 0 0; font-size: 13px; color: var(--text-muted);">{{ upSub }}</p>
+        </div>
+        <button sc-camel-on-click="{{ closeUpload }}" title="Close" aria-label="Close" style="width: 40px; height: 40px; flex: none; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center;" style-hover="background: var(--tchb-gray-100);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+      </div>
+      <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px;">
+        <sc-if value="{{ upPicking }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ upNone }}" hint-placeholder-val="{{ false }}"><div style="font-size: 14px; color: var(--text-muted);">There are no upload templates for your department yet.</div></sc-if>
+          <sc-for list="{{ upGroups }}" as="ug" hint-placeholder-count="0">
+            <div style="font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); padding-top: 4px;">{{ ug.dept }}</div>
+            <sc-for list="{{ ug.items }}" as="ui" hint-placeholder-count="1">
+              <button sc-camel-on-click="{{ ui.onPick }}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; padding: 12px 14px; border-radius: var(--radius-md); cursor: pointer; border: 1px solid var(--border-default); background: var(--surface-subtle);" style-hover="border-color: var(--tchb-indigo-500);"><span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--tchb-indigo-700);">{{ ui.name }}</span><span style="font-size: 13px; color: var(--text-muted);">{{ ui.help }}</span></button>
+            </sc-for>
+          </sc-for>
+        </sc-if>
+        <sc-if value="{{ upForm }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;"><span style="display: inline-flex; padding: 4px 10px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; background: #fff1e0; color: #b45309;">{{ upTplLabel }}</span><button sc-camel-on-click="{{ upBack }}" style="border: none; background: transparent; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); text-decoration: underline;">Change</button></div>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--text-muted);">Address
+            <input value="{{ upAddress }}" sc-camel-on-input="{{ onUpAddress }}" sc-camel-auto-focus="{{ true }}" placeholder="e.g. 123 Main St, Akron OH 44301" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 10px 12px; font-family: var(--font-body); font-size: 15px; color: var(--text-body); outline: none; background: var(--surface-card); width: 100%; box-sizing: border-box; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+          </label>
+          <div style="font-size: 13px; color: var(--text-muted);">The task will be named <b style="color: var(--tchb-indigo-700);">{{ upTitle }}</b></div>
+          <label style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: var(--radius-md); border: 1px dashed var(--border-strong); cursor: pointer; background: var(--surface-subtle);">
+            <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; color: var(--tchb-indigo-700);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+            <span style="flex: 1; min-width: 0; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); word-break: break-word;">{{ upFileLabel }}</span>
+            <input type="file" accept=".csv,text/csv" sc-camel-on-change="{{ onUpFile }}" style="display: none;">
+          </label>
+          <button sc-camel-on-click="{{ toggleUpHeader }}" role="switch" aria-checked="{{ upHeader }}" style="display: flex; align-items: center; gap: 10px; border: none; background: transparent; cursor: pointer; padding: 2px 0; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--text-body); text-align: left;"><span style="width: 36px; height: 20px; flex: none; border-radius: 999px; position: relative; transition: background 140ms; background: {{ upHeadTrack }};"><span style="position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 999px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.25); transition: transform 140ms; transform: {{ upHeadKnob }};"></span></span>The file has a header row</button>
+          <button sc-camel-on-click="{{ toggleUpSummary }}" role="switch" aria-checked="{{ upSummary }}" style="display: flex; align-items: center; gap: 10px; border: none; background: transparent; cursor: pointer; padding: 2px 0; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--text-body); text-align: left;"><span style="width: 36px; height: 20px; flex: none; border-radius: 999px; position: relative; transition: background 140ms; background: {{ upSumTrack }};"><span style="position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 999px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.25); transition: transform 140ms; transform: {{ upSumKnob }};"></span></span>The file has a summary row at the bottom</button>
+          <sc-if value="{{ upHasPreview }}" hint-placeholder-val="{{ false }}">
+            <div style="padding: 10px 12px; border-radius: var(--radius-md); background: var(--tchb-green-050); color: var(--tchb-green-600); font-size: 13px; font-weight: 700;">{{ upCount }}</div>
+            <sc-for list="{{ upPreview }}" as="pv" hint-placeholder-count="0">
+              <div style="padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border-default);"><div style="font-size: 14px; font-weight: 700; color: var(--text-body); word-break: break-word;">{{ pv.title }}</div><div style="font-size: 12px; color: var(--text-muted); white-space: pre-wrap; word-break: break-word;">{{ pv.note }}</div></div>
+            </sc-for>
+          </sc-if>
+          <sc-if value="{{ upHasErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 700; color: var(--tchb-red-500); background: var(--tchb-red-050);">{{ upErr }}</div></sc-if>
+        </sc-if>
+      </div>
+      <sc-if value="{{ upForm }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; gap: 8px; justify-content: flex-end; padding: 12px 20px; border-top: 1px solid var(--border-default);">
+          <button sc-camel-on-click="{{ closeUpload }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 7px 12px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); background: var(--surface-card); padding: 10px 16px; font-size: 14px;" style-hover="background: var(--tchb-indigo-050);">Cancel</button>
+          <button sc-camel-on-click="{{ doUpload }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 10px 18px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ upBusy }}" style-hover="background: var(--action-primary-hover);">{{ upGoLabel }}</button>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ depOpen }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ closeDeploy }}" style="position: fixed; inset: 0; z-index: 70; background: rgba(10, 12, 24, 0.4);"></div>
+    <div role="dialog" aria-label="Deploy a template" style="position: fixed; z-index: 71; left: 50%; top: 50%; transform: translate(-50%, -50%); width: calc(100% - 32px); max-width: 420px; box-sizing: border-box; padding: 20px; border-radius: var(--radius-lg); background-color: var(--surface-card); border: 1px solid var(--border-default); box-shadow: var(--shadow-raised); display: flex; flex-direction: column; gap: 12px;">
+      <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--tchb-indigo-700); word-break: break-word;">{{ depHead }}</h2>
+      <p style="margin: 0; font-size: 14px; line-height: 1.45; color: var(--text-body);">{{ depWhat }}</p>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--text-muted);">What should the task be called?
+        <input value="{{ depName }}" sc-camel-auto-focus="{{ true }}" sc-camel-on-input="{{ onDepName }}" sc-camel-on-key-down="{{ onDepKey }}" placeholder="e.g. TC - 123 Main St" style="border: 1px solid var(--border-strong); border-radius: 8px; padding: 10px 12px; font-family: var(--font-body); font-size: 15px; color: var(--text-body); outline: none; background: var(--surface-card); width: 100%; box-sizing: border-box; {{ mo.input16 }}" style-focus="border-color: var(--tchb-indigo-500); box-shadow: var(--focus-ring);">
+      </label>
+      <sc-if value="{{ depHasErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="font-size: 13px; font-weight: 700; color: var(--tchb-red-500);">{{ depErr }}</div></sc-if>
+      <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px;">
+        <button sc-camel-on-click="{{ closeDeploy }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 7px 12px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); background: var(--surface-card); padding: 10px 16px; font-size: 14px;" style-hover="background: var(--tchb-indigo-050);">Cancel</button>
+        <button sc-camel-on-click="{{ doDeploy }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 10px 18px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary);" style-hover="background: var(--action-primary-hover);">Deploy</button>
+      </div>
     </div>
   </sc-if>
 
@@ -1846,8 +1975,44 @@ const TAGS = {
   mgmt: ['#fbe9ec', '#bd2239', 'rgba(239,90,111,0.16)', '#ff8a9a', 'M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16M4 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z'],
   agent: ['#fdf1d6', '#8a6100', 'rgba(253,177,26,0.16)', '#f5c451', 'M12 8V4H8M6 8h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2zM2 14h2M20 14h2M9 13v2M15 13v2'],
   shared: ['#e3f4ea', '#2e7d4f', 'rgba(79,217,138,0.14)', '#7be3a5', 'M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13'],
-  person: ['#ecebf7', '#4d458a', 'rgba(143,135,221,0.18)', '#c9c4f2', 'M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z']
-};   // tasks the Title Commitment Agent creates (api/title-agent)
+  person: ['#ecebf7', '#4d458a', 'rgba(143,135,221,0.18)', '#c9c4f2', 'M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z'],
+  upload: ['#fff1e0', '#b45309', 'rgba(242,166,90,0.16)', '#f2a65a', 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h8'],
+  deploy: ['#e6f0fa', '#2d669f', 'rgba(91,155,219,0.16)', '#8fbcea', 'M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5']
+};   // tasks the Title Commitment Agent creates (api/title-agent); CSV uploads and template deployments
+// Saved task lists (templates/<login>: { lists: [{ id, name, subs: [title, ...] }] }). Monz starts with the TC lists;
+// keep in step with STARTER in api/_lib/templates.js (the GHL webhook deploys her TC Deal Tasks).
+const STARTER_TEMPLATES = { 'monz@totalchb.com': [
+  { id: 'tc-deal-tasks', name: 'TC Deal Tasks', subs: ['Do seller call and fill TC checklist', 'Understand occupancy of property',
+    'TC assistant search for a runner', 'I set up time for runner to meet the seller'] },
+  { id: 'wholesale', name: 'Wholesale', subs: ['If owner occupied schedule showings with seller', 'After we have a buyer submit to title',
+    'Follow up on title search', 'Keep in contact with the seller and update on next steps', 'Solve any closing blockers',
+    'Schedule closing with title, buyer and seller', 'TC assistant sends review link'] },
+  { id: 'novation', name: 'Novation', subs: ['If owner occupied schedule showings with seller', 'After we have a buyer submit to title',
+    'Follow up on title search', 'After getting a buyer schedule appraisals and inspections',
+    'TC assistant gets contractors for any fixes requested', 'Follow up with agents to make sure everything is cleared to close on buyer side',
+    'Keep in contact with the seller and update on next steps', 'Solve any closing blockers',
+    'Schedule closing with title, buyer and seller', 'TC assistant sends review link'] }] };
+// Upload Tasks: CSV templates by department. Column `sub` names each subtask; the `notes` columns make its note (one line
+// each, labelled with the header when the file has one). Keep in step with UPLOADS in api/_lib/templates.js.
+const UPLOAD_TEMPLATES = [
+  { key: 'SOW', dept: 'TC', name: 'SOW', help: 'Column A becomes the subtasks; columns B and C their notes. Named SOW - <address>.', sub: 0, notes: [1, 2], title: a => 'SOW - ' + a }];
+// A CSV file as rows of cells (quotes, commas and line breaks inside quotes; blank rows dropped).
+const parseCsv = text => {
+  const rows = []; let row = [], f = '', q = false; text = String(text || '').replace(/^﻿/, '');
+  for (let i = 0; i < text.length; i++) { const c = text[i];
+    if (q) { if (c === '"') { if (text[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
+    else if (c === '"') q = true; else if (c === ',') { row.push(f); f = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(f); rows.push(row); row = []; f = ''; }
+    else f += c; }
+  if (f !== '' || row.length) { row.push(f); rows.push(row); }
+  return rows.filter(r => r.some(x => String(x).trim())); };
+// Rows of an upload template: skip the header row and the summary row (last) when the file has them.
+const csvSubs = (tpl, rows, header, summary) => {
+  const head = header ? rows[0] || [] : null; let body = rows.slice(header ? 1 : 0); if (summary) body = body.slice(0, -1);
+  return body.map(r => ({ title: String(r[tpl.sub] || '').replace(/\s+/g, ' ').trim(),
+    note: tpl.notes.map(i => { const v = String(r[i] || '').trim(), h = head && String(head[i] || '').trim(); return v ? (h ? h + ': ' + v : v) : ''; }).filter(Boolean).join('\n') }))
+    .filter(x => x.title); };
+const rid = () => Array.from(crypto.getRandomValues(new Uint8Array(8)), b => b.toString(16).padStart(2, '0')).join('');
 const MOBILE_MAX = 640;
 // Search: every word typed must start a word in the title, in any case ("AI" finds "AI Review", not "Failsafe";
 // "walk" finds "Walkthrough"). Returns null for an empty search.
@@ -1949,7 +2114,7 @@ class Component extends DCLogic {
     if (!dir || typeof dir !== 'object') dir = DEFAULT_DIRECTORY;
     let mode = 'light', openMap = {};
     try { mode = localStorage.getItem(KEY + '-mode') || 'light'; openMap = JSON.parse(localStorage.getItem(KEY + '-open')) || {}; } catch (e) {}
-    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, dir, mgrs: [], cos: DEFAULT_COMPANIES, dept: 'all', pd: null, np: { name: '', email: '', role: 'member', dept: '' }, uploading: {}, folderOpen: {}, menu: null, tasks: loadOffline(), forWho: '', scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'all', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null, del: null, search: '', searchOpen: false };
+    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, dir, mgrs: [], cos: DEFAULT_COMPANIES, dept: 'all', pd: null, np: { name: '', email: '', role: 'member', dept: '' }, uploading: {}, folderOpen: {}, menu: null, tasks: loadOffline(), forWho: '', scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'pending', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null, del: null, search: '', searchOpen: false, myTpls: [], settings: null, deploy: null, upl: null };
   }
   applyTheme(company, mode) {
     const el = document.documentElement, dark = mode === 'dark', kpi = company === 'kpi';
@@ -2027,6 +2192,11 @@ class Component extends DCLogic {
     // Everyone signs in to the people list, so managers and team leaders know whose personal lists to open.
     db.doc('meta/people').set({ keys: this.fb.firestore.FieldValue.arrayUnion(key), names: { [key]: this._name } }, { merge: true }).catch(e => console.warn(e));
     ls.push(db.doc('meta/people').onSnapshot(d => { this.setState({ people: (d.exists && d.data().names) || {} }, () => this.syncListeners()); }, e => console.warn(e)));
+    // My task templates (My Settings). Someone with starter lists gets them saved once.
+    ls.push(db.doc('templates/' + key).onSnapshot(d => {
+      if (!d.exists && STARTER_TEMPLATES[key] && !this._seeded.tpl) { this._seeded.tpl = true; db.doc('templates/' + key).set({ lists: STARTER_TEMPLATES[key], updatedAt: hubNow() }).catch(e => console.warn('templates', e.code || e)); }
+      this.setState({ myTpls: d.exists ? d.data().lists || [] : STARTER_TEMPLATES[key] || [] });
+    }, e => { console.warn('templates', e.code || e); this.setState({ myTpls: STARTER_TEMPLATES[key] || [] }); }));
     // Online now: check in every minute, and read everyone's check-ins (recounted each minute as they age).
     const beat = () => db.doc('presence/' + key).set({ sessions: { [DEVICE]: { at: hubNow(), type: DEVICE_TYPE } } }, { merge: true }).catch(e => console.warn('presence', e.code || e));
     beat(); this._beat = setInterval(() => { beat(); this.setState({ presTick: hubNow() }); }, BEAT_MS);
@@ -2226,6 +2396,51 @@ class Component extends DCLogic {
   setTaskStatus(tid, v) {
     this.upd(tid, x => x.subs.length ? x : { ...x, status: v, done: v === 'done' });
   }
+  // ---------- Task templates (My Settings, Deploy, Add Template) ----------
+  saveTpls(lists) {
+    this.setState({ myTpls: lists });
+    return this.db.doc('templates/' + this._key).set({ lists, updatedAt: hubNow() }).catch(e => { console.warn(e); this.say('Could not save your templates: ' + (e.code || e.message)); });
+  }
+  // A new task in your list with the template's subtasks (yours), tagged Task Deployment <name>.
+  deployTpl(l, title) {
+    const me = this.myName(), m = this.me();
+    this.setState(st => {
+      let t = { ...mk(st.company, title, me), scope: 'personal', list: this._key, order: hubNow(), deployed: [l.name], ...(m ? { updatedBy: m, updatedAt: hubNow() } : {}) };
+      t.subs = (l.subs || []).map(x => ({ id: id(), title: x, owner: me, status: 'todo', done: false, ...this.sst() }));
+      t = stamp(null, t, m);
+      return { tasks: [...st.tasks, t], scope: 'personal', filter: 'pending', ownerFilter: '', search: '', searchOpen: false, openMap: { ...st.openMap, [t.id]: true }, deploy: null, settings: null, menu: null };
+    });
+    this.say('Deployed “' + title + '” to your list');
+  }
+  addTplTo(tid, l) {
+    const me = this.myName();
+    this.upd(tid, x => ({ ...x, deployed: [...new Set([...(x.deployed || []), l.name])], subs: [...x.subs, ...(l.subs || []).map(y => ({ id: id(), title: y, owner: me, status: 'todo', done: false, ...this.sst() }))] }));
+    this.setState(st => ({ openMap: { ...st.openMap, [tid]: true } }));
+    this.say('Added ' + (l.subs || []).length + ' subtasks from ' + l.name);
+  }
+  // ---------- Upload Tasks (CSV) ----------
+  // The file goes to the new task's folder, then the server builds the task in the department Team Leader's list.
+  doUpload = () => {
+    const u = this.state.upl; if (!u || !u.tpl || u.busy) return;
+    const tpl = UPLOAD_TEMPLATES.find(x => x.key === u.tpl), address = (u.address || '').trim(), subs = u.rows || [];
+    const fail = err => this.setState(st => ({ upl: st.upl && { ...st.upl, busy: false, err } }));
+    if (!address) return fail('Add the address.');
+    if (!u.file) return fail('Choose the CSV file.');
+    if (!subs.length) return fail('No subtasks found in the file. Check the header and summary switches.');
+    const user = this.auth && this.auth.currentUser; if (!user) return fail('Sign in again.');
+    this.setState({ upl: { ...u, busy: true, err: '' } });
+    const tid = 'csv-' + rid(), path = 'files/tchb/' + tid + '/' + rid().slice(0, 8) + '-' + u.file.name.replace(/[^\w.\- ]+/g, '_');
+    let url = '';
+    this.storage().then(st => st.ref(path).put(u.file, { contentType: 'text/csv' })).then(r => r.ref.getDownloadURL()).then(x => { url = x; return user.getIdToken(); })
+      .then(token => fetch('/api/hub/upload', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+        body: JSON.stringify({ template: tpl.key, address, id: tid, subs, file: { name: u.file.name, size: u.file.size, url, path } }) }))
+      .then(r => r.json().catch(() => ({})).then(b => {
+        if (!r.ok) { this.storage().then(st => st.ref(path).delete()).catch(() => {}); return fail(b.error || 'Could not create the task. Try again.'); }
+        this.setState(st => ({ upl: null, scope: st.scope === 'offline' ? st.scope : 'personal', filter: 'pending', ownerFilter: '', search: '', searchOpen: false, openMap: { ...st.openMap, [tid]: true } }));
+        this.say('Created “' + b.title + '” with ' + b.subs + ' subtasks in ' + b.lead + "'s list");
+      }))
+      .catch(e => { console.warn(e); fail('Could not upload: ' + (e.code || e.message || 'no connection')); });
+  };
   removeSub(t, s) {
     if (t.scope === 'offline') return this.upd(t.id, x => ({ ...x, subs: x.subs.filter(y => y.id !== s.id) }));
     this.askDelete('sub', t, s);
@@ -2276,6 +2491,8 @@ class Component extends DCLogic {
     else if (m.kind === 'forMember') this.setState({ forWho: v });
     else if (m.kind === 'ownerFilter') this.setState(st => { const o = { ...st.openMap }; if (v) st.tasks.forEach(t => { if (t.subs.some(y => (y.owner || '').trim() === v)) o[t.id] = true; }); return { ownerFilter: v, openMap: o }; });
     else if (m.kind === 'status') m.sid ? this.setSubStatus(m.tid, m.sid, v) : this.setTaskStatus(m.tid, v);
+    else if (m.kind === 'deployPick') { const l = (this.state.myTpls || []).find(x => x.id === v); if (l) return this.setState({ menu: null, deploy: { id: l.id, name: '', err: '' } }); }
+    else if (m.kind === 'addTpl') { const l = (this.state.myTpls || []).find(x => x.id === v); if (l) this.addTplTo(m.tid, l); }
     this.setState({ menu: null });
   }
   // Date picker state: the month in view (vy, vm), the picked day 'YYYY-MM-DD' and time (hh, mm), all Eastern.
@@ -2559,7 +2776,7 @@ class Component extends DCLogic {
       return sc === scope; };
     // Completion % is hidden on the sign-in screen; when shown it counts the list being viewed (team or personal).
     const companyTabs = COMPANIES.filter(c => myCos.includes(c.key)).map(c => ({ label: c.label, pct: gate ? '' : pctOf(allTasks.filter(t => (t.company || 'tchb') === c.key && inScope(t))),
-      onClick: () => this.setState({ company: c.key, ownerFilter: '', filter: 'all' }),
+      onClick: () => this.setState({ company: c.key, ownerFilter: '', filter: 'pending' }),
       bg: company === c.key ? 'var(--action-secondary)' : 'transparent', color: company === c.key ? '#fff' : 'var(--tchb-gray-700)', shadow: company === c.key ? 'var(--shadow-button)' : 'none' }));
     const tasks = allTasks.filter(t => (t.company || 'tchb') === company && inScope(t));
     const owners = this.state.team;
@@ -2581,6 +2798,9 @@ class Component extends DCLogic {
       if (menu.kind === 'status') {
         const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : tk && !menu.sid ? statusOf(tk) : '';
         menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
+      } else if (menu.kind === 'deployPick' || menu.kind === 'addTpl') {
+        menuItems = [{ isHeader: true, label: menu.kind === 'addTpl' ? 'Add A Template' : 'Deploy A Template', value: '#h' },
+          ...(this.state.myTpls || []).map(l => ({ value: l.id, label: l.name, note: (l.subs || []).length + ' subtasks' }))];
       } else if (menu.kind === 'forMember') {
         // Managers add for anyone but managers; team leaders for people in the departments they see.
         menuCur = this.state.forWho;
@@ -2600,15 +2820,17 @@ class Component extends DCLogic {
     const showProgress = this.props.showProgress ?? true;
     const done = tasks.filter(t => this.isDone(t));
     const subsTotal = unitTot(tasks), subsDone = unitDone(tasks);
-    const counts = { all: tasks.length, todo: 0, progress: 0, done: 0 };
-    tasks.forEach(t => counts[statusOf(t)]++);
-    const filters = [['all', 'All'], ['todo', 'Not Started'], ['progress', 'In Progress'], ['done', 'Done']].map(([k, label]) => ({
+    // Pending (the default) = Not Started and In Progress together.
+    const counts = { todo: 0, progress: 0, done: 0 };
+    tasks.forEach(t => counts[statusOf(t)]++); counts.pending = counts.todo + counts.progress;
+    const filters = [['pending', 'Pending'], ['progress', 'In Progress'], ['todo', 'Not Started'], ['done', 'Done']].map(([k, label]) => ({
       label, count: counts[k], onClick: () => this.setState({ filter: k }),
       bg: filter === k ? 'var(--surface-card)' : 'transparent',
       color: filter === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
       shadow: filter === k ? 'var(--shadow-button)' : 'none'
     }));
-    let list = tasks.filter(t => (filter === 'all' || statusOf(t) === filter) && ownerMatch(t) && searchMatch(t));
+    const inFilter = t => filter === 'pending' ? statusOf(t) !== 'done' : statusOf(t) === filter;
+    let list = tasks.filter(t => inFilter(t) && ownerMatch(t) && searchMatch(t));
     // Group by status (In Progress, then Not Started, then Done); within a group keep the saved drag order.
     const RANK = { progress: 0, todo: 1, done: 2 };
     list = list.map((t, i) => [t, i]).sort((a, b) => RANK[statusOf(a[0])] - RANK[statusOf(b[0])] || a[1] - b[1]).map(([t]) => t);
@@ -2635,7 +2857,8 @@ class Component extends DCLogic {
       const deptTag = scope === 'team' ? deptsOf(t).filter(Boolean).join(', ') : '';
       // Tasks created by another app (the Title Agent, later the EOD tools) carry source: '<app name>'.
       // Where it comes from: MGMT red, Title Commitment Agent gold, shared from someone's list green, someone's own list indigo.
-      const tag = t.source ? ['agent', 'Added by ' + t.source] : asg ? (t.list ? ['shared', 'Shared by ' + this.nameOf(t.list)] : ['mgmt', 'Added by MGMT'])
+      const tag = t.source ? ['agent', 'Added by ' + t.source] : t.upload ? ['upload', 'CSV Upload ' + t.upload.template]
+        : (t.deployed || []).length ? ['deploy', 'Task Deployment ' + t.deployed.join(' + ')] : asg ? (t.list ? ['shared', 'Shared by ' + this.nameOf(t.list)] : ['mgmt', 'Added by MGMT'])
         : mgmtInTeam ? ['mgmt', 'Added by MGMT for ' + who] : t.scope === 'team' ? ['person', this.nameOf(t.list) + "'s Task"] : scope === 'team' ? ['person', 'Your Task'] : null;
       const tc = tag && TAGS[tag[0]], dk = mode === 'dark', due = dueOf(t, d);
       const n = t.subs.filter(s => s.done).length;
@@ -2657,8 +2880,11 @@ class Component extends DCLogic {
         lockMain: asg && !whole ? 'pointer-events: none; opacity: 0.55;' : '', readOnly: asg && !whole,
         hideEdit: noDelete ? 'display: none;' : '', hideGrip: asg ? 'visibility: hidden; pointer-events: none;' : '', ownerLock: asg ? 'pointer-events: none;' : '', addSubStyle: asg && !whole ? 'display: none;' : '',
         hasTag: !!tag, tagText: tag ? tag[1] : '', tagIcon: tc ? tc[4] : '', tagBg: tc ? tc[dk ? 2 : 0] : '', tagFg: tc ? tc[dk ? 3 : 1] : '',
-        tagTitle: tag ? { agent: 'Created by the Title Commitment Agent and kept in step with it', mgmt: 'A MGMT task', shared: 'From someone else\'s list: you own part of it', person: 'From this person\'s own list' }[tag[0]] : '',
+        tagTitle: tag ? { upload: 'Made from a CSV file (Upload Tasks)', deploy: 'Made from a task template', agent: 'Created by the Title Commitment Agent and kept in step with it', mgmt: 'A MGMT task', shared: 'From someone else\'s list: you own part of it', person: 'From this person\'s own list' }[tag[0]] : '',
         hasTagRow: !!tag || due.hasDue || !!(t.ext && t.ext.url),
+        // A deployed task can take another template's subtasks (Add Template), if you can work on the whole task.
+        canAddTpl: live && !!(t.deployed || []).length && !(asg && !whole) && t.scope !== 'offline' && (this.state.myTpls || []).length > 0,
+        openAddTpl: e => this.openMenu(e, { kind: 'addTpl', tid: t.id }),
         hasExtLink: !!(t.ext && t.ext.url), extUrl: (t.ext && t.ext.url) || '', extLabel: t.source === AGENT_TITLE ? 'Open In Title Agent' : 'Open',
         canPushMgmt: live && role === 'manager' && t.scope === 'personal', onPushMgmt: () => this.pushMgmt(t.id),
         titleMatch: hit(t.title) ? MATCH_GLOW : '',
@@ -2766,10 +2992,10 @@ class Component extends DCLogic {
       // Team is split by department: All plus each department this person sees (one department: just that one).
       showDepts: scope === 'team' && teamDepts.length > 1,
       deptTabs: [...(teamDepts.length > 1 ? ['all'] : []), ...teamDepts].map(d => { const on = d === dept, n = allTasks.filter(t => (t.company || 'tchb') === company && inTeam(t) && inDept(t, d)).length;
-        return { label: d === 'all' ? 'All' : d, count: n, onClick: () => this.setState({ dept: d, ownerFilter: '', filter: 'all' }),
+        return { label: d === 'all' ? 'All' : d, count: n, onClick: () => this.setState({ dept: d, ownerFilter: '', filter: 'pending' }),
           bg: on ? 'var(--surface-card)' : 'transparent', color: on ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: on ? 'var(--shadow-button)' : 'none' }; }),
       ...Object.fromEntries(['mgmt', 'team', 'personal', 'offline'].map(k => [k + 'Tab', { on: scope === k, show: views.includes(k),
-        onClick: () => this.setState({ scope: k, ownerFilter: '', filter: 'all', menu: null }),
+        onClick: () => this.setState({ scope: k, ownerFilter: '', filter: 'pending', menu: null }),
         bg: scope === k ? 'var(--surface-card)' : 'transparent', color: scope === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', shadow: scope === k ? 'var(--shadow-button)' : 'none' }])),
       scopeHint: { mgmt: 'Shared by the managers only.',
         team: role === 'manager' ? 'Everyone’s personal tasks by department, plus MGMT tasks they own.' : teamDepts.length > 1 ? 'Tasks in the departments you lead.' : 'Your department’s tasks: ' + teamDepts[0] + '.',
@@ -2843,12 +3069,9 @@ class Component extends DCLogic {
       foldersEmpty: !tasks.some(t => (t.files || []).length),
       hasToast: !!this.state.toast, toast: this.state.toast,
       signIn: () => this.auth && this.auth.signInWithPopup(new this.fb.auth.GoogleAuthProvider()).catch(e => this.setState({ authError: e.message })),
-      signOut: () => { if (!this.auth || !window.confirm('Sign out of the Team Hub?')) return;
-        const out = () => this.auth.signOut();
-        if (this.db && this._key) this.db.doc('presence/' + this._key).set({ sessions: { [DEVICE]: { at: 0, type: DEVICE_TYPE } } }, { merge: true }).then(out, out); else out(); },
       signedIn: cloud === 'ready' && !!this.state.user, userInitials: this.state.user ? initials(live ? this.myName() : this.state.user.name) : '',
       me: { photo: live ? this.rec(this._key).photo || '' : '', hasPhoto: live && !!this.rec(this._key).photo },
-      userTitle: this.state.user ? 'Signed in as ' + this.state.user.email + ' — click to sign out' : '',
+      userTitle: this.state.user ? 'Signed in as ' + this.state.user.email + ' — My Settings' : '',
       ...(() => { const st = cloud !== 'ready' ? cloud : this.state.saveErr ? 'unsaved' : this.state.saving ? 'saving' : 'ready';
         return { syncLabel: { ready: 'Live', saving: 'Saving…', unsaved: 'Not Saved', connecting: 'Connecting', error: 'Offline' }[st] || 'Local Only',
           syncTitle: { ready: 'Every change is saved for the whole team', saving: 'Saving your changes for the whole team…', unsaved: this.state.saveErr }[st] || 'Changes are saved in this browser only',
@@ -2862,6 +3085,66 @@ class Component extends DCLogic {
       ownerFilterLabel: ownerFilter || 'All Owners',
       openNewOwner: e => this.openMenu(e, { kind: 'newOwner' }),
       openOwnerFilter: e => this.openMenu(e, { kind: 'ownerFilter' }),
+      ...(() => {
+        // My Settings (the avatar): templates and Sign Out.
+        const S = this.state.settings, tpls = this.state.myTpls || [], ed = S && S.edit;
+        const close = () => this.setState({ settings: null }), setEd = x => this.setState(st => ({ settings: { ...(st.settings || {}), edit: x && { ...(st.settings || {}).edit, ...x } } }));
+        // Deploy / Upload Tasks beside Add Task; on phones they share their own row.
+        const tplBtnBox = this.state.mob ? 'order: 5; flex: 1 1 40%; justify-content: center; min-height: 44px; padding: 0 10px; font-size: 14px; white-space: nowrap;' : 'flex: none; min-height: 48px; padding: 0 16px; font-size: 15px;';
+        return { tplBtnBox, tplBreak: this.state.mob ? 'order: 4; flex: 0 0 100%; height: 0;' : 'display: none;', showTplBtns: live, setOpen: !!S, openSettings: () => this.setState({ settings: {}, menu: null }), closeSettings: close,
+          setWho: this.state.user ? this.myName() + ' · ' + this.state.user.email : '',
+          tplEmpty: !tpls.length, tplEditing: !!ed, tplCanNew: !ed, tplEditHead: ed && ed.id ? 'Edit Template' : 'New Template',
+          tplEditName: ed ? ed.name : '', tplEditText: ed ? ed.text : '', tplHasErr: !!(ed && ed.err), tplErr: ed ? ed.err || '' : '',
+          onTplName: e => setEd({ name: e.target.value, err: '' }), onTplText: e => setEd({ text: e.target.value, err: '' }),
+          newTpl: () => this.setState({ settings: { edit: { id: '', name: '', text: '', err: '' } } }), cancelTpl: () => this.setState({ settings: {} }),
+          saveTpl: () => { const name = (ed.name || '').trim(), subs = (ed.text || '').split('\n').map(x => x.replace(/^\s*[-*•]\s*/, '').trim()).filter(Boolean);
+            if (!name) return setEd({ err: 'Give the template a name.' }); if (!subs.length) return setEd({ err: 'Add at least one subtask.' });
+            if (tpls.some(l => l.id !== ed.id && l.name.toLowerCase() === name.toLowerCase())) return setEd({ err: 'You already have a template with that name.' });
+            this.saveTpls(ed.id ? tpls.map(l => l.id === ed.id ? { ...l, name, subs } : l) : [...tpls, { id: 't' + rid(), name, subs }]); this.setState({ settings: {} }); },
+          tplRows: tpls.map(l => ({ name: l.name, summary: (l.subs || []).length + ' subtasks · ' + (l.subs || []).slice(0, 3).join(' · ') + ((l.subs || []).length > 3 ? ' …' : ''),
+            onDeploy: () => this.setState({ deploy: { id: l.id, name: '', err: '' } }),
+            onEdit: () => this.setState({ settings: { edit: { id: l.id, name: l.name, text: (l.subs || []).join('\n'), err: '' } } }),
+            onDelete: () => { if (window.confirm('Delete the template “' + l.name + '”? Tasks already deployed stay as they are.')) this.saveTpls(tpls.filter(x => x.id !== l.id)); } })),
+          openDeployPick: e => { if (!tpls.length) { this.say('Add a template in My Settings first'); return this.setState({ settings: { edit: { id: '', name: '', text: '', err: '' } } }); } this.openMenu(e, { kind: 'deployPick' }); },
+          signOut: () => { if (!this.auth || !window.confirm('Sign out of the Team Hub?')) return;
+            const out = () => { this.setState({ settings: null }); this.auth.signOut(); };
+            if (this.db && this._key) this.db.doc('presence/' + this._key).set({ sessions: { [DEVICE]: { at: 0, type: DEVICE_TYPE } } }, { merge: true }).then(out, out); else out(); } };
+      })(),
+      ...(() => {
+        // Deploy: name the new task.
+        const D = this.state.deploy, l = D && (this.state.myTpls || []).find(x => x.id === D.id);
+        if (!D || !l) return { depOpen: false, depHasErr: false };
+        const go = () => { const name = (this.state.deploy.name || '').trim(); if (!name) return this.setState(st => ({ deploy: { ...st.deploy, err: 'Give the task a name.' } })); this.deployTpl(l, name); };
+        return { depOpen: true, depHead: 'Deploy ' + l.name, depWhat: (l.subs || []).length + ' subtasks go into a new task in your list, assigned to you.',
+          depName: D.name, onDepName: e => { const v = e.target.value; this.setState(st => ({ deploy: { ...st.deploy, name: v, err: '' } })); },
+          onDepKey: e => { if (e.key === 'Enter') { e.preventDefault(); go(); } else if (e.key === 'Escape') this.setState({ deploy: null }); },
+          depHasErr: !!D.err, depErr: D.err, doDeploy: go, closeDeploy: () => this.setState({ deploy: null }) };
+      })(),
+      ...(() => {
+        // Upload Tasks: pick a template (your departments; managers all), then the address, file and switches.
+        const U = this.state.upl, mine = role === 'manager' ? UPLOAD_TEMPLATES : UPLOAD_TEMPLATES.filter(x => x.dept === myDept || teamDepts.includes(x.dept));
+        const openUpload = () => this.setState({ upl: { tpl: mine.length === 1 ? mine[0].key : '', address: '', file: null, text: '', header: true, summary: true, rows: [], err: '', busy: false }, menu: null });
+        if (!U) return { openUpload, upOpen: false, upPicking: false, upForm: false, upHasPreview: false, upHasErr: false, upNone: false, upGroups: [], upPreview: [] };
+        const tpl = UPLOAD_TEMPLATES.find(x => x.key === U.tpl), set = x => this.setState(st => ({ upl: st.upl && { ...st.upl, ...x } }));
+        const reparse = (text, header, summary) => tpl ? csvSubs(tpl, parseCsv(text), header, summary) : [];
+        const sw = on => ({ Track: on ? 'var(--tchb-indigo-500)' : 'var(--tchb-gray-300)', Knob: on ? 'translateX(16px)' : 'none' });
+        const h = sw(U.header), sm = sw(U.summary), rows = U.rows || [];
+        return { openUpload, upOpen: true, closeUpload: () => { if (!U.busy) this.setState({ upl: null }); },
+          upSub: tpl ? 'Makes one task from the file, in the ' + tpl.dept + ' Team Leader\'s list, with the subtasks assigned to you.' : 'Choose what you are uploading.',
+          upPicking: !tpl, upForm: !!tpl, upNone: !mine.length,
+          upGroups: [...new Set(mine.map(x => x.dept))].map(d => ({ dept: d, items: mine.filter(x => x.dept === d).map(x => ({ name: x.name, help: x.help, onPick: () => set({ tpl: x.key, rows: reparse(U.text, U.header, U.summary), err: '' }) })) })),
+          upTplLabel: tpl ? 'CSV Upload ' + tpl.name + ' · ' + tpl.dept : '', upBack: () => set({ tpl: '', err: '' }),
+          upAddress: U.address, onUpAddress: e => set({ address: e.target.value, err: '' }), upTitle: tpl ? tpl.title((U.address || '').trim() || '<address>') : '',
+          upFileLabel: U.file ? U.file.name : 'Choose the CSV file',
+          onUpFile: e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (!f) return;
+            if (f.size > 5 * 1024 * 1024) return set({ err: f.name + ' is over 5 MB' });
+            f.text().then(text => set({ file: f, text, rows: reparse(text, U.header, U.summary), err: '' })).catch(() => set({ err: 'Could not read ' + f.name })); },
+          upHeader: !!U.header, upHeadTrack: h.Track, upHeadKnob: h.Knob, toggleUpHeader: () => set({ header: !U.header, rows: reparse(U.text, !U.header, U.summary) }),
+          upSummary: !!U.summary, upSumTrack: sm.Track, upSumKnob: sm.Knob, toggleUpSummary: () => set({ summary: !U.summary, rows: reparse(U.text, U.header, !U.summary) }),
+          upHasPreview: !!U.file, upCount: rows.length ? rows.length + ' subtasks found' + (rows.length > 5 ? ', the first five:' : ':') : 'No subtasks found. Check the switches above.',
+          upPreview: rows.slice(0, 5).map(r => ({ title: r.title, note: r.note })), upHasErr: !!U.err, upErr: U.err || '',
+          upBusy: U.busy ? 'opacity: 0.6; pointer-events: none;' : '', upGoLabel: U.busy ? 'Uploading…' : 'Create Task', doUpload: this.doUpload };
+      })(),
       // Search: typing opens every task with a matching subtask (as the assignee filter does); the X or Esc clears it.
       searchOpen: !!this.state.searchOpen, searchClosed: !this.state.searchOpen, search: this.state.search,
       openSearch: () => this.setState({ searchOpen: true }),
@@ -2916,8 +3199,8 @@ class Component extends DCLogic {
       expandAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = true; }); return { openMap: o }; }),
       collapseAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = false; }); return { openMap: o }; }),
       isEmpty: visibleTasks.length === 0,
-      emptyTitle: tasks.length ? 'Nothing here' : { personal: 'No personal tasks yet', team: 'No team tasks yet', mgmt: 'No MGMT tasks yet', offline: 'No offline tasks' }[scope] || 'No tasks yet',
-      emptyBody: tasks.length ? (q ? 'No tasks or subtasks match “' + this.state.search.trim() + '”.' : 'No tasks match these filters.') : scope === 'team' ? 'Personal tasks in this department show up here as people add them.' : 'Add your first task above to get started.',
+      emptyTitle: tasks.length ? (filter === 'pending' && !q && !ownerFilter ? 'All caught up' : 'Nothing here') : { personal: 'No personal tasks yet', team: 'No team tasks yet', mgmt: 'No MGMT tasks yet', offline: 'No offline tasks' }[scope] || 'No tasks yet',
+      emptyBody: tasks.length ? (q ? 'No tasks or subtasks match “' + this.state.search.trim() + '”.' : filter === 'pending' && !ownerFilter ? 'Every task here is done. They are under Done.' : 'No tasks match these filters.') : scope === 'team' ? 'Personal tasks in this department show up here as people add them.' : 'Add your first task above to get started.',
       hasUndo: !!undo, undoLabel: undo ? undo.t.title : '',
       ...(() => {
         // Online now: everyone with a device seen in the last five minutes (Hub clock), by name, with phone / desktop.

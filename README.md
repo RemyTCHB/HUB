@@ -33,6 +33,9 @@ Plan the work, assign it, and watch it move — by department, in real time.
 - **Safe Deleting** — delete tasks in your own list as before. Anyone else's task needs the department's Team Leader password; removing a subtask needs the department's subtask password; MGMT tasks and their subtasks are for managers. Checked on the server, and a copy of everything deleted is kept.
 - **Two Company Boards** — TCHB and KPI DRIVER, each with its own tasks, progress, and brand look; access is set per person.
 - **People** — managers set roles, departments and access in one place.
+- **Pending First** — the task list opens on Pending (Not Started and In Progress together), then In Progress, Not Started and Done.
+- **Task Templates** — save lists of subtasks in My Settings (click your photo) and Deploy one as a new task, named as you like; add another template to a deployed task later. Tagged *Task Deployment <template>*.
+- **Upload Tasks** — make a task from a CSV file with a department's upload template (TC: *SOW*, named SOW - <address>); the file is kept on the task. Tagged *CSV Upload <template>*.
 - **Search** — find tasks and subtasks by name; matching titles glow green and tasks open to show the subtasks that matched.
 - **Who's Online** — the Active pill shows how many people are in the hub right now; click it for who, on phone or desktop (seen in the last five minutes).
 - **Light & Dark Themes**, phone-ready, and **Work Offline** with Push To Live.
@@ -70,6 +73,17 @@ The page sends these to `POST /api/hub/delete` (with the person's sign-in), whic
 with who and when. The Firestore rules don't let the page delete anyone else's task or shrink a task's subtask list itself.
 The passwords are only in the Vercel setting `HUB_DELETE_PASSWORDS` (JSON: `leads` and `subtasks` by department, `people`
 by email for anyone with their own delete password); never put them in the code or this README.
+
+## Task Templates, Upload Tasks And GHL
+
+- Saved lists live in `templates/<login>` (each person's own; managers can see them). Monz starts with TC Deal Tasks,
+  Wholesale and Novation (`STARTER_TEMPLATES` in the app, `STARTER` in `api/_lib/templates.js`).
+- `POST /api/hub/upload` (with the person's sign-in) builds a CSV upload's task in the department Team Leader's list:
+  owner the Team Leader, subtasks the uploader. Upload templates: `UPLOAD_TEMPLATES` in the app and `UPLOADS` in
+  `api/_lib/templates.js` (tested: `node --test tests/templates.test.js`).
+- `POST /api/hooks/ghl?key=<GHL_WEBHOOK_KEY>`: a GHL workflow deploys Monz's TC Deal Tasks as
+  *TC - <address1>, <city> <state> <postal_code>*, one task per contact. Vercel settings: `GHL_WEBHOOK_KEY` (required),
+  optional `GHL_DEPLOY_FOR` and `GHL_TEMPLATE`. Never put the key in the code or this README.
 
 ## Connecting Other Apps
 

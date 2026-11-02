@@ -43,7 +43,7 @@ service cloud.firestore {
       return onTask(resource.data)
         && request.resource.data.get('members', []) == resource.data.get('members', [])
         && request.resource.data.diff(resource.data).affectedKeys()
-             .hasOnly(['subs', 'done', 'status', 'notes', 'title', 'updatedBy', 'updatedAt', 'startedAt', 'doneAt', 'files', 'log']);
+             .hasOnly(['subs', 'done', 'status', 'notes', 'title', 'updatedBy', 'updatedAt', 'startedAt', 'doneAt', 'files', 'log', 'deployed']);
     }
 
     // Deleting tasks (other than in your own list) and removing subtasks go through the hub's server, which checks
@@ -81,6 +81,11 @@ service cloud.firestore {
       allow read, create: if signedIn();
       allow update: if signedIn() && request.resource.data.get('keys', []).hasAll(resource.data.get('keys', []));
       allow delete: if isManager();
+    }
+    // Saved task lists (My Settings): your own; managers can see and fix anyone's.
+    match /templates/{person} {
+      allow read: if signedIn() && (person == me() || isManager());
+      allow write: if signedIn() && (person == me() || isManager()) && request.resource.data.keys().hasOnly(['lists', 'updatedAt']);
     }
     // Who's online: each person checks in their own devices; everyone signed in can see who's online.
     match /presence/{person} {
