@@ -132,6 +132,7 @@ Only **Closing Blockers** come over: one task per deal, **Title - &lt;address&gt
 | --- | --- |
 | `POST /api/title-agent` | The agent sends a deal's Closing Blockers (after each review, re-run or change, and every 15 minutes); the hub creates or updates the task and answers with blockers ticked or unticked here. |
 | `POST /api/title-agent/team` | The agent asks who is on the team (signed the same way, body `{}`); the hub answers `{"people": [{name, email, role, dept, photo}]}` with the Managers and the TC department from the team directory. Another app can add departments with `{"depts": ["TC", "DISPO"]}` (TC Checklist does, for names, signed with its own `TC_CHECKLIST_SYNC_SECRET`, which opens only this list). Logs counts only. |
+| `POST /api/title-agent/passwords` | The agent's in-app Help asks which delete passwords a person may see: body `{"email": "..."}` (team domains only, else 400), signed with `TITLE_AGENT_SYNC_SECRET` only. The answer is the same as `/api/hub/passwords` for that person (`{rows: [{dept, lead, sub}], own: [{name, pw}]}`: managers all, Team Leaders their departments, members none), sent with `Cache-Control: no-store`. Logs counts only. |
 | `POST /api/title-agent/hub` | The hub page calls it after saving one of these tasks; the server sends the agent any blocker ticked or unticked here. |
 | `api/_lib/titleagent.js` | The rules (tested in `tests/`: `node --test tests/title-agent.test.js`). |
 

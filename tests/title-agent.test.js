@@ -126,3 +126,42 @@ test('a blocker cancelled in the hub does not count: the deal is done when the r
   assert.equal(back.task.done, false, 'a new open blocker reopens the task');
   assert.ok(back.task.log.some(e => e.ev === 'reopened' && !e.sid));
 });
+
+test('passwords: signed with the agent\'s secret only, team emails only, the same answer as the hub\'s Help', async () => {
+  // A stand-in team directory, so the handler runs without Firebase.
+  const hub = require('../api/_lib/hub');
+  const people = { 'brandy@totalchb.com': { name: 'Brandy Pollack', role: 'manager' }, 'monz@totalchb.com': { name: 'Monz', role: 'lead', dept: 'TC', sees: ['TC', 'DISPO'], deptView: true },
+    'will@totalchb.com': { name: 'Will', role: 'member', dept: 'TC' } };
+  const realTeam = hub.team; hub.team = async () => ({ people, managers: ['brandy@totalchb.com', 'systems@totalchb.com'] });
+  const env = { ...process.env };
+  Object.assign(process.env, { TITLE_AGENT_SYNC_SECRET: 'agent-secret', TC_CHECKLIST_SYNC_SECRET: 'checklist-secret',
+    HUB_DELETE_PASSWORDS: JSON.stringify({ leads: { TC: 'l-tc', DISPO: 'l-di', ACQ: 'l-acq' }, subtasks: { TC: 's-tc' }, people: { 'brandy@totalchb.com': 'b-own' } }) });
+  delete require.cache[require.resolve('../api/title-agent/passwords')];
+  const handler = require('../api/title-agent/passwords');
+  const call = async (bodyObj, secret = 'agent-secret', method = 'POST') => {
+    const body = JSON.stringify(bodyObj), h = sign(secret, body), out = { headers: {} };
+    const logs = []; const log = console.log; console.log = (...a) => logs.push(a.join(' '));
+    try {
+      await handler({ method, body, headers: { 'x-hub-timestamp': h['X-Hub-Timestamp'], 'x-hub-signature': h['X-Hub-Signature'] } },
+        { setHeader: (k, v) => { out.headers[k.toLowerCase()] = v; }, end: s => { out.body = JSON.parse(s); }, set statusCode(c) { out.code = c; } });
+    } finally { console.log = log; }
+    return { ...out, logs };
+  };
+  try {
+    const lead = await call({ email: 'Monz@TotalCHB.com' });
+    assert.equal(lead.code, 200);
+    assert.deepEqual(lead.body, { rows: [{ dept: 'TC', lead: 'l-tc', sub: 's-tc' }, { dept: 'DISPO', lead: 'l-di', sub: '' }], own: [] });
+    assert.equal(lead.headers['cache-control'], 'no-store');
+    assert.ok(lead.logs.every(l => !/l-tc|s-tc|l-di|b-own/.test(l)), 'logs counts only, never a password');
+    const mgr = await call({ email: 'systems@kpidriver.com' });             // second login → systems@totalchb.com
+    assert.deepEqual(mgr.body.rows.map(r => r.dept), ['TC', 'DISPO', 'ACQ']); assert.deepEqual(mgr.body.own, [{ name: 'Brandy Pollack', pw: 'b-own' }]);
+    assert.deepEqual((await call({ email: 'will@totalchb.com' })).body, { rows: [], own: [] }, 'members: none');
+    assert.equal((await call({ email: 'monz@totalchb.com' }, 'checklist-secret')).code, 401, 'TC Checklist\'s secret does not open this');
+    assert.equal((await call({ email: 'someone@gmail.com' })).code, 400, 'not a team email');
+    assert.equal((await call({})).code, 400, 'no email');
+    assert.equal((await call({ email: 'x@totalchb.com.evil.com' })).code, 400);
+    assert.equal((await call({ email: 'monz@totalchb.com' }, 'agent-secret', 'GET')).code, 405);
+  } finally {
+    hub.team = realTeam; for (const k of ['TITLE_AGENT_SYNC_SECRET', 'TC_CHECKLIST_SYNC_SECRET', 'HUB_DELETE_PASSWORDS']) { if (k in env) process.env[k] = env[k]; else delete process.env[k]; }
+  }
+});
