@@ -152,6 +152,18 @@ person's sign-in before asking. Passwords are never logged and never go into eit
 | `POST /api/tc-checklist/passwords` | The passwords TC Checklist's Help shows the person: Managers the TC one and anyone's own, TC Team Leaders the TC one, Members none. |
 | `api/_lib/tcchecklist.js` | The rules (tested: `node --test tests/tcchecklist.test.js`). |
 
+### DISPO OPS
+
+DISPO OPS (dispo-ops.totalchb.com) sends each deal's progress one way: **DISPO - &lt;address&gt;** in Carlos's list (DISPO), tagged *Added by DISPO OPS* with a link back. The task's note shows the overall % and the next step with its owner; each phase of the deal is a subtask with its % (owned by whoever has that phase's next step, Done at 100%). Closed in DISPO OPS marks every phase Done; Cancelled sets the task's status to `cancelled` with a note; a removed deal gets a note and is no longer updated. Nothing is sent back, people's own title edits are kept, and a task deleted here is not brought back. **Switched off in DISPO OPS** until its owner decides what moves.
+
+| Piece | Where |
+| --- | --- |
+| `POST /api/dispo-ops` | DISPO OPS's Cloud Functions send a deal after each change that moves its progress, plus a daily catch-up; the hub creates or updates the task (link record `hubsync/dispo-ops-<deal>`, server only). |
+| `POST /api/title-agent/team` | DISPO OPS asks for every department (`{"depts": ["TC", "DISPO", "ACQ", "OPS"]}`) when a Manager clicks Refresh From Hub. |
+| `api/_lib/dispoops.js` | The rules (tested: `node --test tests/dispo-ops.test.js`). |
+
+Vercel settings: `DISPO_OPS_SYNC_SECRET` (the same value as DISPO OPS's `HUB_SYNC_SECRET` in its Firebase secrets; it opens only these two endpoints) and optionally `HUB_DISPO_OWNER` (default carlos@totalchb.com).
+
 ## Support
 
 Questions or access requests: contact the TCHB / KPI Driver operations team.
