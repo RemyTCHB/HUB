@@ -138,6 +138,20 @@ Only **Closing Blockers** come over: one task per deal, **Title - &lt;address&gt
 
 Messages between the apps are signed with a shared secret. Vercel settings for this project: `HUB_FIREBASE_SERVICE_ACCOUNT` (a service account key for this Firebase project, role Cloud Datastore User), `TITLE_AGENT_SYNC_SECRET` (the shared secret; the agent has the same value as `HUB_SYNC_SECRET`), and optionally `TITLE_AGENT_ENGINE_URL` and `HUB_TITLE_OWNER` (default monz@totalchb.com). For TC Checklist's names: `TC_CHECKLIST_SYNC_SECRET` (the same value as TC Checklist's `HUB_SYNC_SECRET`).
 
+### TC Checklist
+
+TC Checklist (tc.totalchb.com) takes names from the team directory (above) and uses the hub's delete passwords. Its
+properties belong to TC, so only the TC Team Leader password and people's own passwords apply: Remy confirms, Brandy
+uses her own, Managers and Team Leaders who see TC use the TC Team Leader password, and Members can't delete (they
+mark the property Cancelled). Both endpoints are signed with `TC_CHECKLIST_SYNC_SECRET`; TC Checklist checks the
+person's sign-in before asking. Passwords are never logged and never go into either app's pages or repositories.
+
+| Piece | Where |
+| --- | --- |
+| `POST /api/tc-checklist/delete-check` | `{"email", "ask": true}` says what deleting needs (`confirm` or `password`); `{"email", "password"}` checks it. |
+| `POST /api/tc-checklist/passwords` | The passwords TC Checklist's Help shows the person: Managers the TC one and anyone's own, TC Team Leaders the TC one, Members none. |
+| `api/_lib/tcchecklist.js` | The rules (tested: `node --test tests/tcchecklist.test.js`). |
+
 ## Support
 
 Questions or access requests: contact the TCHB / KPI Driver operations team.
