@@ -27,7 +27,7 @@ Plan the work, assign it, and watch it move — by department, in real time.
 - **Roles** — Managers see everything; Team Leaders see and assign within their departments; Members see their own list (plus their department when a manager turns that on).
 - **Shared Work** — own a subtask on anyone's task and that task shows in your list, with the parts you don't own blurred.
 - **Tasks & Subtasks** — check off subtasks and the main task closes itself, or complete the whole task in one click.
-- **Clear Statuses** — Not Started, In Progress, Done and Cancelled, with the date each one started and finished. A cancelled subtask stops counting and leaves its task open; Cancel Whole Task cancels every subtask (Reopen Task brings them back as they were). Cancelled work doesn't count toward anyone's % and has its own filter.
+- **Clear Statuses** — Not Started, In Progress, Done and Cancelled, with the date each one started and finished. A cancelled subtask (red) stops counting and leaves its task open; Cancel Whole Task cancels every subtask (Reopen Task brings them back as they were). Cancelled work doesn't count toward anyone's % and has its own filter.
 - **Files** — attach documents to any task or subtask; the Files button shows every task folder in the current view.
 - **Notes** — leave notes on tasks and subtasks, with who wrote them and when.
 - **Safe Deleting** — delete tasks in your own list as before. Anyone else's task needs the department's Team Leader password; removing a subtask needs the department's subtask password; MGMT tasks and their subtasks are for managers. Checked on the server, and a copy of everything deleted is kept.
@@ -82,6 +82,11 @@ by email for anyone with their own delete password); never put them in the code 
 page fills from `POST /api/hub/passwords` (with the person's sign-in): managers get every department's passwords and
 anyone's own, Team Leaders the departments they lead with Team view on, members none (`passwordsFor` in
 `api/_lib/deletes.js`, tested). The build refuses to write a password into the Help files. Screenshots use made-up tasks.
+
+Help also offers each guide as a PDF (Open / Download): `help/pdf/` holds the three guides without passwords. A Team
+Leader's or manager's own copy gets a last page, *Your Delete Passwords*, built in the browser from the same
+`/api/hub/passwords` answer (pdf-lib and fontkit in `help/vendor/`, brand fonts cut to Latin in `help/fonts/`). Team
+Leaders can also open the User Guide, and managers all three, without passwords, to send to someone new.
 
 ## Login As User (Remy)
 
