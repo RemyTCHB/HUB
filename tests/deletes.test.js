@@ -66,3 +66,19 @@ test('a broken or missing password setting refuses instead of letting deletes th
   assert.equal(passwordCheck({ need: 'sub', dept: 'TC' }, 'mo@totalchb.com', '', readPasswords('')), 'unset');
   assert.equal(passwordCheck({ need: 'sub', dept: 'TC' }, 'mo@totalchb.com', '', conf), 'wrong');
 });
+
+test('Help passwords: managers all, Team Leaders their departments (Team view on), members none', () => {
+  const { passwordsFor } = require('../api/_lib/deletes');
+  const conf = { leads: { TC: 'l-tc', DISPO: 'l-di', ACQ: 'l-acq' }, subtasks: { TC: 's-tc', DISPO: 's-di' }, people: { 'brandy@totalchb.com': 'b-own' } };
+  const people = { 'brandy@totalchb.com': { name: 'Brandy Pollack', role: 'manager' }, 'monz@totalchb.com': { name: 'Monz', role: 'lead', dept: 'TC', sees: ['TC', 'DISPO'], deptView: true },
+    'luke@totalchb.com': { name: 'Luke', role: 'lead', dept: 'ACQ', sees: ['ACQ'], deptView: false }, 'will@totalchb.com': { name: 'Will', role: 'member', dept: 'TC', sees: ['TC'], deptView: true } };
+  const managers = ['brandy@totalchb.com', 'systems@totalchb.com'];
+  const m = passwordsFor({ me: 'systems@totalchb.com', people, managers, conf });
+  assert.deepEqual(m.rows.map(r => r.dept), ['TC', 'DISPO', 'ACQ']);
+  assert.deepEqual(m.own, [{ name: 'Brandy Pollack', pw: 'b-own' }]);
+  const l = passwordsFor({ me: 'monz@totalchb.com', people, managers, conf });
+  assert.deepEqual(l.rows, [{ dept: 'TC', lead: 'l-tc', sub: 's-tc' }, { dept: 'DISPO', lead: 'l-di', sub: 's-di' }]);
+  assert.deepEqual(l.own, []);
+  assert.deepEqual(passwordsFor({ me: 'luke@totalchb.com', people, managers, conf }).rows, [], 'Team view off: none');
+  assert.deepEqual(passwordsFor({ me: 'will@totalchb.com', people, managers, conf }), { rows: [], own: [] }, 'members: none');
+});

@@ -39,7 +39,8 @@ module.exports = async (req, res) => {
       } else {
         const subs = t.subs.filter(s => s.id !== sid);
         tx.set(trash, { kind: 'subtask', path: ref.path, taskTitle: t.title || '', sub, by: name, byKey: me, at: now });
-        tx.update(ref, { subs, done: subs.length ? subs.every(s => s.done) : !!t.done, members: who.members({ ...t, subs }, list),
+        const live = subs.filter(s => s.status !== 'cancelled');   // cancelled subtasks don't count (same as the page)
+        tx.update(ref, { subs, done: subs.length ? live.length > 0 && live.every(s => s.done) : !!t.done, members: who.members({ ...t, subs }, list),
           updatedBy: name, updatedAt: now, log: [...(t.log || []), { at: now, by: name, ev: 'subtask removed', sid, title: sub.title || '' }].slice(-300) });
       }
       return { code: 200, body: { ok: true } };

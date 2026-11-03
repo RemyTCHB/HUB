@@ -1548,6 +1548,31 @@ h1, h2, h3, h4 {
     </div>
   </sc-if>
 
+  <sc-if value="{{ helpOpen }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ closeHelp }}" style="position: fixed; inset: 0; z-index: 70; background: rgba(10, 12, 24, 0.45);"></div>
+    <div role="dialog" aria-label="Help" tabindex="-1" sc-camel-on-key-down="{{ helpKey }}" style="position: fixed; z-index: 71; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface-card); overflow: hidden; outline: none; {{ helpBox }}">
+      <div style="display: flex; align-items: flex-start; gap: 12px; padding: 16px 20px 12px; border-bottom: 1px solid var(--border-default);">
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tchb-red-500);">Help</div>
+          <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--tchb-indigo-700);">{{ helpTitle }}</h2>
+          <p style="margin: 2px 0 0; font-size: 13px; color: var(--text-muted);">{{ helpSub }}</p>
+        </div>
+        <button sc-camel-on-click="{{ closeHelp }}" title="Close" aria-label="Close" style="width: 40px; height: 40px; flex: none; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center;" style-hover="background: var(--tchb-gray-100);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+      </div>
+      <div style="flex: 1; min-height: 0; display: flex; {{ helpBodyDir }}">
+        <nav aria-label="Contents" style="flex: none; overflow: auto; display: flex; gap: 2px; {{ helpNavBox }}">
+          <sc-for list="{{ helpNav }}" as="hn" hint-placeholder-count="0">
+            <button sc-camel-on-click="{{ hn.go }}" style="text-align: left; border: none; cursor: pointer; border-radius: 8px; padding: 8px 10px; font-family: var(--font-display); font-weight: 700; font-size: 13px; line-height: 1.25; white-space: {{ hn.wrap }}; flex: none; color: {{ hn.fg }}; background: {{ hn.bg }};" style-hover="background: var(--tchb-indigo-050);"><span style="color: var(--tchb-red-500); margin-right: 6px;">{{ hn.num }}</span>{{ hn.label }}</button>
+          </sc-for>
+        </nav>
+        <div style="flex: 1; min-width: 0; min-height: 0; position: relative; display: flex; flex-direction: column;">
+          <sc-if value="{{ helpLoading }}" hint-placeholder-val="{{ false }}"><div style="padding: 28px; font-size: 15px; color: var(--text-muted);">{{ helpMsg }}</div></sc-if>
+          <div ref="{{ helpRef }}" sc-camel-on-scroll="{{ onHelpScroll }}" style="flex: 1; min-height: 0; overflow-y: auto; position: relative; {{ helpPad }}"></div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ setOpen }}" hint-placeholder-val="{{ false }}">
     <div sc-camel-on-click="{{ closeSettings }}" style="position: fixed; inset: 0; z-index: 64; background: rgba(10, 12, 24, 0.4);"></div>
     <div role="dialog" aria-label="My Settings" style="position: fixed; z-index: 65; left: 50%; top: 24px; transform: translateX(-50%); width: calc(100% - 32px); max-width: 600px; max-height: calc(100vh - 48px); box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); overflow: hidden; {{ mo.sheet }}">
@@ -1559,6 +1584,14 @@ h1, h2, h3, h4 {
         <button sc-camel-on-click="{{ closeSettings }}" title="Close" aria-label="Close" style="width: 40px; height: 40px; flex: none; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center;" style-hover="background: var(--tchb-gray-100);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
       </div>
       <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-default); background: var(--tchb-indigo-050); margin-bottom: 6px;">
+          <svg width="28" height="28" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--tchb-indigo-700)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+          <div style="flex: 1 1 220px; min-width: 0;">
+            <div style="font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--tchb-indigo-700);">Help</div>
+            <div style="font-size: 13px; color: var(--text-muted);">{{ helpBlurb }}</div>
+          </div>
+          <button sc-camel-on-click="{{ openHelp }}" style="flex: none; border: none; cursor: pointer; border-radius: 8px; padding: 10px 18px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-secondary);" style-hover="filter: brightness(1.08);">{{ helpBtn }}</button>
+        </div>
         <div style="font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--tchb-indigo-700);">My Task Templates</div>
         <p style="margin: 0 0 4px; font-size: 13px; color: var(--text-muted);">Lists of subtasks you use again and again. Deploy one to make a new task in your list (it asks for the name), or add one to a task you deployed before.</p>
         <sc-if value="{{ tplEmpty }}" hint-placeholder-val="{{ false }}">
@@ -1924,16 +1957,23 @@ const hostOf = url => { try { return new URL(url).hostname.replace(/^www\./, '')
 const fileMeta = f => f.link ? hostOf(f.url) : sizeOf(f.size || 0);
 const sizeOf = b => b < 1024 * 1024 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
 const subStatus = s => s.status || (s.done ? 'done' : 'todo');
-const isDone = t => t.subs.length ? t.subs.every(s => s.done) : !!t.done;
-// A task with no subtasks has its own status (Not Started / In Progress / Done); with subtasks it follows them.
-const statusOf = t => isDone(t) ? 'done' : (t.subs.length ? t.subs.some(s => s.done || s.status === 'progress') : t.status === 'progress') ? 'progress' : 'todo';
+// Cancelled: a cancelled subtask leaves its task open and no longer counts; a cancelled task cancels every subtask.
+const isCancelled = s => s.status === 'cancelled';
+const liveSubs = subs => (subs || []).filter(s => !isCancelled(s));
+const allDone = subs => { const l = liveSubs(subs); return l.length > 0 && l.every(s => s.done); };
+const isDone = t => t.subs.length ? allDone(t.subs) : !!t.done && !isCancelled(t);
+// A task with no subtasks has its own status (Not Started / In Progress / Done / Cancelled); with subtasks it follows
+// them, ignoring cancelled ones (all subtasks cancelled = the task is Cancelled).
+const statusOf = t => {
+  if (t.subs.length) { const l = liveSubs(t.subs); return !l.length ? 'cancelled' : l.every(s => s.done) ? 'done' : l.some(s => s.done || s.status === 'progress') ? 'progress' : 'todo'; }
+  return isCancelled(t) ? 'cancelled' : t.done ? 'done' : t.status === 'progress' ? 'progress' : 'todo'; };
 // Dates for the EOD report (when a task or subtask was created, first moved to In Progress, and finished) and the
 // activity log: every status change, reopen, subtask added or removed and owner change, with who and when (Hub clock).
-const EV = { started: 'moved to In Progress', done: 'marked Done', reopened: 'reopened', 'not started': 'set back to Not Started' };
+const EV = { started: 'moved to In Progress', done: 'marked Done', reopened: 'reopened', 'not started': 'set back to Not Started', cancelled: 'cancelled' };
 const stamp = (prev, t, by) => {
   const now = hubNow(), log = [...(t.log || [])], add = (ev, x) => log.push({ at: now, ...(by ? { by } : {}), ev, ...x });
-  const mark = (o, was, is) => is === was ? o : { ...o, ...(is !== 'todo' && !o.startedAt ? { startedAt: now } : {}), doneAt: is === 'done' ? now : null };
-  const evOf = (was, is) => is === 'done' ? 'done' : was === 'done' ? 'reopened' : is === 'progress' ? 'started' : 'not started';
+  const mark = (o, was, is) => is === was ? o : { ...o, ...(is !== 'todo' && is !== 'cancelled' && !o.startedAt ? { startedAt: now } : {}), doneAt: is === 'done' ? now : null, cancelledAt: is === 'cancelled' ? now : null };
+  const evOf = (was, is) => is === 'cancelled' ? 'cancelled' : is === 'done' ? 'done' : was === 'done' || was === 'cancelled' ? 'reopened' : is === 'progress' ? 'started' : 'not started';
   if (!prev) add('created', { title: t.title });
   const subs = t.subs.map(s => {
     const p = prev && prev.subs.find(y => y.id === s.id), is = subStatus(s);
@@ -1990,7 +2030,7 @@ const mergeTask = (base, mine, theirs) => {
   const byId = (b, m, t) => mergeList(b, m, t);
   const out = mergeFields(base, mine, theirs, { notes: byId, files: byId, log: mergeLog,
     subs: (b, m, t) => mergeList(b, m, t, (bs, ms, ts) => mergeFields(bs, ms, ts, { notes: byId })) });
-  if (out.subs && out.subs.length) out.done = out.subs.every(x => x.done);
+  if (out.subs && out.subs.length) out.done = allDone(out.subs);
   return out;
 };
 const AGENT_TITLE = 'Title Commitment Agent';
@@ -2129,6 +2169,7 @@ class Component extends DCLogic {
     this.rootRef = React.createRef();
     this.clockARef = React.createRef(); this.clockBRef = React.createRef();
     this.bgRef = React.createRef();
+    this.helpRef = React.createRef();
     let company = 'tchb';
     try { company = localStorage.getItem(KEY + '-co') || 'tchb'; } catch (e) {}
     // Last directory seen, so owner lists work offline too.
@@ -2174,14 +2215,14 @@ class Component extends DCLogic {
   }
   onUser(u) {
     // Signed out: forget the board in memory so nothing shows on the sign-in screen.
-    if (!u) { this.unsub(); this._synced = null; this._pending = {}; clearTimeout(this._wt); this._wt = null; return this.setState(st => ({ cloud: 'signedOut', user: null, tasks: st.tasks.filter(t => t.scope === 'offline'), scope: 'offline', errs: {}, people: {}, pd: null, menu: null })); }
+    if (!u) { this.unsub(); this._synced = null; this._pending = {}; clearTimeout(this._wt); this._wt = null; return this.setState(st => ({ cloud: 'signedOut', user: null, tasks: st.tasks.filter(t => t.scope === 'offline'), scope: 'offline', errs: {}, people: {}, pd: null, menu: null, help: null, settings: null })); }
     const email = (u.email || '').toLowerCase();
     if (this.allowed.length && !this.allowed.some(d => email.endsWith('@' + d))) {
       this.auth.signOut();
       return this.setState({ cloud: 'signedOut', user: null, authError: (u.email || 'That account') + " isn't on the team list. Use your @" + this.allowed.join(' or @') + ' Google account.' });
     }
     this._key = personKey(email); this._mgr = ROOT_MANAGERS.includes(this._key); this._name = u.displayName || email;
-    this.setState({ cloud: 'connecting', user: { name: u.displayName || email, email }, authError: '', errs: {}, scope: this._mgr ? 'mgmt' : 'personal', dept: 'all', imp: '', pd: null, settings: null });
+    this.setState({ cloud: 'connecting', user: { name: u.displayName || email, email }, authError: '', errs: {}, scope: this._mgr ? 'mgmt' : 'personal', dept: 'all', imp: '', pd: null, settings: null, help: null });
     // Login As User: Remy's one-time sign-in as someone else carries imp (his email). Read it before loading anything.
     (typeof u.getIdTokenResult === 'function' ? u.getIdTokenResult() : Promise.resolve({ claims: {} })).catch(() => ({ claims: {} })).then(r => {
       if (!this.auth || ((this.auth.currentUser || {}).uid !== u.uid)) return;   // signed in as someone else meanwhile
@@ -2409,9 +2450,22 @@ class Component extends DCLogic {
     this.setState(st => ({ openMap: { ...st.openMap, [tid]: true } }));
     this.setState(st => ({ drafts: { ...st.drafts, [tid]: '' } }));
   }
+  // The big checkbox: Done for the whole task (cancelled subtasks stay cancelled, unless the whole task was cancelled).
   toggleTask(t) {
-    const d = !this.isDone(t);
-    this.upd(t.id, x => ({ ...x, done: d, ...(x.subs.length ? {} : { status: d ? 'done' : 'todo' }), subs: x.subs.map(s => ({ ...s, done: d, status: d ? 'done' : (s.status === 'done' ? 'todo' : s.status), ...this.sst() })) }));
+    const d = !this.isDone(t), all = statusOf(t) === 'cancelled';
+    this.upd(t.id, x => ({ ...x, done: d, ...(x.subs.length ? {} : { status: d ? 'done' : 'todo' }),
+      subs: x.subs.map(s => isCancelled(s) && !all ? s : ({ ...s, done: d, status: d ? 'done' : (s.status === 'done' ? 'todo' : s.status === 'cancelled' ? 'todo' : s.status), cancelledFrom: null, ...this.sst() })) }));
+  }
+  // Cancel the whole task (every subtask, remembering where each was) or bring it back (each subtask as it was).
+  cancelTask(tid, on) {
+    this.upd(tid, x => {
+      if (!x.subs.length) return { ...x, status: on ? 'cancelled' : 'todo', done: false };
+      if (on) return { ...x, done: false, subs: x.subs.map(s => isCancelled(s) ? s : { ...s, status: 'cancelled', done: false, cancelledFrom: subStatus(s), ...this.sst() }) };
+      const any = x.subs.some(s => s.cancelledFrom);
+      const subs = x.subs.map(s => !isCancelled(s) ? s : any && !s.cancelledFrom ? s
+        : { ...s, status: s.cancelledFrom || 'todo', done: s.cancelledFrom === 'done', cancelledFrom: null, ...this.sst() });
+      return { ...x, subs, done: allDone(subs) };
+    });
   }
   // Your own list (and offline tasks): gone at once, with Undo. Anyone else's: the delete dialog, checked by the server.
   ownList(t) { return (t.scope === 'personal' || t.scope === 'team') && (t.list || this._key) === this._key; }
@@ -2454,6 +2508,57 @@ class Component extends DCLogic {
       .then(() => { this.setState({ backBusy: false, imp: '' }); this.say('Back to your own view'); })
       .catch(e => { console.warn(e); this.setState({ backBusy: false }); google(); });
   }
+  // ---------- Help (My Settings): the guide for this person's role, from help/guides.json ----------
+  // Team Leaders and managers also see the delete passwords, fetched from the server after sign-in (never in the page).
+  helpRole() { return this.state.cloud === 'ready' ? this.roleOf(this._key) : 'member'; }
+  openHelp = () => {
+    const role = this.helpRole();
+    this.setState({ settings: null, menu: null, help: { role, sec: 0, err: '' } }, () => { this.fillHelp(); this.loadHelp(role); });
+  };
+  loadHelp(role) {
+    if (!this._guides) {
+      (this._guidesP = this._guidesP || fetch('help/guides.json', { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }))
+        .then(g => { this._guides = g; this.setState(st => ({ help: st.help && { ...st.help } }), () => this.fillHelp()); })
+        .catch(e => { console.warn('help', e); this._guidesP = null; this.setState(st => ({ help: st.help && { ...st.help, err: 'Could not load the guide. Check your connection and try again.' } })); });
+    }
+    const u = this.auth && this.auth.currentUser;
+    if (role === 'member' || !u || (this._pw && this._pwKey === this._key)) return;
+    this._pw = null; this._pwKey = this._key; this._pwErr = '';
+    u.getIdToken().then(token => fetch('/api/hub/passwords', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }, body: '{}' }))
+      .then(r => r.json().catch(() => ({})).then(b => { if (!r.ok) throw new Error(b.error || 'Could not load the passwords.'); this._pw = b; }))
+      .catch(e => { this._pwErr = e.message || 'Could not load the passwords.'; this._pwKey = ''; })
+      .then(() => this.fillHelp());
+  }
+  pwTable(role) {
+    const esc = x => String(x == null ? '' : x).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const note = t => '<p style="margin: 8px 0 14px; padding: 10px 14px; border-radius: 10px; background: var(--surface-subtle); color: var(--text-muted); font-size: 14px;">' + t + '</p>';
+    if (this._pwErr) return note(esc(this._pwErr) + ' Close Help and open it again to retry.');
+    if (!this._pw) return note('Loading your passwords…');
+    const code = x => x ? '<code style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; background: var(--tchb-indigo-050); color: var(--tchb-indigo-700); padding: 2px 6px; border-radius: 5px;">' + esc(x) + '</code>' : '<span style="color: var(--text-muted);">Not set</span>';
+    const td = 'padding: 9px 12px; border-top: 1px solid var(--border-default); vertical-align: top;', th = 'padding: 9px 12px; text-align: left; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--action-secondary);';
+    const rows = this._pw.rows.map(r => '<tr><td style="' + td + ' font-weight: 700;">' + esc(r.dept) + '</td><td style="' + td + '">' + code(r.lead) + '</td><td style="' + td + '">' + code(r.sub) + '</td></tr>')
+      .concat(this._pw.own.map(o => '<tr><td style="' + td + ' font-weight: 700;">' + esc(o.name) + ' (own, tasks and subtasks)</td><td style="' + td + '">' + code(o.pw) + '</td><td style="' + td + '">' + code(o.pw) + '</td></tr>'))
+      .concat(role === 'manager' ? ['<tr><td style="' + td + ' font-weight: 700;">Remy</td><td style="' + td + '" colspan="2">No password: confirm only</td></tr>'] : []);
+    if (!rows.length) return note(role === 'lead' ? 'No departments are turned on for you in Team yet, so there are no passwords to show. Ask a manager.' : 'No delete passwords are set up yet.');
+    return '<div style="overflow-x: auto; margin: 8px 0 14px; border: 1px solid var(--border-default); border-radius: 12px;"><table style="width: 100%; border-collapse: collapse; font-size: 14px; color: var(--text-body);"><thead><tr><th style="' + th + '">' + (role === 'manager' ? 'Department or person' : 'Department') + '</th><th style="' + th + '">Team Leader password (tasks)</th><th style="' + th + '">Subtask password</th></tr></thead><tbody>' + rows.join('') + '</tbody></table></div>';
+  }
+  fillHelp() {
+    const el = this.helpRef.current, h = this.state.help, g = h && this._guides && this._guides[h.role];
+    if (!el || !g) return;
+    const html = g.html.replace('<div data-hub-pw></div>', h.role === 'member' ? '' : this.pwTable(h.role));
+    if (el._html !== html) { el.innerHTML = html; el._html = html; }
+  }
+  helpGo(i) {
+    const el = this.helpRef.current, h = el && el.querySelectorAll('h2[data-sec]')[i];
+    if (h) el.scrollTo({ top: Math.max(0, h.offsetTop - 12), behavior: 'smooth' });
+    this.setState(st => ({ help: st.help && { ...st.help, sec: i } }));
+  }
+  onHelpScroll = e => {
+    const el = e.currentTarget, hs = [...el.querySelectorAll('h2[data-sec]')]; let i = 0;
+    hs.forEach((h, j) => { if (h.offsetTop - 40 <= el.scrollTop) i = j; });
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 4) i = hs.length - 1;
+    if (this.state.help && this.state.help.sec !== i) this.setState(st => ({ help: st.help && { ...st.help, sec: i } }));
+  };
   // ---------- Task templates (My Settings, Deploy, Add Template) ----------
   saveTpls(lists) {
     this.setState({ myTpls: lists });
@@ -2533,7 +2638,7 @@ class Component extends DCLogic {
       .catch(() => fail('No connection. Try again.'));
   };
   setSubStatus(tid, sid, v) {
-    this.upd(tid, x => { const subs = x.subs.map(y => y.id === sid ? { ...y, status: v, done: v === 'done', ...this.sst() } : y); return { ...x, subs, done: subs.every(y => y.done) }; });
+    this.upd(tid, x => { const subs = x.subs.map(y => y.id === sid ? { ...y, status: v, done: v === 'done', ...this.sst() } : y); return { ...x, subs, done: allDone(subs) }; });
   }
   openMenu(e, cfg) {
     const r = e.currentTarget.getBoundingClientRect();
@@ -2548,7 +2653,16 @@ class Component extends DCLogic {
     else if (m.kind === 'newSubOwner') this.setState(st => ({ newSubs: st.newSubs.map((s, j) => j === m.idx ? { ...s, owner: v } : s) }));
     else if (m.kind === 'forMember') this.setState({ forWho: v });
     else if (m.kind === 'ownerFilter') this.setState(st => { const o = { ...st.openMap }; if (v) st.tasks.forEach(t => { if (t.subs.some(y => (y.owner || '').trim() === v)) o[t.id] = true; }); return { ownerFilter: v, openMap: o }; });
-    else if (m.kind === 'status') m.sid ? this.setSubStatus(m.tid, m.sid, v) : this.setTaskStatus(m.tid, v);
+    else if (m.kind === 'status') {
+      const tk = this.state.tasks.find(x => x.id === m.tid);
+      if (m.sid) this.setSubStatus(m.tid, m.sid, v);
+      else if (v === 'cancelAll') { const n = liveSubs(tk.subs).length;
+        this.ask({ title: 'Cancel This Task?', tone: 'warn', ok: 'Cancel Task', text: '“' + (tk.title || 'This task') + '”' + (n ? ' and its ' + n + (n === 1 ? ' open subtask are' : ' open subtasks are') : ' is') + ' marked Cancelled. Reopen Task brings ' + (n ? 'them' : 'it') + ' back as ' + (n ? 'they were' : 'it was') + '.' },
+          () => this.cancelTask(m.tid, true)); }
+      else if (v === 'reopen') this.cancelTask(m.tid, false);
+      else if (tk && !tk.subs.length && v === 'cancelled') this.cancelTask(m.tid, true);
+      else this.setTaskStatus(m.tid, v);
+    }
     else if (m.kind === 'deployPick') { const l = (this.state.myTpls || []).find(x => x.id === v); if (l) return this.setState({ menu: null, deploy: { id: l.id, name: '', err: '' } }); }
     else if (m.kind === 'addTpl') { const l = (this.state.myTpls || []).find(x => x.id === v); if (l) this.addTplTo(m.tid, l); }
     this.setState({ menu: null });
@@ -2812,8 +2926,8 @@ class Component extends DCLogic {
     // What counts toward someone's %: on a task shared into their list, only the parts they own (all of it if they own the task).
     const mineName = n => live && this.keyOfName(n) === this._key;
     const ownsAll = t => t.scope !== 'assigned' || mineName(t.owner);
-    const unitSubs = t => ownsAll(t) ? t.subs : t.subs.filter(s => mineName(s.owner));
-    const unitTot = ts => ts.reduce((a, t) => a + (t.subs.length ? unitSubs(t).length : (ownsAll(t) ? 1 : 0)), 0);
+    const unitSubs = t => liveSubs(ownsAll(t) ? t.subs : t.subs.filter(s => mineName(s.owner)));   // cancelled ones don't count
+    const unitTot = ts => ts.reduce((a, t) => a + (t.subs.length ? unitSubs(t).length : (ownsAll(t) && !isCancelled(t) ? 1 : 0)), 0);
     const unitDone = ts => ts.reduce((a, t) => a + (t.subs.length ? unitSubs(t).filter(s => s.done).length : (ownsAll(t) && t.done ? 1 : 0)), 0);
     const pctOf = ts => { const tot = unitTot(ts), dn = unitDone(ts); return (tot ? Math.round(dn / tot * 100) : 0) + '%'; };
     const gate = ['init', 'connecting', 'signedOut'].includes(cloud);
@@ -2852,12 +2966,15 @@ class Component extends DCLogic {
     // On phones, task/subtask owner pills show just the initials avatar once someone is picked (nameHide).
     const chipOf = o => ({ owner: o || '', photo: this.photoOf(o), hasPhoto: !!this.photoOf(o), ownerLabel: o || 'Assign', nameHide: o && this.state.mob ? 'display: none;' : '', ownerAria: o ? 'Owner: ' + o : 'Assign owner', ownerLabelColor: o ? 'var(--text-body)' : 'var(--text-muted)', initials: initials(o) || '+', ownerBg: o ? 'var(--avatar-bg, var(--tchb-indigo-700))' : 'var(--tchb-gray-100)', ownerFg: o ? '#fff' : 'var(--tchb-gray-500)' });
     const menu = this.state.menu;
-    const SL = { todo: 'Not Started', progress: 'In Progress', done: 'Done' };
+    const SL = { todo: 'Not Started', progress: 'In Progress', done: 'Done', cancelled: 'Cancelled' };
     let menuItems = [], menuCur = '';
     if (menu && !['notes', 'files', 'folders', 'due', 'activity', 'active'].includes(menu.kind)) {   // the rest are pick lists
       if (menu.kind === 'status') {
         const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : tk && !menu.sid ? statusOf(tk) : '';
-        menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
+        menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)'], ['cancelled', 'var(--tchb-gray-300)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
+        // With subtasks the task's status follows them; the only choice here is cancelling (or reopening) all of it.
+        if (tk && !menu.sid && tk.subs.length) menuItems = [{ isHeader: true, label: 'Follows Its Subtasks', value: '#h' },
+          statusOf(tk) === 'cancelled' ? { value: 'reopen', label: 'Reopen Task', hasDot: true, dot: 'var(--tchb-indigo-500)' } : { value: 'cancelAll', label: 'Cancel Whole Task', hasDot: true, dot: 'var(--tchb-gray-300)' }];
       } else if (menu.kind === 'deployPick' || menu.kind === 'addTpl') {
         menuItems = [{ isHeader: true, label: menu.kind === 'addTpl' ? 'Add A Template' : 'Deploy A Template', value: '#h' },
           ...(this.state.myTpls || []).map(l => ({ value: l.id, label: l.name, note: (l.subs || []).length + ' subtasks' }))];
@@ -2881,20 +2998,20 @@ class Component extends DCLogic {
     const done = tasks.filter(t => this.isDone(t));
     const subsTotal = unitTot(tasks), subsDone = unitDone(tasks);
     // Pending (the default) = Not Started and In Progress together.
-    const counts = { todo: 0, progress: 0, done: 0 };
+    const counts = { todo: 0, progress: 0, done: 0, cancelled: 0 };
     tasks.forEach(t => counts[statusOf(t)]++); counts.pending = counts.todo + counts.progress;
-    const filters = [['pending', 'Pending'], ['progress', 'In Progress'], ['todo', 'Not Started'], ['done', 'Done']].map(([k, label]) => ({
+    const filters = [['pending', 'Pending'], ['progress', 'In Progress'], ['todo', 'Not Started'], ['done', 'Done'], ['cancelled', 'Cancelled']].map(([k, label]) => ({
       label, count: counts[k], onClick: () => this.setState({ filter: k }),
       bg: filter === k ? 'var(--surface-card)' : 'transparent',
       color: filter === k ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
       shadow: filter === k ? 'var(--shadow-button)' : 'none'
     }));
-    const inFilter = t => filter === 'pending' ? statusOf(t) !== 'done' : statusOf(t) === filter;
+    const inFilter = t => filter === 'pending' ? !['done', 'cancelled'].includes(statusOf(t)) : statusOf(t) === filter;
     let list = tasks.filter(t => inFilter(t) && ownerMatch(t) && searchMatch(t));
     // Group by status (In Progress, then Not Started, then Done); within a group keep the saved drag order.
-    const RANK = { progress: 0, todo: 1, done: 2 };
+    const RANK = { progress: 0, todo: 1, done: 2, cancelled: 3 };
     list = list.map((t, i) => [t, i]).sort((a, b) => RANK[statusOf(a[0])] - RANK[statusOf(b[0])] || a[1] - b[1]).map(([t]) => t);
-    const STAT = { done: ['Done', 'green'], progress: ['In Progress', 'indigo'], todo: ['Not Started', 'neutral'] };
+    const STAT = { done: ['Done', 'green'], progress: ['In Progress', 'indigo'], todo: ['Not Started', 'neutral'], cancelled: ['Cancelled', 'neutral'] };
     const fileBtn = (n, k, idle) => ({ hasFiles: n > 0, filesCount: n, fileColor: n ? 'var(--tchb-indigo-700)' : idle, filesAria: n ? n + (n === 1 ? ' file or link' : ' files and links') : 'Add a file or link', fileBusy: this.state.uploading[k] ? 'opacity: 0.5;' : '' });
     // Due chip: indigo when just set, redder as the due time gets closer, full red once overdue; grey once done.
     const dueOf = (o, done) => {
@@ -2909,7 +3026,7 @@ class Component extends DCLogic {
     const datesOf = o => [['Created', o.createdAt], ['Started', o.startedAt], ['Done', o.doneAt], ['Due', o.due]].filter(x => x[1]).map(([l, v]) => l + ' ' + when(v)).join(' · ');
     const noteBtn = (o, idle) => { const n = (o.notes || []).length; return { hasNotes: n > 0, notesCount: n, noteColor: n ? 'var(--tchb-indigo-700)' : idle, notesAria: n ? n + (n === 1 ? ' note' : ' notes') : 'Add a note' }; };
     const visibleTasks = list.map(t => {
-      const d = this.isDone(t), st = statusOf(t);
+      const d = this.isDone(t), st = statusOf(t), gone = st === 'cancelled';
       const asg = t.scope === 'assigned', whole = ownsAll(t), mgmtInTeam = scope === 'team' && t.scope === 'mgmt';
       const who = mgmtInTeam ? this.membersOf(t).map(m => this.nameOf(keyOfToken(m))).join(', ') : '';
       // Members with the department toggle can work on their department's tasks but only team leaders and managers delete them.
@@ -2920,9 +3037,9 @@ class Component extends DCLogic {
       const tag = t.source ? ['agent', 'Added by ' + t.source] : t.upload ? ['upload', 'CSV Upload ' + t.upload.template]
         : (t.deployed || []).length ? ['deploy', 'Task Deployment ' + t.deployed.join(' + ')] : asg ? (t.list ? ['shared', 'Shared by ' + this.nameOf(t.list)] : ['mgmt', 'Added by MGMT'])
         : mgmtInTeam ? ['mgmt', 'Added by MGMT for ' + who] : t.scope === 'team' ? ['person', this.nameOf(t.list) + "'s Task"] : scope === 'team' ? ['person', 'Your Task'] : null;
-      const tc = tag && TAGS[tag[0]], dk = mode === 'dark', due = dueOf(t, d);
-      const n = t.subs.filter(s => s.done).length;
-      const pct = t.subs.length ? Math.round(n / t.subs.length * 100) : (d ? 100 : 0);
+      const tc = tag && TAGS[tag[0]], dk = mode === 'dark', due = dueOf(t, d || gone);
+      const live = liveSubs(t.subs), n = live.filter(s => s.done).length, nc = t.subs.length - live.length;
+      const pct = live.length ? Math.round(n / live.length * 100) : (d ? 100 : 0);
       return {
         dragOpacity: this.state.dragId === t.id ? 0.45 : 1,
         dropOutline: this.state.overId === t.id && this.state.dragId && this.state.dragId !== t.id ? '2px solid var(--tchb-indigo-500)' : 'none',
@@ -2951,15 +3068,16 @@ class Component extends DCLogic {
         id: t.id, title: t.title, isDone: d, open: !!this.state.openMap[t.id], draft: drafts[t.id] || '',
         status: STAT[st][0], tone: STAT[st][1], pct: pct + '%',
         // No subtasks: the status is a pick list (same pill as a subtask's); with subtasks it's a badge that follows them.
-        canStatus: !t.subs.length, noStatusPick: !!t.subs.length, openStatus: e => this.openMenu(e, { kind: 'status', tid: t.id }),
+        // A task with subtasks: the pill shows their status and offers Cancel Whole Task / Reopen Task.
+        canStatus: !(asg && !whole), noStatusPick: asg && !whole, openStatus: e => this.openMenu(e, { kind: 'status', tid: t.id }),
         statusBg: st === 'done' ? 'var(--tchb-green-050)' : st === 'progress' ? 'var(--tchb-indigo-050)' : 'var(--tchb-gray-100)',
-        statusFg: st === 'done' ? 'var(--tchb-green-600)' : st === 'progress' ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
+        statusFg: st === 'done' ? 'var(--tchb-green-600)' : st === 'progress' ? 'var(--tchb-indigo-700)' : st === 'cancelled' ? 'var(--tchb-gray-500)' : 'var(--tchb-gray-700)',
         metaTitle: datesOf(t),
-        meta: [deptTag].filter(Boolean).map(x => x + ' · ').join('') + (t.subs.length ? `${n} of ${t.subs.length} subtasks done` : 'No subtasks') + (t.updatedBy ? ` · Edited by ${this.canon(t.updatedBy)} · ${ago(t.updatedAt)}` : ''),
+        meta: [deptTag].filter(Boolean).map(x => x + ' · ').join('') + (t.subs.length ? (live.length ? `${n} of ${live.length} subtasks done` : 'All subtasks cancelled') + (nc && live.length ? ` · ${nc} cancelled` : '') : gone ? 'Cancelled' : 'No subtasks') + (t.updatedBy ? ` · Edited by ${this.canon(t.updatedBy)} · ${ago(t.updatedAt)}` : ''),
         boxBg: d ? 'var(--tchb-green-500)' : 'var(--surface-card)',
         boxBorder: d ? 'var(--tchb-green-500)' : 'var(--border-strong)',
-        titleColor: d ? 'var(--text-muted)' : 'var(--tchb-indigo-700)',
-        titleDeco: d ? 'line-through' : 'none',
+        titleColor: d || gone ? 'var(--text-muted)' : 'var(--tchb-indigo-700)',
+        titleDeco: d || gone ? 'line-through' : 'none',
         barColor: d ? 'var(--tchb-green-500)' : 'var(--tchb-indigo-500)',
         chevron: t.open ? 'rotate(180deg)' : 'none',
         onToggle: () => this.toggleTask(t),
@@ -2981,25 +3099,25 @@ class Component extends DCLogic {
           onDrop: e => { const d = this.state.subDrag; if (!d || d.tid !== t.id) return; e.preventDefault(); e.stopPropagation(); this.setState({ subDrag: null, subOver: null }); this.moveSub(t.id, d.sid, s.id); },
           onGripDown: e => { if (e.pointerType === 'mouse') return; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {} this.setState({ subDrag: { tid: t.id, sid: s.id }, subOver: null }); },
           title: s.title, done: s.done, hasEdited: !!s.by, edited: s.by ? (s.by === AGENT_TITLE ? 'Title Agent' : firstName(this.canon(s.by))) + ' · ' + ago(s.at) : '', editedTitle: [s.by ? 'Last edited by ' + this.canon(s.by) : '', datesOf(s)].filter(Boolean).join(' · '),
-          ...dueOf(s, s.done), openDue: e => this.openMenu(e, { kind: 'due', tid: t.id, sid: s.id, due: s.due }),
+          ...dueOf(s, s.done || isCancelled(s)), openDue: e => this.openMenu(e, { kind: 'due', tid: t.id, sid: s.id, due: s.due }),
           ...fileBtn((t.files || []).filter(f => f.sid === s.id).length, t.id + s.id, 'var(--tchb-gray-300)'), openFiles: e => this.openMenu(e, { kind: 'files', tid: t.id, sid: s.id }), ...chipOf(s.owner), status: s.status || (s.done ? 'done' : 'todo'),
           matchStyle: (ownerFilter && (s.owner || '').trim() === ownerFilter) || hit(s.title) ? MATCH_GLOW : '',
           statusBg: s.done ? 'var(--tchb-green-050)' : s.status === 'progress' ? 'var(--tchb-indigo-050)' : 'var(--tchb-gray-100)',
-          statusFg: s.done ? 'var(--tchb-green-600)' : s.status === 'progress' ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)',
+          statusFg: s.done ? 'var(--tchb-green-600)' : s.status === 'progress' ? 'var(--tchb-indigo-700)' : isCancelled(s) ? 'var(--tchb-gray-500)' : 'var(--tchb-gray-700)',
           openOwner: e => this.openMenu(e, { kind: 'owner', tid: t.id, sid: s.id }),
           ...noteBtn(s, 'var(--tchb-gray-300)'), openNotes: e => this.openMenu(e, { kind: 'notes', tid: t.id, sid: s.id }),
           openStatus: e => this.openMenu(e, { kind: 'status', tid: t.id, sid: s.id }), statusLabel: SL[s.status || (s.done ? 'done' : 'todo')],
           boxBg: s.done ? 'var(--tchb-green-500)' : 'var(--surface-card)',
           boxBorder: s.done ? 'var(--tchb-green-500)' : 'var(--border-strong)',
-          color: s.done ? 'var(--text-muted)' : 'var(--text-body)',
-          deco: s.done ? 'line-through' : 'none',
+          color: s.done || isCancelled(s) ? 'var(--text-muted)' : 'var(--text-body)',
+          deco: s.done || isCancelled(s) ? 'line-through' : 'none',
           onToggle: () => this.upd(t.id, x => {
-            const subs = x.subs.map(y => y.id === s.id ? { ...y, done: !y.done, status: y.done ? 'todo' : 'done', ...this.sst() } : y);
-            return { ...x, subs, done: subs.every(y => y.done) };
+            const subs = x.subs.map(y => y.id === s.id ? { ...y, done: !y.done, status: y.done ? 'todo' : 'done', cancelledFrom: null, ...this.sst() } : y);
+            return { ...x, subs, done: allDone(subs) };
           }),
           onStatus: e => { const v = e.target.value; this.upd(t.id, x => {
             const subs = x.subs.map(y => y.id === s.id ? { ...y, status: v, done: v === 'done', ...this.sst() } : y);
-            return { ...x, subs, done: subs.every(y => y.done) };
+            return { ...x, subs, done: allDone(subs) };
           }); },
           onTitle: e => { const v = e.target.value; this.upd(t.id, x => ({ ...x, subs: x.subs.map(y => y.id === s.id ? { ...y, title: v, ...this.sst() } : y) })); },
           onDelete: () => this.removeSub(t, s)
@@ -3007,7 +3125,7 @@ class Component extends DCLogic {
       };
     });
     return {
-      tasksDone: done.length, tasksTotal: tasks.length, subsDone, subsTotal,
+      tasksDone: done.length, tasksTotal: tasks.filter(t => statusOf(t) !== 'cancelled').length, subsDone, subsTotal,
       overallPct: (subsTotal ? Math.round(subsDone / subsTotal * 100) : 0) + '%',
       onDragEnd: () => this.setState({ dragId: null, overId: null, subDrag: null, subOver: null }),
       // A mouse drag fires pointercancel the moment the browser's own drag starts, so only a touch cancel ends the drag.
@@ -3128,6 +3246,23 @@ class Component extends DCLogic {
           files: (t.files || []).map(f => { const s = f.sid ? t.subs.find(y => y.id === f.sid) : null; return { name: f.name, url: f.url, icon: f.link ? ICON_LINK : ICON_FILE, meta: [s ? s.title : '', fileMeta(f), ago(f.at)].filter(Boolean).join(' · ') }; }) }; }),
       foldersEmpty: !tasks.some(t => (t.files || []).length),
       hasToast: !!this.state.toast, toast: this.state.toast,
+      ...(() => {
+        // Help: which guide, its contents list, and the phone layout (full screen, contents as a sideways row).
+        const H = this.state.help, mob = this.state.mob, role = live ? this.roleOf(this._key) : 'member';
+        const NAME = { member: 'User Guide', lead: 'Team Leader Guide', manager: 'Manager Guide' };
+        const g = H && this._guides && this._guides[H.role];
+        return { helpBlurb: 'The ' + NAME[role] + ', with screenshots' + (role === 'member' ? '.' : ' and the delete passwords for ' + (role === 'manager' ? 'every department.' : 'your departments.')),
+          helpBtn: 'Open Help', openHelp: this.openHelp, helpOpen: !!H, closeHelp: () => this.setState({ help: null }),
+          helpKey: e => { if (e.key === 'Escape') this.setState({ help: null }); }, helpRef: this.helpRef, onHelpScroll: this.onHelpScroll,
+          helpTitle: H ? NAME[H.role] : '', helpSub: H ? 'Universal Team Hub · ' + (H.role === 'member' ? 'for team members' : H.role === 'lead' ? 'for Team Leaders' : 'for managers') : '',
+          helpLoading: !!H && (!g || !!H.err), helpMsg: H && H.err ? H.err : 'Loading the guide…',
+          helpNav: g ? g.sections.map((x, i) => { const on = H.sec === i; return { label: x.title, num: String(i + 1).padStart(2, '0'), go: () => this.helpGo(i), wrap: mob ? 'nowrap' : 'normal',
+            fg: on ? 'var(--tchb-indigo-700)' : 'var(--tchb-gray-700)', bg: on ? 'var(--tchb-indigo-050)' : 'transparent' }; }) : [],
+          helpBox: mob ? 'inset: 0; border-radius: 0;' : 'left: 50%; top: 24px; transform: translateX(-50%); width: calc(100% - 32px); max-width: 1060px; height: calc(100vh - 48px); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised);',
+          helpBodyDir: mob ? 'flex-direction: column;' : 'flex-direction: row;',
+          helpNavBox: mob ? 'flex-direction: row; padding: 8px 12px; border-bottom: 1px solid var(--border-default);' : 'flex-direction: column; width: 250px; padding: 12px 10px; border-right: 1px solid var(--border-default);',
+          helpPad: mob ? 'padding: 4px 16px 40px;' : 'padding: 4px 32px 48px;' };
+      })(),
       signIn: () => this.auth && this.auth.signInWithPopup(new this.fb.auth.GoogleAuthProvider()).catch(e => this.setState({ authError: e.message })),
       signedIn: cloud === 'ready' && !!this.state.user, userInitials: this.state.user ? initials(live ? this.myName() : this.state.user.name) : '',
       me: { photo: live ? this.rec(this._key).photo || '' : '', hasPhoto: live && !!this.rec(this._key).photo },

@@ -108,3 +108,21 @@ test('team: an app can ask for more departments (TC Checklist: TC and DISPO); un
   assert.deepEqual(deptsFrom(['nope']), ['TC']);
   assert.deepEqual(teamFor(people, ['systems@totalchb.com']).map(p => p.email), ['systems@totalchb.com', 'monz@totalchb.com'], 'the Title Commitment Agent still gets Managers + TC');
 });
+
+test('a blocker cancelled in the hub does not count: the deal is done when the rest are cleared', () => {
+  let t = run(null, null, deal([B('1'), B('2')])).task;
+  t.subs[1] = { ...t.subs[1], status: 'cancelled', done: false };       // cancelled in the hub
+  const r = run(t, { created: true }, deal([B('1', { status: 'Cleared' }), B('2')]), 2000);
+  assert.equal(r.task.done, true, 'only the open blocker counts');
+  assert.equal(r.task.subs[1].status, 'cancelled', 'the cancelled one stays cancelled');
+  assert.ok(r.task.log.some(e => e.ev === 'done' && !e.sid));
+  assert.deepEqual(r.updates, [], 'nothing to send back for a cancelled blocker the agent still lists as Open');
+  t = { ...r.task, subs: r.task.subs.map(s => ({ ...s, status: 'cancelled', done: false })) };
+  const all = run(t, { created: true }, deal([B('1', { status: 'Cleared' }), B('2')]), 3000);
+  assert.equal(all.task && all.task.done, false, 'every blocker cancelled: the task is cancelled, not done');
+  assert.deepEqual(all.updates, [], 'cancelling a cleared blocker does not reopen it in the agent');
+  assert.deepEqual(hubChanges(t), [], 'nor does the hub page report it');
+  const back = run(r.task, { created: true }, deal([B('1', { status: 'Cleared' }), B('2'), B('3')]), 4000);
+  assert.equal(back.task.done, false, 'a new open blocker reopens the task');
+  assert.ok(back.task.log.some(e => e.ev === 'reopened' && !e.sid));
+});

@@ -27,7 +27,7 @@ Plan the work, assign it, and watch it move — by department, in real time.
 - **Roles** — Managers see everything; Team Leaders see and assign within their departments; Members see their own list (plus their department when a manager turns that on).
 - **Shared Work** — own a subtask on anyone's task and that task shows in your list, with the parts you don't own blurred.
 - **Tasks & Subtasks** — check off subtasks and the main task closes itself, or complete the whole task in one click.
-- **Clear Statuses** — Not Started, In Progress, Done, with the date each one started and finished.
+- **Clear Statuses** — Not Started, In Progress, Done and Cancelled, with the date each one started and finished. A cancelled subtask stops counting and leaves its task open; Cancel Whole Task cancels every subtask (Reopen Task brings them back as they were). Cancelled work doesn't count toward anyone's % and has its own filter.
 - **Files** — attach documents to any task or subtask; the Files button shows every task folder in the current view.
 - **Notes** — leave notes on tasks and subtasks, with who wrote them and when.
 - **Safe Deleting** — delete tasks in your own list as before. Anyone else's task needs the department's Team Leader password; removing a subtask needs the department's subtask password; MGMT tasks and their subtasks are for managers. Checked on the server, and a copy of everything deleted is kept.
@@ -38,6 +38,7 @@ Plan the work, assign it, and watch it move — by department, in real time.
 - **Upload Tasks** — make a task from a CSV file with a department's upload template (TC: *SOW*, named SOW - <address>); the file is kept on the task. Tagged *CSV Upload <template>*.
 - **Search** — find tasks and subtasks by name; matching titles glow green and tasks open to show the subtasks that matched.
 - **Who's Online** — the Active pill shows how many people are in the hub right now; click it for who, on phone or desktop (seen in the last five minutes).
+- **Help** — My Settings → Help opens the guide for the person's role (User, Team Leader or Manager) with screenshots; Team Leaders and managers also see the delete passwords they may use, loaded from the server after sign-in.
 - **Light & Dark Themes**, phone-ready, and **Work Offline** with Push To Live.
 
 ## Access
@@ -73,6 +74,14 @@ The page sends these to `POST /api/hub/delete` (with the person's sign-in), whic
 with who and when. The Firestore rules don't let the page delete anyone else's task or shrink a task's subtask list itself.
 The passwords are only in the Vercel setting `HUB_DELETE_PASSWORDS` (JSON: `leads` and `subtasks` by department, `people`
 by email for anyone with their own delete password); never put them in the code or this README.
+
+## In-App Help
+
+`help/guides.json` and `help/img/` are built from the three guides (User, Team Leader, Manager) with
+`node tools/help-build.mjs <user.md> <lead.md> <manager.md> <screenshots dir>`. Each password table becomes a slot the
+page fills from `POST /api/hub/passwords` (with the person's sign-in): managers get every department's passwords and
+anyone's own, Team Leaders the departments they lead with Team view on, members none (`passwordsFor` in
+`api/_lib/deletes.js`, tested). The build refuses to write a password into the Help files. Screenshots use made-up tasks.
 
 ## Login As User (Remy)
 

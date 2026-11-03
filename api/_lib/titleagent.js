@@ -27,9 +27,14 @@ function dueMs(v) {
 const when = ts => { const p = etParts(ts); return `${p.month}/${p.day}/${p.year} ${p.hour}:${p.minute} ET`; };
 
 const subStatus = s => s.status || (s.done ? 'done' : 'todo');
-const statusOf = t => (t.subs.length ? t.subs.every(s => s.done) : t.done) ? 'done' : (t.subs.length ? t.subs.some(s => s.done || s.status === 'progress') : t.status === 'progress') ? 'progress' : 'todo';
+// Same as the page: cancelled subtasks don't count; all cancelled (or a cancelled task with none) = 'cancelled'.
+const liveSubs = subs => subs.filter(s => s.status !== 'cancelled');
+const allDone = subs => { const l = liveSubs(subs); return l.length > 0 && l.every(s => s.done); };
+const statusOf = t => {
+  if (t.subs.length) { const l = liveSubs(t.subs); return !l.length ? 'cancelled' : l.every(s => s.done) ? 'done' : l.some(s => s.done || s.status === 'progress') ? 'progress' : 'todo'; }
+  return t.status === 'cancelled' ? 'cancelled' : t.done ? 'done' : t.status === 'progress' ? 'progress' : 'todo'; };
 // Same dates the app keeps for the EOD report: first time In Progress (or Done), and when finished.
-const mark = (o, was, is, now) => is === was ? o : { ...o, ...(is !== 'todo' && !o.startedAt ? { startedAt: now } : {}), doneAt: is === 'done' ? now : null };
+const mark = (o, was, is, now) => is === was ? o : { ...o, ...(is !== 'todo' && is !== 'cancelled' && !o.startedAt ? { startedAt: now } : {}), doneAt: is === 'done' ? now : null, ...(was === 'cancelled' || is === 'cancelled' ? { cancelledAt: is === 'cancelled' ? now : null } : {}) };
 const noteText = b => ['Action needed: ' + (b.action || '').trim(), 'Source: ' + ((b.sources || []).filter(Boolean).join(', ') || 'Title commitment')].join('\n');
 
 /**
@@ -73,7 +78,7 @@ function applyDeal(task, link, payload, ctx) {
     if (ext.status !== (old.status || 'Open')) {                         // changed in the agent: copy it here
       const was = subStatus(s), st = toHub(ext.status);
       if (st !== was) { s = mark({ ...s, status: st, done: st === 'done', by: AGENT, at: now }, was, st, now); log(st === 'done' ? 'done' : was === 'done' ? 'reopened' : st === 'progress' ? 'started' : 'not started', { sid: s.id, title: s.title }); }
-    } else if (hubDone !== agentWasDone) {                               // changed in the hub: send it to the agent
+    } else if (hubDone !== agentWasDone && s.status !== 'cancelled') {  // changed in the hub: send it to the agent (not a cancel)
       ext.status = hubDone ? 'Cleared' : 'Open';
       updates.push({ key: b.key, status: ext.status, by: s.by || 'Universal Team Hub' });
     }
@@ -93,9 +98,9 @@ function applyDeal(task, link, payload, ctx) {
   const dues = t.subs.filter(s => s.ext && !s.ext.gone && !s.done && s.due).map(s => s.due), due = dues.length ? Math.min(...dues) : (t.ext.due || null);
   if ((t.due || null) === (t.ext.due || null) && due !== (t.ext.due || null)) { t.due = due; t.dueSet = due ? now : null; if (!created) log('due', { due }); }
   t.ext.due = due;
-  if (t.subs.length) t.done = t.subs.every(s => s.done);
+  if (t.subs.length) t.done = allDone(t.subs);
   const isTask = statusOf(t), out = created ? { ...mark(t, 'todo', isTask, now) } : mark(t, wasTask, isTask, now);
-  if (!created && wasTask !== isTask) out.log.push({ at: now, by: AGENT, ev: isTask === 'done' ? 'done' : wasTask === 'done' ? 'reopened' : isTask === 'progress' ? 'started' : 'not started' });
+  if (!created && wasTask !== isTask) out.log.push({ at: now, by: AGENT, ev: isTask === 'cancelled' ? 'cancelled' : isTask === 'done' ? 'done' : wasTask === 'done' || wasTask === 'cancelled' ? 'reopened' : isTask === 'progress' ? 'started' : 'not started' });
   out.log = out.log.slice(-300);
   const changed = created || J(out) !== before;
   if (changed) { out.updatedBy = AGENT; out.updatedAt = now; }
@@ -104,7 +109,7 @@ function applyDeal(task, link, payload, ctx) {
 
 /** The hub side's own changes to report to the agent (someone ticked or unticked a blocker in the hub). */
 function hubChanges(task) {
-  return (task.subs || []).filter(s => s.ext && s.ext.key && !s.ext.gone && !!s.done !== DONE.has(s.ext.status || 'Open'))
+  return (task.subs || []).filter(s => s.ext && s.ext.key && !s.ext.gone && s.status !== 'cancelled' && !!s.done !== DONE.has(s.ext.status || 'Open'))
     .map(s => ({ key: s.ext.key, status: s.done ? 'Cleared' : 'Open', by: s.by || 'Universal Team Hub' }));
 }
 

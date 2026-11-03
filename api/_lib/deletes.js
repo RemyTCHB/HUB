@@ -51,8 +51,21 @@ function passwordCheck(rule, me, given, conf) {
   return given && same(given, want) ? 'ok' : 'wrong';
 }
 
+/** The passwords the in-app Help shows a person (owner, 2026-11-03): managers every department's plus anyone's own
+ *  (Brandy's); a Team Leader the departments they lead (Team view on); members none.
+ *  Returns { rows: [{ dept, lead, sub }], own: [{ name, pw }] }. */
+const DEPTS = ['TC', 'DISPO', 'ACQ', 'OPS'];
+function passwordsFor({ me, people, managers, conf }) {
+  const mine = people[me] || {}, isM = managers.includes(me);
+  const depts = isM ? [...new Set([...DEPTS, ...Object.keys(conf.leads || {}), ...Object.keys(conf.subtasks || {})])]
+    : mine.role === 'lead' && mine.deptView === true ? DEPTS.filter(d => (mine.sees || []).includes(d)) : [];
+  const rows = depts.map(dept => ({ dept, lead: (conf.leads || {})[dept] || '', sub: (conf.subtasks || {})[dept] || '' })).filter(r => r.lead || r.sub);
+  const own = isM ? Object.entries(conf.people || {}).map(([k, pw]) => ({ name: (people[k] && people[k].name) || k, pw })) : [];
+  return { rows, own };
+}
+
 function readPasswords(raw) {
   try { const c = JSON.parse(raw || '{}'); return c && typeof c === 'object' ? c : {}; } catch (e) { return {}; }
 }
 
-module.exports = { ADMIN, deleteRule, passwordCheck, readPasswords };
+module.exports = { ADMIN, deleteRule, passwordCheck, readPasswords, passwordsFor };
