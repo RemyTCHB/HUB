@@ -1,6 +1,6 @@
 // node --test tests/tcchecklist.test.js   (TC Checklist: who may delete a property, and which passwords its Help shows)
 const test = require('node:test'), assert = require('node:assert');
-const { tcDeleteRule, tcDeleteCheck, tcPasswordsFor } = require('../api/_lib/tcchecklist');
+const { tcDeleteRule, tcDeleteCheck, tcPasswordsFor, tcSecret } = require('../api/_lib/tcchecklist');
 const { readPasswords } = require('../api/_lib/deletes');
 
 const people = {
@@ -44,4 +44,39 @@ test('Help shows managers the TC password and everyone\'s own; TC leads the TC o
   assert.deepEqual(pw('carlos@totalchb.com').rows, [{ dept: 'TC', lead: 'tl-tc' }]);
   for (const me of ['monz@totalchb.com', 'dee@totalchb.com', 'off@totalchb.com']) assert.deepEqual(pw(me), { rows: [], own: [], confirmOnly: false }, me);
   assert.ok(!JSON.stringify(pw('boss@totalchb.com')).includes('tl-dispo'), 'other departments never shown');
+});
+
+test('TC Checklist secret: either setting name works', () => {
+  assert.equal(tcSecret({ TC_CHECKLIST_SYNC_SECRET: 'a' }), 'a');
+  assert.equal(tcSecret({ TC_CHECKLIST_SECRET: 'b' }), 'b');
+  assert.equal(tcSecret({ TC_CHECKLIST_SYNC_SECRET: 'a', TC_CHECKLIST_SECRET: 'b' }), 'a');
+  assert.equal(tcSecret({}), '');
+});
+
+test('TC Checklist endpoints open with TC_CHECKLIST_SECRET alone; a wrong secret is refused', async () => {
+  const { sign } = require('../api/_lib/titleagent');
+  const hub = require('../api/_lib/hub');
+  const people = { 'lee@totalchb.com': { name: 'Lee Sample', role: 'lead', dept: 'TC', sees: ['TC'], deptView: true }, 'alex@totalchb.com': { name: 'Alex Sample', role: 'member', dept: 'TC' } };
+  const realTeam = hub.team; hub.team = async () => ({ people, managers: ['systems@totalchb.com'] });
+  const keys = ['TITLE_AGENT_SYNC_SECRET', 'TC_CHECKLIST_SYNC_SECRET', 'TC_CHECKLIST_SECRET', 'HUB_DELETE_PASSWORDS'], env = { ...process.env };
+  for (const k of keys) delete process.env[k];
+  Object.assign(process.env, { TC_CHECKLIST_SECRET: 'sample-secret', HUB_DELETE_PASSWORDS: JSON.stringify({ leads: { TC: 'sample-lead' } }) });
+  const call = async (path, bodyObj, secret = 'sample-secret') => {
+    delete require.cache[require.resolve(path)];
+    const handler = require(path), body = JSON.stringify(bodyObj), h = sign(secret, body), out = {};
+    await handler({ method: 'POST', body, headers: { 'x-hub-timestamp': h['X-Hub-Timestamp'], 'x-hub-signature': h['X-Hub-Signature'] } },
+      { setHeader() {}, end: s => { out.body = JSON.parse(s); }, set statusCode(c) { out.code = c; } });
+    return out;
+  };
+  const log = console.log; console.log = () => {};
+  try {
+    assert.equal((await call('../api/title-agent/team', { depts: ['TC'] })).code, 200);
+    assert.equal((await call('../api/tc-checklist/passwords', { email: 'lee@totalchb.com' })).code, 200);
+    assert.deepEqual((await call('../api/tc-checklist/delete-check', { email: 'lee@totalchb.com', password: 'sample-lead' })).body, { ok: true });
+    for (const p of ['../api/title-agent/team', '../api/tc-checklist/passwords', '../api/tc-checklist/delete-check'])
+      assert.equal((await call(p, { email: 'lee@totalchb.com', ask: true }, 'wrong-secret')).code, 401, p);
+  } finally {
+    console.log = log; hub.team = realTeam;
+    for (const k of keys) { if (k in env) process.env[k] = env[k]; else delete process.env[k]; }
+  }
 });

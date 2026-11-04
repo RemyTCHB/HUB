@@ -39,4 +39,8 @@ function tcPasswordsFor({ me, people, managers, conf }) {
   return { rows, own, confirmOnly: me === ADMIN };
 }
 
-module.exports = { tcDeleteRule, tcDeleteCheck, tcPasswordsFor };
+/** TC Checklist's shared secret (the same value as TC Checklist's HUB_SYNC_SECRET). Either setting name works:
+ *  TC_CHECKLIST_SYNC_SECRET, or TC_CHECKLIST_SECRET. */
+const tcSecret = (env = process.env) => env.TC_CHECKLIST_SYNC_SECRET || env.TC_CHECKLIST_SECRET || '';
+
+module.exports = { tcDeleteRule, tcDeleteCheck, tcPasswordsFor, tcSecret };
