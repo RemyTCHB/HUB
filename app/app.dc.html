@@ -1038,6 +1038,12 @@ h1, h2, h3, h4 {
           <sc-if value="{{ kpiDark }}" hint-placeholder-val="{{ false }}">
             <img src="c6cb2c3c-4eaf-48c9-a4d4-8658f9419f52" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }} {{ cmp.logoKpi }}">
           </sc-if>
+          <sc-if value="{{ markTchb }}" hint-placeholder-val="{{ false }}">
+            <img src="7d1c4a2e-5b3f-4e8a-9c61-2f0b8d4e6a13" alt="Total Cash Home Buyers" style="height: 44px; width: 44px; display: block; border-radius: 999px;">
+          </sc-if>
+          <sc-if value="{{ markKpi }}" hint-placeholder-val="{{ false }}">
+            <img src="3e9f0b6c-1a2d-4c5e-8f7a-6b4d2c1e9a50" alt="KPI Driver" style="height: 44px; width: 44px; display: block; border-radius: 999px;">
+          </sc-if>
         </div>
         <button sc-camel-on-click="{{ openSync }}" title="{{ syncTitle }}" aria-haspopup="true" aria-label="{{ syncAria }}" style="position: relative; overflow: hidden; flex: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 14px; box-sizing: border-box; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: {{ clockSize }}; letter-spacing: 0.03em; font-variant-numeric: tabular-nums; white-space: nowrap; {{ syncBadge }}"><span style="width: 8px; height: 8px; flex: none; border-radius: 999px; background: {{ syncDot }}; {{ syncPing }}"></span><span ref="{{ clockARef }}" aria-hidden="true" style="position: relative;"></span><sc-if value="{{ syncShine }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; background: var(--live-sheen, linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%)) no-repeat; background-size: 60% 100%; animation: hubSheen 4.5s ease-in-out infinite;"></span></sc-if></button>
       </div>
@@ -2158,7 +2164,7 @@ const isTouch = () => !!(window.matchMedia && window.matchMedia('(pointer: coars
 const MOBILE = {
   headRow: 'padding: 10px 16px; gap: 10px 8px; position: relative;',
   headLeft: 'flex: 1 1 100%; order: 1; min-width: 0; gap: 10px; padding-right: 54px;',   // logo and Live; the photo sits top right
-  logoBox: 'height: 40px;',
+  logoBox: 'height: 44px;',
   logoTchb: 'height: 40px;', logoKpi: 'height: 22px;',
   theme: 'display: none;',   // phones: Active and light/dark live in the photo menu
   themeBtn: 'width: 44px; height: 40px;',
@@ -3352,7 +3358,9 @@ class Component extends DCLogic {
       ...(() => { const mask = f => !f ? '' : (g => '-webkit-mask-image: ' + g + '; mask-image: ' + g + ';')('linear-gradient(90deg, ' + (f.includes('l') ? 'transparent 0, #000 28px' : '#000 0') + ', ' + (f.includes('r') ? '#000 calc(100% - 28px), transparent 100%' : '#000 100%') + ')');
         return { deptFade: mask(this.state.fades.dept), filtFade: mask(this.state.fades.filt) }; })(),
       menuSheet: menu && this.state.mob ? `top: auto; left: 0; right: 0; width: auto; bottom: ${this.state.kb}px; transform: none; min-width: 0; max-height: ${this.state.kb ? 'calc(100% - ' + (this.state.kb + 24) + 'px)' : '70vh'}; padding: 8px 8px 20px; border-radius: 20px 20px 0 0;` : '',
-      tchbLight: company === 'tchb' && mode !== 'dark', tchbDark: company === 'tchb' && mode === 'dark', kpiLight: company === 'kpi' && mode !== 'dark', kpiDark: company === 'kpi' && mode === 'dark',
+      // Phones show the company's round icon instead of the full logo (as in DISPO OPS).
+      tchbLight: !this.state.mob && company === 'tchb' && mode !== 'dark', tchbDark: !this.state.mob && company === 'tchb' && mode === 'dark', kpiLight: !this.state.mob && company === 'kpi' && mode !== 'dark', kpiDark: !this.state.mob && company === 'kpi' && mode === 'dark',
+      markTchb: this.state.mob && company === 'tchb', markKpi: this.state.mob && company === 'kpi',
       setLight: () => this.setState({ mode: 'light' }), setDark: () => this.setState({ mode: 'dark' }),
       lightBg: mode !== 'dark' ? 'var(--action-secondary)' : 'transparent', lightFg: mode !== 'dark' ? '#fff' : 'var(--tchb-gray-700)',
       darkBg: mode === 'dark' ? 'var(--action-secondary)' : 'transparent', darkFg: mode === 'dark' ? '#fff' : 'var(--tchb-gray-700)',

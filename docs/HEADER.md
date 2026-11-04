@@ -112,7 +112,7 @@ Help. Each item opens its own window.
 
 ## 5. Phones (under 640px)
 
-- **Row 1:** logo (`40px`), the Live clock (time only, no date), and the photo in the top right corner.
+- **Row 1:** the company's **round icon** in place of the full logo (`44px` circle: the TCHB mark, or the KPI Driver gauge when that company is open; the same image in light and dark), the Live clock (time only, no date), and the photo in the top right corner.
 - **Row 2:** the company switch, full width. It is hidden when the person has only one company.
 - **Active and light/dark move into the photo menu.** At the top of the menu is a Light / Dark switch with words, and a **Who's Online** item with the count.
 - The completion takes its own row under the tabs. Rings are `44px`. Cards follow the phone card in section 3.
