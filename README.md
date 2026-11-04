@@ -136,7 +136,7 @@ Only **Closing Blockers** come over: one task per deal, **Title - &lt;address&gt
 | `POST /api/title-agent/hub` | The hub page calls it after saving one of these tasks; the server sends the agent any blocker ticked or unticked here. |
 | `api/_lib/titleagent.js` | The rules (tested in `tests/`: `node --test tests/title-agent.test.js`). |
 
-Messages between the apps are signed with a shared secret. Vercel settings for this project: `HUB_FIREBASE_SERVICE_ACCOUNT` (a service account key for this Firebase project, role Cloud Datastore User), `TITLE_AGENT_SYNC_SECRET` (the shared secret; the agent has the same value as `HUB_SYNC_SECRET`), and optionally `TITLE_AGENT_ENGINE_URL` and `HUB_TITLE_OWNER` (default monz@totalchb.com). For TC Checklist: `TC_CHECKLIST_SYNC_SECRET` or `TC_CHECKLIST_SECRET` (either name works; the same value as TC Checklist's `HUB_SYNC_SECRET`). For Dispo Ops' names: `DISPO_OPS_SECRET` (the same value as Dispo Ops' `HUB_SYNC_SECRET`; it opens only the team list).
+Messages between the apps are signed with a shared secret. Vercel settings for this project: `HUB_FIREBASE_SERVICE_ACCOUNT` (a service account key for this Firebase project, role Cloud Datastore User), `TITLE_AGENT_SYNC_SECRET` (the shared secret; the agent has the same value as `HUB_SYNC_SECRET`), and optionally `TITLE_AGENT_ENGINE_URL` and `HUB_TITLE_OWNER` (default monz@totalchb.com). For TC Checklist: `TC_CHECKLIST_SYNC_SECRET` or `TC_CHECKLIST_SECRET` (either name works; the same value as TC Checklist's `HUB_SYNC_SECRET`). For Dispo Ops: `DISPO_OPS_SECRET` (the same value as Dispo Ops' `HUB_SYNC_SECRET`; it opens only the team list and Dispo Ops' own deal sync, `/api/dispo-ops`).
 
 ### TC Checklist
 
@@ -162,7 +162,7 @@ DISPO OPS (dispo-ops.totalchb.com) sends each deal's progress one way: **DISPO -
 | `POST /api/title-agent/team` | DISPO OPS asks for every department (`{"depts": ["TC", "DISPO", "ACQ", "OPS"]}`) when a Manager clicks Refresh From Hub. |
 | `api/_lib/dispoops.js` | The rules (tested: `node --test tests/dispo-ops.test.js`). |
 
-Vercel settings: `DISPO_OPS_SYNC_SECRET` (the same value as DISPO OPS's `HUB_SYNC_SECRET` in its Firebase secrets; it opens only these two endpoints) and optionally `HUB_DISPO_OWNER` (default carlos@totalchb.com).
+Vercel settings: `DISPO_OPS_SECRET` (the same value as DISPO OPS's `HUB_SYNC_SECRET` in its Firebase secrets; it opens only these two endpoints) and optionally `HUB_DISPO_OWNER` (default carlos@totalchb.com).
 
 ## Support
 

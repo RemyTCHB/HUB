@@ -1,4 +1,4 @@
-// POST /api/dispo-ops: DISPO OPS sends one deal's progress (signed with DISPO_OPS_SYNC_SECRET, the same scheme as the
+// POST /api/dispo-ops: DISPO OPS sends one deal's progress (signed with DISPO_OPS_SECRET, the same secret as its team list; the same scheme as the
 // Title Commitment Agent). The hub creates or updates "DISPO - <address>" in the DISPO owner's list. One way: nothing
 // is sent back. DISPO OPS keeps this switched off until its owner decides what moves (HUB_SYNC_ENABLED there).
 const { applyDispo, APP } = require('../_lib/dispoops');
@@ -7,7 +7,7 @@ const { db, rawBody, team, send } = require('../_lib/hub');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return send(res, 405, { error: 'POST only' });
-  const body = await rawBody(req), secret = process.env.DISPO_OPS_SYNC_SECRET;
+  const body = await rawBody(req), secret = process.env.DISPO_OPS_SECRET || process.env.DISPO_OPS_SYNC_SECRET;
   if (!secret) return send(res, 503, { error: 'The hub is not set up for DISPO OPS yet.' });
   if (!verify(secret, body, req.headers['x-hub-timestamp'], req.headers['x-hub-signature'])) return send(res, 401, { error: 'Bad signature.' });
   let payload; try { payload = JSON.parse(body); } catch (e) { return send(res, 400, { error: 'Not JSON.' }); }
