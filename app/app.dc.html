@@ -1016,6 +1016,7 @@ h1, h2, h3, h4 {
     a { color: var(--tchb-indigo-700); }
     a:hover { color: var(--tchb-indigo-900); }
     input::placeholder { color: var(--tchb-gray-500); }
+    @keyframes hubSheen { 0% { background-position: -120% 0; } 60%, 100% { background-position: 220% 0; } }
     @keyframes hubPing { 0% { box-shadow: 0 0 0 0 rgba(16, 150, 72, 0.55); } 80%, 100% { box-shadow: 0 0 0 7px rgba(16, 150, 72, 0); } }
   </style>
 </helmet>
@@ -1023,42 +1024,45 @@ h1, h2, h3, h4 {
   <canvas ref="{{ bgRef }}" aria-hidden="true" style="position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block;"></canvas>
   <header style="position: relative; z-index: 1; background: color-mix(in srgb, var(--surface-card) 78%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-default);">
     <div style="max-width: 1280px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; {{ mo.headRow }}">
-      <div style="height: 64px; display: flex; align-items: center; {{ mo.logoBox }}">
-        <sc-if value="{{ tchbLight }}" hint-placeholder-val="{{ true }}">
-          <img src="eacd85cb-342b-497b-9f44-adad94715c27" alt="Total Cash Home Buyers" style="height: 64px; width: auto; display: block; {{ mo.logoTchb }}">
-        </sc-if>
-        <sc-if value="{{ tchbDark }}" hint-placeholder-val="{{ false }}">
-          <img src="69e01730-0e65-40e4-b23e-ce47acf4ec71" alt="Total Cash Home Buyers" style="height: 64px; width: auto; display: block; {{ mo.logoTchb }}">
-        </sc-if>
-        <sc-if value="{{ kpiLight }}" hint-placeholder-val="{{ false }}">
-          <img src="2f4cc925-6d8d-4ae7-aa63-2f3160418bce" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }}">
-        </sc-if>
-        <sc-if value="{{ kpiDark }}" hint-placeholder-val="{{ false }}">
-          <img src="c6cb2c3c-4eaf-48c9-a4d4-8658f9419f52" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }}">
-        </sc-if>
-      </div>
-      <div style="display: flex; align-items: center; gap: 10px; {{ mo.theme }}">
-        <div title="Theme" style="display: flex; gap: 2px; padding: 4px; border-radius: 999px; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10));">
-          <button sc-camel-on-click="{{ setLight }}" title="Light theme" style="border: none; cursor: pointer; padding: 7px 12px; border-radius: 999px; display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; transition: background 120ms; background: {{ lightBg }}; color: {{ lightFg }}; {{ mo.themeBtn }}" aria-label="Light theme">
-            <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg><span style="{{ mo.hide }}">Light</span>
-          </button>
-          <button sc-camel-on-click="{{ setDark }}" title="Dark theme" style="border: none; cursor: pointer; padding: 7px 12px; border-radius: 999px; display: flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: 13px; transition: background 120ms; background: {{ darkBg }}; color: {{ darkFg }}; {{ mo.themeBtn }}" aria-label="Dark theme">
-            <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg><span style="{{ mo.hide }}">Dark</span>
-          </button>
+      <div style="flex: 1 1 0; min-width: max-content; display: flex; align-items: center; gap: 16px; {{ mo.headLeft }}">
+        <div style="height: 64px; display: flex; align-items: center; {{ mo.logoBox }}">
+          <sc-if value="{{ tchbLight }}" hint-placeholder-val="{{ true }}">
+            <img src="eacd85cb-342b-497b-9f44-adad94715c27" alt="Total Cash Home Buyers" style="height: 64px; width: auto; display: block; {{ mo.logoTchb }}">
+          </sc-if>
+          <sc-if value="{{ tchbDark }}" hint-placeholder-val="{{ false }}">
+            <img src="69e01730-0e65-40e4-b23e-ce47acf4ec71" alt="Total Cash Home Buyers" style="height: 64px; width: auto; display: block; {{ mo.logoTchb }}">
+          </sc-if>
+          <sc-if value="{{ kpiLight }}" hint-placeholder-val="{{ false }}">
+            <img src="2f4cc925-6d8d-4ae7-aa63-2f3160418bce" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }}">
+          </sc-if>
+          <sc-if value="{{ kpiDark }}" hint-placeholder-val="{{ false }}">
+            <img src="c6cb2c3c-4eaf-48c9-a4d4-8658f9419f52" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }}">
+          </sc-if>
         </div>
-        <sc-if value="{{ showActive }}" hint-placeholder-val="{{ false }}">
-          <button sc-camel-on-click="{{ openActive }}" title="Who's online now" aria-haspopup="true" aria-label="{{ activeAria }}" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; flex: none; padding: 0 7px 0 14px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); white-space: nowrap; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10));" style-focus="box-shadow: var(--focus-ring);"><span style="width: 8px; height: 8px; border-radius: 999px; background: var(--tchb-green-500); flex: none; animation: hubPing 2.2s ease-out infinite;"></span><span style="{{ mo.hide }}">Active</span><span style="min-width: 24px; height: 22px; padding: 0 7px; box-sizing: border-box; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; background: var(--tchb-green-050); color: var(--tchb-green-600); font-size: 13px; box-shadow: 0 0 10px color-mix(in srgb, var(--tchb-green-500) 25%, transparent);">{{ activeCount }}</span></button>
-        </sc-if>
+        <span title="{{ syncTitle }}" role="status" style="position: relative; overflow: hidden; flex: none; display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; {{ syncBadge }}"><span style="width: 8px; height: 8px; flex: none; border-radius: 999px; background: {{ syncDot }}; {{ syncPing }}"></span>{{ syncLabel }}<sc-if value="{{ syncShine }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; background: var(--live-sheen, linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%)) no-repeat; background-size: 60% 100%; animation: hubSheen 4.5s ease-in-out infinite;"></span></sc-if></span>
       </div>
-      <div style="display: flex; align-items: center; gap: 10px; {{ mo.navGroup }}">
-      <nav style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.nav }}">
+      <nav style="flex: none; display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.nav }}">
         <sc-for list="{{ companyTabs }}" as="c" hint-placeholder-count="2">
           <button sc-camel-on-click="{{ c.onClick }}" style="border: none; cursor: pointer; padding: 9px 18px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: 0.04em; display: flex; gap: 8px; align-items: center; transition: background 120ms; background: {{ c.bg }}; color: {{ c.color }}; box-shadow: {{ c.shadow }}; {{ mo.tab }}">{{ c.label }}<span style="font-weight: 600; font-size: 12px; opacity: 0.8; {{ mo.tabPct }}">{{ c.pct }}</span></button>
         </sc-for>
       </nav>
-      <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
-        <button sc-camel-on-click="{{ openAccount }}" title="{{ userTitle }}" aria-haspopup="true" aria-label="Your account" style="width: 40px; height: 40px; flex: none; border-radius: 999px; cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-shadow: var(--shadow-button); {{ mo.avatar }}">{{ userInitials }}<sc-if value="{{ me.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ me.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></button>
-      </sc-if>
+      <div style="flex: 1 1 0; min-width: max-content; display: flex; align-items: center; justify-content: flex-end; gap: 10px; {{ mo.navGroup }}">
+        <div style="display: flex; align-items: center; gap: 10px; {{ mo.theme }}">
+          <sc-if value="{{ showActive }}" hint-placeholder-val="{{ false }}">
+            <button sc-camel-on-click="{{ openActive }}" title="Who's online now" aria-haspopup="true" aria-label="{{ activeAria }}" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; flex: none; padding: 0 7px 0 14px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); white-space: nowrap; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10));" style-focus="box-shadow: var(--focus-ring);"><span style="width: 8px; height: 8px; border-radius: 999px; background: var(--tchb-green-500); flex: none; animation: hubPing 2.2s ease-out infinite;"></span><span style="{{ mo.hide }}">Active</span><span style="min-width: 24px; height: 22px; padding: 0 7px; box-sizing: border-box; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; background: var(--tchb-green-050); color: var(--tchb-green-600); font-size: 13px; box-shadow: 0 0 10px color-mix(in srgb, var(--tchb-green-500) 25%, transparent);">{{ activeCount }}</span></button>
+          </sc-if>
+          <div title="Theme" style="display: flex; gap: 2px; padding: 4px; border-radius: 999px; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10));">
+            <button sc-camel-on-click="{{ setLight }}" title="Light theme" style="border: none; cursor: pointer; width: 40px; height: 32px; padding: 0; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; transition: background 120ms; background: {{ lightBg }}; color: {{ lightFg }}; {{ mo.themeBtn }}" aria-label="Light theme">
+              <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+            </button>
+            <button sc-camel-on-click="{{ setDark }}" title="Dark theme" style="border: none; cursor: pointer; width: 40px; height: 32px; padding: 0; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; transition: background 120ms; background: {{ darkBg }}; color: {{ darkFg }}; {{ mo.themeBtn }}" aria-label="Dark theme">
+              <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+            </button>
+          </div>
+        </div>
+        <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
+          <button sc-camel-on-click="{{ openAccount }}" title="{{ userTitle }}" aria-haspopup="true" aria-label="Your account" style="width: 40px; height: 40px; flex: none; border-radius: 999px; cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-shadow: var(--shadow-button); {{ mo.avatar }}">{{ userInitials }}<sc-if value="{{ me.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ me.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></button>
+        </sc-if>
       </div>
     </div>
   </header>
@@ -1085,28 +1089,9 @@ h1, h2, h3, h4 {
     </sc-if>
     <sc-if value="{{ showBoard }}" hint-placeholder-val="{{ true }}">
     <div style="display: contents;">
-    <section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; {{ mo.hero }}">
-      <div style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 440px; min-width: 0; {{ mo.heroText }}">
-        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
-          <span title="{{ syncTitle }}" style="display: flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.04em; background: {{ syncBg }}; color: {{ syncFg }};"><span style="width: 7px; height: 7px; border-radius: 999px; background: {{ syncDot }};"></span>{{ syncLabel }}</span>
-          <span title="Hub clock, Eastern time. Every date in the hub comes from this clock." aria-label="Hub clock, Eastern time" style="display: flex; flex-direction: column; gap: 1px; line-height: 1.15; font-family: var(--font-display); font-variant-numeric: tabular-nums; white-space: nowrap;">
-            <span ref="{{ clockARef }}" style="font-weight: 700; font-size: 12px; letter-spacing: 0.03em; color: var(--tchb-indigo-700);"></span>
-            <span ref="{{ clockBRef }}" style="font-weight: 600; font-size: 11px; letter-spacing: 0.03em; color: var(--text-muted);"></span>
-          </span>
-        </div>
-        <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 44px; line-height: 1.15; color: var(--tchb-indigo-700); {{ mo.h1 }}">Universal <span style="color: var(--tchb-red-500);">Team Hub</span></h1>
-        <p style="margin: 0; font-size: 16px; color: var(--text-muted); text-wrap: pretty; text-transform: capitalize">Every Department's Tasks, Owners And Files In One Place.</p>
-      </div>
-      <div style="display: flex; gap: 28px; align-items: flex-end; {{ mo.stats }}">
-        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-end; {{ mo.stat }}">
-          <span style="font-family: var(--font-display); font-weight: 800; font-size: 32px; line-height: 1; color: var(--tchb-indigo-700); {{ mo.statNum }}">{{ tasksDone }}<span style="color: var(--tchb-gray-300);">/</span>{{ tasksTotal }}</span>
-          <span style="font-size: 13px; color: var(--text-muted); text-transform: capitalize">tasks done</span>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-end; {{ mo.stat }}">
-          <span style="font-family: var(--font-display); font-weight: 800; font-size: 32px; line-height: 1; color: var(--tchb-green-600); {{ mo.statNum }}">{{ overallPct }}</span>
-          <span style="font-size: 13px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap;">{{ subsDone }} of {{ subsTotal }} subtasks</span>
-        </div>
-      </div>
+    <section style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; {{ mo.hero }}">
+      <span ref="{{ clockARef }}" title="Hub clock, Eastern time. Every date in the hub comes from this clock." aria-label="Hub clock, Eastern time" style="font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--text-muted);"></span>
+      <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 44px; line-height: 1.15; color: var(--tchb-indigo-700); {{ mo.h1 }}">Universal <span style="color: var(--tchb-red-500);">Team Hub</span></h1>
     </section>
 
     <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;">
@@ -1129,8 +1114,18 @@ h1, h2, h3, h4 {
         </div>
       </sc-if>
       <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
-        <button sc-camel-on-click="{{ goBack }}" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; margin-left: auto;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back To Sign In</button>
+        <button sc-camel-on-click="{{ goBack }}" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back To Sign In</button>
       </sc-if>
+      <div style="display: flex; gap: 22px; align-items: center; {{ statsBox }}">
+        <div style="display: flex; flex-direction: column; gap: 2px; align-items: {{ statAlign }};">
+          <span style="font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1; color: var(--tchb-indigo-700);">{{ tasksDone }}<span style="color: var(--tchb-gray-300);">/</span>{{ tasksTotal }}</span>
+          <span style="font-size: 12px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap;">tasks done</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px; align-items: {{ statAlign }};">
+          <span style="font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1; color: var(--tchb-green-600);">{{ overallPct }}</span>
+          <span style="font-size: 12px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap;">{{ subsDone }} of {{ subsTotal }} subtasks</span>
+        </div>
+      </div>
     </div>
     <sc-if value="{{ showErr }}" hint-placeholder-val="{{ false }}">
       <div style="padding: 10px 14px; border-radius: var(--radius-md); background: var(--tchb-red-050); color: var(--status-error); font-size: 14px; font-weight: 600;">These tasks can't load yet. An admin needs to update the Firestore rules (see the user guide).</div>
@@ -1884,13 +1879,13 @@ const KPI_DARK = {
 const GLASS_LIGHT = {
   '--glass-bg': 'rgba(255,255,255,0.55)', '--glass-sheen': 'linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)', '--glass-border': 'rgba(255,255,255,0.85)',
   '--glass-shadow': 'inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)',
-  '--glass-hover': 'rgba(255,255,255,0.85)', '--glass-divider': 'rgba(17,29,44,0.08)', '--menu-bg': 'rgba(255,255,255,0.62)',
+  '--glass-hover': 'rgba(255,255,255,0.85)', '--glass-divider': 'rgba(17,29,44,0.08)', '--menu-bg': 'rgba(255,255,255,0.62)', '--live-sheen': 'linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%)',
   '--menu-sheen': 'linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 100%)', '--menu-shadow': 'inset 0 1px 0 rgba(255,255,255,0.95), 0 2px 4px rgba(34,29,84,0.08), 0 16px 40px rgba(34,29,84,0.18)'
 };
 const GLASS_DARK = {
   '--glass-bg': 'rgba(255,255,255,0.06)', '--glass-sheen': 'linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.02) 100%)', '--glass-border': 'rgba(255,255,255,0.12)',
   '--glass-shadow': 'inset 0 1px 0 rgba(255,255,255,0.10), 0 1px 2px rgba(0,0,0,0.4), 0 4px 14px rgba(0,0,0,0.3)',
-  '--glass-hover': 'rgba(255,255,255,0.10)', '--glass-divider': 'rgba(255,255,255,0.10)', '--menu-bg': 'rgba(30, 28, 50, 0.75)',
+  '--glass-hover': 'rgba(255,255,255,0.10)', '--glass-divider': 'rgba(255,255,255,0.10)', '--menu-bg': 'rgba(30, 28, 50, 0.75)', '--live-sheen': 'linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.16) 50%, transparent 70%)',
   '--menu-sheen': 'linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 100%)', '--menu-shadow': 'inset 0 1px 0 rgba(255,255,255,0.08), 0 16px 40px rgba(0,0,0,0.5)'
 };
 const ALL_VARS = [...new Set([DARK_BASE, KPI_DARK, GLASS_LIGHT, GLASS_DARK].flatMap(Object.keys))];
@@ -2118,20 +2113,20 @@ const isTouch = () => !!(window.matchMedia && window.matchMedia('(pointer: coars
 // Phone-only style overrides, appended to inline styles; desktop gets '' so its layout is untouched.
 const MOBILE = {
   headRow: 'padding: 10px 16px; gap: 10px 8px; position: relative;',
-  logoBox: 'height: 44px; flex: 1 0 100%; order: 1; justify-content: center;',
+  headLeft: 'flex: 1 1 100%; order: 1; min-width: 0; gap: 10px; padding-right: 54px;',   // logo and Live; the photo sits top right
+  logoBox: 'height: 44px;',
   logoTchb: 'height: 44px;', logoKpi: 'height: 24px;',
   theme: 'order: 3; flex: none;',
-  themeBtn: 'padding: 0; width: 44px; height: 40px; justify-content: center;',
+  themeBtn: 'width: 44px; height: 40px;',
   hide: 'display: none;',
   navGroup: 'display: contents;',
   nav: 'order: 4; flex: 1 1 auto;',   // wraps to its own line when the company tabs don't fit beside the theme and Active pills
   tab: 'flex: 1 1 0; min-width: 0; justify-content: center; padding: 0 8px; height: 40px; font-size: 13px; gap: 6px; white-space: nowrap;',
-  avatar: 'position: absolute; top: 10px; right: 16px; width: 44px; height: 44px;', // keeps the logo centred
+  avatar: 'position: absolute; top: 10px; right: 16px; width: 44px; height: 44px;', // top right, beside the logo and Live
   main: 'padding: 20px 16px 96px; gap: 16px;',
   gate: 'margin-top: 16px; padding: 28px 20px; box-sizing: border-box;', gateTitle: 'font-size: 24px;',
-  hero: 'gap: 16px;', heroText: 'flex-basis: 100%;',
+  hero: 'gap: 4px;',
   h1: 'font-size: 30px;',
-  stats: 'width: 100%; align-items: flex-start;', stat: 'align-items: flex-start;', statNum: 'font-size: 28px;',
   addBar: 'padding: 10px; gap: 8px;',
   addInput: 'flex: 1 1 100%; min-width: 0;',
   addOwner: 'flex: 1 1 0; min-width: 0; min-height: 46px;',
@@ -2189,7 +2184,7 @@ class Component extends DCLogic {
   constructor(p) {
     super(p);
     this.rootRef = React.createRef();
-    this.clockARef = React.createRef(); this.clockBRef = React.createRef();
+    this.clockARef = React.createRef();
     this.bgRef = React.createRef();
     this.helpRef = React.createRef();
     let company = 'tchb';
@@ -2904,9 +2899,9 @@ class Component extends DCLogic {
     this._min = setInterval(() => this.setState({ minute: hubNow() }), 60000);   // due-date colours deepen as time passes
   }
   tickClock() {
-    const a = this.clockARef.current, b = this.clockBRef.current; if (!a || !b) return;
+    const a = this.clockARef.current; if (!a) return;
     const n = hubNow(), sec = Math.floor(n / 1000); if (a.dataset.s === String(sec) && a.textContent) return;
-    a.dataset.s = sec; a.textContent = etDate(n) + '  ' + et24(n); b.textContent = etDate(n) + '  ' + et12(n) + ' ' + etZone(n);
+    a.dataset.s = sec; a.textContent = etDate(n) + '  ' + et12(n) + ' ' + etZone(n);
   }
   // Soft glows behind the board: two drift slowly, the green one eases toward the pointer (or a tap).
   startAurora() {
@@ -3243,6 +3238,7 @@ class Component extends DCLogic {
         if (dragId && overId) this.moveTask(dragId, overId);
       },
       mo: this.state.mob ? (this.state.tiny ? MOBILE_TINY : MOBILE) : {},
+      statsBox: this.state.mob ? 'flex: 1 1 100%; justify-content: flex-start;' : 'margin-left: auto;', statAlign: this.state.mob ? 'flex-start' : 'flex-end',
       menuSheet: menu && this.state.mob ? `top: auto; left: 0; right: 0; width: auto; bottom: ${this.state.kb}px; transform: none; min-width: 0; max-height: ${this.state.kb ? 'calc(100% - ' + (this.state.kb + 24) + 'px)' : '70vh'}; padding: 8px 8px 20px; border-radius: 20px 20px 0 0;` : '',
       tchbLight: company === 'tchb' && mode !== 'dark', tchbDark: company === 'tchb' && mode === 'dark', kpiLight: company === 'kpi' && mode !== 'dark', kpiDark: company === 'kpi' && mode === 'dark',
       setLight: () => this.setState({ mode: 'light' }), setDark: () => this.setState({ mode: 'dark' }),
@@ -3363,10 +3359,13 @@ class Component extends DCLogic {
       ...(() => { const st = cloud !== 'ready' ? cloud : this.state.saveErr ? 'unsaved' : this.state.saving ? 'saving' : 'ready';
         return { syncLabel: { ready: 'Live', saving: 'Saving…', unsaved: 'Not Saved', connecting: 'Connecting', error: 'Offline' }[st] || 'Local Only',
           syncTitle: { ready: 'Every change is saved for the whole team', saving: 'Saving your changes for the whole team…', unsaved: this.state.saveErr }[st] || 'Changes are saved in this browser only',
+          syncBadge: st === 'ready' ? 'background: var(--tchb-green-050); color: var(--tchb-green-600); border: 1px solid color-mix(in srgb, var(--tchb-green-500) 35%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--tchb-green-500) 10%, transparent), 0 2px 14px color-mix(in srgb, var(--tchb-green-500) 28%, transparent);'
+            : 'border: 1px solid transparent; background: ' + (st === 'saving' ? 'var(--tchb-indigo-050)' : ['error', 'unsaved'].includes(st) ? 'var(--tchb-red-050)' : 'var(--tchb-gray-100)') + '; color: ' + (st === 'saving' ? 'var(--tchb-indigo-700)' : ['error', 'unsaved'].includes(st) ? 'var(--status-error)' : 'var(--tchb-gray-700)') + ';',
+          syncShine: st === 'ready', syncPing: st === 'ready' ? 'animation: hubPing 2.2s ease-out infinite;' : '',
           syncBg: st === 'ready' ? 'var(--tchb-green-050)' : st === 'saving' ? 'var(--tchb-indigo-050)' : ['error', 'unsaved'].includes(st) ? 'var(--tchb-red-050)' : 'var(--tchb-gray-100)',
           syncFg: st === 'ready' ? 'var(--tchb-green-600)' : st === 'saving' ? 'var(--tchb-indigo-700)' : ['error', 'unsaved'].includes(st) ? 'var(--status-error)' : 'var(--tchb-gray-700)',
           syncDot: st === 'ready' ? 'var(--tchb-green-500)' : st === 'saving' ? 'var(--tchb-indigo-500)' : ['error', 'unsaved'].includes(st) ? 'var(--status-error)' : 'var(--tchb-gray-500)' }; })(),
-      companyTabs, isTchb: company === 'tchb', isKpi: company === 'kpi', rootRef: this.rootRef, bgRef: this.bgRef, clockARef: this.clockARef, clockBRef: this.clockBRef,
+      companyTabs, isTchb: company === 'tchb', isKpi: company === 'kpi', rootRef: this.rootRef, bgRef: this.bgRef, clockARef: this.clockARef,
       companyName: COMPANIES.find(c => c.key === company).name,
       newTask: this.state.newTask, newOwner: this.state.newOwner, owners, ownerFilter,
       newOwnerChip: chipOf(this.state.newOwner),
