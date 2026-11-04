@@ -1039,10 +1039,12 @@ h1, h2, h3, h4 {
             <img src="c6cb2c3c-4eaf-48c9-a4d4-8658f9419f52" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }} {{ cmp.logoKpi }}">
           </sc-if>
         </div>
-        <button sc-camel-on-click="{{ openSync }}" title="{{ syncTitle }}" aria-haspopup="true" aria-label="{{ syncAria }}" style="cursor: pointer; position: relative; overflow: hidden; flex: none; display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; {{ syncBadge }}"><span style="width: 8px; height: 8px; flex: none; border-radius: 999px; background: {{ syncDot }}; {{ syncPing }}"></span>{{ syncLabel }}<sc-if value="{{ syncShine }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; background: var(--live-sheen, linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%)) no-repeat; background-size: 60% 100%; animation: hubSheen 4.5s ease-in-out infinite;"></span></sc-if></button>
-        <sc-if value="{{ headClock }}" hint-placeholder-val="{{ true }}">
-          <span ref="{{ clockARef }}" title="Hub clock, Eastern time. Every date in the hub comes from this clock." aria-label="Hub clock, Eastern time" style="flex: none; display: inline-flex; align-items: center; height: 34px; padding: 0 14px; box-sizing: border-box; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.03em; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--tchb-indigo-700); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10));"></span>
-        </sc-if>
+        <div style="display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 4px; flex: none;">
+          <button sc-camel-on-click="{{ openSync }}" title="{{ syncTitle }}" aria-haspopup="true" aria-label="{{ syncAria }}" style="cursor: pointer; position: relative; overflow: hidden; flex: none; display: inline-flex; align-items: center; gap: 6px; justify-content: center; height: 22px; padding: 0 10px; box-sizing: border-box; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; {{ syncBadge }}"><span style="width: 7px; height: 7px; flex: none; border-radius: 999px; background: {{ syncDot }}; {{ syncPing }}"></span>{{ syncLabel }}<sc-if value="{{ syncShine }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; background: var(--live-sheen, linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%)) no-repeat; background-size: 60% 100%; animation: hubSheen 4.5s ease-in-out infinite;"></span></sc-if></button>
+          <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ true }}">
+            <span ref="{{ clockARef }}" title="Hub clock, Eastern time. Every date in the hub comes from this clock." aria-label="Hub clock, Eastern time" style="flex: none; display: inline-flex; align-items: center; justify-content: center; height: 22px; padding: 0 10px; box-sizing: border-box; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: {{ clockSize }}; letter-spacing: 0.03em; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--tchb-indigo-700); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10));"></span>
+          </sc-if>
+        </div>
       </div>
       <div style="{{ headBreak }}"></div>
       <sc-if value="{{ showCompanyNav }}" hint-placeholder-val="{{ true }}">
@@ -1096,13 +1098,10 @@ h1, h2, h3, h4 {
     <sc-if value="{{ showBoard }}" hint-placeholder-val="{{ true }}">
     <div style="display: contents;">
     <section style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; {{ mo.hero }}">
-      <sc-if value="{{ heroClock }}" hint-placeholder-val="{{ false }}">
-        <span ref="{{ clockARef }}" title="Hub clock, Eastern time. Every date in the hub comes from this clock." aria-label="Hub clock, Eastern time" style="font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--tchb-indigo-700);"></span>
-      </sc-if>
       <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 44px; line-height: 1.15; color: var(--tchb-indigo-700); {{ mo.h1 }}">Universal <span style="color: var(--tchb-red-500);">Team Hub</span></h1>
     </section>
 
-    <div ref="{{ tabsRef }}" style="position: sticky; top: {{ pinTop }}; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 8px; margin: -8px -8px 0; border-radius: 18px; border: 1px solid transparent; transition: background-color 160ms, box-shadow 160ms; {{ pinBox }}">
+    <div ref="{{ tabsRef }}" style="position: {{ pinPos }}; top: {{ pinTop }}; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 8px; margin: -8px -8px 0; border-radius: 18px; border: 1px solid transparent; transition: background-color 160ms, box-shadow 160ms; {{ pinBox }}">
       <sc-if value="{{ showScopes }}" hint-placeholder-val="{{ false }}">
         <div role="group" aria-label="Which tasks" title="{{ scopeHint }}" style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.scopeSeg }}">
           <sc-if value="{{ mgmtTab.show }}" hint-placeholder-val="{{ true }}"><button sc-camel-on-click="{{ mgmtTab.onClick }}" aria-pressed="{{ mgmtTab.on }}" style="border: none; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; display: flex; gap: 7px; align-items: center; transition: background 120ms; background: {{ mgmtTab.bg }}; color: {{ mgmtTab.color }}; box-shadow: {{ mgmtTab.shadow }}; {{ mo.scopeBtn }}"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>MGMT</button></sc-if>
@@ -1124,20 +1123,17 @@ h1, h2, h3, h4 {
       <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
         <button sc-camel-on-click="{{ goBack }}" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back To Sign In</button>
       </sc-if>
-      <div style="display: flex; gap: 20px; align-items: center; {{ statsBox }}">
-        <div style="display: flex; flex-direction: column; gap: 2px; align-items: {{ statAlign }};">
-          <span style="font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1; color: var(--tchb-indigo-700);">{{ tasksDone }}<span style="color: var(--tchb-gray-300);">/</span>{{ tasksTotal }}</span>
-          <span style="font-size: 12px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap;">tasks done</span>
+      <div style="display: flex; gap: 22px; align-items: center; {{ statsBox }}">
+        <div style="display: flex; flex-direction: column; gap: 3px; align-items: center; text-align: center;">
+          <span style="font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1; color: var(--tchb-indigo-700); font-variant-numeric: tabular-nums;">{{ tasksDone }}<span style="color: var(--tchb-gray-300);">/</span>{{ tasksTotal }}</span>
+          <span style="font-size: 12px; color: var(--text-muted); white-space: nowrap;">Tasks Done</span>
         </div>
-        <div title="{{ ringTitle }}" style="display: flex; align-items: center; gap: 10px;">
-          <span role="img" aria-label="{{ ringTitle }}" style="position: relative; width: 48px; height: 48px; flex: none;">
-            <svg width="48" height="48" sc-camel-view-box="0 0 48 48" style="display: block; transform: rotate(-90deg);"><circle cx="24" cy="24" r="20" fill="none" stroke="var(--tchb-gray-100)" stroke-width="5"></circle><circle cx="24" cy="24" r="20" fill="none" stroke="{{ ringColor }}" stroke-width="5" stroke-linecap="round" style="stroke-dasharray: {{ ringDash }}; transition: stroke-dasharray 300ms cubic-bezier(0.2,0.8,0.3,1);"></circle></svg>
-            <span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 12px; color: {{ ringText }};">{{ overallPct }}</span>
-          </span>
-          <span style="display: flex; flex-direction: column; gap: 2px;">
-            <span style="font-family: var(--font-display); font-weight: 800; font-size: 18px; line-height: 1; color: var(--tchb-indigo-700);">{{ subsDone }}<span style="color: var(--tchb-gray-300);">/</span>{{ subsTotal }}</span>
+        <div title="{{ ringTitle }}" style="display: flex; align-items: center; gap: 12px;">
+          <div aria-hidden="true" style="width: {{ ringBox }}; height: {{ ringBox }}; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: conic-gradient({{ ringColor }} {{ overallPct }}, var(--tchb-gray-100) 0);"><b style="width: {{ ringIn }}; height: {{ ringIn }}; border-radius: 999px; background: var(--surface-card); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: {{ ringFont }}; color: {{ ringText }}; font-variant-numeric: tabular-nums;">{{ overallPct }}</b></div>
+          <div style="display: flex; flex-direction: column; gap: 3px; align-items: center; text-align: center;">
+            <span style="font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1; color: var(--tchb-indigo-700); font-variant-numeric: tabular-nums;">{{ subsDone }}<span style="color: var(--tchb-gray-300);">/</span>{{ subsTotal }}</span>
             <span style="font-size: 12px; color: var(--text-muted); white-space: nowrap;">Subtasks Done</span>
-          </span>
+          </div>
         </div>
       </div>
     </div>
@@ -1218,8 +1214,13 @@ h1, h2, h3, h4 {
           </label>
         </sc-if>
         <button sc-camel-on-click="{{ openOwnerFilter }}" style="display: flex; align-items: center; gap: 8px; border-radius: 999px; padding: 8px 12px 8px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); cursor: pointer; white-space: nowrap; text-transform: capitalize; background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10)); {{ mo.ownerFilter }}" style-focus="box-shadow: var(--focus-ring);"><span style="{{ mo.ellip }}">{{ ownerFilterLabel }}</span><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: none; opacity: 0.7;"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="ghost" size="sm" sc-camel-on-click="{{ expandAll }}" hint-size="100px,36px">Expand All</x-import></div>
-        <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="ghost" size="sm" sc-camel-on-click="{{ collapseAll }}" hint-size="100px,36px">Collapse All</x-import></div>
+        <sc-if value="{{ bothExpand }}" hint-placeholder-val="{{ true }}">
+          <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="ghost" size="sm" sc-camel-on-click="{{ expandAll }}" hint-size="100px,36px">Expand All</x-import></div>
+          <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="ghost" size="sm" sc-camel-on-click="{{ collapseAll }}" hint-size="100px,36px">Collapse All</x-import></div>
+        </sc-if>
+        <sc-if value="{{ oneExpand }}" hint-placeholder-val="{{ false }}">
+          <div style="display: contents; {{ mo.btnWrap }}"><x-import component-from-global-scope="TotalCashHomeBuyersDesignSystem_161e1a.Button" variant="ghost" size="sm" sc-camel-on-click="{{ toggleAll }}" hint-size="100px,36px">{{ toggleAllLabel }}</x-import></div>
+        </sc-if>
       </div>
     </section>
 
@@ -1236,11 +1237,21 @@ h1, h2, h3, h4 {
               </sc-if>
             </button>
             <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0; {{ mo.grow }}">
-              <div style="display: grid; margin-left: -7px; min-width: 0; border-radius: 8px; {{ t.titleMatch }}">
-                <span aria-hidden="true" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; visibility: hidden; {{ mo.taskTitle }}">{{ t.title }} </span>
-                <textarea rows="1" value="{{ t.title }}" sc-camel-read-only="{{ t.readOnly }}" sc-camel-on-change="{{ t.onTitle }}" sc-camel-on-key-down="{{ blurOnEnter }}" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; border-radius: 6px; background: transparent; outline: none; resize: none; overflow: hidden; margin: 0; min-width: 0; width: 100%; box-sizing: border-box; color: {{ t.titleColor }}; text-decoration: {{ t.titleDeco }}; {{ mo.taskTitle }}" style-hover="border-color: var(--border-default);" style-focus="border-color: var(--tchb-indigo-500); background: var(--tchb-indigo-050);"></textarea>
+              <div style="display: flex; align-items: center; gap: 14px; min-width: 0;">
+                <sc-if value="{{ t.hasRing }}" hint-placeholder-val="{{ false }}">
+                  <span title="{{ t.ringTitle }}" style="display: flex; flex: none;"><div aria-hidden="true" style="width: {{ ringBox }}; height: {{ ringBox }}; flex: none; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: conic-gradient({{ t.ringColor }} {{ t.pct }}, var(--tchb-gray-100) 0);"><b style="width: {{ ringIn }}; height: {{ ringIn }}; border-radius: 999px; background: var(--surface-card); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: {{ ringFont }}; color: {{ t.ringText }}; font-variant-numeric: tabular-nums;">{{ t.pct }}</b></div></span>
+                </sc-if>
+                <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 0;">
+                  <div style="display: grid; margin-left: -7px; min-width: 0; border-radius: 8px; {{ t.titleMatch }}">
+                    <span aria-hidden="true" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; visibility: hidden; {{ mo.taskTitle }}">{{ t.title }} </span>
+                    <textarea rows="1" value="{{ t.title }}" sc-camel-read-only="{{ t.readOnly }}" sc-camel-on-change="{{ t.onTitle }}" sc-camel-on-key-down="{{ blurOnEnter }}" style="font-family: var(--font-display); font-weight: 700; font-size: 19px; line-height: 1.3; text-transform: capitalize; padding: 2px 6px; border: 1px solid transparent; white-space: pre-wrap; word-break: break-word; grid-area: 1 / 1; border-radius: 6px; background: transparent; outline: none; resize: none; overflow: hidden; margin: 0; min-width: 0; width: 100%; box-sizing: border-box; color: {{ t.titleColor }}; text-decoration: {{ t.titleDeco }}; {{ mo.taskTitle }}" style-hover="border-color: var(--border-default);" style-focus="border-color: var(--tchb-indigo-500); background: var(--tchb-indigo-050);"></textarea>
+                  </div>
+                  <span title="{{ t.metaTitle }}" style="font-size: 13px; color: var(--text-muted);">{{ t.meta }}</span>
+                  <sc-if value="{{ t.hasBar }}" hint-placeholder-val="{{ false }}">
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; max-width: 420px; margin-top: 4px;"><div style="flex: 1 1 120px; min-width: 60px; height: 6px; border-radius: 999px; background: var(--tchb-gray-100); overflow: hidden;"><i style="display: block; height: 100%; width: {{ t.pct }}; border-radius: 999px; background: {{ t.barColor }}; transition: width 400ms cubic-bezier(0.2,0.8,0.3,1);"></i></div><span style="font-size: 13px; font-weight: 700; color: var(--text-muted); white-space: nowrap;">{{ t.barLabel }}</span></div>
+                  </sc-if>
+                </div>
               </div>
-              <span title="{{ t.metaTitle }}" style="font-size: 13px; color: var(--text-muted);">{{ t.meta }}</span>
               <sc-if value="{{ t.canPushLive }}" hint-placeholder-val="{{ false }}">
                 <span style="display: flex; margin-top: 6px;"><button sc-camel-on-click="{{ t.onPushLive }}" title="Move this task into your personal list" style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--tchb-indigo-500); background: transparent; color: var(--tchb-indigo-700); cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.02em; white-space: nowrap; {{ mo.pushBtn }}" style-hover="background: var(--tchb-indigo-050);"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M12 12v9"></path><path d="m16 16-4-4-4 4"></path></svg>Push To Live</button></span>
               </sc-if>
@@ -1280,11 +1291,6 @@ h1, h2, h3, h4 {
               <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
             </button>
           </div>
-          <sc-if value="{{ showProgress }}" hint-placeholder-val="{{ true }}">
-            <div style="height: 4px; background: var(--tchb-gray-100);">
-              <div style="height: 100%; width: {{ t.pct }}; background: {{ t.barColor }}; transition: width 200ms cubic-bezier(0.2,0.8,0.3,1);"></div>
-            </div>
-          </sc-if>
           <sc-if value="{{ t.open }}" hint-placeholder-val="{{ true }}">
             <div style="background: var(--tchb-gray-050); padding: 10px 18px 16px 60px; display: flex; flex-direction: column; gap: 2px; {{ mo.panel }}">
               <sc-for list="{{ t.subs }}" as="s" hint-placeholder-count="3">
@@ -1624,18 +1630,37 @@ h1, h2, h3, h4 {
     </div>
   </sc-if>
 
+  <sc-if value="{{ meOpen }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ closeMe }}" style="position: fixed; inset: 0; z-index: 64; background: rgba(10, 12, 24, 0.4);"></div>
+    <div role="dialog" aria-label="My Settings" sc-camel-on-key-down="{{ meKey }}" style="position: fixed; z-index: 65; left: 50%; top: 24px; transform: translateX(-50%); width: calc(100% - 32px); max-width: 520px; max-height: calc(100vh - 48px); box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); overflow: hidden; {{ mo.sheet }}">
+      <div style="display: flex; align-items: flex-start; gap: 12px; padding: 18px 20px 12px; border-bottom: 1px solid var(--border-default);">
+        <h2 style="flex: 1; margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--tchb-indigo-700);">My Settings</h2>
+        <button sc-camel-on-click="{{ closeMe }}" title="Close" aria-label="Close" style="width: 40px; height: 40px; flex: none; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center;" style-hover="background: var(--tchb-gray-100);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+      </div>
+      <div style="padding: 16px 20px 22px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 14px; padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-default); background: var(--surface-subtle);">
+          <span style="width: 48px; height: 48px; flex: none; border-radius: 999px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700));">{{ userInitials }}<sc-if value="{{ me.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ me.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></span>
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+            <b style="font-family: var(--font-display); font-size: 16px; color: var(--tchb-indigo-700); text-transform: capitalize;">{{ acctName }}</b>
+            <span style="font-size: 13px; color: var(--text-muted); overflow-wrap: anywhere;">{{ acctEmail }}</span>
+            <span style="font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tchb-red-500);">{{ acctType }}</span>
+          </span>
+        </div>
+        <p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--text-muted);">There's nothing to set here yet. Your own settings for the hub will show up here as they're added. Your task templates are under Task Templates in this menu.</p>
+      </div>
+    </div>
+  </sc-if>
   <sc-if value="{{ setOpen }}" hint-placeholder-val="{{ false }}">
     <div sc-camel-on-click="{{ closeSettings }}" style="position: fixed; inset: 0; z-index: 64; background: rgba(10, 12, 24, 0.4);"></div>
-    <div role="dialog" aria-label="My Settings" style="position: fixed; z-index: 65; left: 50%; top: 24px; transform: translateX(-50%); width: calc(100% - 32px); max-width: 600px; max-height: calc(100vh - 48px); box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); overflow: hidden; {{ mo.sheet }}">
+    <div role="dialog" aria-label="Task Templates" style="position: fixed; z-index: 65; left: 50%; top: 24px; transform: translateX(-50%); width: calc(100% - 32px); max-width: 600px; max-height: calc(100vh - 48px); box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-raised); overflow: hidden; {{ mo.sheet }}">
       <div style="display: flex; align-items: flex-start; gap: 12px; padding: 18px 20px 12px; border-bottom: 1px solid var(--border-default);">
         <div style="flex: 1; min-width: 0;">
-          <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--tchb-indigo-700);">My Settings</h2>
+          <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--tchb-indigo-700);">Task Templates</h2>
           <p style="margin: 2px 0 0; font-size: 13px; color: var(--text-muted); word-break: break-word;">{{ setWho }}</p>
         </div>
         <button sc-camel-on-click="{{ closeSettings }}" title="Close" aria-label="Close" style="width: 40px; height: 40px; flex: none; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center;" style-hover="background: var(--tchb-gray-100);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
       </div>
       <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px;">
-        <div style="font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--tchb-indigo-700);">My Task Templates</div>
         <p style="margin: 0 0 4px; font-size: 13px; color: var(--text-muted);">Lists of subtasks you use again and again. Deploy one to make a new task in your list (it asks for the name), or add one to a task you deployed before.</p>
         <sc-if value="{{ tplEmpty }}" hint-placeholder-val="{{ false }}">
           <div style="padding: 12px; border-radius: var(--radius-md); background: var(--surface-subtle); font-size: 14px; color: var(--text-muted);">No templates yet. Add your first one below.</div>
@@ -2146,8 +2171,8 @@ const isTouch = () => !!(window.matchMedia && window.matchMedia('(pointer: coars
 const MOBILE = {
   headRow: 'padding: 10px 16px; gap: 10px 8px; position: relative;',
   headLeft: 'flex: 1 1 100%; order: 1; min-width: 0; gap: 10px; padding-right: 54px;',   // logo and Live; the photo sits top right
-  logoBox: 'height: 44px;',
-  logoTchb: 'height: 44px;', logoKpi: 'height: 24px;',
+  logoBox: 'height: 40px;',
+  logoTchb: 'height: 40px;', logoKpi: 'height: 22px;',
   theme: 'display: none;',   // phones: Active and light/dark live in the photo menu
   themeBtn: 'width: 44px; height: 40px;',
   hide: 'display: none;',
@@ -2562,7 +2587,7 @@ class Component extends DCLogic {
   // Sign Out (the photo menu): asks first, then marks this device offline.
   askSignOut = () => { if (!this.auth) return;
             this.ask({ title: 'Sign Out?', ok: 'Sign Out', text: 'You will need to sign in with your Google account again to see the hub.' }, () => {
-              const out = () => { this.setState({ settings: null }); this.auth.signOut(); };
+              const out = () => { this.setState({ settings: null, mySet: false }); this.auth.signOut(); };
               if (this.db && this._key && !this._imp) this.db.doc('presence/' + this._key).set({ sessions: { [DEVICE]: { at: 0, type: DEVICE_TYPE } } }, { merge: true }).then(out, out); else out(); }); };
   helpRole() { return this.state.cloud === 'ready' ? this.roleOf(this._key) : 'member'; }
   openHelp = () => {
@@ -2934,8 +2959,8 @@ class Component extends DCLogic {
   }
   tickClock() {
     const a = this.clockARef.current; if (!a) return;
-    const n = hubNow(), sec = Math.floor(n / 1000); if (a.dataset.s === String(sec) && a.textContent) return;
-    a.dataset.s = sec; a.textContent = etDate(n) + '  ' + et12(n) + ' ' + etZone(n);
+    const n = hubNow(), sec = Math.floor(n / 1000); if (a.dataset.s === sec + (this.state.mob ? 'm' : '') && a.textContent) return;
+    a.dataset.s = sec + (this.state.mob ? 'm' : ''); a.textContent = (this.state.mob ? '' : etDate(n) + '  ') + et12(n) + ' ' + etZone(n);
   }
   // Soft glows behind the board: two drift slowly, the green one eases toward the pointer (or a tap).
   startAurora() {
@@ -3202,12 +3227,17 @@ class Component extends DCLogic {
         statusBg: st === 'done' ? 'var(--tchb-green-050)' : st === 'progress' ? 'var(--tchb-indigo-050)' : st === 'cancelled' ? 'var(--tchb-red-050)' : 'var(--tchb-gray-100)',
         statusFg: st === 'done' ? 'var(--tchb-green-600)' : st === 'progress' ? 'var(--tchb-indigo-700)' : st === 'cancelled' ? 'var(--tchb-red-500)' : 'var(--tchb-gray-700)',
         metaTitle: datesOf(t),
-        meta: [deptTag].filter(Boolean).map(x => x + ' · ').join('') + (t.subs.length ? (live.length ? `${n} of ${live.length} subtasks done` : 'All subtasks cancelled') + (nc && live.length ? ` · ${nc} cancelled` : '') : gone ? 'Cancelled' : 'No subtasks') + (t.updatedBy ? ` · Edited by ${this.canon(t.updatedBy)} · ${ago(t.updatedAt)}` : ''),
+        meta: [deptTag, t.subs.length ? (live.length ? (nc ? `${nc} subtask${nc === 1 ? '' : 's'} cancelled` : '') : 'All subtasks cancelled') : gone ? 'Cancelled' : 'No subtasks',
+          t.updatedBy ? `Edited by ${this.canon(t.updatedBy)} · ${ago(t.updatedAt)}` : ''].filter(Boolean).join(' · '),
         boxBg: d ? 'var(--tchb-green-500)' : 'var(--surface-card)',
         boxBorder: d ? 'var(--tchb-green-500)' : 'var(--border-strong)',
         titleColor: d || gone ? 'var(--text-muted)' : 'var(--tchb-indigo-700)',
         titleDeco: d || gone ? 'line-through' : 'none',
-        barColor: d ? 'var(--tchb-green-500)' : 'var(--tchb-indigo-500)',
+        barColor: d ? 'var(--tchb-green-500)' : 'var(--tchb-gradient-brand)',
+        // TC Checklist's look: a ring with the % beside the title, and a bar with "1 of 4 Subtasks Done" under it.
+        hasRing: live.length > 0, hasBar: live.length > 0 && showProgress, barLabel: n + ' of ' + live.length + ' Subtasks Done',
+        ringColor: n === live.length ? 'var(--tchb-green-500)' : 'var(--tchb-red-500)', ringText: n === live.length ? 'var(--tchb-green-600)' : 'var(--tchb-indigo-700)',
+        ringTitle: n + ' of ' + live.length + ' subtasks done (' + pct + '%)',
         chevron: t.open ? 'rotate(180deg)' : 'none',
         onToggle: () => this.toggleTask(t),
         onExpand: () => this.setState(st => ({ openMap: { ...st.openMap, [t.id]: !st.openMap[t.id] } })),
@@ -3295,9 +3325,10 @@ class Component extends DCLogic {
         : { headRow: 'padding-top: 8px; padding-bottom: 8px;', logoBox: 'height: 44px;', logoTchb: 'height: 44px;', logoKpi: 'height: 22px;' },
       headBg: 'color-mix(in srgb, var(--surface-card) ' + (this.state.compact ? 94 : 78) + '%, transparent)',
       headRef: this.headRef, impRef: this.impRef, tabsRef: this.tabsRef, deptRef: this.deptRef, filtRef: this.filtRef,
-      impTop: this.state.impTop + 'px', pinTop: this.state.pinTop + 'px',
+      impTop: this.state.impTop + 'px', pinTop: this.state.pinTop + 'px', pinPos: this.state.mob && views.length < 2 ? 'relative' : 'sticky',
       pinBox: this.state.stuck ? 'background-color: color-mix(in srgb, var(--surface-card) 84%, transparent); backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%); border-color: var(--border-default); box-shadow: var(--shadow-card);' : '',
-      headClock: !this.state.mob, heroClock: this.state.mob,
+      clockSize: this.state.mob ? '11px' : '12px',
+      ringBox: this.state.mob ? '44px' : '56px', ringIn: this.state.mob ? '35px' : '44px', ringFont: this.state.mob ? '11px' : '13px',
       headBreak: this.state.mid ? 'order: 4; flex: 0 0 100%; height: 0;' : 'display: none;', navMid: this.state.mid ? 'order: 5; margin: 0 auto;' : '',
       showCompanyNav: !this.state.mob || companyTabs.length > 1,
       onFadeScroll: () => this._onScroll(),
@@ -3467,9 +3498,9 @@ class Component extends DCLogic {
           tplRows: tpls.map(l => ({ name: l.name, summary: (l.subs || []).length + ' subtasks · ' + (l.subs || []).slice(0, 3).join(' · ') + ((l.subs || []).length > 3 ? ' …' : ''),
             onDeploy: () => this.setState({ deploy: { id: l.id, name: '', err: '' } }),
             onEdit: () => this.setState({ settings: { edit: { id: l.id, name: l.name, text: (l.subs || []).join('\n'), err: '' } } }),
-            onDelete: () => this.ask({ title: 'Delete “' + l.name + '”?', tone: 'danger', ok: 'Delete', text: 'This template is removed from My Settings. Tasks already deployed from it stay as they are.' },
+            onDelete: () => this.ask({ title: 'Delete “' + l.name + '”?', tone: 'danger', ok: 'Delete', text: 'This template is removed from your Task Templates. Tasks already deployed from it stay as they are.' },
               () => this.saveTpls((this.state.myTpls || []).filter(x => x.id !== l.id))) })),
-          openDeployPick: e => { if (!tpls.length) { this.say('Add a template in My Settings first'); return this.setState({ settings: { edit: { id: '', name: '', text: '', err: '' } } }); } this.openMenu(e, { kind: 'deployPick' }); },
+          openDeployPick: e => { if (!tpls.length) { this.say('Add a template in Task Templates first'); return this.setState({ settings: { edit: { id: '', name: '', text: '', err: '' } } }); } this.openMenu(e, { kind: 'deployPick' }); },
           signOut: this.askSignOut };
       })(),
       ...(() => {
@@ -3560,6 +3591,9 @@ class Component extends DCLogic {
       filters, visibleTasks, showProgress,
       expandAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = true; }); return { openMap: o }; }),
       collapseAll: () => this.setState(st => { const o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = false; }); return { openMap: o }; }),
+      // Phones: one button that expands everything, or collapses it once anything is open (leaves room for All Owners).
+      bothExpand: !this.state.mob, oneExpand: this.state.mob, toggleAllLabel: tasks.some(t => this.state.openMap[t.id]) ? 'Collapse All' : 'Expand All',
+      toggleAll: () => this.setState(st => { const any = tasks.some(t => st.openMap[t.id]), o = { ...st.openMap }; tasks.forEach(t => { o[t.id] = !any; }); return { openMap: o }; }),
       isEmpty: visibleTasks.length === 0,
       emptyTitle: tasks.length ? (filter === 'pending' && !q && !ownerFilter ? 'All caught up' : 'Nothing here') : { personal: 'No personal tasks yet', team: 'No team tasks yet', mgmt: 'No MGMT tasks yet', offline: 'No offline tasks' }[scope] || 'No tasks yet',
       emptyBody: tasks.length ? (q ? 'No tasks or subtasks match “' + this.state.search.trim() + '”.' : filter === 'pending' && !ownerFilter ? 'Every task here is done. They are under Done.' : 'No tasks match these filters.') : scope === 'team' ? 'Personal tasks in this department show up here as people add them.' : 'Add your first task above to get started.',
@@ -3576,15 +3610,17 @@ class Component extends DCLogic {
         // The photo menu, like TC Checklist's: you (name, email, role), then My Settings, Team Members (managers), Help, Sign Out.
         const u = this.state.user || {}, k = this._key, mgr = live && role === 'manager', dept = k ? this.deptOf(k) : '';
         const go = f => () => this.setState({ menu: null }, f);
-        const I = { settings: 'M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4',
+        const I = { tpl: 'M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5', settings: 'M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4',
           team: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
           help: 'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01', online: 'M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0M16.24 7.76a6 6 0 0 1 0 8.49M7.76 16.24a6 6 0 0 1 0-8.49M19.07 4.93a10 10 0 0 1 0 14.14M4.93 19.07a10 10 0 0 1 0-14.14', out: 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9' };
         const r = live ? role : 'member', nowT = hubNow();
         const onlineN = (this.state.presence || []).filter(p => Object.values(p.sessions || {}).some(x => x && nowT - (x.at || 0) < ONLINE_MS)).length;
-        return { openAccount: e => this.openMenu(e, { kind: 'account' }), menuIsAccount: !!menu && menu.kind === 'account',
+        return { meOpen: !!this.state.mySet && live, closeMe: () => this.setState({ mySet: false }), meKey: e => { if (e.key === 'Escape') this.setState({ mySet: false }); },
+          openAccount: e => this.openMenu(e, { kind: 'account' }), menuIsAccount: !!menu && menu.kind === 'account',
           acctName: k ? this.nameOf(k) : (u.displayName || u.email || ''), acctEmail: u.email || '',
           acctType: ROLE_LABEL[r] + (dept && r !== 'manager' ? ' · ' + dept : ''),
-          acctItems: [{ label: 'My Settings', icon: I.settings, onClick: go(() => this.setState({ settings: {} })) },
+          acctItems: [{ label: 'My Settings', icon: I.settings, onClick: go(() => this.setState({ mySet: true })) },
+            { label: 'Task Templates', icon: I.tpl, onClick: go(() => this.setState({ settings: {} })) },
             ...(mgr ? [{ label: 'Team Members', icon: I.team, onClick: () => this.openPeople() }] : []),
             ...(this.state.mob && live ? [{ label: 'Who\'s Online', icon: I.online, note: String(onlineN), onClick: () => this.setState({ menu: { kind: 'active', top: 0, left: 0 } }) }] : []),
             { label: 'Help', icon: I.help, onClick: this.openHelp }, { label: 'Sign Out', icon: I.out, onClick: go(this.askSignOut) }].map(x => ({ note: '', ...x })),

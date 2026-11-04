@@ -34,8 +34,8 @@ Plan the work, assign it, and watch it move — by department, in real time.
 - **Two Company Boards** — TCHB and KPI DRIVER, each with its own tasks, progress, and brand look; access is set per person.
 - **People** — managers set roles, departments and access in one place.
 - **Pending First** — the task list opens on Pending (Not Started and In Progress together), then In Progress, Not Started and Done.
-- **Photo menu** — clicking your photo opens a small menu, like TC Checklist's: your name, email and role, then My Settings, Team Members (managers), Help and Sign Out. The header is the pattern for the other apps; the full spec is in [docs/HEADER.md](docs/HEADER.md).
-- **Task Templates** — save lists of subtasks in My Settings (click your photo, then My Settings) and Deploy one as a new task, named as you like; add another template to a deployed task later. Tagged *Task Deployment <template>*.
+- **Photo menu** — clicking your photo opens a small menu, like TC Checklist's: your name, email and role, then My Settings (nothing to set yet), Task Templates, Team Members (managers), Help and Sign Out. The header is the pattern for the other apps; the full spec is in [docs/HEADER.md](docs/HEADER.md).
+- **Task Templates** — save lists of subtasks in Task Templates (click your photo, then Task Templates) and Deploy one as a new task, named as you like; add another template to a deployed task later. Tagged *Task Deployment <template>*.
 - **Upload Tasks** — make a task from a CSV file with a department's upload template (TC: *SOW*, named SOW - <address>); the file is kept on the task. Tagged *CSV Upload <template>*.
 - **Search** — find tasks and subtasks by name; matching titles glow green and tasks open to show the subtasks that matched.
 - **Who's Online** — the Active pill shows how many people are in the hub right now; click it for who, on phone or desktop (seen in the last five minutes).
