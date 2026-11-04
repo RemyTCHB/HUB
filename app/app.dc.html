@@ -1022,30 +1022,36 @@ h1, h2, h3, h4 {
 </helmet>
 <div style="min-height: 100vh; background: var(--surface-subtle); font-family: var(--font-body); color: var(--text-body);">
   <canvas ref="{{ bgRef }}" aria-hidden="true" style="position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block;"></canvas>
-  <header style="position: relative; z-index: 1; background: color-mix(in srgb, var(--surface-card) 78%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-default);">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; {{ mo.headRow }}">
+  <header ref="{{ headRef }}" style="position: sticky; top: 0; z-index: 30; background: {{ headBg }}; transition: background 160ms; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-default);">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; transition: padding 160ms; {{ mo.headRow }} {{ cmp.headRow }}">
       <div style="flex: 1 1 0; min-width: max-content; display: flex; align-items: center; gap: 16px; {{ mo.headLeft }}">
-        <div style="height: 64px; display: flex; align-items: center; {{ mo.logoBox }}">
+        <div style="height: 64px; display: flex; align-items: center; transition: height 160ms; {{ mo.logoBox }} {{ cmp.logoBox }}">
           <sc-if value="{{ tchbLight }}" hint-placeholder-val="{{ true }}">
-            <img src="eacd85cb-342b-497b-9f44-adad94715c27" alt="Total Cash Home Buyers" style="height: 64px; width: auto; display: block; {{ mo.logoTchb }}">
+            <img src="eacd85cb-342b-497b-9f44-adad94715c27" alt="Total Cash Home Buyers" style="height: 64px; width: auto; display: block; {{ mo.logoTchb }} {{ cmp.logoTchb }}">
           </sc-if>
           <sc-if value="{{ tchbDark }}" hint-placeholder-val="{{ false }}">
-            <img src="69e01730-0e65-40e4-b23e-ce47acf4ec71" alt="Total Cash Home Buyers" style="height: 64px; width: auto; display: block; {{ mo.logoTchb }}">
+            <img src="69e01730-0e65-40e4-b23e-ce47acf4ec71" alt="Total Cash Home Buyers" style="height: 64px; width: auto; display: block; {{ mo.logoTchb }} {{ cmp.logoTchb }}">
           </sc-if>
           <sc-if value="{{ kpiLight }}" hint-placeholder-val="{{ false }}">
-            <img src="2f4cc925-6d8d-4ae7-aa63-2f3160418bce" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }}">
+            <img src="2f4cc925-6d8d-4ae7-aa63-2f3160418bce" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }} {{ cmp.logoKpi }}">
           </sc-if>
           <sc-if value="{{ kpiDark }}" hint-placeholder-val="{{ false }}">
-            <img src="c6cb2c3c-4eaf-48c9-a4d4-8658f9419f52" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }}">
+            <img src="c6cb2c3c-4eaf-48c9-a4d4-8658f9419f52" alt="KPI Driver" style="height: 30px; width: auto; display: block; {{ mo.logoKpi }} {{ cmp.logoKpi }}">
           </sc-if>
         </div>
-        <span title="{{ syncTitle }}" role="status" style="position: relative; overflow: hidden; flex: none; display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; {{ syncBadge }}"><span style="width: 8px; height: 8px; flex: none; border-radius: 999px; background: {{ syncDot }}; {{ syncPing }}"></span>{{ syncLabel }}<sc-if value="{{ syncShine }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; background: var(--live-sheen, linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%)) no-repeat; background-size: 60% 100%; animation: hubSheen 4.5s ease-in-out infinite;"></span></sc-if></span>
+        <button sc-camel-on-click="{{ openSync }}" title="{{ syncTitle }}" aria-haspopup="true" aria-label="{{ syncAria }}" style="cursor: pointer; position: relative; overflow: hidden; flex: none; display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; {{ syncBadge }}"><span style="width: 8px; height: 8px; flex: none; border-radius: 999px; background: {{ syncDot }}; {{ syncPing }}"></span>{{ syncLabel }}<sc-if value="{{ syncShine }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; background: var(--live-sheen, linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%)) no-repeat; background-size: 60% 100%; animation: hubSheen 4.5s ease-in-out infinite;"></span></sc-if></button>
+        <sc-if value="{{ headClock }}" hint-placeholder-val="{{ true }}">
+          <span ref="{{ clockARef }}" title="Hub clock, Eastern time. Every date in the hub comes from this clock." aria-label="Hub clock, Eastern time" style="flex: none; display: inline-flex; align-items: center; height: 34px; padding: 0 14px; box-sizing: border-box; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.03em; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--tchb-indigo-700); background-color: var(--glass-bg, rgba(255,255,255,0.55)); background-image: var(--glass-sheen, linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%)); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); border: 1px solid var(--glass-border, rgba(255,255,255,0.85)); box-shadow: var(--glass-shadow, inset 0 1px 0 rgba(255,255,255,0.95), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10));"></span>
+        </sc-if>
       </div>
-      <nav style="flex: none; display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.nav }}">
+      <div style="{{ headBreak }}"></div>
+      <sc-if value="{{ showCompanyNav }}" hint-placeholder-val="{{ true }}">
+      <nav style="flex: none; display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.nav }} {{ navMid }} {{ cmp.nav }}">
         <sc-for list="{{ companyTabs }}" as="c" hint-placeholder-count="2">
           <button sc-camel-on-click="{{ c.onClick }}" style="border: none; cursor: pointer; padding: 9px 18px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: 0.04em; display: flex; gap: 8px; align-items: center; transition: background 120ms; background: {{ c.bg }}; color: {{ c.color }}; box-shadow: {{ c.shadow }}; {{ mo.tab }}">{{ c.label }}<span style="font-weight: 600; font-size: 12px; opacity: 0.8; {{ mo.tabPct }}">{{ c.pct }}</span></button>
         </sc-for>
       </nav>
+      </sc-if>
       <div style="flex: 1 1 0; min-width: max-content; display: flex; align-items: center; justify-content: flex-end; gap: 10px; {{ mo.navGroup }}">
         <div style="display: flex; align-items: center; gap: 10px; {{ mo.theme }}">
           <sc-if value="{{ showActive }}" hint-placeholder-val="{{ false }}">
@@ -1061,14 +1067,14 @@ h1, h2, h3, h4 {
           </div>
         </div>
         <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
-          <button sc-camel-on-click="{{ openAccount }}" title="{{ userTitle }}" aria-haspopup="true" aria-label="Your account" style="width: 40px; height: 40px; flex: none; border-radius: 999px; cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-shadow: var(--shadow-button); {{ mo.avatar }}">{{ userInitials }}<sc-if value="{{ me.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ me.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></button>
+          <button sc-camel-on-click="{{ openAccount }}" title="{{ userTitle }}" aria-haspopup="true" aria-label="Your account" style="width: 40px; height: 40px; flex: none; border-radius: 999px; cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-shadow: var(--shadow-button); {{ mo.avatar }} {{ cmp.avatar }}">{{ userInitials }}<sc-if value="{{ me.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ me.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></button>
         </sc-if>
       </div>
     </div>
   </header>
 
   <sc-if value="{{ impOn }}" hint-placeholder-val="{{ false }}">
-    <div role="status" style="position: sticky; top: 0; z-index: 40; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; padding: 10px 16px; background: #b45309; color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 14px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.18);">
+    <div ref="{{ impRef }}" role="status" style="position: sticky; top: {{ impTop }}; z-index: 25; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; padding: 10px 16px; background: #b45309; color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 14px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.18);">
       <span>{{ impText }}</span>
       <button sc-camel-on-click="{{ backToRemy }}" style="border: 1px solid rgba(255,255,255,0.7); background: rgba(255,255,255,0.14); color: #fff; cursor: pointer; border-radius: 999px; padding: 6px 14px; font-family: var(--font-display); font-weight: 700; font-size: 13px;" style-hover="background: rgba(255,255,255,0.26);">{{ backLabel }}</button>
     </div>
@@ -1090,11 +1096,13 @@ h1, h2, h3, h4 {
     <sc-if value="{{ showBoard }}" hint-placeholder-val="{{ true }}">
     <div style="display: contents;">
     <section style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; {{ mo.hero }}">
-      <span ref="{{ clockARef }}" title="Hub clock, Eastern time. Every date in the hub comes from this clock." aria-label="Hub clock, Eastern time" style="font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--text-muted);"></span>
+      <sc-if value="{{ heroClock }}" hint-placeholder-val="{{ false }}">
+        <span ref="{{ clockARef }}" title="Hub clock, Eastern time. Every date in the hub comes from this clock." aria-label="Hub clock, Eastern time" style="font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--tchb-indigo-700);"></span>
+      </sc-if>
       <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 44px; line-height: 1.15; color: var(--tchb-indigo-700); {{ mo.h1 }}">Universal <span style="color: var(--tchb-red-500);">Team Hub</span></h1>
     </section>
 
-    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;">
+    <div ref="{{ tabsRef }}" style="position: sticky; top: {{ pinTop }}; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 8px; margin: -8px -8px 0; border-radius: 18px; border: 1px solid transparent; transition: background-color 160ms, box-shadow 160ms; {{ pinBox }}">
       <sc-if value="{{ showScopes }}" hint-placeholder-val="{{ false }}">
         <div role="group" aria-label="Which tasks" title="{{ scopeHint }}" style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.scopeSeg }}">
           <sc-if value="{{ mgmtTab.show }}" hint-placeholder-val="{{ true }}"><button sc-camel-on-click="{{ mgmtTab.onClick }}" aria-pressed="{{ mgmtTab.on }}" style="border: none; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; display: flex; gap: 7px; align-items: center; transition: background 120ms; background: {{ mgmtTab.bg }}; color: {{ mgmtTab.color }}; box-shadow: {{ mgmtTab.shadow }}; {{ mo.scopeBtn }}"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>MGMT</button></sc-if>
@@ -1107,7 +1115,7 @@ h1, h2, h3, h4 {
         <span style="font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700);">Your Personal Tasks</span>
       </sc-if>
       <sc-if value="{{ showDepts }}" hint-placeholder-val="{{ false }}">
-        <div role="group" aria-label="Department" style="display: flex; gap: 4px; padding: 4px; max-width: 100%; box-sizing: border-box; overflow-x: auto; scrollbar-width: none; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.deptSeg }}">
+        <div ref="{{ deptRef }}" sc-camel-on-scroll="{{ onFadeScroll }}" role="group" aria-label="Department" style="display: flex; gap: 4px; padding: 4px; max-width: 100%; box-sizing: border-box; overflow-x: auto; scrollbar-width: none; background: var(--tchb-gray-100); border-radius: 999px; {{ deptFade }} {{ mo.deptSeg }}">
           <sc-for list="{{ deptTabs }}" as="d" hint-placeholder-count="5">
             <button sc-camel-on-click="{{ d.onClick }}" style="border: none; cursor: pointer; flex: none; padding: 7px 14px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; display: flex; gap: 6px; align-items: center; white-space: nowrap; transition: background 120ms; background: {{ d.bg }}; color: {{ d.color }}; box-shadow: {{ d.shadow }}; {{ mo.deptBtn }}">{{ d.label }}<span style="font-weight: 600; opacity: 0.7;">{{ d.count }}</span></button>
           </sc-for>
@@ -1116,14 +1124,20 @@ h1, h2, h3, h4 {
       <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
         <button sc-camel-on-click="{{ goBack }}" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back To Sign In</button>
       </sc-if>
-      <div style="display: flex; gap: 22px; align-items: center; {{ statsBox }}">
+      <div style="display: flex; gap: 20px; align-items: center; {{ statsBox }}">
         <div style="display: flex; flex-direction: column; gap: 2px; align-items: {{ statAlign }};">
           <span style="font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1; color: var(--tchb-indigo-700);">{{ tasksDone }}<span style="color: var(--tchb-gray-300);">/</span>{{ tasksTotal }}</span>
           <span style="font-size: 12px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap;">tasks done</span>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 2px; align-items: {{ statAlign }};">
-          <span style="font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1; color: var(--tchb-green-600);">{{ overallPct }}</span>
-          <span style="font-size: 12px; color: var(--text-muted); text-transform: capitalize; white-space: nowrap;">{{ subsDone }} of {{ subsTotal }} subtasks</span>
+        <div title="{{ ringTitle }}" style="display: flex; align-items: center; gap: 10px;">
+          <span role="img" aria-label="{{ ringTitle }}" style="position: relative; width: 48px; height: 48px; flex: none;">
+            <svg width="48" height="48" sc-camel-view-box="0 0 48 48" style="display: block; transform: rotate(-90deg);"><circle cx="24" cy="24" r="20" fill="none" stroke="var(--tchb-gray-100)" stroke-width="5"></circle><circle cx="24" cy="24" r="20" fill="none" stroke="{{ ringColor }}" stroke-width="5" stroke-linecap="round" style="stroke-dasharray: {{ ringDash }}; transition: stroke-dasharray 300ms cubic-bezier(0.2,0.8,0.3,1);"></circle></svg>
+            <span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 12px; color: {{ ringText }};">{{ overallPct }}</span>
+          </span>
+          <span style="display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-family: var(--font-display); font-weight: 800; font-size: 18px; line-height: 1; color: var(--tchb-indigo-700);">{{ subsDone }}<span style="color: var(--tchb-gray-300);">/</span>{{ subsTotal }}</span>
+            <span style="font-size: 12px; color: var(--text-muted); white-space: nowrap;">Subtasks Done</span>
+          </span>
         </div>
       </div>
     </div>
@@ -1131,9 +1145,6 @@ h1, h2, h3, h4 {
       <div style="padding: 10px 14px; border-radius: var(--radius-md); background: var(--tchb-red-050); color: var(--status-error); font-size: 14px; font-weight: 600;">These tasks can't load yet. An admin needs to update the Firestore rules (see the user guide).</div>
     </sc-if>
 
-    <div style="height: 6px; border-radius: 999px; background: var(--tchb-gray-100); overflow: hidden;">
-      <div style="height: 100%; width: {{ overallPct }}; background: var(--tchb-gradient-brand); border-radius: 999px; transition: width 200ms cubic-bezier(0.2,0.8,0.3,1);"></div>
-    </div>
 
     <sc-if value="{{ canAdd }}" hint-placeholder-val="{{ true }}">
     <section style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; {{ mo.addBar }}">
@@ -1188,7 +1199,7 @@ h1, h2, h3, h4 {
     <section style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; {{ mo.filterRow }}">
       <div style="display: flex; align-items: center; gap: 8px; min-width: 0; max-width: 100%; {{ mo.filterLeft }}">
       <button sc-camel-on-click="{{ openFolders }}" title="Task folders: every file and link in this view" aria-label="Files" style="flex: none; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 14px; border-radius: 999px; cursor: pointer; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); border: 1px solid var(--border-strong); background: var(--surface-card);" style-hover="background: var(--tchb-indigo-050);" style-focus="box-shadow: var(--focus-ring);"><svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path></svg><span style="{{ mo.hide }}">Files</span><span style="font-weight: 600; opacity: 0.7;">{{ folderCount }}</span></button>
-      <div style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ mo.filterPills }}">
+      <div ref="{{ filtRef }}" sc-camel-on-scroll="{{ onFadeScroll }}" style="display: flex; gap: 4px; padding: 4px; background: var(--tchb-gray-100); border-radius: 999px; {{ filtFade }} {{ mo.filterPills }}">
         <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
           <button sc-camel-on-click="{{ f.onClick }}" style="border: none; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 14px; display: flex; gap: 6px; align-items: center; background: {{ f.bg }}; color: {{ f.color }}; box-shadow: {{ f.shadow }}; transition: background 120ms; {{ mo.filterBtn }}">{{ f.label }}<span style="font-weight: 600; opacity: 0.7;">{{ f.count }}</span></button>
         </sc-for>
@@ -1511,9 +1522,29 @@ h1, h2, h3, h4 {
           </span>
         </div>
         <div style="border-top: 1px solid var(--glass-divider, rgba(17,29,44,0.08)); margin: 4px 6px;"></div>
+        <sc-if value="{{ acctPhone }}" hint-placeholder-val="{{ false }}">
+          <div role="group" aria-label="Theme" style="display: flex; gap: 4px; padding: 4px; margin: 2px 6px 6px; border-radius: 999px; background: var(--tchb-gray-100);">
+            <button sc-camel-on-click="{{ setLight }}" aria-label="Light theme" style="flex: 1; border: none; cursor: pointer; min-height: 40px; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-display); font-weight: 700; font-size: 14px; background: {{ lightBg }}; color: {{ lightFg }};"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>Light</button>
+            <button sc-camel-on-click="{{ setDark }}" aria-label="Dark theme" style="flex: 1; border: none; cursor: pointer; min-height: 40px; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-display); font-weight: 700; font-size: 14px; background: {{ darkBg }}; color: {{ darkFg }};"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>Dark</button>
+          </div>
+        </sc-if>
         <sc-for list="{{ acctItems }}" as="ai" hint-placeholder-count="4">
-          <button sc-camel-on-click="{{ ai.onClick }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 9px 12px; border-radius: 9px; font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--tchb-indigo-700); background: transparent; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path sc-camel-d="{{ ai.icon }}"></path></svg>{{ ai.label }}</button>
+          <button sc-camel-on-click="{{ ai.onClick }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 9px 12px; border-radius: 9px; font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--tchb-indigo-700); background: transparent; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path sc-camel-d="{{ ai.icon }}"></path></svg><span style="flex: 1;">{{ ai.label }}</span><span style="font-size: 12px; color: var(--tchb-green-600);">{{ ai.note }}</span></button>
         </sc-for>
+      </sc-if>
+      <sc-if value="{{ menuIsSync }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; align-items: center; gap: 8px; padding: 10px 12px 4px;">
+          <span style="width: 9px; height: 9px; flex: none; border-radius: 999px; background: {{ syncDot }}; {{ syncPing }}"></span>
+          <b style="font-family: var(--font-display); font-size: 15px; color: var(--tchb-indigo-700);">{{ syncHead }}</b>
+        </div>
+        <p style="margin: 0; padding: 2px 12px 6px; font-size: 13px; line-height: 1.45; color: var(--text-body); overflow-wrap: anywhere;">{{ syncText }}</p>
+        <p style="margin: 0; padding: 0 12px 8px; font-size: 12px; color: var(--text-muted);">{{ syncSaved }}</p>
+        <sc-if value="{{ syncRetry }}" hint-placeholder-val="{{ false }}">
+          <button sc-camel-on-click="{{ onSyncRetry }}" style="margin: 2px 8px 6px; border: none; cursor: pointer; border-radius: 8px; padding: 10px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-secondary);">Retry Now</button>
+        </sc-if>
+        <sc-if value="{{ syncOk }}" hint-placeholder-val="{{ false }}">
+          <button sc-camel-on-click="{{ onSyncOk }}" style="margin: 2px 8px 6px; border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 9px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); background: var(--surface-card);">OK</button>
+        </sc-if>
       </sc-if>
       <sc-if value="{{ menuIsActive }}" hint-placeholder-val="{{ false }}">
         <div style="padding: 8px 10px 4px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">{{ activeHead }}</div>
@@ -2109,6 +2140,7 @@ const ONLINE_MS = 5 * 60 * 1000, BEAT_MS = 60 * 1000;
 const DEVICE = (() => { try { let d = localStorage.getItem(KEY + '-device'); if (!d) { d = 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); localStorage.setItem(KEY + '-device', d); } return d; } catch (e) { return 'd-nostore'; } })();
 const DEVICE_TYPE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
 const isTiny = () => window.innerWidth < 360;
+const isMid = () => !isPhone() && window.innerWidth < 1240;   // desktop too narrow for the company switch between the two header groups
 const isTouch = () => !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 // Phone-only style overrides, appended to inline styles; desktop gets '' so its layout is untouched.
 const MOBILE = {
@@ -2116,11 +2148,11 @@ const MOBILE = {
   headLeft: 'flex: 1 1 100%; order: 1; min-width: 0; gap: 10px; padding-right: 54px;',   // logo and Live; the photo sits top right
   logoBox: 'height: 44px;',
   logoTchb: 'height: 44px;', logoKpi: 'height: 24px;',
-  theme: 'order: 3; flex: none;',
+  theme: 'display: none;',   // phones: Active and light/dark live in the photo menu
   themeBtn: 'width: 44px; height: 40px;',
   hide: 'display: none;',
   navGroup: 'display: contents;',
-  nav: 'order: 4; flex: 1 1 auto;',   // wraps to its own line when the company tabs don't fit beside the theme and Active pills
+  nav: 'order: 4; flex: 1 1 100%;',   // phones: the company switch is the header's second row
   tab: 'flex: 1 1 0; min-width: 0; justify-content: center; padding: 0 8px; height: 40px; font-size: 13px; gap: 6px; white-space: nowrap;',
   avatar: 'position: absolute; top: 10px; right: 16px; width: 44px; height: 44px;', // top right, beside the logo and Live
   main: 'padding: 20px 16px 96px; gap: 16px;',
@@ -2184,7 +2216,7 @@ class Component extends DCLogic {
   constructor(p) {
     super(p);
     this.rootRef = React.createRef();
-    this.clockARef = React.createRef();
+    this.clockARef = React.createRef(); this.headRef = React.createRef(); this.impRef = React.createRef(); this.tabsRef = React.createRef(); this.deptRef = React.createRef(); this.filtRef = React.createRef();
     this.bgRef = React.createRef();
     this.helpRef = React.createRef();
     let company = 'tchb';
@@ -2196,7 +2228,7 @@ class Component extends DCLogic {
     if (!dir || typeof dir !== 'object') dir = DEFAULT_DIRECTORY;
     let mode = 'light', openMap = {};
     try { mode = localStorage.getItem(KEY + '-mode') || 'light'; openMap = JSON.parse(localStorage.getItem(KEY + '-open')) || {}; } catch (e) {}
-    this.state = { mob: isPhone(), tiny: isTiny(), kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, dir, mgrs: [], cos: DEFAULT_COMPANIES, dept: 'all', pd: null, np: { name: '', email: '', role: 'member', dept: '' }, uploading: {}, folderOpen: {}, menu: null, tasks: loadOffline(), forWho: '', scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'pending', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null, del: null, search: '', searchOpen: false, myTpls: [], settings: null, deploy: null, upl: null };
+    this.state = { mob: isPhone(), tiny: isTiny(), mid: isMid(), compact: false, stuck: false, pinTop: 0, impTop: 0, fades: {}, lastSaved: 0, kb: 0, mode, openMap, cloud: 'init', user: null, authError: '', team, dir, mgrs: [], cos: DEFAULT_COMPANIES, dept: 'all', pd: null, np: { name: '', email: '', role: 'member', dept: '' }, uploading: {}, folderOpen: {}, menu: null, tasks: loadOffline(), forWho: '', scope: 'offline', errs: {}, people: {}, toast: '', company, filter: 'pending', ownerFilter: '', newTask: '', newSubs: [], newSubDraft: '', newOwner: '', drafts: {}, undo: null, del: null, search: '', searchOpen: false, myTpls: [], settings: null, deploy: null, upl: null };
   }
   applyTheme(company, mode) {
     const el = document.documentElement, dark = mode === 'dark', kpi = company === 'kpi';
@@ -2427,7 +2459,7 @@ class Component extends DCLogic {
   // Refused (e.g. no permission): Not Saved with the reason, and the screen goes back to what is really saved.
   write(t, fn, keep) {
     this._inflight = (this._inflight || 0) + 1; this.setState({ saving: this._inflight });
-    fn().then(() => { this._inflight--; this.setState(st => ({ saving: this._inflight, saveErr: this._inflight || this._retry || Object.keys(this._pending || {}).length ? st.saveErr : '' })); })
+    fn().then(() => { this._inflight--; this.setState(st => ({ lastSaved: hubNow(), saving: this._inflight, saveErr: this._inflight || this._retry || Object.keys(this._pending || {}).length ? st.saveErr : '' })); })
       .catch(e => {
         this._inflight--; console.warn('Save failed', e);
         const msg = (e.code || '') + ' ' + (e.message || ''), offline = /unavailable|network|offline|failed-precondition|deadline/i.test(msg);
@@ -2723,7 +2755,7 @@ class Component extends DCLogic {
   }
   openMenu(e, cfg) {
     const r = e.currentTarget.getBoundingClientRect();
-    const wide = ['notes', 'files', 'folders', 'due', 'activity', 'active'].includes(cfg.kind), h = wide ? (cfg.kind === 'due' ? 540 : 430) : 330, w = wide ? 340 : cfg.kind === 'account' ? 290 : 248;
+    const wide = ['notes', 'files', 'folders', 'due', 'activity', 'active'].includes(cfg.kind), h = wide ? (cfg.kind === 'due' ? 540 : 430) : 330, w = wide ? 340 : cfg.kind === 'account' ? 290 : cfg.kind === 'sync' ? 300 : 248;
     const flip = r.bottom + h > window.innerHeight && r.top > h;
     this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, cfg.kind === 'account' ? Math.min(r.right - w, window.innerWidth - w - 8) : Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '', noteTab: 'task', attach: 'file', linkUrl: '', linkName: '', ...(cfg.kind === 'due' ? { dp: this.dpFrom(cfg.due) } : {}) });
   }
@@ -2885,11 +2917,13 @@ class Component extends DCLogic {
   componentDidMount() {
     // Track the phone breakpoint and the on-screen keyboard (so the bottom sheet stays above it).
     this._onResize = () => {
-      const vv = window.visualViewport, mob = isPhone(), tiny = isTiny();
+      const vv = window.visualViewport, mob = isPhone(), tiny = isTiny(), mid = isMid(); if (mid !== this.state.mid) this.setState({ mid });
       const kb = vv ? Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) : 0;
       if (mob !== this.state.mob || tiny !== this.state.tiny || kb !== this.state.kb) this.setState(st => ({ mob, tiny, kb, menu: mob !== st.mob ? null : st.menu }));
     };
     window.addEventListener('resize', this._onResize);
+    this._onScroll = () => { if (!this._sq) this._sq = requestAnimationFrame(() => { this._sq = 0; this.measure(); }); };
+    window.addEventListener('scroll', this._onScroll, { passive: true }); window.addEventListener('resize', this._onScroll);
     if (window.visualViewport) { window.visualViewport.addEventListener('resize', this._onResize); window.visualViewport.addEventListener('scroll', this._onResize); }
     this.startAurora();
     // Hub clock: synced with the server now, every 15 minutes and whenever the tab comes back; redrawn each second.
@@ -2940,10 +2974,24 @@ class Component extends DCLogic {
     };
     this._auRaf = requestAnimationFrame(frame);
   }
+  componentDidUpdate() { if (!this._mq) this._mq = requestAnimationFrame(() => { this._mq = 0; this.measure(); }); }
+  // Pinned header and tabs: the header slims down once the page scrolls; the tabs line pins just under it (and under the
+  // Login As banner); the rows that slide sideways fade at the edge that has more.
+  measure() {
+    const y = window.scrollY || 0, h = this.headRef.current, imp = this.impRef.current, tabs = this.tabsRef.current;
+    const compact = this.state.compact ? y > 40 : y > 120;
+    const headH = h ? Math.round(h.getBoundingClientRect().height) : 0, impH = imp ? Math.round(imp.getBoundingClientRect().height) : 0, pinTop = headH + impH;
+    const stuck = !!tabs && y > 0 && tabs.getBoundingClientRect().top <= pinTop + 1;
+    const fade = el => { if (!el || el.scrollWidth <= el.clientWidth + 1) return '';
+      const l = el.scrollLeft > 2, r = el.scrollLeft + el.clientWidth < el.scrollWidth - 2; return (l ? 'l' : '') + (r ? 'r' : ''); };
+    const fades = { dept: fade(this.deptRef.current), filt: fade(this.filtRef.current) }, st = this.state;
+    if (compact !== st.compact || stuck !== st.stuck || pinTop !== st.pinTop || headH !== st.impTop || fades.dept !== st.fades.dept || fades.filt !== st.fades.filt)
+      this.setState({ compact, stuck, pinTop, impTop: headH, fades });
+  }
   componentWillUnmount() {
     clearInterval(this._clk); clearInterval(this._cs); clearInterval(this._min); document.removeEventListener('visibilitychange', this._onVis);
     clearTimeout(this._u); Object.keys(KPI_THEME).forEach(k => document.documentElement.style.removeProperty(k));
-    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('resize', this._onResize); window.removeEventListener('scroll', this._onScroll); window.removeEventListener('resize', this._onScroll); cancelAnimationFrame(this._sq); cancelAnimationFrame(this._mq);
     cancelAnimationFrame(this._auRaf); window.removeEventListener('pointermove', this._onPtr); window.removeEventListener('pointerdown', this._onPtr); document.removeEventListener('pointerout', this._onPtrOut);
     if (window.visualViewport) { window.visualViewport.removeEventListener('resize', this._onResize); window.visualViewport.removeEventListener('scroll', this._onResize); }
   }
@@ -3049,7 +3097,7 @@ class Component extends DCLogic {
     const menu = this.state.menu;
     const SL = { todo: 'Not Started', progress: 'In Progress', done: 'Done', cancelled: 'Cancelled' };
     let menuItems = [], menuCur = '';
-    if (menu && !['notes', 'files', 'folders', 'due', 'activity', 'active', 'account'].includes(menu.kind)) {   // the rest are pick lists
+    if (menu && !['notes', 'files', 'folders', 'due', 'activity', 'active', 'account', 'sync'].includes(menu.kind)) {   // the rest are pick lists
       if (menu.kind === 'status') {
         const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : tk && !menu.sid ? statusOf(tk) : '';
         menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)'], ['cancelled', 'var(--tchb-red-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
@@ -3208,6 +3256,9 @@ class Component extends DCLogic {
     return {
       tasksDone: done.length, tasksTotal: tasks.filter(t => statusOf(t) !== 'cancelled').length, subsDone, subsTotal,
       overallPct: (subsTotal ? Math.round(subsDone / subsTotal * 100) : 0) + '%',
+      ...(() => { const pc = subsTotal ? Math.round(subsDone / subsTotal * 100) : 0, C = 2 * Math.PI * 20;
+        return { ringDash: (pc / 100 * C).toFixed(1) + ' ' + C.toFixed(1), ringColor: pc >= 100 ? 'var(--tchb-green-500)' : 'var(--tchb-red-500)', ringText: pc >= 100 ? 'var(--tchb-green-600)' : 'var(--tchb-indigo-700)',
+          ringTitle: subsDone + ' of ' + subsTotal + ' subtasks done (' + pc + '%)' }; })(),
       onDragEnd: () => this.setState({ dragId: null, overId: null, subDrag: null, subOver: null }),
       // A mouse drag fires pointercancel the moment the browser's own drag starts, so only a touch cancel ends the drag.
       onGripCancel: e => { if (e.pointerType !== 'mouse') this.setState({ dragId: null, overId: null, subDrag: null, subOver: null }); },
@@ -3238,7 +3289,20 @@ class Component extends DCLogic {
         if (dragId && overId) this.moveTask(dragId, overId);
       },
       mo: this.state.mob ? (this.state.tiny ? MOBILE_TINY : MOBILE) : {},
-      statsBox: this.state.mob ? 'flex: 1 1 100%; justify-content: flex-start;' : 'margin-left: auto;', statAlign: this.state.mob ? 'flex-start' : 'flex-end',
+      statsBox: this.state.mob ? (this.state.compact ? 'display: none;' : 'flex: 1 1 100%; justify-content: flex-start;') : 'margin-left: auto;', statAlign: this.state.mob ? 'flex-start' : 'flex-end',
+      // Pinned header (slimmer once the page scrolls) and the tabs line under it.
+      cmp: !this.state.compact ? {} : this.state.mob ? { headRow: 'padding-top: 8px; padding-bottom: 8px;', logoBox: 'height: 36px;', logoTchb: 'height: 36px;', logoKpi: 'height: 20px;', nav: 'display: none;', avatar: 'top: 6px; width: 40px; height: 40px;' }
+        : { headRow: 'padding-top: 8px; padding-bottom: 8px;', logoBox: 'height: 44px;', logoTchb: 'height: 44px;', logoKpi: 'height: 22px;' },
+      headBg: 'color-mix(in srgb, var(--surface-card) ' + (this.state.compact ? 94 : 78) + '%, transparent)',
+      headRef: this.headRef, impRef: this.impRef, tabsRef: this.tabsRef, deptRef: this.deptRef, filtRef: this.filtRef,
+      impTop: this.state.impTop + 'px', pinTop: this.state.pinTop + 'px',
+      pinBox: this.state.stuck ? 'background-color: color-mix(in srgb, var(--surface-card) 84%, transparent); backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%); border-color: var(--border-default); box-shadow: var(--shadow-card);' : '',
+      headClock: !this.state.mob, heroClock: this.state.mob,
+      headBreak: this.state.mid ? 'order: 4; flex: 0 0 100%; height: 0;' : 'display: none;', navMid: this.state.mid ? 'order: 5; margin: 0 auto;' : '',
+      showCompanyNav: !this.state.mob || companyTabs.length > 1,
+      onFadeScroll: () => this._onScroll(),
+      ...(() => { const mask = f => !f ? '' : (g => '-webkit-mask-image: ' + g + '; mask-image: ' + g + ';')('linear-gradient(90deg, ' + (f.includes('l') ? 'transparent 0, #000 28px' : '#000 0') + ', ' + (f.includes('r') ? '#000 calc(100% - 28px), transparent 100%' : '#000 100%') + ')');
+        return { deptFade: mask(this.state.fades.dept), filtFade: mask(this.state.fades.filt) }; })(),
       menuSheet: menu && this.state.mob ? `top: auto; left: 0; right: 0; width: auto; bottom: ${this.state.kb}px; transform: none; min-width: 0; max-height: ${this.state.kb ? 'calc(100% - ' + (this.state.kb + 24) + 'px)' : '70vh'}; padding: 8px 8px 20px; border-radius: 20px 20px 0 0;` : '',
       tchbLight: company === 'tchb' && mode !== 'dark', tchbDark: company === 'tchb' && mode === 'dark', kpiLight: company === 'kpi' && mode !== 'dark', kpiDark: company === 'kpi' && mode === 'dark',
       setLight: () => this.setState({ mode: 'light' }), setDark: () => this.setState({ mode: 'dark' }),
@@ -3361,6 +3425,15 @@ class Component extends DCLogic {
           syncTitle: { ready: 'Every change is saved for the whole team', saving: 'Saving your changes for the whole team…', unsaved: this.state.saveErr }[st] || 'Changes are saved in this browser only',
           syncBadge: st === 'ready' ? 'background: var(--tchb-green-050); color: var(--tchb-green-600); border: 1px solid color-mix(in srgb, var(--tchb-green-500) 35%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--tchb-green-500) 10%, transparent), 0 2px 14px color-mix(in srgb, var(--tchb-green-500) 28%, transparent);'
             : 'border: 1px solid transparent; background: ' + (st === 'saving' ? 'var(--tchb-indigo-050)' : ['error', 'unsaved'].includes(st) ? 'var(--tchb-red-050)' : 'var(--tchb-gray-100)') + '; color: ' + (st === 'saving' ? 'var(--tchb-indigo-700)' : ['error', 'unsaved'].includes(st) ? 'var(--status-error)' : 'var(--tchb-gray-700)') + ';',
+          syncAria: 'Save status: ' + ({ ready: 'Live', saving: 'Saving', unsaved: 'Not Saved', connecting: 'Connecting', error: 'Offline' }[st] || 'Local Only') + '. Show details',
+          openSync: e => this.openMenu(e, { kind: 'sync' }), menuIsSync: !!menu && menu.kind === 'sync',
+          syncHead: { ready: 'Live: Everything Is Saved', saving: 'Saving…', unsaved: 'Not Saved', connecting: 'Connecting…', error: 'Offline' }[st] || 'Local Only',
+          syncText: { ready: 'Every change you make is saved for the whole team as you go.', saving: 'Your latest change is on its way to the server.', unsaved: this.state.saveErr,
+            connecting: 'Connecting to the Team Hub…', error: 'The hub can\'t reach the server. Your changes wait here and go through once it can.' }[st] || 'Changes are saved in this browser only.',
+          syncSaved: this.state.lastSaved ? 'Last saved ' + etDate(this.state.lastSaved) + ' ' + et12(this.state.lastSaved) + ' ' + etZone(this.state.lastSaved) : 'Nothing changed since you opened the hub.',
+          syncRetry: st === 'unsaved' && !!this._retry, syncOk: st === 'unsaved' && !this._retry,
+          onSyncRetry: () => { clearTimeout(this._retry); this._retry = null; this.setState({ menu: null }); this.flush(); },
+          onSyncOk: () => this.setState({ menu: null, saveErr: '' }),
           syncShine: st === 'ready', syncPing: st === 'ready' ? 'animation: hubPing 2.2s ease-out infinite;' : '',
           syncBg: st === 'ready' ? 'var(--tchb-green-050)' : st === 'saving' ? 'var(--tchb-indigo-050)' : ['error', 'unsaved'].includes(st) ? 'var(--tchb-red-050)' : 'var(--tchb-gray-100)',
           syncFg: st === 'ready' ? 'var(--tchb-green-600)' : st === 'saving' ? 'var(--tchb-indigo-700)' : ['error', 'unsaved'].includes(st) ? 'var(--status-error)' : 'var(--tchb-gray-700)',
@@ -3459,7 +3532,7 @@ class Component extends DCLogic {
             return { showNoteToggle: toggle, subNotesOn: all, subNotesCount: subNotes.length ? String(subNotes.length) : '',
               subTrack: all ? 'var(--action-secondary)' : 'var(--tchb-gray-300)', subKnob: all ? 'translateX(16px)' : 'none',
               toggleSubNotes: () => this.setState(st => ({ subNotesOn: !st.subNotesOn })) }; })(),
-          notesBox: menu && menu.kind === 'account' ? 'width: 290px; max-width: calc(100vw - 16px); max-height: min(440px, calc(100vh - 16px)); box-sizing: border-box;' : on || (menu && ['files', 'folders', 'due', 'activity', 'active'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: min(560px, calc(100vh - 16px)); box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
+          notesBox: menu && menu.kind === 'sync' ? 'width: 300px; max-width: calc(100vw - 16px); box-sizing: border-box;' : menu && menu.kind === 'account' ? 'width: 290px; max-width: calc(100vw - 16px); max-height: min(440px, calc(100vh - 16px)); box-sizing: border-box;' : on || (menu && ['files', 'folders', 'due', 'activity', 'active'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: min(560px, calc(100vh - 16px)); box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
           notesList: (() => { const mine = n => !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name);
             const all = !!(on && tk && !menu.sid && this.state.subNotesOn);
             const rows = [...notes.map(n => ({ n, sb: null })), ...(all ? [].concat(...tk.subs.map(sb => (sb.notes || []).map(n => ({ n, sb })))) : [])]
@@ -3505,14 +3578,17 @@ class Component extends DCLogic {
         const go = f => () => this.setState({ menu: null }, f);
         const I = { settings: 'M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4',
           team: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
-          help: 'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01', out: 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9' };
-        const r = live ? role : 'member';
+          help: 'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01', online: 'M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0M16.24 7.76a6 6 0 0 1 0 8.49M7.76 16.24a6 6 0 0 1 0-8.49M19.07 4.93a10 10 0 0 1 0 14.14M4.93 19.07a10 10 0 0 1 0-14.14', out: 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9' };
+        const r = live ? role : 'member', nowT = hubNow();
+        const onlineN = (this.state.presence || []).filter(p => Object.values(p.sessions || {}).some(x => x && nowT - (x.at || 0) < ONLINE_MS)).length;
         return { openAccount: e => this.openMenu(e, { kind: 'account' }), menuIsAccount: !!menu && menu.kind === 'account',
           acctName: k ? this.nameOf(k) : (u.displayName || u.email || ''), acctEmail: u.email || '',
           acctType: ROLE_LABEL[r] + (dept && r !== 'manager' ? ' · ' + dept : ''),
           acctItems: [{ label: 'My Settings', icon: I.settings, onClick: go(() => this.setState({ settings: {} })) },
             ...(mgr ? [{ label: 'Team Members', icon: I.team, onClick: () => this.openPeople() }] : []),
-            { label: 'Help', icon: I.help, onClick: this.openHelp }, { label: 'Sign Out', icon: I.out, onClick: go(this.askSignOut) }] };
+            ...(this.state.mob && live ? [{ label: 'Who\'s Online', icon: I.online, note: String(onlineN), onClick: () => this.setState({ menu: { kind: 'active', top: 0, left: 0 } }) }] : []),
+            { label: 'Help', icon: I.help, onClick: this.openHelp }, { label: 'Sign Out', icon: I.out, onClick: go(this.askSignOut) }].map(x => ({ note: '', ...x })),
+          acctPhone: this.state.mob };
       })(),
       ...(() => {
         // Online now: everyone with a device seen in the last five minutes (Hub clock), by name, with phone / desktop.
