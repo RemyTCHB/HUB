@@ -13,7 +13,7 @@ Brand: Baloo 2 (display) and Nunito Sans (body), indigo `#4d458a` / `--tchb-indi
 | --- | --- | --- |
 | Content width | `max-width: 1280px`, centred (`margin: 0 auto`) | full width |
 | Side margins | `24px` | `16px` |
-| Header bar padding | `14px 24px` (`8px 24px` once slimmed) | `10px 16px` (`8px 16px` slimmed) |
+| Header bar padding | `14px 24px` (`6px 24px` once slimmed) | `10px 16px` (`6px 16px` slimmed) |
 | Page body padding | `36px` top, `24px` sides, `96px` bottom | `20px` top, `16px` sides, `96px` bottom |
 | Gap between sections | `24px` | `16px` |
 
@@ -39,8 +39,8 @@ the tabs and the cards all line up on the same left and right edges.
 | Light / dark | Right group, before the photo. Glass track with two icon-only buttons (`40×32`), sun and moon, no words. The chosen one is filled indigo. |
 | Photo | Far right, `40px` circle with initials under the Google photo. Opens the photo menu (section 4). |
 
-When the page scrolls past `120px`, the bar **slims down**: padding `8px` top and bottom, logo `44px`, and the
-background goes to 94% so content doesn't show through. It returns to full size once you scroll back to within
+When the page scrolls past `120px`, the bar **slims down**: padding `6px` top and bottom, and the background goes to
+94% so content doesn't show through. The logo, the Live clock and the photo **keep their size**. It returns to full size once you scroll back to within
 `40px` of the top.
 
 ## 2. Under the Header
@@ -114,7 +114,7 @@ Help. Each item opens its own window.
 - **Row 2:** the company switch, full width. It is hidden when the person has only one company.
 - **Active and light/dark move into the photo menu.** At the top of the menu is a Light / Dark switch with words, and a **Who's Online** item with the count.
 - The completion takes its own row under the tabs. Rings are `44px`. Cards follow the phone card in section 3.
-- Scrolled: the header slims to row 1 only (logo `36px`, photo `40px`), and the completion hides so the pinned tabs stay small.
+- Scrolled: the header slims to row 1 only (the company row folds away; the logo and photo keep their size), and the completion hides so the pinned tabs stay small.
 - When someone has no tabs to switch (one view only), the tabs line doesn't pin.
 - Rows of buttons that would squeeze a label shrink to one button: "Expand All" and "Collapse All" become one button that does whichever fits, so "All Owners" keeps its full name.
 

@@ -3337,8 +3337,9 @@ class Component extends DCLogic {
       mo: this.state.mob ? (this.state.tiny ? MOBILE_TINY : MOBILE) : {},
       statsBox: this.state.mob ? (this.state.compact ? 'display: none;' : 'flex: 1 1 100%; justify-content: flex-start;') : 'margin-left: auto;', statAlign: this.state.mob ? 'flex-start' : 'flex-end',
       // Pinned header (slimmer once the page scrolls) and the tabs line under it.
-      cmp: !this.state.compact ? {} : this.state.mob ? { headRow: 'padding-top: 8px; padding-bottom: 8px;', logoBox: 'height: 36px;', logoTchb: 'height: 36px;', logoKpi: 'height: 20px;', nav: 'display: none;', avatar: 'top: 6px; width: 40px; height: 40px;' }
-        : { headRow: 'padding-top: 8px; padding-bottom: 8px;', logoBox: 'height: 44px;', logoTchb: 'height: 44px;', logoKpi: 'height: 22px;' },
+      // The logo, clock and photo keep their size; only the padding slims (and on phones the company row folds away).
+      cmp: !this.state.compact ? {} : this.state.mob ? { headRow: 'padding-top: 6px; padding-bottom: 6px;', nav: 'display: none;', avatar: 'top: 6px;' }
+        : { headRow: 'padding-top: 6px; padding-bottom: 6px;' },
       headBg: 'color-mix(in srgb, var(--surface-card) ' + (this.state.compact ? 94 : 78) + '%, transparent)',
       headRef: this.headRef, impRef: this.impRef, tabsRef: this.tabsRef, deptRef: this.deptRef, filtRef: this.filtRef,
       impTop: this.state.impTop + 'px', pinTop: this.state.mob && views.length < 2 ? 'auto' : this.state.pinTop + 'px', pinPos: this.state.mob && views.length < 2 ? 'relative' : 'sticky',
