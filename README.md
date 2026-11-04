@@ -28,8 +28,9 @@ Plan the work, assign it, and watch it move — by department, in real time.
 - **Shared Work** — own a subtask on anyone's task and that task shows in your list, with the parts you don't own blurred.
 - **Tasks & Subtasks** — check off subtasks and the main task closes itself, or complete the whole task in one click.
 - **Clear Statuses** — Not Started, In Progress, Done and Cancelled, with the date each one started and finished. A cancelled subtask (red) stops counting and leaves its task open; Cancel Whole Task cancels every subtask (Reopen Task brings them back as they were). Cancelled work doesn't count toward anyone's % and has its own filter.
-- **Files** — attach documents to any task or subtask; the Files button shows every task folder in the current view.
-- **Notes** — leave notes on tasks and subtasks, with who wrote them and when.
+- **Details** — one button on each task and subtask opens its Due Date, Notes, Activity and Files, switched with a toggle; it opens on the part you used last and shows the notes + files count. The Files button above the list shows every task folder in the current view.
+- **Progress at a glance** — each task shows TC Checklist's ring with its %, and a bar with "1 of 4 Subtasks Done" beside its pills on the progress line.
+- **Live clock** — the hub's Eastern clock beside the logo, green while every change is saved, blue while saving, red when something didn't save; click it for the last saved time and Retry Now.
 - **Safe Deleting** — delete tasks in your own list as before. Anyone else's task needs the department's Team Leader password; removing a subtask needs the department's subtask password; MGMT tasks and their subtasks are for managers. Checked on the server, and a copy of everything deleted is kept.
 - **Two Company Boards** — TCHB and KPI DRIVER, each with its own tasks, progress, and brand look; access is set per person.
 - **People** — managers set roles, departments and access in one place.
