@@ -1,14 +1,17 @@
 // POST /api/title-agent/team: an app asks who is on the team (signed with the shared secret). Body {} gives the Managers
 // and the TC department (the Title Commitment Agent); {"depts": ["TC", "DISPO"]} adds those departments (TC Checklist).
 // Answers name, email, role, dept, photo from the team directory.
-// Signed with TITLE_AGENT_SYNC_SECRET (the agent) or TC_CHECKLIST_SYNC_SECRET (TC Checklist's own secret, which opens
-// only this read-only list, not the task sync).
+// Signed with TITLE_AGENT_SYNC_SECRET (the agent), TC Checklist's own secret (TC_CHECKLIST_SECRET, or the older name
+// TC_CHECKLIST_SYNC_SECRET) or Dispo Ops' own secret (DISPO_OPS_SECRET). The last two open only this read-only list,
+// not the task sync or the passwords.
 const { teamFor, deptsFrom, verify } = require('../_lib/titleagent');
 const { rawBody, team, send } = require('../_lib/hub');
 
+const appSecrets = (e = process.env) => [e.TITLE_AGENT_SYNC_SECRET, e.TC_CHECKLIST_SECRET || e.TC_CHECKLIST_SYNC_SECRET, e.DISPO_OPS_SECRET].filter(Boolean);
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return send(res, 405, { error: 'POST only' });
-  const body = await rawBody(req), secrets = [process.env.TITLE_AGENT_SYNC_SECRET, process.env.TC_CHECKLIST_SYNC_SECRET].filter(Boolean);
+  const body = await rawBody(req), secrets = appSecrets();
   if (!secrets.length) return send(res, 503, { error: 'The hub is not set up for connected apps yet.' });
   if (!secrets.some(s => verify(s, body, req.headers['x-hub-timestamp'], req.headers['x-hub-signature']))) return send(res, 401, { error: 'Bad signature.' });
   let ask; try { ask = JSON.parse(body) || {}; } catch (e) { return send(res, 400, { error: 'Not JSON.' }); }

@@ -165,3 +165,31 @@ test('passwords: signed with the agent\'s secret only, team emails only, the sam
     hub.team = realTeam; for (const k of ['TITLE_AGENT_SYNC_SECRET', 'TC_CHECKLIST_SYNC_SECRET', 'HUB_DELETE_PASSWORDS']) { if (k in env) process.env[k] = env[k]; else delete process.env[k]; }
   }
 });
+
+test('team: the agent, TC Checklist and Dispo Ops each sign with their own secret; the passwords stay agent-only', async () => {
+  const hub = require('../api/_lib/hub');
+  const people = { 'monz@totalchb.com': { name: 'Monz', role: 'lead', dept: 'TC', order: 1 }, 'sara@totalchb.com': { name: 'Sara', role: 'member', dept: 'DISPO', order: 2 } };
+  const realTeam = hub.team; hub.team = async () => ({ people, managers: ['brandy@totalchb.com'] });
+  const KEYS = ['TITLE_AGENT_SYNC_SECRET', 'TC_CHECKLIST_SECRET', 'TC_CHECKLIST_SYNC_SECRET', 'DISPO_OPS_SECRET', 'HUB_DELETE_PASSWORDS'], env = { ...process.env };
+  for (const k of KEYS) delete process.env[k];
+  Object.assign(process.env, { TITLE_AGENT_SYNC_SECRET: 'agent-secret', TC_CHECKLIST_SECRET: 'checklist-secret', DISPO_OPS_SECRET: 'dispo-secret', HUB_DELETE_PASSWORDS: '{}' });
+  for (const f of ['team', 'passwords']) delete require.cache[require.resolve('../api/title-agent/' + f)];
+  const run = async (handler, bodyObj, secret) => {
+    const body = JSON.stringify(bodyObj), h = sign(secret, body), out = {}; const log = console.log; console.log = () => {};
+    try { await handler({ method: 'POST', body, headers: { 'x-hub-timestamp': h['X-Hub-Timestamp'], 'x-hub-signature': h['X-Hub-Signature'] } },
+      { setHeader() {}, end: s => { out.body = JSON.parse(s); }, set statusCode(c) { out.code = c; } }); } finally { console.log = log; }
+    return out;
+  };
+  try {
+    const team = require('../api/title-agent/team'), pw = require('../api/title-agent/passwords');
+    for (const s of ['agent-secret', 'checklist-secret', 'dispo-secret']) assert.equal((await run(team, { depts: ['TC', 'DISPO'] }, s)).code, 200, s);
+    assert.deepEqual((await run(team, { depts: ['DISPO'] }, 'dispo-secret')).body.people.map(p => p.email), ['brandy@totalchb.com', 'sara@totalchb.com']);
+    assert.equal((await run(team, {}, 'wrong-secret')).code, 401);
+    assert.equal((await run(pw, { email: 'monz@totalchb.com' }, 'dispo-secret')).code, 401, 'Dispo Ops\' secret does not open the passwords');
+    assert.equal((await run(pw, { email: 'monz@totalchb.com' }, 'checklist-secret')).code, 401);
+    delete process.env.TC_CHECKLIST_SECRET; process.env.TC_CHECKLIST_SYNC_SECRET = 'old-name-secret';
+    assert.equal((await run(team, {}, 'old-name-secret')).code, 200, 'the older name still works');
+  } finally {
+    hub.team = realTeam; for (const k of KEYS) { if (k in env) process.env[k] = env[k]; else delete process.env[k]; }
+  }
+});
