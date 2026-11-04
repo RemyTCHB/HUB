@@ -1057,7 +1057,7 @@ h1, h2, h3, h4 {
         </sc-for>
       </nav>
       <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
-        <button sc-camel-on-click="{{ openSettings }}" title="{{ userTitle }}" style="width: 40px; height: 40px; flex: none; border-radius: 999px; cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-shadow: var(--shadow-button); {{ mo.avatar }}">{{ userInitials }}<sc-if value="{{ me.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ me.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></button>
+        <button sc-camel-on-click="{{ openAccount }}" title="{{ userTitle }}" aria-haspopup="true" aria-label="Your account" style="width: 40px; height: 40px; flex: none; border-radius: 999px; cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-shadow: var(--shadow-button); {{ mo.avatar }}">{{ userInitials }}<sc-if value="{{ me.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ me.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></button>
       </sc-if>
       </div>
     </div>
@@ -1088,7 +1088,6 @@ h1, h2, h3, h4 {
     <section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; {{ mo.hero }}">
       <div style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 440px; min-width: 0; {{ mo.heroText }}">
         <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
-          <span style="font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; color: var(--tchb-red-500);">{{ companyName }}</span>
           <span title="{{ syncTitle }}" style="display: flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.04em; background: {{ syncBg }}; color: {{ syncFg }};"><span style="width: 7px; height: 7px; border-radius: 999px; background: {{ syncDot }};"></span>{{ syncLabel }}</span>
           <span title="Hub clock, Eastern time. Every date in the hub comes from this clock." aria-label="Hub clock, Eastern time" style="display: flex; flex-direction: column; gap: 1px; line-height: 1.15; font-family: var(--font-display); font-variant-numeric: tabular-nums; white-space: nowrap;">
             <span ref="{{ clockARef }}" style="font-weight: 700; font-size: 12px; letter-spacing: 0.03em; color: var(--tchb-indigo-700);"></span>
@@ -1131,9 +1130,6 @@ h1, h2, h3, h4 {
       </sc-if>
       <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
         <button sc-camel-on-click="{{ goBack }}" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; margin-left: auto;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back To Sign In</button>
-      </sc-if>
-      <sc-if value="{{ showPeopleBtn }}" hint-placeholder-val="{{ false }}">
-        <button sc-camel-on-click="{{ openPeople }}" title="Roles, departments and access" style="border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--tchb-indigo-700); cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: var(--font-display); font-weight: 700; font-size: 13px; margin-left: auto;" style-hover="background: var(--tchb-indigo-050);"><svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path></svg>Team Members</button>
       </sc-if>
     </div>
     <sc-if value="{{ showErr }}" hint-placeholder-val="{{ false }}">
@@ -1510,6 +1506,20 @@ h1, h2, h3, h4 {
           <button sc-camel-on-click="{{ addNote }}" style="border: none; cursor: pointer; border-radius: 8px; padding: 9px 14px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-primary); {{ mo.noteAdd }}" style-hover="background: var(--action-primary-hover);">Add</button>
         </div>
       </sc-if>
+      <sc-if value="{{ menuIsAccount }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 9px;">
+          <span style="width: 40px; height: 40px; flex: none; border-radius: 999px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--avatar-bg, var(--tchb-indigo-700)); border: 2px solid var(--surface-card); box-sizing: border-box;">{{ userInitials }}<sc-if value="{{ me.hasPhoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ me.photo }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></sc-if></span>
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+            <b style="font-family: var(--font-display); font-size: 14px; color: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: capitalize;">{{ acctName }}</b>
+            <span style="font-size: 12px; color: var(--text-muted); overflow-wrap: anywhere;">{{ acctEmail }}</span>
+            <span style="font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tchb-red-500);">{{ acctType }}</span>
+          </span>
+        </div>
+        <div style="border-top: 1px solid var(--glass-divider, rgba(17,29,44,0.08)); margin: 4px 6px;"></div>
+        <sc-for list="{{ acctItems }}" as="ai" hint-placeholder-count="4">
+          <button sc-camel-on-click="{{ ai.onClick }}" style="display: flex; align-items: center; gap: 10px; width: 100%; border: none; cursor: pointer; text-align: left; padding: 9px 12px; border-radius: 9px; font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--tchb-indigo-700); background: transparent; {{ mo.menuItem }}" style-hover="background: var(--glass-hover, rgba(255,255,255,0.85));"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path sc-camel-d="{{ ai.icon }}"></path></svg>{{ ai.label }}</button>
+        </sc-for>
+      </sc-if>
       <sc-if value="{{ menuIsActive }}" hint-placeholder-val="{{ false }}">
         <div style="padding: 8px 10px 4px; font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">{{ activeHead }}</div>
         <sc-if value="{{ activeEmpty }}" hint-placeholder-val="{{ false }}">
@@ -1599,14 +1609,6 @@ h1, h2, h3, h4 {
         <button sc-camel-on-click="{{ closeSettings }}" title="Close" aria-label="Close" style="width: 40px; height: 40px; flex: none; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--tchb-gray-500); display: flex; align-items: center; justify-content: center;" style-hover="background: var(--tchb-gray-100);"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
       </div>
       <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px;">
-        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-default); background: var(--tchb-indigo-050); margin-bottom: 6px;">
-          <svg width="28" height="28" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--tchb-indigo-700)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
-          <div style="flex: 1 1 220px; min-width: 0;">
-            <div style="font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--tchb-indigo-700);">Help</div>
-            <div style="font-size: 13px; color: var(--text-muted);">{{ helpBlurb }}</div>
-          </div>
-          <button sc-camel-on-click="{{ openHelp }}" style="flex: none; border: none; cursor: pointer; border-radius: 8px; padding: 10px 18px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--action-secondary);" style-hover="filter: brightness(1.08);">{{ helpBtn }}</button>
-        </div>
         <div style="font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--tchb-indigo-700);">My Task Templates</div>
         <p style="margin: 0 0 4px; font-size: 13px; color: var(--text-muted);">Lists of subtasks you use again and again. Deploy one to make a new task in your list (it asks for the name), or add one to a task you deployed before.</p>
         <sc-if value="{{ tplEmpty }}" hint-placeholder-val="{{ false }}">
@@ -1647,7 +1649,6 @@ h1, h2, h3, h4 {
       </div>
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 20px; border-top: 1px solid var(--border-default);">
         <span style="font-size: 12px; color: var(--text-muted);">Your templates are saved to your account.</span>
-        <button sc-camel-on-click="{{ signOut }}" style="border: 1px solid var(--border-strong); cursor: pointer; border-radius: 8px; padding: 7px 12px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--tchb-indigo-700); background: var(--surface-card); padding: 9px 14px; font-size: 14px; color: var(--tchb-red-500);" style-hover="background: var(--tchb-red-050);">Sign Out</button>
       </div>
     </div>
   </sc-if>
@@ -2531,6 +2532,11 @@ class Component extends DCLogic {
   }
   // ---------- Help (My Settings): the guide for this person's role, from help/guides.json ----------
   // Team Leaders and managers also see the delete passwords, fetched from the server after sign-in (never in the page).
+  // Sign Out (the photo menu): asks first, then marks this device offline.
+  askSignOut = () => { if (!this.auth) return;
+            this.ask({ title: 'Sign Out?', ok: 'Sign Out', text: 'You will need to sign in with your Google account again to see the hub.' }, () => {
+              const out = () => { this.setState({ settings: null }); this.auth.signOut(); };
+              if (this.db && this._key && !this._imp) this.db.doc('presence/' + this._key).set({ sessions: { [DEVICE]: { at: 0, type: DEVICE_TYPE } } }, { merge: true }).then(out, out); else out(); }); };
   helpRole() { return this.state.cloud === 'ready' ? this.roleOf(this._key) : 'member'; }
   openHelp = () => {
     const role = this.helpRole();
@@ -2722,9 +2728,9 @@ class Component extends DCLogic {
   }
   openMenu(e, cfg) {
     const r = e.currentTarget.getBoundingClientRect();
-    const wide = ['notes', 'files', 'folders', 'due', 'activity', 'active'].includes(cfg.kind), h = wide ? (cfg.kind === 'due' ? 540 : 430) : 330, w = wide ? 340 : 248;
+    const wide = ['notes', 'files', 'folders', 'due', 'activity', 'active'].includes(cfg.kind), h = wide ? (cfg.kind === 'due' ? 540 : 430) : 330, w = wide ? 340 : cfg.kind === 'account' ? 290 : 248;
     const flip = r.bottom + h > window.innerHeight && r.top > h;
-    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '', noteTab: 'task', attach: 'file', linkUrl: '', linkName: '', ...(cfg.kind === 'due' ? { dp: this.dpFrom(cfg.due) } : {}) });
+    this.setState({ menu: { ...cfg, top: flip ? r.top - 6 : r.bottom + 6, left: Math.max(8, cfg.kind === 'account' ? Math.min(r.right - w, window.innerWidth - w - 8) : Math.min(r.left, window.innerWidth - w)), flip }, noteDraft: '', noteTab: 'task', attach: 'file', linkUrl: '', linkName: '', ...(cfg.kind === 'due' ? { dp: this.dpFrom(cfg.due) } : {}) });
   }
   choose(v) {
     const m = this.state.menu; if (!m) return;
@@ -3048,7 +3054,7 @@ class Component extends DCLogic {
     const menu = this.state.menu;
     const SL = { todo: 'Not Started', progress: 'In Progress', done: 'Done', cancelled: 'Cancelled' };
     let menuItems = [], menuCur = '';
-    if (menu && !['notes', 'files', 'folders', 'due', 'activity', 'active'].includes(menu.kind)) {   // the rest are pick lists
+    if (menu && !['notes', 'files', 'folders', 'due', 'activity', 'active', 'account'].includes(menu.kind)) {   // the rest are pick lists
       if (menu.kind === 'status') {
         const tk = allTasks.find(x => x.id === menu.tid); const sb = tk && tk.subs.find(y => y.id === menu.sid); menuCur = sb ? (sb.status || (sb.done ? 'done' : 'todo')) : tk && !menu.sid ? statusOf(tk) : '';
         menuItems = [['todo', 'var(--tchb-gray-500)'], ['progress', 'var(--tchb-indigo-500)'], ['done', 'var(--tchb-green-500)'], ['cancelled', 'var(--tchb-red-500)']].map(([v, dot]) => ({ value: v, label: SL[v], hasDot: true, dot }));
@@ -3353,7 +3359,7 @@ class Component extends DCLogic {
       signIn: () => this.auth && this.auth.signInWithPopup(new this.fb.auth.GoogleAuthProvider()).catch(e => this.setState({ authError: e.message })),
       signedIn: cloud === 'ready' && !!this.state.user, userInitials: this.state.user ? initials(live ? this.myName() : this.state.user.name) : '',
       me: { photo: live ? this.rec(this._key).photo || '' : '', hasPhoto: live && !!this.rec(this._key).photo },
-      userTitle: this.state.user ? 'Signed in as ' + this.state.user.email + ' — My Settings' : '',
+      userTitle: this.state.user ? 'Signed in as ' + this.state.user.email : '',
       ...(() => { const st = cloud !== 'ready' ? cloud : this.state.saveErr ? 'unsaved' : this.state.saving ? 'saving' : 'ready';
         return { syncLabel: { ready: 'Live', saving: 'Saving…', unsaved: 'Not Saved', connecting: 'Connecting', error: 'Offline' }[st] || 'Local Only',
           syncTitle: { ready: 'Every change is saved for the whole team', saving: 'Saving your changes for the whole team…', unsaved: this.state.saveErr }[st] || 'Changes are saved in this browser only',
@@ -3392,10 +3398,7 @@ class Component extends DCLogic {
             onDelete: () => this.ask({ title: 'Delete “' + l.name + '”?', tone: 'danger', ok: 'Delete', text: 'This template is removed from My Settings. Tasks already deployed from it stay as they are.' },
               () => this.saveTpls((this.state.myTpls || []).filter(x => x.id !== l.id))) })),
           openDeployPick: e => { if (!tpls.length) { this.say('Add a template in My Settings first'); return this.setState({ settings: { edit: { id: '', name: '', text: '', err: '' } } }); } this.openMenu(e, { kind: 'deployPick' }); },
-          signOut: () => { if (!this.auth) return;
-            this.ask({ title: 'Sign Out?', ok: 'Sign Out', text: 'You will need to sign in with your Google account again to see the hub.' }, () => {
-              const out = () => { this.setState({ settings: null }); this.auth.signOut(); };
-              if (this.db && this._key && !this._imp) this.db.doc('presence/' + this._key).set({ sessions: { [DEVICE]: { at: 0, type: DEVICE_TYPE } } }, { merge: true }).then(out, out); else out(); }); } };
+          signOut: this.askSignOut };
       })(),
       ...(() => {
         // Deploy: name the new task.
@@ -3457,7 +3460,7 @@ class Component extends DCLogic {
             return { showNoteToggle: toggle, subNotesOn: all, subNotesCount: subNotes.length ? String(subNotes.length) : '',
               subTrack: all ? 'var(--action-secondary)' : 'var(--tchb-gray-300)', subKnob: all ? 'translateX(16px)' : 'none',
               toggleSubNotes: () => this.setState(st => ({ subNotesOn: !st.subNotesOn })) }; })(),
-          notesBox: on || (menu && ['files', 'folders', 'due', 'activity', 'active'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: min(560px, calc(100vh - 16px)); box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
+          notesBox: menu && menu.kind === 'account' ? 'width: 290px; max-width: calc(100vw - 16px); max-height: min(440px, calc(100vh - 16px)); box-sizing: border-box;' : on || (menu && ['files', 'folders', 'due', 'activity', 'active'].includes(menu.kind)) ? 'width: 340px; max-width: calc(100vw - 16px); max-height: min(560px, calc(100vh - 16px)); box-sizing: border-box; background-color: var(--surface-card); background-image: none;' : '',
           notesList: (() => { const mine = n => !n.by || n.by === this.me() || (!!this.state.user && n.by === this.state.user.name);
             const all = !!(on && tk && !menu.sid && this.state.subNotesOn);
             const rows = [...notes.map(n => ({ n, sb: null })), ...(all ? [].concat(...tk.subs.map(sb => (sb.notes || []).map(n => ({ n, sb })))) : [])]
@@ -3497,6 +3500,21 @@ class Component extends DCLogic {
         const no = () => { this._askThen = null; this.setState({ ask: null }); }, yes = () => { const f = this._askThen; this._askThen = null; this.setState({ ask: null }); if (f) f(); };
         return { askOpen: true, askTitle: a.title, askText: a.text, askOk: a.ok, askIconBg: T[0], askIconFg: T[1], askOkBg: T[2], askIcon: T[3], askYes: yes, askNo: no,
           askKey: e => { if (e.key === 'Escape') { e.preventDefault(); no(); } } }; })(),
+      ...(() => {
+        // The photo menu, like TC Checklist's: you (name, email, role), then My Settings, Team Members (managers), Help, Sign Out.
+        const u = this.state.user || {}, k = this._key, mgr = live && role === 'manager', dept = k ? this.deptOf(k) : '';
+        const go = f => () => this.setState({ menu: null }, f);
+        const I = { settings: 'M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4',
+          team: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
+          help: 'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01', out: 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9' };
+        const r = live ? role : 'member';
+        return { openAccount: e => this.openMenu(e, { kind: 'account' }), menuIsAccount: !!menu && menu.kind === 'account',
+          acctName: k ? this.nameOf(k) : (u.displayName || u.email || ''), acctEmail: u.email || '',
+          acctType: ROLE_LABEL[r] + (dept && r !== 'manager' ? ' · ' + dept : ''),
+          acctItems: [{ label: 'My Settings', icon: I.settings, onClick: go(() => this.setState({ settings: {} })) },
+            ...(mgr ? [{ label: 'Team Members', icon: I.team, onClick: () => this.openPeople() }] : []),
+            { label: 'Help', icon: I.help, onClick: this.openHelp }, { label: 'Sign Out', icon: I.out, onClick: go(this.askSignOut) }] };
+      })(),
       ...(() => {
         // Online now: everyone with a device seen in the last five minutes (Hub clock), by name, with phone / desktop.
         const now = hubNow(), on = (this.state.presence || []).map(p => { const ss = Object.values(p.sessions || {}).filter(x => x && now - (x.at || 0) < ONLINE_MS);
