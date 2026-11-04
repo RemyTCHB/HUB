@@ -131,12 +131,26 @@ Only **Closing Blockers** come over: one task per deal, **Title - &lt;address&gt
 | Piece | Where |
 | --- | --- |
 | `POST /api/title-agent` | The agent sends a deal's Closing Blockers (after each review, re-run or change, and every 15 minutes); the hub creates or updates the task and answers with blockers ticked or unticked here. |
-| `POST /api/title-agent/team` | The agent asks who is on the team (signed the same way, body `{}`); the hub answers `{"people": [{name, email, role, dept, photo}]}` with the Managers and the TC department from the team directory. Another app can add departments with `{"depts": ["TC", "DISPO"]}` (TC Checklist and Dispo Ops do, for names, each signed with its own secret, `TC_CHECKLIST_SECRET` or `DISPO_OPS_SECRET`, which opens only this list). Logs counts only. |
+| `POST /api/title-agent/team` | The agent asks who is on the team (signed the same way, body `{}`); the hub answers `{"people": [{name, email, role, dept, photo}]}` with the Managers and the TC department from the team directory. Another app can add departments with `{"depts": ["TC", "DISPO"]}` (TC Checklist and Dispo Ops do, for names, each signed with its own secret: `TC_CHECKLIST_SYNC_SECRET` / `TC_CHECKLIST_SECRET` or `DISPO_OPS_SECRET`). Logs counts only. |
 | `POST /api/title-agent/passwords` | The agent's in-app Help asks which delete passwords a person may see: body `{"email": "..."}` (team domains only, else 400), signed with `TITLE_AGENT_SYNC_SECRET` only. The answer is the same as `/api/hub/passwords` for that person (`{rows: [{dept, lead, sub}], own: [{name, pw}]}`: managers all, Team Leaders their departments, members none), sent with `Cache-Control: no-store`. Logs counts only. |
 | `POST /api/title-agent/hub` | The hub page calls it after saving one of these tasks; the server sends the agent any blocker ticked or unticked here. |
 | `api/_lib/titleagent.js` | The rules (tested in `tests/`: `node --test tests/title-agent.test.js`). |
 
-Messages between the apps are signed with a shared secret. Vercel settings for this project: `HUB_FIREBASE_SERVICE_ACCOUNT` (a service account key for this Firebase project, role Cloud Datastore User), `TITLE_AGENT_SYNC_SECRET` (the shared secret; the agent has the same value as `HUB_SYNC_SECRET`), and optionally `TITLE_AGENT_ENGINE_URL` and `HUB_TITLE_OWNER` (default monz@totalchb.com). For the other apps' names: `TC_CHECKLIST_SECRET` (the same value as TC Checklist's `HUB_SYNC_SECRET`; the older name `TC_CHECKLIST_SYNC_SECRET` still works) and `DISPO_OPS_SECRET` (the same value as Dispo Ops' `HUB_SYNC_SECRET`).
+Messages between the apps are signed with a shared secret. Vercel settings for this project: `HUB_FIREBASE_SERVICE_ACCOUNT` (a service account key for this Firebase project, role Cloud Datastore User), `TITLE_AGENT_SYNC_SECRET` (the shared secret; the agent has the same value as `HUB_SYNC_SECRET`), and optionally `TITLE_AGENT_ENGINE_URL` and `HUB_TITLE_OWNER` (default monz@totalchb.com). For TC Checklist: `TC_CHECKLIST_SYNC_SECRET` or `TC_CHECKLIST_SECRET` (either name works; the same value as TC Checklist's `HUB_SYNC_SECRET`). For Dispo Ops' names: `DISPO_OPS_SECRET` (the same value as Dispo Ops' `HUB_SYNC_SECRET`; it opens only the team list).
+
+### TC Checklist
+
+TC Checklist (tc.totalchb.com) takes names from the team directory (above) and uses the hub's delete passwords. Its
+properties belong to TC, so only the TC Team Leader password and people's own passwords apply: Remy confirms, Brandy
+uses her own, Managers and Team Leaders who see TC use the TC Team Leader password, and Members can't delete (they
+mark the property Cancelled). Both endpoints are signed with `TC_CHECKLIST_SYNC_SECRET`; TC Checklist checks the
+person's sign-in before asking. Passwords are never logged and never go into either app's pages or repositories.
+
+| Piece | Where |
+| --- | --- |
+| `POST /api/tc-checklist/delete-check` | `{"email", "ask": true}` says what deleting needs (`confirm` or `password`); `{"email", "password"}` checks it. |
+| `POST /api/tc-checklist/passwords` | The passwords TC Checklist's Help shows the person: Managers the TC one and anyone's own, TC Team Leaders the TC one, Members none. |
+| `api/_lib/tcchecklist.js` | The rules (tested: `node --test tests/tcchecklist.test.js`). |
 
 ## Support
 
