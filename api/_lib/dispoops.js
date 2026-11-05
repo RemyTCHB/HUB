@@ -1,10 +1,11 @@
 // DISPO OPS -> Universal Team Hub (one way): a deal's progress as one hub task. Pure functions (no Firebase) so they
 // can be tested on their own.
 //
-// A deal becomes "DISPO - <address>" in the DISPO owner's list (Carlos, DISPO), tagged "Added by DISPO OPS" with a
-// link back. The task's note shows the overall % and the next DISPO OPS step with its owner. Each phase of the deal is
-// a subtask: the phase name with its %, owned by the owner of that phase's next open step, Done at 100%, In Progress
-// once anything in it is done. Closed in DISPO OPS = every phase Done; Cancelled = the hub's Cancelled status with a
+// A deal becomes "DISPO OPS - <address>" in the DISPO owner's list (Carlos, DISPO), tagged "Added by DISPO OPS" with a
+// link back; its ring shows the deal's overall % (ext.percent). The task's note shows the overall % and the next DISPO
+// OPS step with its owner. Each phase of the deal is a subtask titled on two lines: "<phase> · <%>", then "Working On:
+// <group> › Next: <task>" ("Starts With:" before the phase has begun, "Complete" at 100%), owned by the owner of that
+// next task, Done at 100%, In Progress once anything in it is done. Closed in DISPO OPS = every phase Done; Cancelled = the hub's Cancelled status with a
 // note; removed = a note, and syncing stops. Nothing flows back. sub.ext remembers what DISPO OPS last sent, so a
 // person's own changes to titles in the hub are kept, and a task deleted in the hub is not brought back.
 const crypto = require('crypto');
@@ -17,6 +18,13 @@ const when = ts => { const p = Object.fromEntries(ET.formatToParts(new Date(ts))
 const mark = (o, was, is, now) => is === was ? o : { ...o, ...(is !== 'todo' && !o.startedAt ? { startedAt: now } : {}), doneAt: is === 'done' ? now : null };
 const subStatus = s => s.status || (s.done ? 'done' : 'todo');
 const statusOf = t => (t.subs.length ? t.subs.every(s => s.done) : t.done) ? 'done' : t.subs.some(s => s.done || s.status === 'progress') ? 'progress' : 'todo';
+
+/** A phase subtask's title: "<phase> · <%>" and, on a second line, the group being worked on and its next task. */
+function phaseTitle(p) {
+  const pct = Math.max(0, Math.min(100, Math.round(p.percent || 0))), n = p.next;
+  const line2 = !n ? 'Complete' : (n.group ? `${p.started ? 'Working On' : 'Starts With'}: ${n.group} › ` : '') + `Next: ${n.title}`;
+  return `${p.phase} · ${pct}%\n${line2}`;
+}
 
 /** DISPO OPS stores owners by first name ("Carlos", "Sarah", "Remy"); the hub knows people by email. */
 function nameFor(first, people, fallback) {
@@ -46,7 +54,7 @@ function applyDispo(task, link, payload, ctx) {
     return { task: t, created: false, changed: true, removed: true };
   }
   const created = !task, before = task ? J(task) : '';
-  const title = 'DISPO - ' + ((deal.address || '').trim() || 'Deal ' + deal.id);
+  const title = 'DISPO OPS - ' + ((deal.address || '').trim() || 'Deal ' + deal.id);
   const t = task ? JSON.parse(before) : { id: 'do-' + deal.id, company: 'tchb', title, owner: ctx.owner.name, done: false, order: now,
     subs: [], notes: [], source: APP, createdAt: now, createdBy: APP, ext: { app: 'dispo-ops', deal: deal.id, title, keys: [] }, log: [] };
   t.subs = t.subs || []; t.log = t.log || []; t.notes = t.notes || []; t.ext = t.ext || { app: 'dispo-ops', deal: deal.id, keys: [] };
@@ -56,11 +64,11 @@ function applyDispo(task, link, payload, ctx) {
   const closed = deal.status === 'closed';
   for (const p of phases) {
     const key = String(p.phase || ''); if (!key) continue; seen.add(key);
-    const id = 'do-' + hash(key), sTitle = `${key} (${Math.max(0, Math.min(100, Math.round(p.percent || 0)))}%)`;
+    const id = 'do-' + hash(key), sTitle = phaseTitle(p);
     const had = t.subs.find(s => s.ext && s.ext.key === key);
     const owner = p.next ? nameFor(p.next.owner, ctx.people, ctx.owner.name) : (had && had.ext.owner) || ctx.owner.name;   // a finished phase keeps its last owner
     const want = closed || p.complete ? 'done' : p.started ? 'progress' : 'todo';
-    const noteText = p.next ? `Next: ${p.next.title}${p.next.task && p.next.task !== p.next.title ? ' (' + p.next.task + ')' : ''} - ${owner}` : 'Phase complete.';
+    const noteText = p.next ? `Next: ${p.next.title}${p.next.group ? ' (' + p.next.group + ')' : ''} - ${owner}` : 'Phase complete.';
     const ext = { key, title: sTitle, owner, status: want, note: noteText };
     let i = t.subs.findIndex(s => s.ext && s.ext.key === key);
     if (i < 0) {
@@ -100,4 +108,4 @@ function applyDispo(task, link, payload, ctx) {
   return { task: changed ? out : null, created, changed };
 }
 
-module.exports = { APP, applyDispo, nameFor, hash };
+module.exports = { APP, applyDispo, nameFor, hash, phaseTitle };

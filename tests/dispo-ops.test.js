@@ -6,13 +6,13 @@ const people = { 'carlos@totalchb.com': { name: 'Carlos Test' }, 'sara@totalchb.
 const owner = { key: 'carlos@totalchb.com', name: 'Carlos Test' };
 const run = (task, link, p, now = 1000) => applyDispo(task, link, p, { now, owner, people });
 const P = (x = {}, phases) => ({ deal: { id: 'prop_1', address: '1 Test St', url: 'https://dispo-ops.totalchb.com/?deal=prop_1', status: 'open', percent: 20, next: { title: 'Call', owner: 'Sarah' }, ...x },
-  phases: phases || [{ phase: 'Phase I: Intake', percent: 50, complete: false, started: true, next: { title: 'Call', task: 'Calls', owner: 'Sarah' } }, { phase: 'Phase II: Market', percent: 0, complete: false, started: false, next: { title: 'Post', task: 'Post', owner: 'Remy' } }] });
+  phases: phases || [{ phase: 'Phase I: Intake', percent: 50, complete: false, started: true, next: { group: 'Calls', title: 'Call', owner: 'Sarah' } }, { phase: 'Phase II: Market', percent: 0, complete: false, started: false, next: { group: 'Posts', title: 'Post', owner: 'Remy' } }] });
 
-test('first sync: DISPO - <address> in Carlos\'s list, one subtask per phase with its %, owners from the directory', () => {
+test('first sync: DISPO OPS - <address> in Carlos\'s list, one subtask per phase with its %, group and next task, owners from the directory', () => {
   const r = run(null, null, P()), t = r.task;
-  assert.equal(r.created, true); assert.equal(t.id, 'do-prop_1'); assert.equal(t.title, 'DISPO - 1 Test St'); assert.equal(t.owner, 'Carlos Test');
+  assert.equal(r.created, true); assert.equal(t.id, 'do-prop_1'); assert.equal(t.title, 'DISPO OPS - 1 Test St'); assert.equal(t.ext.percent, 20); assert.equal(t.owner, 'Carlos Test');
   assert.equal(t.source, 'DISPO OPS'); assert.equal(t.ext.url, 'https://dispo-ops.totalchb.com/?deal=prop_1');
-  assert.deepEqual(t.subs.map(s => [s.title, s.owner, s.status]), [['Phase I: Intake (50%)', 'Sara Test', 'progress'], ['Phase II: Market (0%)', 'Remy Test', 'todo']]);
+  assert.deepEqual(t.subs.map(s => [s.title, s.owner, s.status]), [['Phase I: Intake · 50%\nWorking On: Calls › Next: Call', 'Sara Test', 'progress'], ['Phase II: Market · 0%\nStarts With: Posts › Next: Post', 'Remy Test', 'todo']]);
   assert.equal(t.subs[0].notes[0].text, 'Next: Call (Calls) - Sara Test');
   assert.equal(t.notes.find(n => n.id === 'do-overall').text, 'Overall 20% - Next: Call (Sara Test)');
 });
@@ -25,8 +25,8 @@ test('names: first names to hub names (Sarah = sara@, Remy = systems@), company 
 test('re-sync follows progress but keeps titles people changed in the hub', () => {
   const t = run(null, null, P()).task;
   t.subs[1].title = 'Marketing (renamed in the hub)';
-  const r = run(t, { created: true }, P({ percent: 60 }, [{ phase: 'Phase I: Intake', percent: 100, complete: true, started: true, next: null }, { phase: 'Phase II: Market', percent: 30, complete: false, started: true, next: { title: 'Post', task: 'Post', owner: 'Sarah' } }]), 2000);
-  assert.deepEqual(r.task.subs.map(s => [s.title, s.status, s.owner]), [['Phase I: Intake (100%)', 'done', 'Sara Test'], ['Marketing (renamed in the hub)', 'progress', 'Sara Test']]);
+  const r = run(t, { created: true }, P({ percent: 60 }, [{ phase: 'Phase I: Intake', percent: 100, complete: true, started: true, next: null }, { phase: 'Phase II: Market', percent: 30, complete: false, started: true, next: { group: 'Posts', title: 'Post', owner: 'Sarah' } }]), 2000);
+  assert.deepEqual(r.task.subs.map(s => [s.title, s.status, s.owner]), [['Phase I: Intake · 100%\nComplete', 'done', 'Sara Test'], ['Marketing (renamed in the hub)', 'progress', 'Sara Test']]);
   assert.equal(r.task.subs[0].doneAt, 2000);
 });
 
@@ -48,4 +48,9 @@ test('a task deleted in the hub is not brought back; a removed deal gets a note 
 
 test('nothing changed, nothing saved', () => {
   const t = run(null, null, P()).task; assert.equal(run(t, { created: true }, P(), 9000).task, null);
+});
+
+test('a phase title without a group (older deals) still names the next task', () => {
+  const { phaseTitle } = require('../api/_lib/dispoops');
+  assert.equal(phaseTitle({ phase: 'Phase I: X', percent: 12.4, started: true, next: { group: '', title: 'Call' } }), 'Phase I: X · 12%\nNext: Call');
 });

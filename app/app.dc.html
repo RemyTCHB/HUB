@@ -3200,7 +3200,9 @@ class Component extends DCLogic {
         : mgmtInTeam ? ['mgmt', 'Added by MGMT for ' + who] : t.scope === 'team' ? ['person', this.nameOf(t.list) + "'s Task"] : scope === 'team' ? ['person', 'Your Task'] : null;
       const tc = tag && TAGS[tag[0]], dk = mode === 'dark', due = dueOf(t, d || gone);
       const live = liveSubs(t.subs), n = live.filter(s => s.done).length, nc = t.subs.length - live.length;
-      const pct = live.length ? Math.round(n / live.length * 100) : (d ? 100 : 0);
+      // A DISPO OPS deal: the ring shows the deal's overall % from DISPO OPS (its subtasks are phases, not equal steps).
+      const dispoPct = t.ext && t.ext.app === 'dispo-ops' && typeof t.ext.percent === 'number' ? Math.max(0, Math.min(100, Math.round(t.ext.percent))) : null;
+      const pct = dispoPct !== null ? dispoPct : live.length ? Math.round(n / live.length * 100) : (d ? 100 : 0);
       return {
         dragOpacity: this.state.dragId === t.id ? 0.45 : 1,
         dropOutline: this.state.overId === t.id && this.state.dragId && this.state.dragId !== t.id ? '2px solid var(--tchb-indigo-500)' : 'none',
@@ -3254,7 +3256,7 @@ class Component extends DCLogic {
         // TC Checklist's look: a ring with the % beside the title, and a bar with "1 of 4 Subtasks Done" under it.
         hasRing: live.length > 0, hasBar: live.length > 0 && showProgress, barLabel: n + ' of ' + live.length + ' Subtasks Done',
         ringColor: n === live.length ? 'var(--tchb-green-500)' : 'var(--tchb-red-500)', ringText: n === live.length ? 'var(--tchb-green-600)' : 'var(--tchb-indigo-700)',
-        ringTitle: n + ' of ' + live.length + ' subtasks done (' + pct + '%)',
+        ringTitle: dispoPct !== null ? 'The deal is ' + pct + '% done in DISPO OPS' : n + ' of ' + live.length + ' subtasks done (' + pct + '%)',
         chevron: t.open ? 'rotate(180deg)' : 'none',
         onToggle: () => this.toggleTask(t),
         onExpand: () => this.setState(st => ({ openMap: { ...st.openMap, [t.id]: !st.openMap[t.id] } })),
