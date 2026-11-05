@@ -5,9 +5,10 @@
 // link back; its ring shows the deal's overall % (ext.percent). The task's note shows the overall % and the next DISPO
 // OPS step with its owner. Each phase of the deal is a subtask titled on two lines: "<phase> · <%>", then "Working On:
 // <group> › Next: <task>" ("Starts With:" before the phase has begun, "Complete" at 100%), owned by the owner of that
-// next task, Done at 100%, In Progress once anything in it is done. Closed in DISPO OPS = every phase Done; Cancelled = the hub's Cancelled status with a
-// note; removed = a note, and syncing stops. Nothing flows back. sub.ext remembers what DISPO OPS last sent, so a
-// person's own changes to titles in the hub are kept, and a task deleted in the hub is not brought back.
+// next task, Done at 100%, In Progress once anything in it is done. Closed in DISPO OPS = every phase Done (the
+// task Done); Cancelled = the hub's Cancelled status with a note; removed = a note, and syncing stops. Nothing flows
+// back: the hub is a mirror, so changes made to these tasks in the hub are put back by the next sync, and a task
+// deleted in the hub is made again.
 const crypto = require('crypto');
 
 const APP = 'DISPO OPS';
@@ -43,7 +44,6 @@ function nameFor(first, people, fallback) {
  */
 function applyDispo(task, link, payload, ctx) {
   const now = ctx.now, deal = payload.deal || {}, phases = Array.isArray(payload.phases) ? payload.phases : [];
-  if (!task && link && link.created) return { task: null, created: false, changed: false, skipped: 'deleted in the hub' };
   if (link && link.removed) return { task: null, created: false, changed: false, skipped: 'removed in DISPO OPS' };
   if (deal.removed) {
     if (!task) return { task: null, created: false, changed: false, removed: true };
@@ -53,54 +53,57 @@ function applyDispo(task, link, payload, ctx) {
     t.updatedBy = APP; t.updatedAt = now;
     return { task: t, created: false, changed: true, removed: true };
   }
+  // The hub is a mirror: a task deleted here comes back, and titles, owners and statuses always follow DISPO OPS.
   const created = !task, before = task ? J(task) : '';
   const title = 'DISPO OPS - ' + ((deal.address || '').trim() || 'Deal ' + deal.id);
   const t = task ? JSON.parse(before) : { id: 'do-' + deal.id, company: 'tchb', title, owner: ctx.owner.name, done: false, order: now,
-    subs: [], notes: [], source: APP, createdAt: now, createdBy: APP, ext: { app: 'dispo-ops', deal: deal.id, title, keys: [] }, log: [] };
-  t.subs = t.subs || []; t.log = t.log || []; t.notes = t.notes || []; t.ext = t.ext || { app: 'dispo-ops', deal: deal.id, keys: [] };
+    subs: [], notes: [], source: APP, createdAt: now, createdBy: APP, ext: { app: 'dispo-ops', deal: deal.id, title }, log: [] };
+  t.subs = t.subs || []; t.log = t.log || []; t.notes = t.notes || []; t.ext = t.ext || { app: 'dispo-ops', deal: deal.id };
   const log = (ev, x = {}) => t.log.push({ at: now, by: APP, ev, ...x });
-  if (created) log('created', { title });
-  const wasTask = statusOf(t), known = new Set(t.ext.keys || []), seen = new Set();
-  const closed = deal.status === 'closed';
+  if (created) log(link && link.created ? 're-created (deleted in the hub)' : 'created', { title });
+  const wasTask = statusOf(t), closed = deal.status === 'closed', cancelled = deal.status === 'cancelled';
+  const mine = [], others = t.subs.filter(s => !(s.ext && s.ext.key));          // subtasks people added in the hub are left alone
   for (const p of phases) {
-    const key = String(p.phase || ''); if (!key) continue; seen.add(key);
+    const key = String(p.phase || ''); if (!key) continue;
     const id = 'do-' + hash(key), sTitle = phaseTitle(p);
     const had = t.subs.find(s => s.ext && s.ext.key === key);
-    const owner = p.next ? nameFor(p.next.owner, ctx.people, ctx.owner.name) : (had && had.ext.owner) || ctx.owner.name;   // a finished phase keeps its last owner
+    // the phase's owner: whoever owns the task being worked on in DISPO OPS (a finished phase keeps its last owner)
+    const owner = p.next ? nameFor(p.next.owner, ctx.people, ctx.owner.name) : (had && had.ext.owner) || (had && had.owner) || ctx.owner.name;
     const want = closed || p.complete ? 'done' : p.started ? 'progress' : 'todo';
     const noteText = p.next ? `Next: ${p.next.title}${p.next.group ? ' (' + p.next.group + ')' : ''} - ${owner}` : 'Phase complete.';
     const ext = { key, title: sTitle, owner, status: want, note: noteText };
-    let i = t.subs.findIndex(s => s.ext && s.ext.key === key);
-    if (i < 0) {
-      if (known.has(key)) continue;                                           // removed in the hub: leave it out
-      t.subs.push(mark({ id, title: sTitle, owner, status: want, done: want === 'done', createdAt: now, by: APP, at: now,
+    if (!had) {
+      mine.push(mark({ id, title: sTitle, owner, status: want, done: want === 'done', createdAt: now, by: APP, at: now,
         notes: [{ id: id + '-next', text: noteText, by: APP, at: now }], ext }, 'todo', want, now));
       log('subtask added', { sid: id, title: sTitle, to: owner });
       continue;
     }
-    const old = t.subs[i].ext || {}; let s = { ...t.subs[i] };
-    if (s.title === old.title && sTitle !== old.title) s.title = sTitle;     // untouched in the hub: follow DISPO OPS
-    if (s.owner === old.owner && owner !== old.owner) { s.owner = owner; log('owner', { sid: s.id, title: s.title, to: owner }); }
-    if (noteText !== old.note) s.notes = (s.notes || []).map(n => n.id === id + '-next' ? { ...n, text: noteText, at: now } : n);
-    if (want !== (old.status || 'todo')) { const was = subStatus(s); if (want !== was) { s = mark({ ...s, status: want, done: want === 'done', by: APP, at: now }, was, want, now); log(want === 'done' ? 'done' : want === 'progress' ? 'started' : 'not started', { sid: s.id, title: s.title }); } }
-    s.ext = ext; t.subs[i] = s;
+    let s = { ...had };
+    if (s.title !== sTitle) s.title = sTitle;
+    if (s.owner !== owner) { s.owner = owner; log('owner', { sid: s.id, title: key, to: owner }); }
+    const notes = s.notes || [];
+    s.notes = notes.some(n => n.id === id + '-next') ? notes.map(n => n.id === id + '-next' && n.text !== noteText ? { ...n, text: noteText, at: now } : n) : [...notes, { id: id + '-next', text: noteText, by: APP, at: now }];
+    const was = subStatus(s);
+    if (was !== want) { s = mark({ ...s, status: want, done: want === 'done', by: APP, at: now }, was, want, now); delete s.cancelledFrom; log(want === 'done' ? 'done' : want === 'progress' ? 'started' : 'not started', { sid: s.id, title: key }); }
+    s.ext = ext; mine.push(s);
   }
-  t.ext.keys = [...new Set([...(t.ext.keys || []), ...seen])];
+  t.subs = [...mine, ...others];                                                // phases in DISPO OPS order; a phase no longer in the deal is dropped
+  delete t.ext.keys;
   // the task's own note: overall % and the next step
   const overall = `Overall ${Math.max(0, Math.min(100, Math.round(deal.percent || 0)))}%` + (deal.next ? ` - Next: ${deal.next.title} (${nameFor(deal.next.owner, ctx.people, ctx.owner.name)})` : ' - every step done');
   const ni = t.notes.findIndex(n => n.id === 'do-overall');
   if (ni < 0) t.notes.push({ id: 'do-overall', text: overall, by: APP, at: now }); else if (t.notes[ni].text !== overall) t.notes[ni] = { ...t.notes[ni], text: overall, at: now };
-  // status: Cancelled (the hub's own status), Closed (every phase Done above), Open again after either
+  // status: Closed = Done (every phase Done above), Cancelled = the hub's Cancelled status, Open = neither
   const st = deal.status || 'open', prev = t.ext.status || 'open';
   if (st !== prev) {
-    if (st === 'cancelled') { t.status = 'cancelled'; t.notes.push({ id: 'do-cancelled-' + now, text: 'Cancelled in DISPO OPS on ' + when(now) + '.', by: APP, at: now }); log('cancelled'); }
-    else if (prev === 'cancelled') { delete t.status; log('reopened'); }
-    if (st === 'closed') t.notes.push({ id: 'do-closed-' + now, text: 'Closed in DISPO OPS on ' + when(now) + '.', by: APP, at: now });
+    if (st === 'cancelled') { t.notes.push({ id: 'do-cancelled-' + now, text: 'Cancelled in DISPO OPS on ' + when(now) + '.', by: APP, at: now }); log('cancelled'); }
+    else if (st === 'closed') { t.notes.push({ id: 'do-closed-' + now, text: 'Closed in DISPO OPS on ' + when(now) + '.', by: APP, at: now }); log('closed'); }
+    else log('reopened');
   }
+  if (cancelled) t.status = 'cancelled'; else delete t.status;
   t.ext.status = st;
-  if (t.title === t.ext.title && title !== t.ext.title) t.title = title;
-  t.ext.title = title; t.ext.url = deal.url || t.ext.url || ''; t.ext.deal = deal.id; t.ext.percent = deal.percent;
-  if (t.subs.length) t.done = t.subs.every(s => s.done);
+  t.title = title; t.ext.title = title; t.ext.url = deal.url || t.ext.url || ''; t.ext.deal = deal.id; t.ext.percent = deal.percent;
+  t.done = !cancelled && mine.length > 0 && mine.every(s => s.done);
   const isTask = statusOf(t), out = created ? mark(t, 'todo', isTask, now) : mark(t, wasTask, isTask, now);
   out.log = out.log.slice(-300);
   const changed = created || J(out) !== before;

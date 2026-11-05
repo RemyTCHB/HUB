@@ -1,6 +1,6 @@
 // POST /api/dispo-ops: DISPO OPS sends one deal's progress (signed with DISPO_OPS_SECRET, the same secret as its team list; the same scheme as the
 // Title Commitment Agent). The hub creates or updates "DISPO OPS - <address>" in the DISPO owner's list. One way: nothing
-// is sent back. DISPO OPS keeps this switched off until its owner decides what moves (HUB_SYNC_ENABLED there).
+// is sent back: the hub mirrors DISPO OPS (switched on there with HUB_SYNC_ENABLED).
 const { applyDispo, APP } = require('../_lib/dispoops');
 const { verify } = require('../_lib/titleagent');
 const { db, rawBody, team, send } = require('../_lib/hub');

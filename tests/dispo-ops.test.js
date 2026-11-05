@@ -22,25 +22,34 @@ test('names: first names to hub names (Sarah = sara@, Remy = systems@), company 
   assert.equal(nameFor('Nobody', people, 'Fallback'), 'Fallback'); assert.equal(nameFor('Unassigned', people, 'Fallback'), 'Fallback');
 });
 
-test('re-sync follows progress but keeps titles people changed in the hub', () => {
-  const t = run(null, null, P()).task;
-  t.subs[1].title = 'Marketing (renamed in the hub)';
-  const r = run(t, { created: true }, P({ percent: 60 }, [{ phase: 'Phase I: Intake', percent: 100, complete: true, started: true, next: null }, { phase: 'Phase II: Market', percent: 30, complete: false, started: true, next: { group: 'Posts', title: 'Post', owner: 'Sarah' } }]), 2000);
-  assert.deepEqual(r.task.subs.map(s => [s.title, s.status, s.owner]), [['Phase I: Intake · 100%\nComplete', 'done', 'Sara Test'], ['Marketing (renamed in the hub)', 'progress', 'Sara Test']]);
-  assert.equal(r.task.subs[0].doneAt, 2000);
+test('the hub is a mirror: progress, titles, owners and statuses always follow DISPO OPS', () => {
+  const t = run(null, null, P());
+  const h = t.task; h.subs[1].title = 'Marketing (renamed in the hub)'; h.subs[1].owner = 'Someone Else'; h.subs[0].status = 'done'; h.subs[0].done = true; h.title = 'Renamed';
+  h.subs.push({ id: 'mine', title: 'Added in the hub', owner: 'Carlos Test', status: 'todo', done: false });
+  const r = run(h, { created: true }, P({ percent: 60 }, [{ phase: 'Phase I: Intake', percent: 100, complete: true, started: true, next: null }, { phase: 'Phase II: Market', percent: 30, complete: false, started: true, next: { group: 'Posts', title: 'Post', owner: 'Sarah' } }]), 2000);
+  assert.equal(r.task.title, 'DISPO OPS - 1 Test St'); assert.equal(r.task.ext.percent, 60);
+  assert.deepEqual(r.task.subs.map(s => [s.title, s.status, s.owner]), [['Phase I: Intake · 100%\nComplete', 'done', 'Sara Test'], ['Phase II: Market · 30%\nWorking On: Posts › Next: Post', 'progress', 'Sara Test'], ['Added in the hub', 'todo', 'Carlos Test']]);
+  const back = run(r.task, { created: true }, P(), 3000).task;   // DISPO OPS says Phase I is at 50% again: the hub follows
+  assert.equal(back.subs[0].status, 'progress'); assert.equal(back.subs[0].done, false);
+});
+
+test('the phase owner is the owner of the task being worked on in DISPO OPS', () => {
+  const t = run(null, null, P()).task; assert.equal(t.subs[0].owner, 'Sara Test');
+  const r = run(t, { created: true }, P({}, [{ phase: 'Phase I: Intake', percent: 70, complete: false, started: true, next: { group: 'Calls', title: 'Call Back', owner: 'Remy' } }]), 2000).task;
+  assert.equal(r.subs[0].owner, 'Remy Test');
 });
 
 test('Closed = every phase Done; Cancelled = the hub\'s Cancelled status with a note; reopen clears it', () => {
   const t = run(null, null, P()).task;
   const c = run(t, { created: true }, P({ status: 'closed' }), 2000).task;
-  assert.equal(c.done, true); assert.ok(c.subs.every(s => s.done)); assert.ok(c.notes.some(n => /Closed in DISPO OPS/.test(n.text)));
+  assert.equal(c.done, true); assert.equal(c.status, undefined); assert.ok(c.subs.every(s => s.done)); assert.ok(c.notes.some(n => /Closed in DISPO OPS/.test(n.text)));
   const x = run(t, { created: true }, P({ status: 'cancelled' }), 3000).task;
-  assert.equal(x.status, 'cancelled'); assert.ok(x.notes.some(n => /Cancelled in DISPO OPS/.test(n.text)));
+  assert.equal(x.status, 'cancelled'); assert.equal(x.done, false); assert.ok(x.notes.some(n => /Cancelled in DISPO OPS/.test(n.text)));
   const o = run(x, { created: true }, P(), 4000).task; assert.equal(o.status, undefined);
 });
 
-test('a task deleted in the hub is not brought back; a removed deal gets a note and stops', () => {
-  assert.equal(run(null, { created: true }, P()).task, null);
+test('a task deleted in the hub is made again; a removed deal gets a note and stops', () => {
+  const again = run(null, { created: true }, P()); assert.equal(again.created, true); assert.equal(again.task.title, 'DISPO OPS - 1 Test St');
   const t = run(null, null, P()).task, r = run(t, { created: true }, { deal: { id: 'prop_1', removed: true } }, 5000);
   assert.equal(r.removed, true); assert.ok(r.task.notes.some(n => /Removed from DISPO OPS/.test(n.text)));
   assert.equal(run(r.task, { created: true, removed: true }, P()).task, null);
