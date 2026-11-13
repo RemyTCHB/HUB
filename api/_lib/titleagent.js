@@ -126,7 +126,7 @@ function verify(secret, body, ts, sig, nowSec = Math.floor(Date.now() / 1000)) {
 /** The people an app needs from the team directory: the Managers, then each asked-for department in turn (Team Leaders
  *  first), each in the directory's own order. Departments default to TC alone (the Title Commitment Agent); TC Checklist
  *  asks for TC and DISPO. Managers are the root managers plus meta/managers, as in the app. */
-const TEAM_DEPTS = ['TC', 'DISPO', 'ACQ', 'OPS'];
+const TEAM_DEPTS = ['TC', 'DISPO', 'ACQ', 'OPS', 'FUS'];
 const deptsFrom = list => { const d = (Array.isArray(list) ? list : []).map(x => String(x).toUpperCase()).filter(x => TEAM_DEPTS.includes(x));
   return d.length ? [...new Set(d)] : ['TC']; };
 function teamFor(people, managers, depts = ['TC']) {

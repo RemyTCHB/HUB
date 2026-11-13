@@ -109,6 +109,15 @@ test('team: an app can ask for more departments (TC Checklist: TC and DISPO); un
   assert.deepEqual(teamFor(people, ['systems@totalchb.com']).map(p => p.email), ['systems@totalchb.com', 'monz@totalchb.com'], 'the Title Commitment Agent still gets Managers + TC');
 });
 
+test('team: FUS is a department an app can ask for (DISPO OPS asks for every department)', () => {
+  const { teamFor, deptsFrom } = require('../api/_lib/titleagent');
+  const people = { 'systems@totalchb.com': { name: 'Ahmed Ramy', order: 1 },
+    'fl@totalchb.com': { name: 'Fay Lead', role: 'lead', dept: 'FUS', order: 3 }, 'fm@totalchb.com': { name: 'Finn Member', role: 'member', dept: 'FUS', order: 2 } };
+  assert.deepEqual(deptsFrom(['TC', 'DISPO', 'ACQ', 'OPS', 'fus']), ['TC', 'DISPO', 'ACQ', 'OPS', 'FUS']);
+  assert.deepEqual(teamFor(people, ['systems@totalchb.com'], deptsFrom(['FUS'])).map(p => [p.email, p.role, p.dept]),
+    [['systems@totalchb.com', 'manager', ''], ['fl@totalchb.com', 'lead', 'FUS'], ['fm@totalchb.com', 'member', 'FUS']]);
+});
+
 test('a blocker cancelled in the hub does not count: the deal is done when the rest are cleared', () => {
   let t = run(null, null, deal([B('1'), B('2')])).task;
   t.subs[1] = { ...t.subs[1], status: 'cancelled', done: false };       // cancelled in the hub

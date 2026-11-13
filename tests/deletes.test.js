@@ -80,5 +80,8 @@ test('Help passwords: managers all, Team Leaders their departments (Team view on
   assert.deepEqual(l.rows, [{ dept: 'TC', lead: 'l-tc', sub: 's-tc' }, { dept: 'DISPO', lead: 'l-di', sub: 's-di' }]);
   assert.deepEqual(l.own, []);
   assert.deepEqual(passwordsFor({ me: 'luke@totalchb.com', people, managers, conf }).rows, [], 'Team view off: none');
+  const fus = { ...conf, leads: { ...conf.leads, FUS: 'l-fus' } }, fl = { ...people, 'fl@totalchb.com': { name: 'Fay', role: 'lead', dept: 'FUS', sees: ['FUS'], deptView: true } };
+  assert.deepEqual(passwordsFor({ me: 'fl@totalchb.com', people: fl, managers, conf: fus }).rows, [{ dept: 'FUS', lead: 'l-fus', sub: '' }], 'a FUS Team Leader gets FUS');
+  assert.deepEqual(passwordsFor({ me: 'systems@totalchb.com', people: fl, managers, conf: fus }).rows.map(r => r.dept), ['TC', 'DISPO', 'ACQ', 'FUS']);
   assert.deepEqual(passwordsFor({ me: 'will@totalchb.com', people, managers, conf }), { rows: [], own: [] }, 'members: none');
 });

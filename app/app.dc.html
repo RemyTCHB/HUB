@@ -1955,7 +1955,7 @@ const SAME_PERSON = { 'brandy@kpidriver.com': 'brandy@totalchb.com', 'systems@kp
 const OWN_DELETE_PW = ['brandy@totalchb.com'];   // people with their own delete password (kept on the server, HUB_DELETE_PASSWORDS)
 const MANAGER_CAN_SEE = {};   // managers who may see another manager's personal tasks, e.g. { 'systems@totalchb.com': ['brandy@totalchb.com'] }
 const personKey = email => SAME_PERSON[email] || email;
-const DEPTS = ['TC', 'DISPO', 'ACQ', 'OPS'];
+const DEPTS = ['TC', 'DISPO', 'ACQ', 'OPS', 'FUS'];
 const ROLE_LABEL = { manager: 'Manager', lead: 'Team Leader', member: 'Member' };
 // The team directory (meta/directory), written once if none is saved yet; managers change it later in People.
 // [name, sign-in email, role, main department, departments a team leader sees]

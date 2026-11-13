@@ -23,7 +23,7 @@
 
 Plan the work, assign it, and watch it move — by department, in real time.
 
-- **Departments** — TC, DISPO, ACQ and OPS. Everyone's personal list belongs to their main department.
+- **Departments** — TC, DISPO, ACQ, OPS and FUS. Everyone's personal list belongs to their main department.
 - **Roles** — Managers see everything; Team Leaders see and assign within their departments; Members see their own list (plus their department when a manager turns that on).
 - **Shared Work** — own a subtask on anyone's task and that task shows in your list, with the parts you don't own blurred.
 - **Tasks & Subtasks** — check off subtasks and the main task closes itself, or complete the whole task in one click.
@@ -161,7 +161,7 @@ DISPO OPS (dispo-ops.totalchb.com) sends each deal's progress one way, and the h
 | Piece | Where |
 | --- | --- |
 | `POST /api/dispo-ops` | DISPO OPS's Cloud Functions send a deal after each change that moves its progress, plus a daily catch-up; the hub creates or updates the task (link record `hubsync/dispo-ops-<deal>`, server only). |
-| `POST /api/title-agent/team` | DISPO OPS asks for every department (`{"depts": ["TC", "DISPO", "ACQ", "OPS"]}`) when a Manager clicks Refresh From Hub. |
+| `POST /api/title-agent/team` | DISPO OPS asks for its departments (`{"depts": ["TC", "DISPO", "ACQ", "OPS"]}`) when a Manager clicks Refresh From Hub. The hub also answers `FUS` (added 2026-11-13); people in FUS come over once DISPO OPS adds it to its list (`functions/lib.js` `DEPTS`). |
 | `api/_lib/dispoops.js` | The rules (tested: `node --test tests/dispo-ops.test.js`). |
 
 Vercel settings: `DISPO_OPS_SECRET` (the same value as DISPO OPS's `HUB_SYNC_SECRET` in its Firebase secrets; it opens only these two endpoints) and optionally `HUB_DISPO_OWNER` (default carlos@totalchb.com).

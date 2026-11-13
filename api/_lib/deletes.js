@@ -54,7 +54,7 @@ function passwordCheck(rule, me, given, conf) {
 /** The passwords the in-app Help shows a person (owner, 2026-11-03): managers every department's plus anyone's own
  *  (Brandy's); a Team Leader the departments they lead (Team view on); members none.
  *  Returns { rows: [{ dept, lead, sub }], own: [{ name, pw }] }. */
-const DEPTS = ['TC', 'DISPO', 'ACQ', 'OPS'];
+const DEPTS = ['TC', 'DISPO', 'ACQ', 'OPS', 'FUS'];
 function passwordsFor({ me, people, managers, conf }) {
   const mine = people[me] || {}, isM = managers.includes(me);
   const depts = isM ? [...new Set([...DEPTS, ...Object.keys(conf.leads || {}), ...Object.keys(conf.subtasks || {})])]
