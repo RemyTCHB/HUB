@@ -59,7 +59,7 @@ test('blockers dropped by the agent stay, with a note; removed in the hub stay r
   let t = run(null, null, deal([B('1'), B('2')])).task;
   let r = run(t, { created: true }, deal([B('1')]), 2000);
   assert.equal(r.task.subs.length, 2); assert.equal(r.task.subs[1].ext.gone, true);
-  assert.match(r.task.subs[1].notes.at(-1).text, /^Cleared from the list by Title Commitment Agent on /);
+  assert.match(r.task.subs[1].notes.at(-1).text, /^Cleared from the list by Title Commitment & Lien Agent on /);
   t = r.task; t.subs = t.subs.slice(1);                                   // Monz deletes blocker 1 in the hub
   r = run(t, { created: true }, deal([B('1'), B('2')]), 3000);
   assert.deepEqual(r.task.subs.map(s => s.ext.key), ['2']);

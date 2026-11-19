@@ -7,7 +7,8 @@
 // changes what a person hasn't changed since, and a status that changed on one side is copied to the other.
 const crypto = require('crypto');
 
-const AGENT = 'Title Commitment Agent';
+const AGENT = 'Title Commitment Agent';            // how its tasks are stored (source, by): kept so existing tasks stay linked
+const AGENT_NAME = 'Title Commitment & Lien Agent';  // the app's name in note texts (renamed 2026-11)
 const DONE = new Set(['Cleared', 'Waived']);
 const toHub = s => DONE.has(s) ? 'done' : s === 'Ordered' || s === 'Received' ? 'progress' : 'todo';
 const hash = s => crypto.createHash('sha1').update(String(s)).digest('hex').slice(0, 12);
@@ -70,7 +71,7 @@ function applyDeal(task, link, payload, ctx) {
       continue;
     }
     const old = sub.ext || {}, i = t.subs.indexOf(sub); let s = { ...sub };
-    if (old.gone) { s.notes = [...(s.notes || []), { id: id + '-back-' + now, text: 'Back on the list from ' + AGENT + ' on ' + when(now), by: AGENT, at: now }]; }
+    if (old.gone) { s.notes = [...(s.notes || []), { id: id + '-back-' + now, text: 'Back on the list from ' + AGENT_NAME + ' on ' + when(now), by: AGENT, at: now }]; }
     if (s.title === old.title && b.title !== old.title) s.title = b.title;  // untouched here: follow the agent
     if (ext.note !== old.note) s.notes = (s.notes || []).map(n => n.id === id + '-src' && n.text === old.note ? { ...n, text: ext.note, at: now } : n);
     if ((s.due || null) === (old.due || null) && due !== (old.due || null)) { s = { ...s, due, dueSet: due ? now : null }; log('due', { sid: s.id, title: s.title, due }); }
@@ -88,7 +89,7 @@ function applyDeal(task, link, payload, ctx) {
   t.subs = t.subs.map(s => {
     if (!s.ext || !s.ext.key || seen.has(s.ext.key) || s.ext.gone) return s;
     if (!payload.complete) return s;                                     // only a full list can say something is gone
-    return { ...s, ext: { ...s.ext, gone: true }, notes: [...(s.notes || []), { id: s.id + '-gone-' + now, text: 'Cleared from the list by ' + AGENT + ' on ' + when(now), by: AGENT, at: now }] };
+    return { ...s, ext: { ...s.ext, gone: true }, notes: [...(s.notes || []), { id: s.id + '-gone-' + now, text: 'Cleared from the list by ' + AGENT_NAME + ' on ' + when(now), by: AGENT, at: now }] };
   });
   t.ext.keys = [...new Set([...(t.ext.keys || []), ...seen])];
   if (t.title === t.ext.title && title !== t.ext.title) t.title = title;

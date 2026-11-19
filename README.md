@@ -52,7 +52,7 @@ Team members sign in with their company Google account. Access is limited to app
 ```
 index.html            The complete app (self-unpacking bundle)
 app/app.dc.html       Readable source of the app (node tools/bundle.mjs unpack / pack)
-api/                  Vercel functions that connect other apps (the Title Commitment Agent)
+api/                  Vercel functions that connect other apps (the Title Commitment & Lien Agent)
 firebase/             Firestore and Storage security rules
 README.md             This file
 tchb-logo.png         Brand logo (README only)
@@ -126,9 +126,9 @@ The hub is built so other tools can create and update tasks. Each task records:
 
 Tasks live in a person's list (`personal/<login>/items`) and belong to that person's main department; MGMT tasks live in `tasks`. People, roles and departments are in `meta/directory`.
 
-### Title Commitment Agent
+### Title Commitment & Lien Agent
 
-Only **Closing Blockers** come over: one task per deal, **Title - &lt;address&gt;**, in Monz's list (TC), tagged *Added by Title Commitment Agent* with a link back to the deal. Each blocker is a subtask (the item; a note with the action needed and the source; its due date at 9:00 AM Eastern). Ticking or unticking a blocker in either app updates the other.
+Only **Closing Blockers** come over: one task per deal, **Title - &lt;address&gt;**, in Monz's list (TC), tagged *Added by Title Commitment & Lien Agent* (stored as `source: "Title Commitment Agent"`, its name before 2026-11, so existing tasks stay linked) with a link back to the deal. Each blocker is a subtask (the item; a note with the action needed and the source; its due date at 9:00 AM Eastern). Ticking or unticking a blocker in either app updates the other.
 
 | Piece | Where |
 | --- | --- |
