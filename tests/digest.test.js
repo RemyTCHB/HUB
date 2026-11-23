@@ -83,7 +83,7 @@ test('one email per company: each company\'s tasks, logo and name', () => {
   assert.deepEqual(tchb.open.map(o => o.title), ['TCHB deal']); assert.equal(tchb.counts.done, 0);
   assert.deepEqual(kpi.open.map(o => o.title), ['KPI client']); assert.equal(kpi.counts.done, 1);
   const e = digestEmail(kpi, { first: 'Sam', now: NOW, company: 'kpi' });
-  assert.equal(e.subject, 'Your KPI Driver Digest: 1 Done Yesterday, 1 Open, 0 Overdue (Sun 11/22)');
-  assert.ok(e.html.includes('kpi-driver-email.png') && e.html.includes('KPI Driver Daily Digest') && !e.html.includes('tchb-logo.png'));
+  assert.equal(e.subject, 'Your KPI DRIVER Digest: 1 Done Yesterday, 1 Open, 0 Overdue (Sun 11/22)');
+  assert.ok(e.html.includes('kpi-driver-email.png') && e.html.includes('KPI DRIVER Daily Digest') && !e.html.includes('tchb-logo.png'));
   assert.equal(isEmpty(personDigest({ key: 'lee@totalchb.com', tasks, keyOfName, nameOf, now: NOW, company: 'kpi' })), true);
 });

@@ -114,7 +114,7 @@ don't show as online, and each use is kept in `audit/` (server only). The servic
 
 ## Daily Digest Email
 
-Every day at 8:00 AM Eastern, each person gets their own email, **one per company** (TCHB and KPI Driver, each with its
+Every day at 8:00 AM Eastern, each person gets their own email, **one per company** (TCHB and KPI DRIVER, each with its
 logo and only that company's tasks; owner 2026-11-23): **Still Open** first (their open
 tasks and subtasks, overdue first, then by due date), then **Done** the day before (each subtask ticked off, with the
 time), with the counts Still Open, Overdue, Due Today and Done Yesterday and the share of the day's open work they

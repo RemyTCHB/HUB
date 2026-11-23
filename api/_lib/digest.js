@@ -116,7 +116,7 @@ function dueChip(ms, now, w) {
 // One email per company (owner 2026-11-23), each with its own logo and name.
 const BRAND = {
   tchb: { name: 'Total Cash Home Buyers', short: 'TCHB', logo: 'tchb-logo.png', w: 150, h: 46 },
-  kpi: { name: 'KPI Driver', short: 'KPI Driver', logo: 'kpi-driver-email.png', w: 200, h: 27 },
+  kpi: { name: 'KPI DRIVER', short: 'KPI DRIVER', logo: 'kpi-driver-email.png', w: 200, h: 27 },   // as the hub's company switch writes it
 };
 
 /** (subject, html) for one person's digest of one company. first: their first name. */
