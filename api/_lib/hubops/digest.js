@@ -20,14 +20,16 @@ async function allTasks() {
   return [...mgmt.docs.map(d => ({ ...d.data(), list: null })), ...personal];
 }
 
-/** Everyone's digest: [{ key, email, subject, html, empty }]. */
+/** Everyone's digests, one per person and company (owner 2026-11-23): [{ key, company, email, subject, html, empty }]. */
+const COMPANIES = ['tchb', 'kpi'];
 async function build(now, only) {
   const [who, tasks] = await Promise.all([team(), allTasks()]);
   const keys = only ? [only] : [...new Set([...Object.keys(who.people), ...who.managers])];
-  return keys.map(key => {
-    const d = personDigest({ key, tasks, keyOfName: who.keyOfName, nameOf: who.nameOf, now });
-    return { key, email: key, empty: isEmpty(d), counts: d.counts, ...digestEmail(d, { first: firstName(who.nameOf(key) === key ? key.split('@')[0] : who.nameOf(key)), now }) };
-  });
+  return keys.flatMap(key => COMPANIES.map(company => {
+    const d = personDigest({ key, tasks, keyOfName: who.keyOfName, nameOf: who.nameOf, now, company });
+    const first = firstName(who.nameOf(key) === key ? key.split('@')[0] : who.nameOf(key));
+    return { key, company, email: key, empty: isEmpty(d), counts: d.counts, ...digestEmail(d, { first, now, company }) };
+  }));
 }
 
 async function resend(emails) {
@@ -52,9 +54,9 @@ async function cron(req, res) {
     const off = ((await db().doc('meta/digest').get()).data() || {}).off || {};
     const all = await build(now), out = all.filter(e => !e.empty && !off[e.key]);
     await resend(out);
-    const counts = { sent: out.length, empty: all.filter(e => e.empty).length, off: all.filter(e => off[e.key]).length };
+    const counts = { sent: out.length, people: new Set(out.map(e => e.key)).size, empty: all.filter(e => e.empty).length, off: new Set(all.filter(e => off[e.key]).map(e => e.key)).size };
     await run.set({ ...counts, at: Date.now() }, { merge: true });
-    console.log(`digest ${w.today}: ${counts.sent} sent, ${counts.empty} with nothing to say, ${counts.off} turned off`);
+    console.log(`digest ${w.today}: ${counts.sent} emails to ${counts.people} people, ${counts.empty} with nothing to say, ${counts.off} people turned off`);
     send(res, 200, counts);
   } catch (e) {
     await run.delete().catch(() => {});   // the next call today tries again
@@ -87,10 +89,12 @@ module.exports = async (req, res) => {
       const last = (((await ref.get()).data() || {}).testAt || {})[key] || 0;
       if (Date.now() - last < 60e3) return send(res, 429, { error: 'One test a minute: try again shortly.' });
       await ref.set({ testAt: { [key]: Date.now() } }, { merge: true });
-      const [mine] = await build(Date.now(), key);
-      await resend([{ ...mine, subject: '[Test] ' + mine.subject }]);
-      console.log(`digest test: ${mine.counts.open} open, ${mine.counts.done} done`);
-      return send(res, 200, { sent: true, to: email, open: mine.counts.open, done: mine.counts.done });
+      // Each company's digest that has something in it (TCHB's even when empty, so a test always arrives).
+      const mine = (await build(Date.now(), key)).filter(e => !e.empty || e.company === 'tchb');
+      const tests = mine.filter(e => !e.empty).length ? mine.filter(e => !e.empty) : mine;
+      await resend(tests.map(e => ({ ...e, subject: '[Test] ' + e.subject })));
+      console.log(`digest test: ${tests.length} emails`);
+      return send(res, 200, { sent: tests.length, to: email });
     }
     send(res, 400, { error: 'Unknown action.' });
   } catch (e) {

@@ -66,10 +66,24 @@ test('the email: subject, Still Open before Done, escaped text, nothing to say m
   const tasks = [{ id: 'a', title: 'Deal <b>1</b>', list: 'sam@totalchb.com', owner: 'Sam Test', company: 'kpi',
     subs: [doneSub('called', Y + 10 * H), sub('late', { due: NOW - H })] }];
   const d = digest(tasks), { subject, html } = digestEmail(d, { first: 'Sam', now: NOW });
-  assert.equal(subject, 'Your Hub Digest: 1 Done Yesterday, 1 Open, 1 Overdue (Sun 11/22)');
+  assert.equal(subject, 'Your TCHB Digest: 1 Done Yesterday, 1 Open, 1 Overdue (Sun 11/22)');
   assert.ok(html.indexOf('Still Open') < html.indexOf('Done Sunday'), 'Still Open comes first');
   assert.ok(html.includes('Deal &lt;b&gt;1&lt;/b&gt;') && !html.includes('<b>1</b>'));
-  assert.ok(html.includes('Good Morning, <span') && html.includes('KPI DRIVER') && html.includes('50%'));
+  assert.ok(html.includes('Good Morning, <span') && html.includes('tchb-logo.png') && html.includes('50%'));
   assert.equal(isEmpty(d), false);
   assert.equal(isEmpty(digest([])), true);
+});
+
+test('one email per company: each company\'s tasks, logo and name', () => {
+  const tasks = [{ id: 'a', title: 'TCHB deal', list: 'sam@totalchb.com', owner: 'Sam Test', subs: [sub('t1')] },
+    { id: 'b', title: 'KPI client', list: 'sam@totalchb.com', owner: 'Sam Test', company: 'kpi', subs: [sub('k1'), doneSub('k0', Y + 9 * H)] }];
+  const t = digest(tasks, 'sam@totalchb.com', NOW), tchb = personDigest({ key: 'sam@totalchb.com', tasks, keyOfName, nameOf, now: NOW, company: 'tchb' });
+  const kpi = personDigest({ key: 'sam@totalchb.com', tasks, keyOfName, nameOf, now: NOW, company: 'kpi' });
+  assert.equal(t.open.length, 2);
+  assert.deepEqual(tchb.open.map(o => o.title), ['TCHB deal']); assert.equal(tchb.counts.done, 0);
+  assert.deepEqual(kpi.open.map(o => o.title), ['KPI client']); assert.equal(kpi.counts.done, 1);
+  const e = digestEmail(kpi, { first: 'Sam', now: NOW, company: 'kpi' });
+  assert.equal(e.subject, 'Your KPI Driver Digest: 1 Done Yesterday, 1 Open, 0 Overdue (Sun 11/22)');
+  assert.ok(e.html.includes('kpi-driver-email.png') && e.html.includes('KPI Driver Daily Digest') && !e.html.includes('tchb-logo.png'));
+  assert.equal(isEmpty(personDigest({ key: 'lee@totalchb.com', tasks, keyOfName, nameOf, now: NOW, company: 'kpi' })), true);
 });

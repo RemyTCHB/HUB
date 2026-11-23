@@ -49,34 +49,36 @@ function tagOf(t, key, nameOf) {
  * One person's digest. tasks: every task as stored, with list = the personal list's owner key (null for MGMT).
  * keyOfName / nameOf: the team directory. Returns { open: [cards], done: [groups], finished: [titles], counts }.
  * A task counts as theirs when it is in their list or they own it; a subtask when it has their name, or no name in a
- * task of theirs. Cancelled tasks and subtasks don't count.
+ * task of theirs. Cancelled tasks and subtasks don't count. company ('tchb' | 'kpi'): only that company's tasks
+ * (owner 2026-11-23: one email per company).
  */
-function personDigest({ key, tasks, keyOfName, nameOf, now }) {
+function personDigest({ key, tasks, keyOfName, nameOf, now, company }) {
   const w = window(now), inY = ms => !!ms && ms >= w.yStart && ms < w.todayStart;
   const open = [], done = [], finished = [];
   const c = { done: 0, open: 0, overdue: 0, dueToday: 0, startOpen: 0 };
   const due = ms => { if (!ms) return; if (ms <= now) c.overdue++; else if (ms < w.todayEnd) c.dueToday++; };
   for (const t of tasks) {
+    if (company && (t.company === 'kpi' ? 'kpi' : 'tchb') !== company) continue;
     const st = statusOf(t);
     if (st === 'cancelled') continue;
     const mineTask = t.list === key || (!!t.owner && keyOfName(t.owner) === key);
-    const subs = live(t.subs), tag = tagOf(t, key, nameOf), company = t.company === 'kpi' ? 'kpi' : 'tchb';
+    const subs = live(t.subs), tag = tagOf(t, key, nameOf), co = t.company === 'kpi' ? 'kpi' : 'tchb';
     if (!subs.length) {
       if (!mineTask) continue;
-      if (st === 'done') { if (inY(t.doneAt)) { c.done++; c.startOpen++; done.push({ title: t.title, tag, company, items: [], whole: true, at: t.doneAt }); } continue; }
+      if (st === 'done') { if (inY(t.doneAt)) { c.done++; c.startOpen++; done.push({ title: t.title, tag, company: co, items: [], whole: true, at: t.doneAt }); } continue; }
       c.open++; due(t.due); if (!(t.createdAt >= w.todayStart)) c.startOpen++;
-      open.push({ title: t.title, tag, company, status: st, done: 0, total: 0, due: t.due || 0, items: [] });
+      open.push({ title: t.title, tag, company: co, status: st, done: 0, total: 0, due: t.due || 0, items: [] });
       continue;
     }
     const my = subs.filter(s => (s.owner ? keyOfName(s.owner) === key : mineTask));
     if (!my.length) continue;
     const dy = my.filter(s => s.done && inY(s.doneAt)).sort((a, b) => a.doneAt - b.doneAt), op = my.filter(s => !s.done);
-    if (dy.length) { c.done += dy.length; done.push({ title: t.title, tag, company, items: dy.map(s => ({ title: s.title, at: s.doneAt })), at: dy[0].doneAt }); }
+    if (dy.length) { c.done += dy.length; done.push({ title: t.title, tag, company: co, items: dy.map(s => ({ title: s.title, at: s.doneAt })), at: dy[0].doneAt }); }
     if (mineTask && st === 'done' && inY(Math.max(...subs.map(s => s.doneAt || 0)))) finished.push(t.title);
     c.startOpen += dy.length + op.filter(s => !(s.createdAt >= w.todayStart)).length;
     if (op.length) {
       c.open += op.length; op.forEach(s => due(s.due));
-      open.push({ title: t.title, tag, company, status: st, done: subs.filter(s => s.done).length, total: subs.length, due: t.due || 0,
+      open.push({ title: t.title, tag, company: co, status: st, done: subs.filter(s => s.done).length, total: subs.length, due: t.due || 0,
         items: op.map((s, i) => ({ title: s.title, due: s.due || 0, i })).sort((a, b) => (a.due || Infinity) - (b.due || Infinity) || a.i - b.i) });
     }
   }
@@ -111,13 +113,19 @@ function dueChip(ms, now, w) {
   return ms < w.todayEnd + 2 * 86400e3 ? chip('Due ' + dayShort(ms), ORANGE, ORANGE_BG) : chip('Due ' + dayShort(ms), INDIGO, INDIGO_BG);
 }
 
-/** (subject, html) for one person's digest. first: their first name. */
-function digestEmail(d, { first, now, site = SITE }) {
-  const { open, done, finished, counts: c, window: w } = d;
+// One email per company (owner 2026-11-23), each with its own logo and name.
+const BRAND = {
+  tchb: { name: 'Total Cash Home Buyers', short: 'TCHB', logo: 'tchb-logo.png', w: 150, h: 46 },
+  kpi: { name: 'KPI Driver', short: 'KPI Driver', logo: 'kpi-driver-email.png', w: 200, h: 27 },
+};
+
+/** (subject, html) for one person's digest of one company. first: their first name. */
+function digestEmail(d, { first, now, site = SITE, company = 'tchb' }) {
+  const { open, done, finished, counts: c, window: w } = d, b = BRAND[company] || BRAND.tchb;
   const pct = c.startOpen ? Math.round(100 * c.done / c.startOpen) : 0;
-  const subject = `Your Hub Digest: ${c.done} Done Yesterday, ${c.open} Open, ${c.overdue} Overdue (${w.yShort})`;
+  const subject = `Your ${b.short} Digest: ${c.done} Done Yesterday, ${c.open} Open, ${c.overdue} Overdue (${w.yShort})`;
   const preheader = `${first}, yesterday you finished ${plural(c.done, 'item')}. ${c.open} still open, ${c.overdue} overdue, ${c.dueToday} due today.`;
-  const kpi = o => (o.company === 'kpi' ? ' ' + chip('KPI DRIVER', INDIGO, INDIGO_BG, 10) : '');
+  const kpi = () => '';   // each email is one company's
   const openCards = open.map(o => {
     const late = o.items.some(i => i.due && i.due <= now) || (!o.items.length && o.due && o.due <= now);
     const [tf, tb] = TAG[o.tag[0]] || TAG.person;
@@ -144,17 +152,17 @@ function digestEmail(d, { first, now, site = SITE }) {
   const body = section('Still Open', INDIGO, open.length ? 'Overdue first, then by due date' : '') + (openCards || note('Nothing open for you. Nice work.'))
     + section(`Done ${w.yDay}`, GREEN, `${plural(c.done, 'item')}${finished.length ? ' · ' + plural(finished.length, 'task') + ' finished' : ''}`)
     + (doneRows ? card(table(doneRows), '#CBEBD7', GREEN_BG) : note(`Nothing was ticked off ${w.yDay}.`));
-  const header = table(`<tr><td><img src="${esc(site)}/tchb-logo.png" width="150" height="46" alt="Total Cash Home Buyers" style="display:block;border:0"></td>`
-    + `<td align="right" style="${HEAD};font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:${INDIGO}">Daily Digest</td></tr>`);
+  const header = table(`<tr><td><img src="${esc(site)}/${b.logo}" width="${b.w}" height="${b.h}" alt="${esc(b.name)}" style="display:block;border:0"></td>`
+    + `<td align="right" style="${HEAD};font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:${INDIGO}">${esc(b.short)} Daily Digest</td></tr>`);
   const hero = `<div style="${HEAD};font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:${RED}">${esc(w.todayLong)} · Your recap of ${esc(w.yDay)}</div>`
     + `<div style="${HEAD};font-size:30px;line-height:1.2;color:${INDIGO};padding-top:4px">Good Morning, <span style="color:${RED}">${esc(first)}</span></div>`
-    + `<div style="${TEXT};font-size:15px;color:${BODY};padding-top:6px">What is still open for you today in the Universal Team Hub, and what you finished yesterday.</div>`;
+    + `<div style="${TEXT};font-size:15px;color:${BODY};padding-top:6px">Your ${esc(b.name)} tasks in the Universal Team Hub: what is still open today, and what you finished yesterday.</div>`;
   const stats = stat(c.open, 'Still Open', INDIGO) + stat(c.overdue, 'Overdue', c.overdue ? RED : GREEN) + stat(c.dueToday, 'Due Today', ORANGE) + stat(c.done, 'Done Yesterday', GREEN);
   const day = c.startOpen ? `<div style="${HEAD};font-size:15px;color:${INK};padding-bottom:6px">You cleared <span style="color:${GREEN}">${pct}%</span> of what was open yesterday</div>${bar(pct, '#5A4FA0')}`
     + `<div style="${TEXT};font-size:12px;color:${MUTED};padding-top:6px">${c.done} of the ${plural(c.startOpen, 'item')} you had open at the start of ${esc(w.yDay)}.</div>` : '';
   const button = `<a href="${esc(site)}/" style="${HEAD};display:inline-block;font-size:15px;color:#ffffff;background:${INDIGO};border-radius:999px;padding:10px 22px;text-decoration:none">Open The Universal Team Hub</a>`;
-  const footer = 'Sent every day at 8:00 AM Eastern to each person, about their own tasks: their list, plus anything they own in MGMT or someone else\'s list. '
-    + 'Turn it off: your photo &rarr; My Settings.<br>Total Cash Home Buyers · Universal Team Hub · Internal use only';
+  const footer = 'Sent every day at 8:00 AM Eastern to each person, one email per company, about their own tasks: their list, plus anything they own in '
+    + `MGMT or someone else's list. Turn it off: your photo &rarr; My Settings.<br>${esc(b.name)} · Universal Team Hub · Internal use only`;
   const rows = `<tr><td style="background:#ffffff;border-radius:20px 20px 0 0;padding:18px 24px;border-bottom:1px solid ${LINE}">${header}</td></tr>`
     + `<tr><td style="background:#ffffff;padding:24px 24px 8px">${hero}</td></tr>`
     + `<tr><td style="background:#ffffff;padding:12px 18px 8px"><table role="presentation" width="100%" cellpadding="0" cellspacing="6" style="border-collapse:separate"><tr>${stats}</tr></table></td></tr>`

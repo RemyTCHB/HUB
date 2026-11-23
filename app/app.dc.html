@@ -1643,7 +1643,7 @@ h1, h2, h3, h4 {
           <div style="display: flex; align-items: center; gap: 12px;">
             <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
               <b style="font-family: var(--font-display); font-size: 16px; color: var(--tchb-indigo-700);">Daily Digest Email</b>
-              <span style="font-size: 13px; line-height: 1.45; color: var(--text-muted);">Every day at 8:00 AM Eastern: what's still open for you, and what you finished the day before.</span>
+              <span style="font-size: 13px; line-height: 1.45; color: var(--text-muted);">Every day at 8:00 AM Eastern, one email per company: what's still open for you, and what you finished the day before.</span>
             </span>
             <button sc-camel-on-click="{{ toggleDigest }}" role="switch" aria-checked="{{ digOn }}" aria-label="Daily Digest Email" title="{{ digTitle }}" style="flex: none; border: none; background: transparent; cursor: pointer; padding: 6px 0; {{ digBusy }}">
               <span style="display: block; width: 44px; height: 24px; border-radius: 999px; position: relative; transition: background 140ms; background: {{ digTrack }};"><span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 999px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.25); transition: transform 140ms; transform: {{ digKnob }};"></span></span>
@@ -2635,7 +2635,7 @@ class Component extends DCLogic {
       .then(r => r.json().catch(() => ({})).then(b => { if (!r.ok) throw new Error(b.error || 'Could not reach the hub. Try again.'); return b; }))
       .then(b => this.setState(st => ({ dig: { ...(st.dig || {}), busy: '', err: false, live: b.live !== undefined ? b.live : (st.dig || {}).live,
         on: b.on !== undefined ? b.on : (st.dig || {}).on,
-        msg: action === 'test' ? 'Sent to ' + b.to + '. It can take a minute to arrive.' : action === 'set' ? (b.on ? 'On: you get it every morning.' : 'Off: you won\'t get it.') : '' } })))
+        msg: action === 'test' ? (b.sent > 1 ? b.sent + ' emails, one per company, sent to ' : 'Sent to ') + b.to + '. It can take a minute to arrive.' : action === 'set' ? (b.on ? 'On: you get it every morning.' : 'Off: you won\'t get it.') : '' } })))
       .catch(e => this.setState(st => ({ dig: { ...(st.dig || {}), busy: '', err: true, msg: e.message || 'Could not reach the hub. Try again.' } })));
   }
   pwTable(role) {

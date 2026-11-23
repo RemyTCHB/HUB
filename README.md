@@ -58,6 +58,7 @@ api/                  Vercel functions: the connected apps, and the hub's own en
 firebase/             Firestore and Storage security rules
 README.md             This file
 tchb-logo.png         Brand logo (README and the daily digest email)
+kpi-driver-email.png  KPI Driver logo sized for the daily digest email
 kpi-driver-logo.png   Brand logo (README only)
 ```
 
@@ -113,7 +114,8 @@ don't show as online, and each use is kept in `audit/` (server only). The servic
 
 ## Daily Digest Email
 
-Every day at 8:00 AM Eastern, each person gets their own email (owner 2026-11-23): **Still Open** first (their open
+Every day at 8:00 AM Eastern, each person gets their own email, **one per company** (TCHB and KPI Driver, each with its
+logo and only that company's tasks; owner 2026-11-23): **Still Open** first (their open
 tasks and subtasks, overdue first, then by due date), then **Done** the day before (each subtask ticked off, with the
 time), with the counts Still Open, Overdue, Due Today and Done Yesterday and the share of the day's open work they
 cleared. Their tasks are their own list plus anything they own in MGMT or in someone else's list. Nobody gets one on a
