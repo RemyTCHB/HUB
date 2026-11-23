@@ -1,8 +1,8 @@
 // POST /api/hub/upload: Upload Tasks. The page reads the CSV with an upload template (e.g. SOW for TC), saves the
 // file to the task's folder, and sends the rows here (with the person's Firebase sign-in). The task goes in the
 // department Team Leader's list (owner: the Team Leader; subtasks: the person who uploaded), tagged CSV Upload <name>.
-const { UPLOADS, LIMITS, clip, buildTask, leadOf } = require('../_lib/templates');
-const { app, db, rawBody, team, personKey, send } = require('../_lib/hub');
+const { UPLOADS, LIMITS, clip, buildTask, leadOf } = require('../templates');
+const { app, db, rawBody, team, personKey, send } = require('../hub');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return send(res, 405, { error: 'POST only' });

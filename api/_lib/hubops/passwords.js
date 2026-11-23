@@ -1,8 +1,8 @@
 // POST /api/hub/passwords: the delete passwords the in-app Help shows the signed-in person (api/_lib/deletes.js
 // passwordsFor): managers all, Team Leaders their departments, members none. They come from the HUB_DELETE_PASSWORDS
 // setting, so they are never written into the page. Logs counts only.
-const { passwordsFor, readPasswords } = require('../_lib/deletes');
-const { app, team, personKey, send } = require('../_lib/hub');
+const { passwordsFor, readPasswords } = require('../deletes');
+const { app, team, personKey, send } = require('../hub');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return send(res, 405, { error: 'POST only' });

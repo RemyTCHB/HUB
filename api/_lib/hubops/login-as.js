@@ -3,7 +3,7 @@
 // Only Remy, never from a borrowed sign-in. The hub signs them in with a one-time Firebase sign-in for that person
 // (a custom token marked imp: Remy's email), so they see and change exactly what that person can. Each use is kept in
 // audit/ (server only). Logs counts only.
-const { app, db, rawBody, personKey, send } = require('../_lib/hub');
+const { app, db, rawBody, personKey, send } = require('../hub');
 
 const ADMIN = 'systems@totalchb.com';
 const ALIASES = { 'brandy@totalchb.com': ['brandy@kpidriver.com'], 'systems@totalchb.com': ['systems@kpidriver.com'] };

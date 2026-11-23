@@ -52,10 +52,12 @@ Team members sign in with their company Google account. Access is limited to app
 ```
 index.html            The complete app (self-unpacking bundle)
 app/app.dc.html       Readable source of the app (node tools/bundle.mjs unpack / pack)
-api/                  Vercel functions that connect other apps (the Title Commitment & Lien Agent)
+api/                  Vercel functions: the connected apps, and the hub's own endpoints in one function
+                      (api/hub/[op].js → api/_lib/hubops/: delete, digest, login-as, passwords, upload).
+                      Keep it to 12 functions or fewer: the Vercel plan refuses a deployment with more.
 firebase/             Firestore and Storage security rules
 README.md             This file
-tchb-logo.png         Brand logo (README only)
+tchb-logo.png         Brand logo (README and the daily digest email)
 kpi-driver-logo.png   Brand logo (README only)
 ```
 
@@ -118,7 +120,7 @@ cleared. Their tasks are their own list plus anything they own in MGMT or in som
 day with nothing open and nothing done. Each person turns it on or off, and can send themselves a test, under their
 photo → **My Settings**.
 
-`api/_lib/digest.js` builds it (pure functions, `tests/digest.test.js`); `api/hub/digest.js` sends it: Vercel Cron
+`api/_lib/digest.js` builds it (pure functions, `tests/digest.test.js`); `api/_lib/hubops/digest.js` sends it (at `/api/hub/digest`): Vercel Cron
 (`vercel.json`) calls it at 12:00 and 13:00 UTC, and it sends once a day after 8 AM Eastern (the two times cover
 summer and winter time; `digestRuns/<date>` stops a second send). Opt-outs are kept in `meta/digest` (server only).
 

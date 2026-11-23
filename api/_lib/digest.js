@@ -1,7 +1,7 @@
 // The daily digest email (owner 2026-11-23): every day at 8:00 AM Eastern, each person gets their own recap of the day
 // before: what is still open for them (first), then what they finished. Their tasks are their own list plus anything they
 // own in MGMT or in someone else's list (a task they own, or a subtask with their name on it). Pure functions (no
-// Firebase, no network) so they can be tested with made-up data; api/hub/digest.js reads the tasks and sends it.
+// Firebase, no network) so they can be tested with made-up data; api/_lib/hubops/digest.js (/api/hub/digest) reads the tasks and sends it.
 const ET = 'America/New_York';
 const SITE = 'https://hub.totalchb.com';
 const AGENT_TITLE = 'Title Commitment Agent', AGENT_NAME = 'Title Commitment & Lien Agent';   // as in the app

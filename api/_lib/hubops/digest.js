@@ -7,8 +7,8 @@
 // Sent through Resend (RESEND_API_KEY) from HUB_DIGEST_FROM (default Universal Team Hub <hub@totalchb.com>).
 // Opt-outs and the day's run record live in meta/digest and digestRuns/ (server only: the rules give the page no
 // access). Logs counts only.
-const { app, db, rawBody, team, personKey, send } = require('../_lib/hub');
-const { personDigest, digestEmail, isEmpty, window } = require('../_lib/digest');
+const { app, db, rawBody, team, personKey, send } = require('../hub');
+const { personDigest, digestEmail, isEmpty, window } = require('../digest');
 
 const FROM = () => process.env.HUB_DIGEST_FROM || 'Universal Team Hub <hub@totalchb.com>';
 const resendKey = () => process.env.RESEND_API_KEY || process.env.RESEND_KEY || process.env.RESEND || '';

@@ -1,8 +1,8 @@
 // POST /api/hub/delete: the hub page deletes a task or removes a subtask here (with the person's Firebase sign-in).
 // The rules and passwords are checked on the server (api/_lib/deletes.js); the Firestore rules don't let the page do
 // it any other way. A copy of what was deleted is kept in trash/ (server only), with who and when.
-const { deleteRule, passwordCheck, readPasswords } = require('../_lib/deletes');
-const { app, db, rawBody, team, personKey, send } = require('../_lib/hub');
+const { deleteRule, passwordCheck, readPasswords } = require('../deletes');
+const { app, db, rawBody, team, personKey, send } = require('../hub');
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
