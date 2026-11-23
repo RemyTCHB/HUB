@@ -109,6 +109,24 @@ don't show as online, and each use is kept in `audit/` (server only). The servic
   *TC - <address1>, <city> <state> <postal_code>*, one task per contact. Vercel settings: `GHL_WEBHOOK_KEY` (required),
   optional `GHL_DEPLOY_FOR` and `GHL_TEMPLATE`. Never put the key in the code or this README.
 
+## Daily Digest Email
+
+Every day at 8:00 AM Eastern, each person gets their own email (owner 2026-11-23): **Still Open** first (their open
+tasks and subtasks, overdue first, then by due date), then **Done** the day before (each subtask ticked off, with the
+time), with the counts Still Open, Overdue, Due Today and Done Yesterday and the share of the day's open work they
+cleared. Their tasks are their own list plus anything they own in MGMT or in someone else's list. Nobody gets one on a
+day with nothing open and nothing done. Each person turns it on or off, and can send themselves a test, under their
+photo → **My Settings**.
+
+`api/_lib/digest.js` builds it (pure functions, `tests/digest.test.js`); `api/hub/digest.js` sends it: Vercel Cron
+(`vercel.json`) calls it at 12:00 and 13:00 UTC, and it sends once a day after 8 AM Eastern (the two times cover
+summer and winter time; `digestRuns/<date>` stops a second send). Opt-outs are kept in `meta/digest` (server only).
+
+Vercel settings (names only): `RESEND_API_KEY` (Resend, the same service the Title Commitment & Lien Agent uses),
+`CRON_SECRET` (any long random value; Vercel sends it with each cron call), `HUB_DIGEST_ENABLED` (`true` sends it to
+everyone; until then only **Send Me A Test** works), optional `HUB_DIGEST_FROM` (default
+`Universal Team Hub <hub@totalchb.com>`; the address's domain must be verified in Resend).
+
 ## Connecting Other Apps
 
 The hub is built so other tools can create and update tasks. Each task records:

@@ -1639,7 +1639,22 @@ h1, h2, h3, h4 {
             <span style="font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tchb-red-500);">{{ acctType }}</span>
           </span>
         </div>
-        <p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--text-muted);">There's nothing to set here yet. Your own settings for the hub will show up here as they're added. Your task templates are under Task Templates in this menu.</p>
+        <div style="padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-default); display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+              <b style="font-family: var(--font-display); font-size: 16px; color: var(--tchb-indigo-700);">Daily Digest Email</b>
+              <span style="font-size: 13px; line-height: 1.45; color: var(--text-muted);">Every day at 8:00 AM Eastern: what's still open for you, and what you finished the day before.</span>
+            </span>
+            <button sc-camel-on-click="{{ toggleDigest }}" role="switch" aria-checked="{{ digOn }}" aria-label="Daily Digest Email" title="{{ digTitle }}" style="flex: none; border: none; background: transparent; cursor: pointer; padding: 6px 0; {{ digBusy }}">
+              <span style="display: block; width: 44px; height: 24px; border-radius: 999px; position: relative; transition: background 140ms; background: {{ digTrack }};"><span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 999px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.25); transition: transform 140ms; transform: {{ digKnob }};"></span></span>
+            </button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <button sc-camel-on-click="{{ testDigest }}" style="border: 1px solid var(--border-strong); background: var(--surface-card); cursor: pointer; border-radius: 999px; padding: 8px 16px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--tchb-indigo-700); {{ digBusy }}" style-hover="background: var(--tchb-indigo-050);">{{ digTestLabel }}</button>
+            <span role="status" style="flex: 1 1 180px; font-size: 13px; line-height: 1.45; color: {{ digMsgColor }};">{{ digMsg }}</span>
+          </div>
+        </div>
+        <p style="margin: 0; font-size: 13px; line-height: 1.5; color: var(--text-muted);">Your task templates are under Task Templates in this menu.</p>
       </div>
     </div>
   </sc-if>
@@ -2608,6 +2623,20 @@ class Component extends DCLogic {
       .then(r => r.json().catch(() => ({})).then(b => { if (!r.ok) throw new Error(b.error || 'Could not load the passwords.'); this._pw = b; }))
       .catch(e => { this._pwErr = e.message || 'Could not load the passwords.'; this._pwKey = ''; })
       .then(() => this.fillHelp());
+  }
+  // Daily digest (api/hub/digest.js): on / off for yourself, and a test sent to you only.
+  loadDigest() { this.digestCall('get'); }
+  digestCall(action) {
+    const u = this.auth && this.auth.currentUser, dg = this.state.dig || {};
+    if (!u || (dg.busy && action !== 'get')) return;
+    const on = action === 'set' ? dg.on === false : undefined;
+    this.setState({ dig: { ...dg, busy: action === 'get' ? '' : action, msg: '', err: false } });
+    u.getIdToken().then(token => fetch('/api/hub/digest', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }, body: JSON.stringify({ action, on }) }))
+      .then(r => r.json().catch(() => ({})).then(b => { if (!r.ok) throw new Error(b.error || 'Could not reach the hub. Try again.'); return b; }))
+      .then(b => this.setState(st => ({ dig: { ...(st.dig || {}), busy: '', err: false, live: b.live !== undefined ? b.live : (st.dig || {}).live,
+        on: b.on !== undefined ? b.on : (st.dig || {}).on,
+        msg: action === 'test' ? 'Sent to ' + b.to + '. It can take a minute to arrive.' : action === 'set' ? (b.on ? 'On: you get it every morning.' : 'Off: you won\'t get it.') : '' } })))
+      .catch(e => this.setState(st => ({ dig: { ...(st.dig || {}), busy: '', err: true, msg: e.message || 'Could not reach the hub. Try again.' } })));
   }
   pwTable(role) {
     const esc = x => String(x == null ? '' : x).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -3649,11 +3678,16 @@ class Component extends DCLogic {
           help: 'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01', online: 'M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0M16.24 7.76a6 6 0 0 1 0 8.49M7.76 16.24a6 6 0 0 1 0-8.49M19.07 4.93a10 10 0 0 1 0 14.14M4.93 19.07a10 10 0 0 1 0-14.14', out: 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9' };
         const r = live ? role : 'member', nowT = hubNow();
         const onlineN = (this.state.presence || []).filter(p => Object.values(p.sessions || {}).some(x => x && nowT - (x.at || 0) < ONLINE_MS)).length;
+        const dg = this.state.dig || {};
         return { meOpen: !!this.state.mySet && live, closeMe: () => this.setState({ mySet: false }), meKey: e => { if (e.key === 'Escape') this.setState({ mySet: false }); },
+          digOn: dg.on !== false, digTrack: dg.on !== false ? 'var(--action-secondary)' : 'var(--tchb-gray-300)', digKnob: dg.on !== false ? 'translateX(20px)' : 'none',
+          digTitle: dg.on !== false ? 'On: you get it every morning' : 'Off: you don\'t get it', digBusy: dg.busy ? 'opacity: 0.6; pointer-events: none;' : '',
+          digTestLabel: dg.busy === 'test' ? 'Sending…' : 'Send Me A Test', digMsg: dg.msg || (dg.live === false ? 'Not live for the team yet: a test goes to you only.' : ''),
+          digMsgColor: dg.err ? 'var(--status-error)' : 'var(--text-muted)', toggleDigest: () => this.digestCall('set'), testDigest: () => this.digestCall('test'),
           openAccount: e => this.openMenu(e, { kind: 'account' }), menuIsAccount: !!menu && menu.kind === 'account',
           acctName: k ? this.nameOf(k) : (u.displayName || u.email || ''), acctEmail: u.email || '',
           acctType: ROLE_LABEL[r] + (dept && r !== 'manager' ? ' · ' + dept : ''),
-          acctItems: [{ label: 'My Settings', icon: I.settings, onClick: go(() => this.setState({ mySet: true })) },
+          acctItems: [{ label: 'My Settings', icon: I.settings, onClick: go(() => { this.setState({ mySet: true }); this.loadDigest(); }) },
             { label: 'Task Templates', icon: I.tpl, onClick: go(() => this.setState({ settings: {} })) },
             ...(mgr ? [{ label: 'Team Members', icon: I.team, onClick: () => this.openPeople() }] : []),
             ...(this.state.mob && live ? [{ label: 'Who\'s Online', icon: I.online, note: String(onlineN), onClick: () => this.setState({ menu: { kind: 'active', top: 0, left: 0 } }) }] : []),

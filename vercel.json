@@ -1,0 +1,9 @@
+{
+  "crons": [
+    { "path": "/api/hub/digest?at=12utc", "schedule": "0 12 * * *" },
+    { "path": "/api/hub/digest?at=13utc", "schedule": "0 13 * * *" }
+  ],
+  "functions": {
+    "api/hub/digest.js": { "maxDuration": 60 }
+  }
+}
