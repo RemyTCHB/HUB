@@ -2,8 +2,8 @@
 // and the TC department (the Title Commitment Agent); {"depts": ["TC", "DISPO"]} adds those departments (TC Checklist).
 // Answers name, email, role, dept, photo from the team directory.
 // Signed with TITLE_AGENT_SYNC_SECRET (the agent), TC Checklist's own secret (TC_CHECKLIST_SYNC_SECRET or
-// TC_CHECKLIST_SECRET), Dispo Ops' own secret (DISPO_OPS_SECRET) or the Deals Heat Map's (HEAT_MAP_SECRET). Here those
-// open only this read-only list, not the task sync or the Title Agent's passwords.
+// TC_CHECKLIST_SECRET) or Dispo Ops' own secret (DISPO_OPS_SECRET). Here those two open only this read-only list, not
+// the task sync or the Title Agent's passwords.
 const { teamFor, deptsFrom, verify } = require('../_lib/titleagent');
 const { rawBody, team, send } = require('../_lib/hub');
 const { tcSecret } = require('../_lib/tcchecklist');
