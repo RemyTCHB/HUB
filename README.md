@@ -195,6 +195,8 @@ DISPO OPS (dispo-ops.totalchb.com) sends each deal's progress one way, and the h
 
 Vercel settings: `DISPO_OPS_SECRET` (the same value as DISPO OPS's `HUB_SYNC_SECRET` in its Firebase secrets; it opens only these two endpoints) and optionally `HUB_DISPO_OWNER` (default carlos@totalchb.com).
 
+The Deals Heat Map reads the team list too (read only): Vercel setting `HEAT_MAP_SECRET`, the same value as `HEAT_MAP_SECRET` in the Heat Map's project. It opens only `POST /api/title-agent/team`.
+
 ## Support
 
 Questions or access requests: contact the TCHB / KPI Driver operations team.
