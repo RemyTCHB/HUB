@@ -8,7 +8,7 @@ const { teamFor, deptsFrom, verify } = require('../_lib/titleagent');
 const { rawBody, team, send } = require('../_lib/hub');
 const { tcSecret } = require('../_lib/tcchecklist');
 
-const appSecrets = (e = process.env) => [e.TITLE_AGENT_SYNC_SECRET, tcSecret(e), e.DISPO_OPS_SECRET].filter(Boolean);
+const appSecrets = (e = process.env) => [e.TITLE_AGENT_SYNC_SECRET, tcSecret(e), e.DISPO_OPS_SECRET, e.HEAT_MAP_SECRET].filter(Boolean);
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return send(res, 405, { error: 'POST only' });
