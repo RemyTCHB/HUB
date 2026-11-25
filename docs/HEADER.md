@@ -1,5 +1,8 @@
 # Header Standard (All Apps)
 
+This is the visual chapter of the [TCHB App Standard](APP-STANDARD.md), which covers everything every app shares
+(sign-in, Team Members from the hub, Active, Help, daily emails, privacy). Start there for a new app.
+
 The Universal Team Hub's header and the section under it are the pattern for every app (TC Checklist, Title
 Commitment Agent, Dispo Ops, …). Copy this layout, these sizes and these behaviours. The hub's own code is in
 `app/app.dc.html`. Look for `headRef`, `syncBadge`, `acctItems`, `measure()`, `ringBox`, `hasProgLine` and `openDetails`.

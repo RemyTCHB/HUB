@@ -112,6 +112,13 @@ don't show as online, and each use is kept in `audit/` (server only). The servic
   *TC - <address1>, <city> <state> <postal_code>*, one task per contact. Vercel settings: `GHL_WEBHOOK_KEY` (required),
   optional `GHL_DEPLOY_FOR` and `GHL_TEMPLATE`. Never put the key in the code or this README.
 
+## Building Another App
+
+Every internal app follows the **[TCHB App Standard](docs/APP-STANDARD.md)**: the look, the header and Live clock,
+Active, the photo menu, Team Members from this hub, Help and the guides, daily emails, privacy and the checks before
+going live. It ends with the prompt to paste into a new Claude session. The tokens are in
+[`docs/app-kit/tokens.css`](docs/app-kit/tokens.css); the header and cards in detail in [`docs/HEADER.md`](docs/HEADER.md).
+
 ## Daily Digest Email
 
 Every day at 8:00 AM Eastern, each person gets their own email, **one per company** (TCHB and KPI DRIVER, each with its

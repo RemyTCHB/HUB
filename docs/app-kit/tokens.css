@@ -1,0 +1,292 @@
+/* TCHB App Kit: the Universal Team Hub's design tokens, copied from RemyTCHB/HUB app/app.dc.html.
+   Every internal app loads this first (docs/APP-STANDARD.md). Set data-theme="dark" on <html> for dark mode
+   (light is the default) and data-company="kpi" for KPI DRIVER. Keep in step with the hub: when the hub's tokens
+   change, regenerate this file from it. Fonts: Baloo 2 (display) and Nunito Sans (body), from Google Fonts. */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap');
+
+/* Total Cash Home Buyers — color tokens
+   Official palette via Brandfetch (brandfetch.com/totalchb.com):
+   Victoria #4D458A · Cardinal #BD2239 · Stiletto #992849 · Salem #109648 · White.
+   Shades/tints derived; red-400 sampled from the logo's bright "7" stroke. */
+:root {
+  /* Base brand */
+  --tchb-indigo-900: #2c2752;
+  --tchb-indigo-700: #4d458a;   /* Victoria — wordmark "TOTAL CA$H" / house roof */
+  --tchb-indigo-500: #625aa5;
+  --tchb-indigo-100: #eae9f4;
+  --tchb-indigo-050: #f5f4fa;
+
+  --tchb-red-700: #992849;      /* Stiletto — deep crimson (gradient start) */
+  --tchb-red-500: #bd2239;      /* Cardinal — wordmark "HOME BUYERS" */
+  --tchb-red-400: #e0212b;      /* bright red (7 stroke) */
+  --tchb-red-050: #fbf0f2;
+
+  --tchb-green-600: #0d7a3b;
+  --tchb-green-500: #109648;    /* Salem — the "$" accent */
+  --tchb-green-050: #eaf7ef;
+
+  /* Neutrals */
+  --tchb-white: #ffffff;
+  --tchb-gray-050: #f7f7f9;
+  --tchb-gray-100: #eeedf2;
+  --tchb-gray-300: #c9c7d4;
+  --tchb-gray-500: #767388;
+  --tchb-gray-700: #47445a;
+  --tchb-gray-900: #211e33;
+
+  /* Brand gradient (icon ring: red top → indigo bottom) */
+  --tchb-gradient-brand: linear-gradient(160deg, #bd2239 0%, #7d3468 45%, #4d458a 100%); /* @kind color */
+  --tchb-gradient-indigo: linear-gradient(160deg, #625aa5 0%, #352f66 100%); /* @kind color */
+
+  /* Semantic aliases */
+  --surface-page: var(--tchb-white);
+  --surface-subtle: var(--tchb-gray-050);
+  --surface-card: var(--tchb-white);
+  --surface-inverse: var(--tchb-indigo-700);
+  --surface-accent-tint: var(--tchb-indigo-050);
+
+  --text-heading: var(--tchb-indigo-700);
+  --text-body: var(--tchb-gray-700);
+  --text-muted: var(--tchb-gray-500);
+  --text-on-inverse: var(--tchb-white);
+  --text-on-inverse-muted: rgba(255, 255, 255, 0.72);
+
+  --action-primary: var(--tchb-red-500);
+  --action-primary-hover: var(--tchb-red-700);
+  --action-secondary: var(--tchb-indigo-700);
+  --action-secondary-hover: var(--tchb-indigo-900);
+  --accent-money: var(--tchb-green-500);
+
+  --border-default: var(--tchb-gray-100);
+  --border-strong: var(--tchb-gray-300);
+  --focus-ring: 0 0 0 3px rgba(98, 90, 165, 0.35);
+
+  --status-success: var(--tchb-green-600);
+  --status-error: var(--tchb-red-400);
+}
+
+  /* Total Cash Home Buyers — typography tokens
+   Brand wordmark uses a bold rounded geometric sans (source font not provided).
+   Substitutes from Google Fonts: Baloo 2 (display, rounded like the wordmark)
+   + Nunito Sans (body). Flagged in readme.md — replace with real brand fonts
+   in tokens/fonts.css when available. */
+:root {
+  --font-display: 'Baloo 2', 'Nunito Sans', system-ui, sans-serif;
+  --font-body: 'Nunito Sans', system-ui, -apple-system, sans-serif;
+
+  /* Scale */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-xl: 22px;
+  --text-2xl: 28px;
+  --text-3xl: 36px;
+  --text-4xl: 48px;
+  --text-5xl: 62px;
+
+  /* Weights */
+  --weight-regular: 400;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-display: 700;   /* Baloo 2 bold ≈ wordmark weight */
+
+  /* Line heights */
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-body: 1.6;
+
+  /* Letterspacing — wordmark is set wide, all-caps */
+  --tracking-caps: 0.04em;
+  --tracking-normal: 0;
+}
+
+  /* Total Cash Home Buyers — spacing, radius, shadow, motion tokens */
+:root {
+  /* Spacing (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* Radii — brand geometry is softly rounded (wordmark corners, logo notches) */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* Shadows — soft, low-saturation indigo cast */
+  --shadow-card: 0 1px 2px rgba(34, 29, 84, 0.06), 0 4px 16px rgba(34, 29, 84, 0.08);
+  --shadow-raised: 0 2px 4px rgba(34, 29, 84, 0.08), 0 12px 32px rgba(34, 29, 84, 0.14);
+  --shadow-button: 0 1px 2px rgba(34, 29, 84, 0.12);
+
+  /* Borders */
+  --border-width: 1px;
+  --border-width-strong: 2px;
+
+  /* Motion — quick, businesslike; no bounces */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.3, 1); /* @kind other */
+  --duration-fast: 120ms; /* @kind other */
+  --duration-base: 200ms; /* @kind other */
+
+  /* Layout */
+  --container-max: 1140px;
+  --container-pad: 24px;
+}
+
+  /* Minimal base application of tokens */
+body {
+  font-family: var(--font-body);
+  color: var(--text-body);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--text-heading);
+  line-height: var(--leading-snug);
+  margin: 0;
+}
+
+/* Glass surfaces (header, menus, pills), light */
+:root {
+  --glass-bg: rgba(255,255,255,0.55);
+  --glass-sheen: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 100%);
+  --glass-border: rgba(255,255,255,0.85);
+  --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(17,29,44,0.06), 0 1px 2px rgba(34,29,84,0.10), 0 4px 14px rgba(34,29,84,0.10);
+  --glass-hover: rgba(255,255,255,0.85);
+  --glass-divider: rgba(17,29,44,0.08);
+  --menu-bg: rgba(255,255,255,0.62);
+  --live-sheen: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%);
+  --menu-sheen: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 100%);
+  --menu-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 2px 4px rgba(34,29,84,0.08), 0 16px 40px rgba(34,29,84,0.18);
+}
+/* Dark mode (TCHB) */
+:root[data-theme="dark"] {
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-sheen: linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.02) 100%);
+  --glass-border: rgba(255,255,255,0.12);
+  --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 1px 2px rgba(0,0,0,0.4), 0 4px 14px rgba(0,0,0,0.3);
+  --glass-hover: rgba(255,255,255,0.10);
+  --glass-divider: rgba(255,255,255,0.10);
+  --menu-bg: rgba(30, 28, 50, 0.75);
+  --live-sheen: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.16) 50%, transparent 70%);
+  --menu-sheen: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 100%);
+  --menu-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 16px 40px rgba(0,0,0,0.5);
+  --surface-page: #1c1a2e;
+  --surface-card: #1f1d33;
+  --surface-subtle: #141323;
+  --surface-inverse: #0f0e1c;
+  --surface-accent-tint: #2a2747;
+  --tchb-gray-050: #191729;
+  --tchb-gray-100: #2a2740;
+  --tchb-gray-300: #4a4662;
+  --tchb-gray-500: #9a97ad;
+  --tchb-gray-700: #d4d2e3;
+  --tchb-gray-900: #f1f0f7;
+  --text-body: #e4e2ee;
+  --text-muted: #a3a0b8;
+  --text-heading: #c2bdf0;
+  --border-default: #2f2c47;
+  --border-strong: #4a4664;
+  --tchb-indigo-900: #0f0e1c;
+  --tchb-indigo-700: #c2bdf0;
+  --tchb-indigo-500: #8f87dd;
+  --tchb-indigo-100: #36325c;
+  --tchb-indigo-050: #2a2747;
+  --tchb-red-700: #b52a44;
+  --tchb-red-500: #ef5a6f;
+  --tchb-red-400: #ff5a5f;
+  --tchb-red-050: #3a1f2b;
+  --tchb-green-600: #4fd98a;
+  --tchb-green-500: #1fae5b;
+  --tchb-green-050: #163224;
+  --action-primary: #d8334c;
+  --action-primary-hover: #b52a44;
+  --action-secondary: #756dc4;
+  --action-secondary-hover: #625aa5;
+  --avatar-bg: #625aa5;
+  --status-success: #4fd98a;
+  --status-error: #ff5a5f;
+  --focus-ring: 0 0 0 3px rgba(143, 135, 221, 0.45);
+  --shadow-card: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.28);
+  --shadow-raised: 0 2px 4px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.45);
+  --shadow-button: 0 1px 2px rgba(0,0,0,0.5);
+}
+/* KPI DRIVER, light */
+:root[data-company="kpi"] {
+  --tchb-indigo-900: #0a121c;
+  --tchb-indigo-700: #111d2c;
+  --tchb-indigo-500: #3a7fc2;
+  --tchb-indigo-100: #dce9f5;
+  --tchb-indigo-050: #eef4fb;
+  --tchb-red-700: #2d669f;
+  --tchb-red-500: #3a7fc2;
+  --tchb-red-400: #ee2025;
+  --tchb-red-050: #fdeaea;
+  --tchb-green-600: #2f8f34;
+  --tchb-green-500: #47b84b;
+  --tchb-green-050: #ebf7ec;
+  --tchb-gradient-brand: linear-gradient(90deg, #ee2025 0%, #e88e1f 35%, #fdb11a 65%, #47b84b 100%);
+  --surface-inverse: #111d2c;
+  --surface-accent-tint: #eef4fb;
+  --text-heading: #111d2c;
+  --action-primary: #3a7fc2;
+  --action-primary-hover: #2d669f;
+  --action-secondary: #111d2c;
+  --action-secondary-hover: #0a121c;
+  --accent-money: #47b84b;
+  --status-success: #2f8f34;
+  --status-error: #ee2025;
+  --focus-ring: 0 0 0 3px rgba(58, 127, 194, 0.35);
+}
+/* KPI DRIVER, dark */
+:root[data-company="kpi"][data-theme="dark"] {
+  --surface-page: #0f1722;
+  --surface-card: #152131;
+  --surface-subtle: #0b121b;
+  --surface-inverse: #070d15;
+  --surface-accent-tint: #172a40;
+  --tchb-gray-050: #111b28;
+  --tchb-gray-100: #1f2d3f;
+  --tchb-gray-300: #3a4b60;
+  --tchb-gray-500: #93a1b3;
+  --tchb-gray-700: #d3dbe5;
+  --text-body: #e1e7ee;
+  --text-muted: #9aa8b9;
+  --text-heading: #e3ecf7;
+  --border-default: #1f2d3f;
+  --border-strong: #34465c;
+  --tchb-indigo-900: #070d15;
+  --tchb-indigo-700: #e3ecf7;
+  --tchb-indigo-500: #5b9bdb;
+  --tchb-indigo-100: #1f3550;
+  --tchb-indigo-050: #172a40;
+  --tchb-red-700: #2d669f;
+  --tchb-red-500: #5b9bdb;
+  --tchb-red-400: #ff4a4f;
+  --tchb-red-050: #3a1c1e;
+  --tchb-green-600: #5fd463;
+  --tchb-green-500: #47b84b;
+  --tchb-green-050: #173119;
+  --action-primary: #3a7fc2;
+  --action-primary-hover: #2d669f;
+  --action-secondary: #3a7fc2;
+  --action-secondary-hover: #2d669f;
+  --avatar-bg: #3a7fc2;
+  --accent-money: #47b84b;
+  --status-success: #5fd463;
+  --status-error: #ff4a4f;
+  --focus-ring: 0 0 0 3px rgba(91, 155, 219, 0.45);
+  --menu-bg: rgba(18, 30, 46, 0.78);
+}
+:root { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+body { background: var(--surface-subtle); }
